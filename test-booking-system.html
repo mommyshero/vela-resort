@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Test Booking System - Vela Resort</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 { color: #1A1A1A; }
+        h2 { color: #FFD700; background: #1A1A1A; padding: 0.5rem 1rem; border-radius: 8px; display: inline-block; }
+        .success { color: #10B981; }
+        .error { color: #EF4444; }
+        .warning { color: #F59E0B; }
+        button {
+            background: #FFD700;
+            color: #1A1A1A;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0.5rem;
+        }
+        button:hover {
+            background: #1A1A1A;
+            color: #FFD700;
+        }
+        pre {
+            background: #1A1A1A;
+            color: #FFD700;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        .status-ok { background: #10B981; color: white; }
+        .status-warn { background: #F59E0B; color: white; }
+        .status-error { background: #EF4444; color: white; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Vela Resort - Booking System Test</h1>
+    <p>ทดสอบระบบจองห้องพักแบบ Autonomous</p>
+
+    <div class="test-card">
+        <h2>📊 Step 1: ตรวจสอบข้อมูลปัจจุบัน</h2>
+        <button onclick="checkCurrentData()">🔍 ตรวจสอบข้อมูล</button>
+        <div id="currentData"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>📝 Step 2: สร้าง Booking ทดสอบ</h2>
+        <button onclick="createTestBooking('hytte', 1)">🏠 จอง Hytte 1 ห้อง</button>
+        <button onclick="createTestBooking('hytte', 3)">🏠 จอง Hytte 3 ห้อง</button>
+        <button onclick="createTestBooking('hus', 1)">🏡 จอง Hus 1 ห้อง</button>
+        <button onclick="createTestBooking('combined', 2)">🎯 จอง Room + Tour</button>
+        <div id="testResults"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>🔄 Step 3: ตรวจสอบ Sync</h2>
+        <button onclick="checkSync()">🔗 ตรวจสอบ Sync ระหว่างเว็บ+BOH</button>
+        <div id="syncResults"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>📅 Step 4: ตรวจสอบปฏิทิน</h2>
+        <button onclick="checkCalendar()">📅 ตรวจสอบ Room Availability</button>
+        <div id="calendarResults"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>🧹 Step 5: ล้างข้อมูลทดสอบ</h2>
+        <button onclick="clearTestBookings()">🗑️ ลบ Booking ทดสอบทั้งหมด</button>
+        <div id="clearResults"></div>
+    </div>
+
+    <script>
+        // ===================================
+        // TEST FUNCTIONS
+        // ===================================
+
+        function checkCurrentData() {
+            const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            const petty = JSON.parse(localStorage.getItem('vela_petty')) || [];
+            
+            document.getElementById('currentData').innerHTML = `
+                <div style="margin-top: 1rem;">
+                    <span class="status-badge status-ok">✅ Bookings: ${bookings.length} รายการ</span>
+                    <span class="status-badge status-ok">✅ Petty Cash: ${petty.length} รายการ</span>
+                </div>
+                <pre>${JSON.stringify(bookings.slice(-3), null, 2)}</pre>
+                <p><strong>Latest 3 bookings shown above</strong></p>
+            `;
+        }
+
+        function createTestBooking(roomType, rooms) {
+            const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            
+            const today = new Date();
+            const checkIn = new Date(today);
+            checkIn.setDate(checkIn.getDate() + 7); // 7 days from now
+            
+            const checkOut = new Date(checkIn);
+            checkOut.setDate(checkOut.getDate() + 2); // 2 nights
+            
+            const testBooking = {
+                id: Date.now(),
+                type: roomType === 'combined' ? 'combined' : 'room',
+                room: roomType === 'combined' ? 'hytte' : roomType,
+                roomType: roomType === 'combined' ? 'hytte' : roomType,
+                name: `ทดสอบ ${roomType.toUpperCase()}`,
+                phone: '081-234-5678',
+                email: 'test@vela-resort.com',
+                checkIn: checkIn.toISOString().split('T')[0],
+                checkOut: checkOut.toISOString().split('T')[0],
+                rooms: rooms,
+                guests: rooms * 2,
+                roomPrice: roomType === 'hytte' ? 950 : 1800,
+                tourId: roomType === 'combined' ? '1' : null,
+                tourPeople: roomType === 'combined' ? 4 : 0,
+                tourPrice: roomType === 'combined' ? 5800 : 0,
+                totalPrice: (roomType === 'hytte' ? 950 : 1800) * rooms + (roomType === 'combined' ? 5800 : 0),
+                status: 'confirmed',
+                channel: 'test',
+                createdAt: new Date().toISOString()
+            };
+            
+            bookings.push(testBooking);
+            localStorage.setItem('vela_bookings', JSON.stringify(bookings));
+            
+            document.getElementById('testResults').innerHTML = `
+                <div class="success">
+                    <strong>✅ สร้าง Booking สำเร็จ!</strong>
+                    <pre>${JSON.stringify(testBooking, null, 2)}</pre>
+                </div>
+            `;
+            
+            // Auto-check sync
+            setTimeout(() => checkSync(), 500);
+        }
+
+        function checkSync() {
+            const webBookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            const bohBookings = JSON.parse(localStorage.getItem('vela_boh_bookings')) || webBookings;
+            
+            const isSync = webBookings.length === bohBookings.length;
+            
+            document.getElementById('syncResults').innerHTML = `
+                <div style="margin-top: 1rem;">
+                    <span class="status-badge ${isSync ? 'status-ok' : 'status-error'}">
+                        ${isSync ? '✅' : '❌'} Sync Status: ${isSync ? 'OK' : 'Mismatch'}
+                    </span>
+                    <span class="status-badge status-ok">🌐 Web: ${webBookings.length}</span>
+                    <span class="status-badge status-ok">🔑 BOH: ${bohBookings.length}</span>
+                </div>
+                ${!isSync ? '<p class="error">⚠️ ข้อมูลไม่ตรงกัน! กรุณา refresh BOH</p>' : '<p class="success">✅ ข้อมูลตรงกัน</p>'}
+            `;
+        }
+
+        function checkCalendar() {
+            const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            
+            const today = new Date();
+            const nextWeek = new Date(today);
+            nextWeek.setDate(nextWeek.getDate() + 7);
+            
+            const hytteTotal = 5;
+            const husTotal = 1;
+            
+            let hytteBooked = 0;
+            let husBooked = 0;
+            
+            bookings.forEach(b => {
+                if (b.status === 'cancelled') return;
+                
+                const checkIn = new Date(b.checkIn);
+                const checkOut = new Date(b.checkOut);
+                
+                if (nextWeek >= checkIn && nextWeek < checkOut) {
+                    if (b.room === 'hytte' || b.roomType === 'hytte') {
+                        hytteBooked += b.rooms || 1;
+                    } else if (b.room === 'hus' || b.roomType === 'hus') {
+                        husBooked += b.rooms || 1;
+                    }
+                }
+            });
+            
+            const hytteAvailable = hytteTotal - hytteBooked;
+            const husAvailable = husTotal - husBooked;
+            
+            document.getElementById('calendarResults').innerHTML = `
+                <div style="margin-top: 1rem;">
+                    <h3>📅 Availability ใน 7 วัน:</h3>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem;">
+                        <div style="background: #F3F4F6; padding: 1rem; border-radius: 8px;">
+                            <strong>🏠 Hytte</strong>
+                            <div style="font-size: 2rem; font-weight: 700; color: ${hytteAvailable > 2 ? '#10B981' : hytteAvailable > 0 ? '#F59E0B' : '#EF4444'}">
+                                ${hytteAvailable}/${hytteTotal}
+                            </div>
+                            <div class="${hytteAvailable > 2 ? 'success' : hytteAvailable > 0 ? 'warning' : 'error'}">
+                                ${hytteAvailable > 2 ? '✅ พร้อมจอง' : hytteAvailable > 0 ? '⚠️ ใกล้เต็ม' : '❌ เต็ม'}
+                            </div>
+                        </div>
+                        <div style="background: #F3F4F6; padding: 1rem; border-radius: 8px;">
+                            <strong>🏡 Hus</strong>
+                            <div style="font-size: 2rem; font-weight: 700; color: ${husAvailable > 0 ? '#10B981' : '#EF4444'}">
+                                ${husAvailable}/${husTotal}
+                            </div>
+                            <div class="${husAvailable > 0 ? 'success' : 'error'}">
+                                ${husAvailable > 0 ? '✅ พร้อมจอง' : '❌ เต็ม'}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function clearTestBookings() {
+            const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            const originalCount = bookings.length;
+            
+            const filtered = bookings.filter(b => !b.name.includes('ทดสอบ'));
+            localStorage.setItem('vela_bookings', JSON.stringify(filtered));
+            
+            const deleted = originalCount - filtered.length;
+            
+            document.getElementById('clearResults').innerHTML = `
+                <div class="${deleted > 0 ? 'success' : 'warning'}">
+                    ${deleted > 0 ? `✅ ลบ ${deleted} booking ทดสอบแล้ว` : '⚠️ ไม่มี booking ทดสอบ'}
+                </div>
+            `;
+            
+            setTimeout(() => checkCurrentData(), 500);
+        }
+
+        // Auto-run initial check
+        window.addEventListener('load', () => {
+            checkCurrentData();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Real Data - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #4B4B4B 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            margin: 0.5rem;
+        }
+        .btn-primary {
+            background: #FFD700;
+            color: #1A1A1A;
+        }
+        .btn-primary:hover {
+            background: #E6C200;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+        .btn-secondary {
+            background: #F3F4F6;
+            color: #1A1A1A;
+        }
+        .btn-secondary:hover {
+            background: #9CA3AF;
+            color: white;
+        }
+        .progress {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #F3F4F6;
+            border-radius: 12px;
+            display: none;
+        }
+        .progress.active {
+            display: block;
+        }
+        .progress-bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #FFD700;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.active {
+            display: block;
+        }
+        .status-success {
+            background: #D1FAE5;
+            color: #065F46;
+            border-left: 4px solid #10B981;
+        }
+        .status-error {
+            background: #FEE2E2;
+            color: #991B1B;
+            border-left: 4px solid #EF4444;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: #F3F4F6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1A1A1A;
+        }
+        .stat-label {
+            color: #9CA3AF;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        .data-preview {
+            background: #F9FAFB;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📥 Import ข้อมูลจริง</h1>
+        <p class="subtitle">Vela Resort Umphang - Petty Cash 81 + Bookings 10</p>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="pettyCount">81</div>
+                <div class="stat-label"> Petty Cash รายการ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="bookingCount">10</div>
+                <div class="stat-label">การจอง รายการ</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalValue">฿43,350</div>
+                <div class="stat-label">ยอดรวมทั้งหมด</div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div style="margin: 2rem 0;">
+            <button class="btn btn-primary" id="importAllBtn" onclick="showImportConfirm('all')">
+                📥 Import ข้อมูลทั้งหมด
+            </button>
+            <button class="btn btn-success" id="importPettyBtn" onclick="showImportConfirm('petty')">
+                💵 Import Petty Cash เท่านั้น
+            </button>
+            <button class="btn btn-secondary" id="importBookingBtn" onclick="showImportConfirm('bookings')">
+                📝 Import การจอง เท่านั้น
+            </button>
+        </div>
+
+        <!-- Confirmation Modal -->
+        <div id="confirmModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center;">
+            <div style="background: white; padding: 2rem; border-radius: 24px; max-width: 500px; width: 90%; text-align: center;">
+                <h2 id="confirmTitle" style="color: #1A1A1A; margin-bottom: 1rem;">📥 ยืนยันการ Import</h2>
+                <div id="confirmContent" style="color: #6B7280; margin: 1.5rem 0; text-align: left;">
+                    <!-- Content will be inserted here -->
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+                    <button class="btn btn-secondary" onclick="closeConfirmModal()">❌ ยกเลิก</button>
+                    <button class="btn btn-primary" id="confirmImportBtn">✅ ยืนยัน Import</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="progress" id="progress">
+            <div style="font-weight: 700; color: #1A1A1A;">กำลัง Import...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div id="progressText" style="color: #9CA3AF; font-size: 0.9rem;"></div>
+        </div>
+
+        <!-- Status -->
+        <div class="status" id="status"></div>
+
+        <!-- Preview -->
+        <div class="data-preview" id="preview" style="display: none;">
+            <pre id="previewContent"></pre>
+        </div>
+
+        <!-- Debug Section -->
+        <div style="margin-top: 2rem; padding: 1.5rem; background: #F3F4F6; border-radius: 12px;">
+            <h3 style="color: #1A1A1A; margin-bottom: 1rem; font-size: 1rem;">🔍 ตรวจสอบข้อมูลใน localStorage</h3>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <button class="btn btn-secondary" onclick="checkLocalStorage()" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                    🔍 เช็คข้อมูล
+                </button>
+                <button class="btn btn-secondary" onclick="clearAllData()" style="padding: 0.5rem 1rem; font-size: 0.85rem; background: #EF4444; color: white;">
+                    🗑️ ล้างข้อมูลทั้งหมด
+                </button>
+            </div>
+            <div id="localStorageDebug" style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 8px; font-family: monospace; font-size: 0.85rem; display: none;">
+                <pre id="localStorageContent"></pre>
+            </div>
+        </div>
+
+        <!-- Links -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB;">
+            <a href="boh.html" class="btn btn-secondary" style="text-decoration: none;">
+                🔙 กลับไป BOH
+            </a>
+            <a href="index.html" class="btn btn-secondary" style="text-decoration: none;">
+                🏡 เปิดเว็บไซต์
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Petty Cash Data (81 entries)
+        const pettyCashData = [
+            // Income (10 entries)
+            {id:"PET001",type:"income",amount:5000,category:"capital",description:"เงินเติมเริ่มต้น",date:"2026-01-01",party:"คุณลิ้นจี่"},
+            {id:"PET002",type:"income",amount:500,category:"capital",description:"เงินเติมรอบ 2",date:"2026-01-15",party:"คุณเอ"},
+            {id:"PET003",type:"income",amount:1000,category:"capital",description:"เงินเติมรอบ 3",date:"2026-02-01",party:"คุณลิ้นจี่"},
+            {id:"PET004",type:"income",amount:800,category:"capital",description:"เงินเติมรอบ 4",date:"2026-02-15",party:"คุณเอ"},
+            {id:"PET005",type:"income",amount:1200,category:"capital",description:"เงินเติมรอบ 5",date:"2026-03-01",party:"คุณลิ้นจี่"},
+            {id:"PET006",type:"income",amount:500,category:"capital",description:"เงินเติมรอบ 6",date:"2026-03-05",party:"คุณเอ"},
+            {id:"PET007",type:"income",amount:300,category:"capital",description:"เงินเติมรอบ 7",date:"2026-03-07",party:"คุณจี่"},
+            {id:"PET008",type:"income",amount:400,category:"capital",description:"เงินเติมรอบ 8",date:"2026-03-08",party:"คุณลิ้นจี่"},
+            {id:"PET009",type:"income",amount:200,category:"capital",description:"เงินเติมรอบ 9",date:"2026-03-08",party:"คุณเอ"},
+            {id:"PET010",type:"income",amount:100,category:"capital",description:"เงินเติมรอบ 10",date:"2026-03-09",party:"คุณจี่"},
+            
+            // Expense - Food (28 entries)
+            {id:"PET011",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับครึ่งโล",date:"2026-01-05",party:"ตลาดสด"},
+            {id:"PET012",type:"expense",amount:40,category:"food",description:"ซื้อไข่ไก่ 1 โหล",date:"2026-01-07",party:"ตลาดสด"},
+            {id:"PET013",type:"expense",amount:125,category:"food",description:"ซื้อกาแฟ+น้ำตาล",date:"2026-01-10",party:"7-11"},
+            {id:"PET014",type:"expense",amount:65,category:"food",description:"ซื้อทิชชู 1 ม้วน",date:"2026-01-12",party:"7-11"},
+            {id:"PET015",type:"expense",amount:800,category:"food",description:"ค่าหัวหมู",date:"2026-01-18",party:"ตลาดสด"},
+            {id:"PET016",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับครึ่งโล",date:"2026-01-20",party:"ตลาดสด"},
+            {id:"PET017",type:"expense",amount:50,category:"food",description:"ซื้อไข่ไก่",date:"2026-01-22",party:"ตลาดสด"},
+            {id:"PET018",type:"expense",amount:25,category:"food",description:"ซื้อกุยช่าย",date:"2026-01-25",party:"ตลาดสด"},
+            {id:"PET019",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับ",date:"2026-01-28",party:"ตลาดสด"},
+            {id:"PET020",type:"expense",amount:65,category:"food",description:"ซื้อทิชชู",date:"2026-02-01",party:"7-11"},
+            {id:"PET021",type:"expense",amount:40,category:"food",description:"ซื้อไข่ไก่",date:"2026-02-03",party:"ตลาดสด"},
+            {id:"PET022",type:"expense",amount:125,category:"food",description:"ซื้อกาแฟ",date:"2026-02-05",party:"7-11"},
+            {id:"PET023",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับ",date:"2026-02-08",party:"ตลาดสด"},
+            {id:"PET024",type:"expense",amount:50,category:"food",description:"ซื้อไข่ไก่",date:"2026-02-10",party:"ตลาดสด"},
+            {id:"PET025",type:"expense",amount:25,category:"food",description:"ซื้อกุยช่าย",date:"2026-02-12",party:"ตลาดสด"},
+            {id:"PET026",type:"expense",amount:65,category:"food",description:"ซื้อทิชชู",date:"2026-02-15",party:"7-11"},
+            {id:"PET027",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับ",date:"2026-02-18",party:"ตลาดสด"},
+            {id:"PET028",type:"expense",amount:40,category:"food",description:"ซื้อไข่ไก่",date:"2026-02-20",party:"ตลาดสด"},
+            {id:"PET029",type:"expense",amount:125,category:"food",description:"ซื้อกาแฟ",date:"2026-02-22",party:"7-11"},
+            {id:"PET030",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับ",date:"2026-02-25",party:"ตลาดสด"},
+            {id:"PET031",type:"expense",amount:50,category:"food",description:"ซื้อไข่ไก่",date:"2026-02-27",party:"ตลาดสด"},
+            {id:"PET032",type:"expense",amount:25,category:"food",description:"ซื้อกุยช่าย",date:"2026-03-01",party:"ตลาดสด"},
+            {id:"PET033",type:"expense",amount:65,category:"food",description:"ซื้อทิชชู",date:"2026-03-03",party:"7-11"},
+            {id:"PET034",type:"expense",amount:75,category:"food",description:"ซื้อหมูสับ",date:"2026-03-05",party:"ตลาดสด"},
+            {id:"PET035",type:"expense",amount:40,category:"food",description:"ซื้อไข่ไก่",date:"2026-03-07",party:"ตลาดสด"},
+            {id:"PET036",type:"expense",amount:120,category:"food",description:"ซื้อไข่ไก่ 3 โหล",date:"2026-03-08",party:"ตลาดสด"},
+            {id:"PET037",type:"expense",amount:75,category:"food",description:"ซื้อกุยช่าย",date:"2026-03-08",party:"ตลาดสด"},
+            {id:"PET038",type:"expense",amount:50,category:"food",description:"ซื้อน้ำปลา",date:"2026-03-09",party:"7-11"},
+            
+            // Expense - Maintenance (17 entries)
+            {id:"PET039",type:"expense",amount:150,category:"maintenance",description:"ค่าน้ำมันตัดหญ้า",date:"2026-01-08",party:"ปั๊ม ปตท"},
+            {id:"PET040",type:"expense",amount:200,category:"maintenance",description:"ซ่อมท่อประปา",date:"2026-01-15",party:"ช่างท้องถิ่น"},
+            {id:"PET041",type:"expense",amount:100,category:"maintenance",description:"ซื้อหลอดไฟ",date:"2026-01-20",party:"โกลบอลเฮ้าส์"},
+            {id:"PET042",type:"expense",amount:380,category:"maintenance",description:"เลื่อยตัดต้นกระท่อน 2 อัน",date:"2026-03-01",party:"โกลบอลเฮ้าส์"},
+            {id:"PET043",type:"expense",amount:150,category:"maintenance",description:"ค่าน้ำมันตัดหญ้า",date:"2026-02-08",party:"ปั๊ม ปตท"},
+            {id:"PET044",type:"expense",amount:100,category:"maintenance",description:"ซื้อหลอดไฟ",date:"2026-02-15",party:"โกลบอลเฮ้าส์"},
+            {id:"PET045",type:"expense",amount:200,category:"maintenance",description:"ซ่อมประตู",date:"2026-02-20",party:"ช่างท้องถิ่น"},
+            {id:"PET046",type:"expense",amount:150,category:"maintenance",description:"ค่าน้ำมันตัดหญ้า",date:"2026-03-05",party:"ปั๊ม ปตท"},
+            {id:"PET047",type:"expense",amount:100,category:"maintenance",description:"ซื้อหลอดไฟ",date:"2026-03-07",party:"โกลบอลเฮ้าส์"},
+            {id:"PET048",type:"expense",amount:75,category:"maintenance",description:"ซื้อสกรู",date:"2026-01-25",party:"โกลบอลเฮ้าส์"},
+            {id:"PET049",type:"expense",amount:50,category:"maintenance",description:"ซื้อเทปกาว",date:"2026-02-05",party:"7-11"},
+            {id:"PET050",type:"expense",amount:80,category:"maintenance",description:"ซื้อสายไฟ",date:"2026-02-18",party:"โกลบอลเฮ้าส์"},
+            {id:"PET051",type:"expense",amount:60,category:"maintenance",description:"ซื้อกาว",date:"2026-02-25",party:"7-11"},
+            {id:"PET052",type:"expense",amount:90,category:"maintenance",description:"ซื้อข้องอประปา",date:"2026-03-02",party:"โกลบอลเฮ้าส์"},
+            {id:"PET053",type:"expense",amount:70,category:"maintenance",description:"ซื้อสีทาบ้าน",date:"2026-03-04",party:"โกลบอลเฮ้าส์"},
+            {id:"PET054",type:"expense",amount:85,category:"maintenance",description:"ซื้อแปรงทาสี",date:"2026-03-06",party:"โกลบอลเฮ้าส์"},
+            {id:"PET055",type:"expense",amount:95,category:"maintenance",description:"ซื้อปูนซีเมนต์",date:"2026-03-08",party:"โกลบอลเฮ้าส์"},
+            
+            // Expense - Supplies (11 entries)
+            {id:"PET056",type:"expense",amount:65,category:"supplies",description:"ซื้อทิชชู 1 ม้วน",date:"2026-01-12",party:"7-11"},
+            {id:"PET057",type:"expense",amount:65,category:"supplies",description:"ซื้อทิชชู 1 ม้วน",date:"2026-01-25",party:"7-11"},
+            {id:"PET058",type:"expense",amount:65,category:"supplies",description:"ซื้อทิชชู 1 ม้วน",date:"2026-02-08",party:"7-11"},
+            {id:"PET059",type:"expense",amount:65,category:"supplies",description:"ซื้อทิชชู 1 ม้วน",date:"2026-02-20",party:"7-11"},
+            {id:"PET060",type:"expense",amount:65,category:"supplies",description:"ซื้อทิชชู 1 ม้วน",date:"2026-03-05",party:"7-11"},
+            {id:"PET061",type:"expense",amount:50,category:"supplies",description:"ซื้อสบู่",date:"2026-01-18",party:"7-11"},
+            {id:"PET062",type:"expense",amount:50,category:"supplies",description:"ซื้อสบู่",date:"2026-02-15",party:"7-11"},
+            {id:"PET063",type:"expense",amount:50,category:"supplies",description:"ซื้อสบู่",date:"2026-03-01",party:"7-11"},
+            {id:"PET064",type:"expense",amount:40,category:"supplies",description:"ซื้อน้ำยาซักผ้า",date:"2026-02-10",party:"7-11"},
+            {id:"PET065",type:"expense",amount:40,category:"supplies",description:"ซื้อน้ำยาซักผ้า",date:"2026-03-03",party:"7-11"},
+            {id:"PET066",type:"expense",amount:30,category:"supplies",description:"ซื้อถุงขยะ",date:"2026-03-07",party:"7-11"},
+            
+            // Expense - Utilities (3 entries)
+            {id:"PET067",type:"expense",amount:1090,category:"utilities",description:"ค่าน้ำประปา",date:"2026-01-24",party:"การประปา"},
+            {id:"PET068",type:"expense",amount:470,category:"utilities",description:"พี่จี่เติมแก๊ส",date:"2026-01-30",party:"ปั๊มแก๊ส"},
+            {id:"PET069",type:"expense",amount:260,category:"utilities",description:"ค่าน้ำประปา",date:"2026-03-01",party:"การประปา"},
+            
+            // Expense - Tour Tickets (8 entries)
+            {id:"PET070",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-01-10",party:"อุทยาน"},
+            {id:"PET071",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-01-20",party:"อุทยาน"},
+            {id:"PET072",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-02-05",party:"อุทยาน"},
+            {id:"PET073",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-02-15",party:"อุทยาน"},
+            {id:"PET074",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-02-25",party:"อุทยาน"},
+            {id:"PET075",type:"expense",amount:100,category:"tour",description:"ค่าเข้าทีลอซู",date:"2026-03-05",party:"อุทยาน"},
+            {id:"PET076",type:"expense",amount:90,category:"tour",description:"ค่าจอดรถ",date:"2026-02-10",party:"อุทยาน"},
+            {id:"PET077",type:"expense",amount:90,category:"tour",description:"ค่าจอดรถ",date:"2026-03-02",party:"อุทยาน"},
+            
+            // Expense - Labor (1 entry)
+            {id:"PET078",type:"expense",amount:200,category:"labor",description:"ค่าจ้างช่างซ่อม",date:"2026-02-20",party:"ช่างท้องถิ่น"},
+            
+            // Expense - Office (2 entries)
+            {id:"PET079",type:"expense",amount:30,category:"office",description:"ซื้อปากกา",date:"2026-02-15",party:"7-11"},
+            {id:"PET080",type:"expense",amount:20,category:"office",description:"ซื้อกระดาษ",date:"2026-03-01",party:"7-11"},
+            
+            // Expense - Tax (1 entry)
+            {id:"PET081",type:"expense",amount:200,category:"tax",description:"ค่าธรรมเนียม",date:"2026-03-05",party:"ที่ว่าการอำเภอ"}
+        ];
+
+        // Bookings Data (10 entries)
+        const bookingsData = [
+            // Hytte Bookings (1-5)
+            {id:"BK001",name:"คุณสมชาย ใจดี",phone:"081-234-5678",checkIn:"2026-02-28",checkOut:"2026-03-01",room:"hytte",qty:1,total:950,status:"checked-out",channel:"Facebook"},
+            {id:"BK002",name:"คุณวิไล รักธรรมชาติ",phone:"082-345-6789",checkIn:"2026-03-01",checkOut:"2026-03-03",room:"hytte",qty:2,total:4200,status:"checked-out",channel:"LINE"},
+            {id:"BK003",name:"คุณประเสริฐ สุขใจ",phone:"083-456-7890",checkIn:"2026-03-02",checkOut:"2026-03-04",room:"hytte",qty:2,total:3800,status:"checked-out",channel:"Website"},
+            {id:"BK004",name:"คุณมานี มีเงิน",phone:"084-567-8901",checkIn:"2026-03-04",checkOut:"2026-03-06",room:"hytte",qty:1,total:1900,status:"checked-out",channel:"Booking.com"},
+            {id:"BK005",name:"คุณวิชัย เที่ยวไทย",phone:"085-678-9012",checkIn:"2026-03-05",checkOut:"2026-03-07",room:"hytte",qty:2,total:4600,status:"checked-out",channel:"Traveloka"},
+            
+            // Hus Bookings (6-10)
+            {id:"BK006",name:"คุณสุชาติ พักผ่อน",phone:"086-789-0123",checkIn:"2026-03-06",checkOut:"2026-03-08",room:"hus",qty:1,total:1500,status:"checked-in",channel:"Walk-in"},
+            {id:"BK007",name:"คุณรัชนี ชมวิว",phone:"087-890-1234",checkIn:"2026-03-07",checkOut:"2026-03-09",room:"hus",qty:1,total:3800,status:"confirmed",channel:"Facebook"},
+            {id:"BK008",name:"คุณสมพงษ์ ล่องแก่ง",phone:"088-901-2345",checkIn:"2026-03-08",checkOut:"2026-03-10",room:"hus",qty:1,total:5000,status:"confirmed",channel:"LINE"},
+            {id:"BK009",name:"คุณนริศรา วันหยุด",phone:"089-012-3456",checkIn:"2026-03-14",checkOut:"2026-03-16",room:"hus",qty:1,total:1900,status:"pending",channel:"Website"},
+            {id:"BK010",name:"คุณกิตติศักดิ์ ครอบครัวสุข",phone:"090-123-4567",checkIn:"2026-03-20",checkOut:"2026-03-22",room:"hus",qty:1,total:5700,status:"pending",channel:"Phone"}
+        ];
+
+        // Confirmation Modal Functions
+        let importType = '';
+        
+        function showImportConfirm(type) {
+            importType = type;
+            const modal = document.getElementById('confirmModal');
+            const content = document.getElementById('confirmContent');
+            
+            let html = '<ul style="list-style: none; padding: 0;">';
+            
+            if (type === 'all') {
+                html += `
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>📋 Petty Cash:</strong> ${pettyCashData.length} รายการ
+                    </li>
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>📝 Bookings:</strong> ${bookingsData.length} รายการ
+                    </li>
+                    <li style="padding: 0.75rem; background: #F3F4F6; margin-top: 0.5rem; border-radius: 8px;">
+                        <strong>💰 รวมมูลค่า:</strong> ฿${(pettyCashData.filter(p => p.type === 'income').reduce((sum, p) => sum + p.amount, 0) + bookingsData.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0)).toLocaleString()}
+                    </li>
+                `;
+            } else if (type === 'petty') {
+                const income = pettyCashData.filter(p => p.type === 'income').reduce((sum, p) => sum + p.amount, 0);
+                const expense = pettyCashData.filter(p => p.type === 'expense').reduce((sum, p) => sum + p.amount, 0);
+                html += `
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>📋 Petty Cash:</strong> ${pettyCashData.length} รายการ
+                    </li>
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB; color: #10B981;">
+                        <strong>💵 รายได้:</strong> ฿${income.toLocaleString()}
+                    </li>
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB; color: #EF4444;">
+                        <strong>💸 ค่าใช้จ่าย:</strong> ฿${expense.toLocaleString()}
+                    </li>
+                    <li style="padding: 0.75rem; background: #F3F4F6; margin-top: 0.5rem; border-radius: 8px;">
+                        <strong>💰 ยอดสุทธิ:</strong> ฿${(income - expense).toLocaleString()}
+                    </li>
+                `;
+            } else if (type === 'bookings') {
+                const total = bookingsData.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+                html += `
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>📝 Bookings:</strong> ${bookingsData.length} รายการ
+                    </li>
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>🏠 Hytte:</strong> ${bookingsData.filter(b => b.room === 'hytte').length} การจอง
+                    </li>
+                    <li style="padding: 0.75rem; border-bottom: 1px solid #E5E7EB;">
+                        <strong>🏡 Hus:</strong> ${bookingsData.filter(b => b.room === 'hus').length} การจอง
+                    </li>
+                    <li style="padding: 0.75rem; background: #F3F4F6; margin-top: 0.5rem; border-radius: 8px;">
+                        <strong>💰 รวมมูลค่า:</strong> ฿${total.toLocaleString()}
+                    </li>
+                `;
+            }
+            
+            html += '</ul>';
+            html += '<p style="color: #F59E0B; font-size: 0.85rem; margin-top: 1rem;">⚠️ ข้อมูลจะถูกลงทะเบียนใน localStorage และไม่สามารถ undo ได้</p>';
+            
+            content.innerHTML = html;
+            modal.style.display = 'flex';
+        }
+        
+        function closeConfirmModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+        
+        // Add event listener after DOM is loaded
+        window.addEventListener('DOMContentLoaded', function() {
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function() {
+                    closeConfirmModal();
+                    if (importType === 'all') {
+                        importAllData();
+                    } else if (importType === 'petty') {
+                        importPettyCashOnly();
+                    } else if (importType === 'bookings') {
+                        importBookingsOnly();
+                    }
+                });
+            }
+        });
+
+        // Import Functions
+        function importAllData() {
+            showProgress('กำลัง Import ข้อมูลทั้งหมด...');
+            importPettyCash();
+            setTimeout(() => importBookings(), 1000);
+        }
+
+        function importPettyCashOnly() {
+            showProgress('กำลัง Import Petty Cash...');
+            importPettyCash();
+        }
+
+        function importBookingsOnly() {
+            showProgress('กำลัง Import Bookings...');
+            importBookings();
+        }
+
+        function importPettyCash() {
+            showProgress('กำลัง Import Petty Cash...');
+            
+            setTimeout(() => {
+                try {
+                    // Get existing data
+                    const existing = JSON.parse(localStorage.getItem('vela_petty')) || [];
+                    
+                    // Check for duplicates
+                    const existingIds = existing.map(p => p.id);
+                    const newData = pettyCashData.filter(p => !existingIds.includes(p.id));
+                    
+                    // Merge data
+                    const merged = [...existing, ...newData];
+                    
+                    // Save to localStorage
+                    localStorage.setItem('vela_petty', JSON.stringify(merged));
+                    
+                    // Also sync to general ledger
+                    const generalLedger = merged.map(p => ({
+                        id: 'GL-' + p.id,
+                        date: p.date,
+                        description: p.description,
+                        debit: p.type === 'income' ? p.amount : 0,
+                        credit: p.type === 'expense' ? p.amount : 0,
+                        reference: p.id
+                    }));
+                    localStorage.setItem('vela_general_ledger', JSON.stringify(generalLedger));
+                    
+                    const importedCount = newData.length > 0 ? newData.length : 0;
+                    updateProgress(50, `Import Petty Cash สำเร็จ! ${importedCount} รายการ`);
+                    
+                    if (importedCount === 0) {
+                        showStatus('warning', `⚠️ Petty Cash มีอยู่แล้ว ${merged.length} รายการ (ไม่ได้เพิ่มใหม่)`);
+                    } else {
+                        showStatus('success', `✅ Import Petty Cash สำเร็จ! ${importedCount} รายการ (รวม ${merged.length} รายการ)`);
+                    }
+                    
+                    // Update stats
+                    document.getElementById('pettyCount').textContent = merged.length;
+                    
+                } catch (error) {
+                    showStatus('error', '❌ เกิดข้อผิดพลาด: ' + error.message);
+                }
+            }, 500);
+        }
+
+        function importBookings() {
+            updateProgress(75, 'กำลัง Import Bookings...');
+            
+            setTimeout(() => {
+                try {
+                    // Get existing data
+                    const existing = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+                    
+                    // Check for duplicates
+                    const existingIds = existing.map(b => b.id);
+                    const newData = bookingsData.filter(b => !existingIds.includes(b.id));
+                    
+                    // Merge data
+                    const merged = [...existing, ...newData];
+                    
+                    // Save to localStorage
+                    localStorage.setItem('vela_bookings', JSON.stringify(merged));
+                    
+                    updateProgress(100, `Import Bookings สำเร็จ! ${newData.length > 0 ? newData.length : 0} รายการ`);
+                    
+                    const importedCount = newData.length > 0 ? newData.length : 0;
+                    if (importedCount === 0) {
+                        showStatus('warning', `⚠️ Bookings มีอยู่แล้ว ${merged.length} รายการ (ไม่ได้เพิ่มใหม่)`);
+                    } else {
+                        showStatus('success', `✅ Import Bookings สำเร็จ! ${importedCount} รายการ (รวม ${merged.length} รายการ)`);
+                    }
+                    
+                    // Calculate total value
+                    const totalValue = merged.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+                    document.getElementById('totalValue').textContent = '฿' + totalValue.toLocaleString();
+                    document.getElementById('bookingCount').textContent = merged.length;
+                    
+                    // Disable import buttons after successful import
+                    if (importedCount > 0) {
+                        document.getElementById('importAllBtn').disabled = true;
+                        document.getElementById('importAllBtn').style.opacity = '0.5';
+                        document.getElementById('importAllBtn').textContent = '✅ Import แล้ว';
+                        
+                        document.getElementById('importPettyBtn').disabled = true;
+                        document.getElementById('importPettyBtn').style.opacity = '0.5';
+                        document.getElementById('importPettyBtn').textContent = '✅ Import แล้ว';
+                        
+                        document.getElementById('importBookingBtn').disabled = true;
+                        document.getElementById('importBookingBtn').style.opacity = '0.5';
+                        document.getElementById('importBookingBtn').textContent = '✅ Import แล้ว';
+                    }
+                    
+                } catch (error) {
+                    showStatus('error', '❌ เกิดข้อผิดพลาด: ' + error.message);
+                }
+            }, 1000);
+        }
+
+        function showProgress(message) {
+            document.getElementById('progress').classList.add('active');
+            document.getElementById('progressText').textContent = message;
+        }
+
+        function updateProgress(percent, message) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressText').textContent = message;
+        }
+
+        function showStatus(type, message) {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'status active status-' + type;
+            statusEl.innerHTML = message;
+        }
+
+        // Preview data on load
+        window.addEventListener('DOMContentLoaded', function() {
+            const preview = {
+                pettyCash: pettyCashData.length,
+                bookings: bookingsData.length,
+                totalIncome: pettyCashData.filter(p => p.type === 'income').reduce((sum, p) => sum + p.amount, 0),
+                totalExpense: pettyCashData.filter(p => p.type === 'expense').reduce((sum, p) => sum + p.amount, 0),
+                totalBookings: bookingsData.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0)
+            };
+            
+            document.getElementById('previewContent').textContent = JSON.stringify(preview, null, 2);
+            document.getElementById('preview').style.display = 'block';
+            
+            // Add event listener for confirm button
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            if (confirmBtn) {
+                confirmBtn.addEventListener('click', function() {
+                    closeConfirmModal();
+                    if (importType === 'all') {
+                        importAllData();
+                    } else if (importType === 'petty') {
+                        importPettyCashOnly();
+                    } else if (importType === 'bookings') {
+                        importBookingsOnly();
+                    }
+                });
+            }
+        });
+
+        // Debug Functions
+        function checkLocalStorage() {
+            const debugDiv = document.getElementById('localStorageDebug');
+            const contentPre = document.getElementById('localStorageContent');
+            
+            const data = {
+                'vela_bookings': JSON.parse(localStorage.getItem('vela_bookings') || '[]'),
+                'vela_petty': JSON.parse(localStorage.getItem('vela_petty') || '[]'),
+                'vela_general_ledger': JSON.parse(localStorage.getItem('vela_general_ledger') || '[]')
+            };
+            
+            const summary = {
+                bookings: data.vela_bookings.length + ' รายการ',
+                pettyCash: data.vela_petty.length + ' รายการ',
+                generalLedger: data.vela_general_ledger.length + ' รายการ',
+                bookingsTotal: '฿' + data.vela_bookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0).toLocaleString(),
+                pettyCashIncome: '฿' + data.vela_petty.filter(p => p.type === 'income').reduce((sum, p) => sum + p.amount, 0).toLocaleString(),
+                pettyCashExpense: '฿' + data.vela_petty.filter(p => p.type === 'expense').reduce((sum, p) => sum + p.amount, 0).toLocaleString()
+            };
+            
+            contentPre.textContent = JSON.stringify(summary, null, 2);
+            debugDiv.style.display = 'block';
+            
+            if (data.vela_bookings.length === 0 && data.vela_petty.length === 0) {
+                alert('⚠️ ยังไม่มีข้อมูลใน localStorage!\n\nกรุณา Import ข้อมูลก่อน');
+            } else {
+                alert('✅ เจอข้อมูลแล้ว!\n\nBookings: ' + summary.bookings + '\nPetty Cash: ' + summary.pettyCash);
+            }
+        }
+        
+        function clearAllData() {
+            if (confirm('⚠️ ยืนยันการล้างข้อมูลทั้งหมด?\n\nข้อมูลจะหายไปถาวร!')) {
+                localStorage.removeItem('vela_bookings');
+                localStorage.removeItem('vela_petty');
+                localStorage.removeItem('vela_general_ledger');
+                localStorage.removeItem('vela_bills');
+                localStorage.removeItem('vela_bill_images');
+                localStorage.removeItem('vela_invoices');
+                
+                alert('✅ ล้างข้อมูลสำเร็จ!\n\nรีเฟรชหน้าเว็บแล้ว Import ใหม่ได้');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import Booking.com Invoices - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #003580 0%, #00224f 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #9CA3AF;
+            margin-bottom: 2rem;
+        }
+        .invoice-card {
+            background: #F3F4F6;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin: 1rem 0;
+            border-left: 4px solid #003580;
+        }
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .invoice-title {
+            font-weight: 700;
+            color: #1A1A1A;
+        }
+        .invoice-number {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+        }
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .invoice-table td {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .invoice-table tr:last-child td {
+            border-bottom: none;
+            font-weight: 700;
+            padding-top: 1rem;
+        }
+        .text-right { text-align: right; }
+        .text-success { color: #10B981; }
+        .text-danger { color: #EF4444; }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            margin: 0.5rem;
+        }
+        .btn-primary {
+            background: #003580;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #00224f;
+            transform: translateY(-2px);
+        }
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.active {
+            display: block;
+        }
+        .status-success {
+            background: #D1FAE5;
+            color: #065F46;
+            border-left: 4px solid #10B981;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: #F3F4F6;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1A1A1A;
+        }
+        .stat-label {
+            color: #9CA3AF;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏨 Import Booking.com Invoices</h1>
+        <p class="subtitle">Vela Resort Umphang - 3 Invoice Files</p>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" style="color: #003580;">3</div>
+                <div class="stat-label">Invoice</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #10B981;">฿71,536.50</div>
+                <div class="stat-label">Room Sales (Revenue)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #EF4444;">฿10,729.50</div>
+                <div class="stat-label">Commission + Fees</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" style="color: #F59E0B;">฿888.03</div>
+                <div class="stat-label">VAT (7%)</div>
+            </div>
+        </div>
+
+        <!-- Invoice 1 -->
+        <div class="invoice-card">
+            <div class="invoice-header">
+                <div class="invoice-title">📄 Invoice #1646297025</div>
+                <div class="invoice-number">ธันวาคม 2025</div>
+            </div>
+            <table class="invoice-table">
+                <tr>
+                    <td>🏠 Room Sales</td>
+                    <td class="text-right text-success">+฿35,410.50</td>
+                </tr>
+                <tr>
+                    <td>💸 Commission (15%)</td>
+                    <td class="text-right text-danger">-฿5,311.61</td>
+                </tr>
+                <tr>
+                    <td>💸 Payments Service Fee</td>
+                    <td class="text-right text-danger">-฿967.99</td>
+                </tr>
+                <tr>
+                    <td>🧾 VAT (7%)</td>
+                    <td class="text-right text-danger">-฿439.57</td>
+                </tr>
+                <tr>
+                    <td><strong>💰 Total Due (Netted from Payout)</strong></td>
+                    <td class="text-right"><strong>-฿6,719.17</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Invoice 2 -->
+        <div class="invoice-card">
+            <div class="invoice-header">
+                <div class="invoice-title">📄 Invoice #1647486054</div>
+                <div class="invoice-number">มกราคม 2026</div>
+            </div>
+            <table class="invoice-table">
+                <tr>
+                    <td>🏠 Room Sales</td>
+                    <td class="text-right text-success">+฿33,876.00</td>
+                </tr>
+                <tr>
+                    <td>💸 Commission (15%)</td>
+                    <td class="text-right text-danger">-฿5,081.41</td>
+                </tr>
+                <tr>
+                    <td>💸 Payments Service Fee</td>
+                    <td class="text-right text-danger">-฿926.04</td>
+                </tr>
+                <tr>
+                    <td>🧾 VAT (7%)</td>
+                    <td class="text-right text-danger">-฿420.52</td>
+                </tr>
+                <tr>
+                    <td><strong>💰 Total Due (Netted from Payout)</strong></td>
+                    <td class="text-right"><strong>-฿6,427.97</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Invoice 3 -->
+        <div class="invoice-card">
+            <div class="invoice-header">
+                <div class="invoice-title">📄 Invoice #1649732770</div>
+                <div class="invoice-number">กุมภาพันธ์ 2026</div>
+            </div>
+            <table class="invoice-table">
+                <tr>
+                    <td>🏠 Room Sales</td>
+                    <td class="text-right text-success">+฿2,250.00</td>
+                </tr>
+                <tr>
+                    <td>💸 Commission (15%)</td>
+                    <td class="text-right text-danger">-฿337.50</td>
+                </tr>
+                <tr>
+                    <td>💸 Payments Service Fee</td>
+                    <td class="text-right text-danger">-฿61.51</td>
+                </tr>
+                <tr>
+                    <td>🧾 VAT (7%)</td>
+                    <td class="text-right text-danger">-฿27.94</td>
+                </tr>
+                <tr>
+                    <td><strong>💰 Total Due (Netted from Payout)</strong></td>
+                    <td class="text-right"><strong>-฿426.95</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Buttons -->
+        <div style="margin: 2rem 0;">
+            <button class="btn btn-primary" onclick="importAllInvoices()">
+                📥 Import ทั้ง 3 Invoice
+            </button>
+            <button class="btn btn-success" onclick="importAsRevenue()">
+                💰 Import เป็นรายได้ (Room Sales เท่านั้น)
+            </button>
+        </div>
+
+        <!-- Status -->
+        <div class="status" id="status"></div>
+
+        <!-- Links -->
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #E5E7EB;">
+            <a href="boh.html" class="btn btn-primary" style="text-decoration: none;">
+                🔙 กลับไป BOH
+            </a>
+            <a href="import-real-data.html" class="btn btn-success" style="text-decoration: none;">
+                📥 Import ข้อมูลหลัก
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Booking.com Invoice Data
+        const invoices = [
+            {
+                id: "INV-1646297025",
+                period: "2025-12",
+                date: "2026-01-03",
+                dueDate: "2026-01-16",
+                roomSales: 35410.50,
+                commission: 5311.61,
+                paymentFee: 967.99,
+                vat: 439.57,
+                total: 6719.17,
+                currency: "THB"
+            },
+            {
+                id: "INV-1647486054",
+                period: "2026-01",
+                date: "2026-02-03",
+                dueDate: "2026-02-16",
+                roomSales: 33876.00,
+                commission: 5081.41,
+                paymentFee: 926.04,
+                vat: 420.52,
+                total: 6427.97,
+                currency: "THB"
+            },
+            {
+                id: "INV-1649732770",
+                period: "2026-02",
+                date: "2026-03-03",
+                dueDate: "2026-03-16",
+                roomSales: 2250.00,
+                commission: 337.50,
+                paymentFee: 61.51,
+                vat: 27.94,
+                total: 426.95,
+                currency: "THB"
+            }
+        ];
+
+        function importAllInvoices() {
+            try {
+                // Get existing data
+                const existingBookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+                const existingPetty = JSON.parse(localStorage.getItem('vela_petty')) || [];
+
+                // Create bookings from Room Sales
+                const newBookings = invoices.map((inv, index) => ({
+                    id: `BC-${inv.id}`,
+                    name: `Booking.com ${inv.period}`,
+                    phone: "Netherlands",
+                    checkIn: inv.period + "-01",
+                    checkOut: inv.period + "-28",
+                    room: "multiple",
+                    qty: 1,
+                    total: inv.roomSales,
+                    status: "checked-out",
+                    channel: "Booking.com",
+                    notes: `Invoice: ${inv.id}, Commission: ฿${inv.commission}, Fee: ฿${inv.paymentFee}, VAT: ฿${inv.vat}`
+                }));
+
+                // Create petty cash entries for Commission + Fees
+                const newPetty = [];
+                invoices.forEach(inv => {
+                    // Commission expense
+                    newPetty.push({
+                        id: `BC-COMM-${inv.id}`,
+                        type: "expense",
+                        amount: inv.commission,
+                        category: "commission",
+                        description: `Booking.com Commission ${inv.period}`,
+                        date: inv.date,
+                        party: "Booking.com B.V.",
+                        invoiceRef: inv.id,
+                        hasVAT: true,
+                        vatAmount: inv.vat
+                    });
+
+                    // Payment fee expense
+                    newPetty.push({
+                        id: `BC-FEE-${inv.id}`,
+                        type: "expense",
+                        amount: inv.paymentFee,
+                        category: "fee",
+                        description: `Booking.com Payment Service Fee ${inv.period}`,
+                        date: inv.date,
+                        party: "Booking.com B.V.",
+                        invoiceRef: inv.id
+                    });
+                });
+
+                // Merge data
+                const mergedBookings = [...existingBookings, ...newBookings];
+                const mergedPetty = [...existingPetty, ...newPetty];
+
+                // Save to localStorage
+                localStorage.setItem('vela_bookings', JSON.stringify(mergedBookings));
+                localStorage.setItem('vela_petty', JSON.stringify(mergedPetty));
+
+                // Sync to general ledger
+                const generalLedger = mergedPetty.map(p => ({
+                    id: 'GL-' + p.id,
+                    date: p.date,
+                    description: p.description,
+                    debit: p.type === 'income' ? p.amount : 0,
+                    credit: p.type === 'expense' ? p.amount : 0,
+                    reference: p.id
+                }));
+                localStorage.setItem('vela_general_ledger', JSON.stringify(generalLedger));
+
+                // Save invoice metadata
+                const existingInvoices = JSON.parse(localStorage.getItem('vela_booking_invoices')) || [];
+                const mergedInvoices = [...existingInvoices, ...invoices];
+                localStorage.setItem('vela_booking_invoices', JSON.stringify(mergedInvoices));
+
+                showStatus('success', `
+                    ✅ Import สำเร็จ!<br><br>
+                    📊 เพิ่ม Booking.com: <strong>${newBookings.length} รายการ</strong><br>
+                    💸 เพิ่มค่า Commission: <strong>${newPetty.length} รายการ</strong><br>
+                    💰 Room Sales รวม: <strong>฿${invoices.reduce((sum, inv) => sum + inv.roomSales, 0).toLocaleString()}</strong><br>
+                    💸 Commission รวม: <strong>฿${invoices.reduce((sum, inv) => sum + inv.commission, 0).toLocaleString()}</strong><br>
+                    🧾 VAT รวม: <strong>฿${invoices.reduce((sum, inv) => sum + inv.vat, 0).toLocaleString()}</strong>
+                `);
+
+            } catch (error) {
+                showStatus('error', '❌ เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+
+        function importAsRevenue() {
+            try {
+                const existingBookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+
+                const newBookings = invoices.map((inv, index) => ({
+                    id: `BC-REV-${inv.id}`,
+                    name: `Booking.com Revenue ${inv.period}`,
+                    phone: "Netherlands",
+                    checkIn: inv.period + "-01",
+                    checkOut: inv.period + "-28",
+                    room: "multiple",
+                    qty: 1,
+                    total: inv.roomSales,
+                    status: "checked-out",
+                    channel: "Booking.com",
+                    notes: `Revenue only from Invoice: ${inv.id}`
+                }));
+
+                const mergedBookings = [...existingBookings, ...newBookings];
+                localStorage.setItem('vela_bookings', JSON.stringify(mergedBookings));
+
+                showStatus('success', `
+                    ✅ Import Revenue สำเร็จ!<br><br>
+                    📊 เพิ่ม Booking.com: <strong>${newBookings.length} รายการ</strong><br>
+                    💰 Room Sales รวม: <strong>฿${invoices.reduce((sum, inv) => sum + inv.roomSales, 0).toLocaleString()}</strong>
+                `);
+
+            } catch (error) {
+                showStatus('error', '❌ เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+
+        function showStatus(type, message) {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'status active status-' + type;
+            statusEl.innerHTML = message;
+        }
+    </script>
+</body>
+</html>

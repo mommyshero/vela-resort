@@ -1,0 +1,81 @@
+{
+  "resort": {
+    "name": "Vela Resort Umphang",
+    "website": "https://vela-resort.com",
+    "admin_url": "https://vela-resort.com/wp-admin",
+    "credentials": {
+      "username": "boh",
+      "password": "1234"
+    }
+  },
+  "seasons": {
+    "summer": {
+      "name_th": "ฤดูร้อน",
+      "name_en": "Summer",
+      "months": [3, 4, 5],
+      "description": "มีนาคม - พฤษภาคม"
+    },
+    "rainy": {
+      "name_th": "ฤดูฝน",
+      "name_en": "Rainy",
+      "months": [6, 7, 8, 9, 10],
+      "description": "มิถุนายน - ตุลาคม"
+    },
+    "winter": {
+      "name_th": "ฤดูหนาว",
+      "name_en": "Winter",
+      "months": [11, 12, 1, 2],
+      "description": "พฤศจิกายน - กุมภาพันธ์"
+    }
+  },
+  "rooms": [
+    {
+      "id": "standard",
+      "name_th": "ห้องมาตรฐาน",
+      "name_en": "Standard Room",
+      "capacity": 2,
+      "prices": {
+        "summer": 800,
+        "rainy": 600,
+        "winter": 1200
+      }
+    },
+    {
+      "id": "deluxe",
+      "name_th": "ห้องดีลักซ์",
+      "name_en": "Deluxe Room",
+      "capacity": 3,
+      "prices": {
+        "summer": 1500,
+        "rainy": 1000,
+        "winter": 2000
+      }
+    },
+    {
+      "id": "suite",
+      "name_th": "ห้องสวีท",
+      "name_en": "Suite",
+      "capacity": 4,
+      "prices": {
+        "summer": 2500,
+        "rainy": 1800,
+        "winter": 3500
+      }
+    }
+  ],
+  "booking_settings": {
+    "advance_booking_days": 90,
+    "min_stay_nights": 1,
+    "max_stay_nights": 30,
+    "cancellation_policy": "free_24h",
+    "payment_methods": ["cash", "transfer", "credit_card"]
+  },
+  "notifications": {
+    "channel": "telegram",
+    "new_booking": true,
+    "cancellation": true,
+    "payment_received": true,
+    "daily_summary": true,
+    "monthly_report": true
+  }
+}

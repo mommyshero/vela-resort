@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Import - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #4B4B4B 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 1rem;
+        }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            margin: 0.5rem;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: #FFD700;
+            color: #1A1A1A;
+        }
+        .btn-primary:hover {
+            background: #E6C200;
+        }
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+        .status {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.active {
+            display: block;
+        }
+        .status-success {
+            background: #D1FAE5;
+            color: #065F46;
+            border-left: 4px solid #10B981;
+        }
+        .status-error {
+            background: #FEE2E2;
+            color: #991B1B;
+            border-left: 4px solid #EF4444;
+        }
+        .status-info {
+            background: #DBEAFE;
+            color: #1E40AF;
+            border-left: 4px solid #3B82F6;
+        }
+        pre {
+            background: #F3F4F6;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 ทดสอบ Import ข้อมูล</h1>
+        <p style="color: #9CA3AF; margin-bottom: 1.5rem;">หน้าทดสอบง่ายๆ สำหรับเช็คว่า localStorage ทำงานไหม</p>
+
+        <!-- Status -->
+        <div class="status" id="status"></div>
+
+        <!-- Buttons -->
+        <button class="btn btn-primary" onclick="testImport()">
+            🧪 ทดสอบ Import 1 การจอง
+        </button>
+
+        <button class="btn btn-success" onclick="checkData()">
+            🔍 เช็คข้อมูลใน localStorage
+        </button>
+
+        <button class="btn btn-danger" onclick="clearData()">
+            🗑️ ล้างข้อมูล
+        </button>
+
+        <button class="btn" style="background: #6B7280; color: white;" onclick="window.location.href='boh.html'">
+            🔙 กลับไป BOH
+        </button>
+
+        <!-- Output -->
+        <pre id="output" style="display: none;"></pre>
+    </div>
+
+    <script>
+        function showStatus(type, message) {
+            const statusEl = document.getElementById('status');
+            statusEl.className = 'status active status-' + type;
+            statusEl.innerHTML = message;
+        }
+
+        function showOutput(data) {
+            const outputEl = document.getElementById('output');
+            outputEl.style.display = 'block';
+            outputEl.textContent = JSON.stringify(data, null, 2);
+        }
+
+        function testImport() {
+            try {
+                // Create test booking
+                const testBooking = {
+                    id: 'TEST-' + Date.now(),
+                    name: 'คุณทดสอบ ทดสอบ',
+                    phone: '099-999-9999',
+                    checkIn: '2026-03-15',
+                    checkOut: '2026-03-17',
+                    room: 'hytte',
+                    qty: 1,
+                    total: 1900,
+                    status: 'confirmed',
+                    channel: 'Test'
+                };
+
+                // Get existing bookings
+                const existing = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+                
+                // Add new booking
+                existing.push(testBooking);
+                
+                // Save to localStorage
+                localStorage.setItem('vela_bookings', JSON.stringify(existing));
+                
+                // Verify
+                const saved = JSON.parse(localStorage.getItem('vela_bookings'));
+                
+                showStatus('success', `✅ Import สำเร็จ! <br><br>มีทั้งหมด <strong>${saved.length}</strong> รายการ<br>รายการล่าสุด: <strong>${testBooking.name}</strong>`);
+                
+                showOutput({
+                    action: 'Test Import',
+                    bookingAdded: testBooking,
+                    totalBookings: saved.length,
+                    allBookings: saved
+                });
+                
+                console.log('✅ Test booking saved:', testBooking);
+                console.log('📊 Total bookings:', saved.length);
+                
+            } catch (error) {
+                showStatus('error', `❌ เกิดข้อผิดพลาด: ${error.message}`);
+                showOutput({ error: error.message, stack: error.stack });
+                console.error('❌ Error:', error);
+            }
+        }
+
+        function checkData() {
+            try {
+                const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+                const petty = JSON.parse(localStorage.getItem('vela_petty')) || [];
+                const ledger = JSON.parse(localStorage.getItem('vela_general_ledger')) || [];
+                
+                const summary = {
+                    'vela_bookings': bookings.length + ' รายการ',
+                    'vela_petty': petty.length + ' รายการ',
+                    'vela_general_ledger': ledger.length + ' รายการ',
+                    'bookingsTotal': '฿' + bookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0).toLocaleString(),
+                    'pettyCashIncome': '฿' + petty.filter(p => p.type === 'income').reduce((sum, p) => sum + p.amount, 0).toLocaleString(),
+                    'pettyCashExpense': '฿' + petty.filter(p => p.type === 'expense').reduce((sum, p) => sum + p.amount, 0).toLocaleString()
+                };
+                
+                if (bookings.length === 0 && petty.length === 0) {
+                    showStatus('info', 'ℹ️ ยังไม่มีข้อมูลใน localStorage');
+                } else {
+                    showStatus('success', `✅ เจอข้อมูล! <br><br>Bookings: ${summary['vela_bookings']}<br>Petty Cash: ${summary['vela_petty']}`);
+                }
+                
+                showOutput(summary);
+                
+                console.log('📊 Data summary:', summary);
+                
+            } catch (error) {
+                showStatus('error', `❌ เกิดข้อผิดพลาด: ${error.message}`);
+                showOutput({ error: error.message });
+                console.error('❌ Error:', error);
+            }
+        }
+
+        function clearData() {
+            if (confirm('⚠️ ยืนยันการล้างข้อมูลทั้งหมด?\n\nข้อมูลจะหายไปถาวร!')) {
+                localStorage.removeItem('vela_bookings');
+                localStorage.removeItem('vela_petty');
+                localStorage.removeItem('vela_general_ledger');
+                localStorage.removeItem('vela_bills');
+                localStorage.removeItem('vela_bill_images');
+                localStorage.removeItem('vela_invoices');
+                
+                showStatus('success', '✅ ล้างข้อมูลสำเร็จ!');
+                showOutput({ message: 'All vela_* data cleared' });
+                
+                console.log('✅ Data cleared');
+                
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        }
+
+        // Auto-check on load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Test page loaded');
+            console.log('📊 Current bookings:', JSON.parse(localStorage.getItem('vela_bookings') || '[]').length);
+        });
+    </script>
+</body>
+</html>

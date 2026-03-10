@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>นำเข้าบัญชีรายย่อย - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+        h1 { color: #2D3748; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitle { color: #718096; margin-bottom: 1.5rem; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+        .btn-secondary { background: #E2E8F0; color: #4A5568; }
+        .btn-success { background: linear-gradient(135deg, #48BB78 0%, #38A169 100%); }
+        .status {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.success { 
+            background: linear-gradient(135deg, #C6F6D5 0%, #9AE6B4 100%); 
+            color: #22543D; 
+            display: block; 
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid #E2E8F0;
+        }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #667eea; }
+        .stat-label { color: #718096; font-size: 0.9rem; margin-top: 0.25rem; }
+        .stat-card.income { border-color: #48BB78; }
+        .stat-card.income .stat-value { color: #38A169; }
+        .stat-card.expense { border-color: #F56565; }
+        .stat-card.expense .stat-value { color: #E53E3E; }
+        .stat-card.balance { border-color: #4299E1; }
+        .stat-card.balance .stat-value { color: #3182CE; }
+        .entry-list {
+            margin-top: 1.5rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .entry-item {
+            padding: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .entry-item:hover { background: #F7FAFC; }
+        .entry-item:last-child { border-bottom: none; }
+        .entry-item.income { background: #F0FFF4; border-left: 4px solid #48BB78; }
+        .entry-item.expense { background: #FFF5F5; border-left: 4px solid #F56565; }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .badge-income { background: #48BB78; color: white; }
+        .badge-expense { background: #F56565; color: white; }
+        .badge-category { background: #E2E8F0; color: #4A5568; font-size: 0.7rem; }
+        .date-badge { 
+            background: #667eea; 
+            color: white; 
+            padding: 0.25rem 0.5rem; 
+            border-radius: 6px; 
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .description { font-weight: 600; color: #2D3748; }
+        .info { font-size: 0.85rem; color: #718096; margin-top: 0.25rem; }
+        .amount { font-weight: 700; font-size: 1.1rem; }
+        .amount.income { color: #38A169; }
+        .amount.expense { color: #E53E3E; }
+        .month-section {
+            padding: 1rem;
+            background: #2D3748;
+            color: white;
+            font-weight: 700;
+            position: sticky;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>💰 นำเข้าบัญชีรายย่อย</h1>
+            <p class="subtitle">Vela Resort BOH System - บัญชีกระแสเงินสด</p>
+            
+            <div style="background: #EBF8FF; border-left: 4px solid #4299E1; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                <strong style="color: #2C5282;">📋 ข้อมูลบัญชี:</strong>
+                <ul style="margin-left: 1.5rem; color: #2C5282; margin-top: 0.5rem;">
+                    <li>ช่วงวันที่: 1 มกราคม - 2 มีนาคม 2569</li>
+                    <li>รายการทั้งหมด: 81 รายการ</li>
+                    <li>รวมรับเงิน: 10 ครั้ง (ครั้งละ ฿1,000)</li>
+                    <li>รวมรายจ่าย: 71 รายการ</li>
+                </ul>
+            </div>
+            
+            <button class="btn btn-success" onclick="loadPettyCash()">
+                💰 โหลดบัญชีรายย่อย (81 รายการ)
+            </button>
+            
+            <button class="btn btn-secondary" onclick="window.location.href='boh.html'">
+                🔧 กลับหน้า BOH
+            </button>
+            
+            <div id="status" class="status"></div>
+        </div>
+        
+        <div id="statsCard" class="card" style="display: none;">
+            <h2 style="color: #2D3748; margin-bottom: 1rem;">📈 สรุปบัญชีรายย่อย</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalEntries">0</div>
+                    <div class="stat-label">รายการทั้งหมด</div>
+                </div>
+                <div class="stat-card income">
+                    <div class="stat-value" id="totalIncome">฿0</div>
+                    <div class="stat-label">💵 รายรับรวม</div>
+                </div>
+                <div class="stat-card expense">
+                    <div class="stat-value" id="totalExpense">฿0</div>
+                    <div class="stat-label">💸 รายจ่ายรวม</div>
+                </div>
+                <div class="stat-card balance">
+                    <div class="stat-value" id="balance">฿0</div>
+                    <div class="stat-label">💰 คงเหลือ</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; padding: 1rem; background: #F7FAFC; border-radius: 12px;">
+                <h3 style="color: #2D3748; margin-bottom: 0.5rem;">📊 แยกตามหมวดหมู่</h3>
+                <div id="categoryBreakdown" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.5rem;"></div>
+            </div>
+        </div>
+        
+        <div id="entryListCard" class="card" style="display: none;">
+            <h2 style="color: #2D3748; margin-bottom: 1rem;">📋 รายการบัญชีทั้งหมด</h2>
+            <div id="entryList" class="entry-list"></div>
+        </div>
+    </div>
+    
+    <script src="petty-cash-data.js"></script>
+    <script>
+    const categoryLabels = {
+        'capital': '💰 เงินทุน',
+        'food': '🍜 อาหาร',
+        'tour': '🎫 ค่าตั๋ว',
+        'maintenance': '🔧 ซ่อมบำรุง',
+        'supplies': '🧻 ของใช้',
+        'utilities': '💡 สาธารณูปโภค',
+        'labor': '👷 แรงงาน',
+        'office': '📄 สำนักงาน',
+        'tax': '📄 ภาษี'
+    };
+    
+    function loadPettyCash() {
+        const statusDiv = document.getElementById('status');
+        const statsCard = document.getElementById('statsCard');
+        const entryListCard = document.getElementById('entryListCard');
+        const entryList = document.getElementById('entryList');
+        
+        // pettyCashEntries is loaded from petty-cash-data.js
+        
+        // Calculate stats
+        const totalEntries = pettyCashEntries.length;
+        const totalIncome = pettyCashEntries
+            .filter(e => e.type === 'income')
+            .reduce((sum, e) => sum + e.amount, 0);
+        const totalExpense = pettyCashEntries
+            .filter(e => e.type === 'expense')
+            .reduce((sum, e) => sum + e.amount, 0);
+        const balance = totalIncome - totalExpense;
+        
+        // Update stats
+        document.getElementById('totalEntries').textContent = totalEntries;
+        document.getElementById('totalIncome').textContent = '฿' + totalIncome.toLocaleString();
+        document.getElementById('totalExpense').textContent = '฿' + totalExpense.toLocaleString();
+        document.getElementById('balance').textContent = '฿' + balance.toLocaleString();
+        
+        // Category breakdown
+        const categories = {};
+        pettyCashEntries.filter(e => e.type === 'expense').forEach(e => {
+            categories[e.category] = (categories[e.category] || 0) + e.amount;
+        });
+        
+        let categoryHTML = '';
+        for (const [cat, amount] of Object.entries(categories)) {
+            categoryHTML += `
+                <div style="background: white; padding: 0.75rem; border-radius: 8px; border: 1px solid #E2E8F0;">
+                    <div style="font-size: 0.85rem; color: #718096;">${categoryLabels[cat] || cat}</div>
+                    <div style="font-weight: 700; color: #E53E3E;">฿${amount.toLocaleString()}</div>
+                </div>
+            `;
+        }
+        document.getElementById('categoryBreakdown').innerHTML = categoryHTML;
+        
+        // Display entry list grouped by month
+        let html = '';
+        let currentMonth = '';
+        
+        pettyCashEntries.forEach(e => {
+            const month = e.date.substring(0, 7); // YYYY-MM
+            const monthLabel = new Date(e.date).toLocaleDateString('th-TH', { month: 'long', year: 'numeric' });
+            
+            if (month !== currentMonth) {
+                currentMonth = month;
+                html += `<div class="month-section">📅 ${monthLabel}</div>`;
+            }
+            
+            const typeClass = e.type;
+            const amountSign = e.type === 'income' ? '+' : '-';
+            const amountClass = e.type;
+            
+            html += `
+                <div class="entry-item ${typeClass}">
+                    <div style="flex: 1;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <span class="date-badge">${new Date(e.date).toLocaleDateString('th-TH', { day: 'numeric', month: 'short' })}</span>
+                            <span class="badge badge-${typeClass}">${e.type === 'income' ? '💵 รับเงิน' : '💸 จ่าย'}</span>
+                            <span class="badge badge-category">${categoryLabels[e.category] || e.category}</span>
+                        </div>
+                        <div class="description">${e.description}</div>
+                        <div class="info">ID: ${e.id} ${e.slip ? '| 📎 ' + e.slip : ''}</div>
+                    </div>
+                    <div class="amount ${amountClass}">${amountSign}฿${e.amount.toLocaleString()}</div>
+                </div>
+            `;
+        });
+        
+        entryList.innerHTML = html;
+        
+        // Save to localStorage
+        localStorage.setItem('vela_petty', JSON.stringify(pettyCashEntries));
+        
+        // Show results
+        statsCard.style.display = 'block';
+        entryListCard.style.display = 'block';
+        
+        statusDiv.className = 'status success';
+        statusDiv.innerHTML = `
+            <strong style="font-size: 1.2rem;">✅ สำเร็จ!</strong><br>
+            <div style="margin-top: 0.5rem;">
+                โหลดบัญชีรายย่อย <strong>${totalEntries} รายการ</strong> เรียบร้อยแล้ว<br>
+                <strong>💵 รายรับ:</strong> ฿${totalIncome.toLocaleString()} | 
+                <strong>💸 รายจ่าย:</strong> ฿${totalExpense.toLocaleString()}<br>
+                <strong>💰 คงเหลือ:</strong> ฿${balance.toLocaleString()}
+            </div>
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid rgba(0,0,0,0.1);">
+                🎉 เปิดหน้า BOH เพื่อดูบัญชีเต็มรูปแบบ!
+            </div>
+        `;
+        
+        // Scroll to results
+        statsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    </script>
+</body>
+</html>

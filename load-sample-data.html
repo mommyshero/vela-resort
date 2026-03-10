@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โหลดข้อมูลตัวอย่าง - Vela Resort</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2D3748;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #718096;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #E2E8F0;
+            color: #4A5568;
+        }
+        .status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.success {
+            background: #C6F6D5;
+            color: #22543D;
+            display: block;
+        }
+        .summary {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #F7FAFC;
+            border-radius: 12px;
+            display: none;
+        }
+        .summary.show {
+            display: block;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #2D3748;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📊 โหลดข้อมูลตัวอย่าง</h1>
+        <p class="subtitle">Vela Resort BOH System - ข้อมูลการจองและรายจ่าย</p>
+        
+        <button class="btn" onclick="loadSampleData()">
+            🚀 โหลดข้อมูลตัวอย่าง
+        </button>
+        
+        <button class="btn btn-secondary" onclick="window.location.href='boh.html'">
+            🔧 กลับหน้า BOH
+        </button>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="summary" class="summary">
+            <h3 style="margin-top: 0; color: #2D3748;">📈 สรุปข้อมูล</h3>
+            <div class="summary-row">
+                <span>📝 การจองทั้งหมด:</span>
+                <span id="bookingCount">0</span>
+            </div>
+            <div class="summary-row">
+                <span>💰 รายรับรวม:</span>
+                <span id="totalIncome">฿0</span>
+            </div>
+            <div class="summary-row">
+                <span>💸 รายจ่ายรวม:</span>
+                <span id="totalExpense">฿0</span>
+            </div>
+            <div class="summary-row" style="background: #C6F6D5; padding: 0.5rem; border-radius: 8px; margin-top: 0.5rem;">
+                <span>📊 คงเหลือสุทธิ:</span>
+                <span id="netBalance">฿0</span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="sample-data.js"></script>
+    <script>
+        function loadSampleData() {
+            const statusDiv = document.getElementById('status');
+            const summaryDiv = document.getElementById('summary');
+            
+            try {
+                console.log('📊 Saving sample bookings...');
+                localStorage.setItem('vela_bookings', JSON.stringify(sampleBookings));
+                console.log(`✅ Saved ${sampleBookings.length} bookings`);
+                
+                console.log('💰 Saving sample petty cash entries...');
+                localStorage.setItem('vela_petty', JSON.stringify(samplePettyEntries));
+                console.log(`✅ Saved ${samplePettyEntries.length} entries`);
+                
+                // Calculate totals
+                const totalIncome = samplePettyEntries
+                    .filter(e => e.type === 'income')
+                    .reduce((sum, e) => sum + e.amount, 0);
+                const totalExpense = samplePettyEntries
+                    .filter(e => e.type === 'expense')
+                    .reduce((sum, e) => sum + e.amount, 0);
+                const netBalance = totalIncome - totalExpense;
+                
+                // Update summary
+                document.getElementById('bookingCount').textContent = `${sampleBookings.length} รายการ`;
+                document.getElementById('totalIncome').textContent = `฿${totalIncome.toLocaleString()}`;
+                document.getElementById('totalExpense').textContent = `฿${totalExpense.toLocaleString()}`;
+                document.getElementById('netBalance').textContent = `฿${netBalance.toLocaleString()}`;
+                
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = `
+                    <strong>✅ สำเร็จ!</strong><br>
+                    โหลดข้อมูลตัวอย่างเรียบร้อยแล้ว:<br>
+                    • การจอง: ${sampleBookings.length} รายการ<br>
+                    • รายรับ-รายจ่าย: ${samplePettyEntries.length} รายการ
+                `;
+                
+                summaryDiv.classList.add('show');
+                
+            } catch (error) {
+                statusDiv.className = 'status';
+                statusDiv.style.background = '#FED7D7';
+                statusDiv.style.color = '#742A2A';
+                statusDiv.style.display = 'block';
+                statusDiv.innerHTML = `<strong>❌ เกิดข้อผิดพลาด:</strong><br>${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
