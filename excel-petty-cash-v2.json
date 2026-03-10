@@ -1,0 +1,518 @@
+[
+  {
+    "date": "1969-01-01",
+    "description": "ค่าตั๋วลูกค้า4คน",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-01",
+    "description": "ค่าข้าวกล่อง4กล่อง",
+    "amount": 240.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-01",
+    "description": "ค่าลูกบิด",
+    "amount": 180.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-01",
+    "description": "ค่ารเเรงช่าง",
+    "amount": 200.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-01",
+    "description": "ค่ากลอน",
+    "amount": 25.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "ค่าข้าว8กล่อง",
+    "amount": 480.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "ค่าต๋ว8คน",
+    "amount": 240.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "รับเงิน",
+    "amount": 1000.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "รับเงิน",
+    "amount": 1000,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "หอมมะลิ",
+    "amount": 55.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-02",
+    "description": "ไข่ไก่ครึ่งเเผง",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-03",
+    "description": "ค่าข้าว4กล่อง",
+    "amount": 240.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-03",
+    "description": "ค่าตั๋ว4คน",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-03",
+    "description": "ทิชชู1เเพค",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1968-01-03",
+    "description": "รับเงิน",
+    "amount": 1000.0,
+    "type": "expense"
+  },
+  {
+    "date": "1968-01-03",
+    "description": "รับเงิน",
+    "amount": 1000,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-08",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-08",
+    "description": "กุญเชียง",
+    "amount": 50.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-09",
+    "description": "ค่าข้าวกล่อง2คน",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-09",
+    "description": "ค่าตั๋ว1คน",
+    "amount": 30.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-18",
+    "description": "ค่าหัวหมู",
+    "amount": 800.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-19",
+    "description": "รับเงิน1,000บาท",
+    "amount": 1.0,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-19",
+    "description": "ซื้อฝักบัว1อัน",
+    "amount": 27.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-19",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-19",
+    "description": "ไข่ไก่ครึ่งเเผง",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-19",
+    "description": "ผักชี",
+    "amount": 10.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-20",
+    "description": "ทิชชู",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1968-01-21",
+    "description": "ค่าที่ล็อคประตู",
+    "amount": 35.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-22",
+    "description": "เครื่องดื่ม",
+    "amount": 50.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-22",
+    "description": "กาเเฟ",
+    "amount": 125.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-22",
+    "description": "หนังกรอบ",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-22",
+    "description": "ไข่ไก่ครึ่งเเผง",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-22",
+    "description": "ผักชี",
+    "amount": 10.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-23",
+    "description": "ค่าตั๋ว6คน",
+    "amount": 180.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-23",
+    "description": "รับเงิน1,000 บาท",
+    "amount": 1216.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-23",
+    "description": "รับเงิน1,000 บาท",
+    "amount": 1.0,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-24",
+    "description": "ค่าน้ำประปา",
+    "amount": 1090.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-25",
+    "description": "ทิชชู",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-26",
+    "description": "รับเงิน1,000บาท",
+    "amount": 1.0,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-30",
+    "description": "พี่จี่เติมเเก้ส",
+    "amount": 470.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-30",
+    "description": "ปริ้นเอกสาร",
+    "amount": 30.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-31",
+    "description": "ไข่ไก่1เเผง",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-31",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-31",
+    "description": "กุญเชียง",
+    "amount": 25.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-01",
+    "description": "ทิชชู1เเพค",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-01",
+    "description": "เเปรงล้างห้องน้ำ",
+    "amount": 25.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-01",
+    "description": "พี่จี่ซื้อปุ๋ยใส่ดอก",
+    "amount": 35.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-04",
+    "description": "รับเงิน",
+    "amount": 1000.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-04",
+    "description": "รับเงิน",
+    "amount": 1000,
+    "type": "income"
+  },
+  {
+    "date": "1969-02-04",
+    "description": "ภาษี",
+    "amount": 200.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-02-04",
+    "description": "พี่จี่ซื้อสายยางรดน้ำ",
+    "amount": 100.0,
+    "type": "expense"
+  },
+  {
+    "date": "1966-02-05",
+    "description": "ไข่ไก่",
+    "amount": 40.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-06",
+    "description": "ค่าข้าวลูกค้า",
+    "amount": 180.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-06",
+    "description": "ค่าหมูสับ",
+    "amount": 60.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-07",
+    "description": "ทิชชู",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-07",
+    "description": "กาเเฟ",
+    "amount": 125.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-10",
+    "description": "พี่จี่ซื้อน้อต",
+    "amount": 200.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-10",
+    "description": "ท่อประปาสามทาง",
+    "amount": 58.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-10",
+    "description": "ถ่ายเอกสาร",
+    "amount": 20.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-10",
+    "description": "รับเงิน",
+    "amount": 1000.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-10",
+    "description": "รับเงิน",
+    "amount": 1000,
+    "type": "income"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "ซื้อท่อประปา",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "เลื่อยตัดท่อ",
+    "amount": 180.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "ไบเลื่อน",
+    "amount": 30.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "ไข่ไก่",
+    "amount": 60.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "ฮอทดอก",
+    "amount": 40.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-12",
+    "description": "กุญเชียง",
+    "amount": 40.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-13",
+    "description": "ค่าข้าวกล่อง",
+    "amount": 120.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-13",
+    "description": "ค่าตั๋ว",
+    "amount": 30.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-13",
+    "description": "รับเงิน1000",
+    "amount": 1363.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-01-13",
+    "description": "รับเงิน1000",
+    "amount": 1000.0,
+    "type": "income"
+  },
+  {
+    "date": "1969-03-01",
+    "description": "ซื้อถ่านประตู5เเพค",
+    "amount": 175.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-03-01",
+    "description": "ไข่ไก่ครึ่งเเผง",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-03-01",
+    "description": "ค่าน้ำประปา",
+    "amount": 260.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-03-01",
+    "description": "กาเเฟ",
+    "amount": 125.0,
+    "type": "expense"
+  },
+  {
+    "date": "1969-03-01",
+    "description": "หมูสับครึ่งโล",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "รับเงิน",
+    "amount": 1000.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "รับเงิน",
+    "amount": 1000,
+    "type": "income"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "ไข่ไก่",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "ทิชชู",
+    "amount": 65.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "น้ำยาล้างจาน",
+    "amount": 25.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "หนังกรอบ",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "กุญเชียง",
+    "amount": 75.0,
+    "type": "expense"
+  },
+  {
+    "date": "2026-03-02",
+    "description": "หมูสับ",
+    "amount": 75.0,
+    "type": "expense"
+  }
+]

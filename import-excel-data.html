@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>นำเข้าข้อมูลการจอง - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+        h1 { color: #2D3748; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitle { color: #718096; margin-bottom: 1.5rem; }
+        .rule-box {
+            background: #FEF3C7;
+            border-left: 4px solid #F59E0B;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        .rule-box strong { color: #92400E; }
+        .rule-box ul { margin-left: 1.5rem; color: #92400E; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+        .btn-secondary { background: #E2E8F0; color: #4A5568; }
+        .btn-success { background: linear-gradient(135deg, #48BB78 0%, #38A169 100%); }
+        .status {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.success { 
+            background: linear-gradient(135deg, #C6F6D5 0%, #9AE6B4 100%); 
+            color: #22543D; 
+            display: block; 
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value { font-size: 2rem; font-weight: 700; color: #667eea; }
+        .stat-label { color: #718096; font-size: 0.9rem; margin-top: 0.25rem; }
+        .booking-list {
+            margin-top: 1.5rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        .booking-item {
+            padding: 1rem;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+        }
+        .booking-item:hover { background: #F7FAFC; }
+        .booking-item:last-child { border-bottom: none; }
+        .booking-item.hytte { background: #FFFBEB; }
+        .booking-item.hus { background: #ECFDF5; }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .badge-hytte { background: #F59E0B; color: white; }
+        .badge-hus { background: #10B981; color: white; }
+        .badge-status { background: #E2E8F0; color: #4A5568; }
+        .badge-status.checked_out { background: #9AE6B4; color: #22543D; }
+        .badge-status.checked_in { background: #63B3ED; color: #2C5282; }
+        .badge-status.confirmed { background: #F6E05E; color: #975A16; }
+        .badge-status.pending { background: #FED7D7; color: #742A2A; }
+        .info-text { font-size: 0.85rem; color: #718096; margin-top: 0.25rem; }
+        .price { font-weight: 700; color: #2D3748; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>📊 นำเข้าข้อมูลการจองจาก Excel</h1>
+            <p class="subtitle">Vela Resort BOH System - อัพเดทการจองทั้งหมด</p>
+            
+            <div class="rule-box">
+                <strong>📋 กติกาการแยกห้อง:</strong>
+                <ul>
+                    <li>การจองหมายเลข <strong>1-5</strong> = <strong>🏠 Hytte</strong> (บ้านริมน้ำ 5 ห้อง)</li>
+                    <li>การจองที่ไม่มีชื่อห้อง = <strong>🏡 Hus</strong> (บ้านวิวสนาม 1 ห้อง)</li>
+                </ul>
+            </div>
+            
+            <button class="btn btn-success" onclick="loadExcelBookings()">
+                📥 โหลดข้อมูลจาก Excel (10 การจอง)
+            </button>
+            
+            <button class="btn btn-secondary" onclick="window.location.href='boh.html'">
+                🔧 กลับหน้า BOH
+            </button>
+            
+            <div id="status" class="status"></div>
+        </div>
+        
+        <div id="statsCard" class="card" style="display: none;">
+            <h2 style="color: #2D3748; margin-bottom: 1rem;">📈 สรุปข้อมูลการจอง</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalBookings">0</div>
+                    <div class="stat-label">การจองทั้งหมด</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="hytteCount">0</div>
+                    <div class="stat-label">🏠 Hytte</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="husCount">0</div>
+                    <div class="stat-label">🏡 Hus</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalRevenue">฿0</div>
+                    <div class="stat-label">รายได้รวม</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="bookingListCard" class="card" style="display: none;">
+            <h2 style="color: #2D3748; margin-bottom: 1rem;">📋 รายการจองทั้งหมด</h2>
+            <div id="bookingList" class="booking-list"></div>
+        </div>
+    </div>
+    
+    <script>
+    const excelBookings = [
+        {id:'BK001', bookingNo:'1', guestName:'คุณสมชาย ใจดี', phone:'081-234-5678', room:'hytte', checkin:'2026-02-28', checkout:'2026-03-01', nights:1, amount:950, status:'checked_out'},
+        {id:'BK002', bookingNo:'2', guestName:'คุณวิไล รักธรรมชาติ', phone:'082-345-6789', room:'hytte', checkin:'2026-03-01', checkout:'2026-03-03', nights:2, amount:4200, status:'checked_out'},
+        {id:'BK003', bookingNo:'3', guestName:'คุณประเสริฐ สุขใจ', phone:'083-456-7890', room:'hytte', checkin:'2026-03-02', checkout:'2026-03-04', nights:2, amount:3800, status:'checked_out'},
+        {id:'BK004', bookingNo:'4', guestName:'คุณมานี มีเงิน', phone:'084-567-8901', room:'hytte', checkin:'2026-03-04', checkout:'2026-03-06', nights:2, amount:1900, status:'checked_out'},
+        {id:'BK005', bookingNo:'5', guestName:'คุณวิชัย เที่ยวไทย', phone:'085-678-9012', room:'hytte', checkin:'2026-03-05', checkout:'2026-03-07', nights:2, amount:4600, status:'checked_out'},
+        {id:'BK006', bookingNo:'6', guestName:'คุณสุชาติ พักผ่อน', phone:'086-789-0123', room:'hus', checkin:'2026-03-06', checkout:'2026-03-08', nights:2, amount:1500, status:'checked_in'},
+        {id:'BK007', bookingNo:'7', guestName:'คุณรัชนี ชมวิว', phone:'087-890-1234', room:'hus', checkin:'2026-03-07', checkout:'2026-03-09', nights:2, amount:3800, status:'confirmed'},
+        {id:'BK008', bookingNo:'8', guestName:'คุณสมพงษ์ ล่องแก่ง', phone:'088-901-2345', room:'hus', checkin:'2026-03-08', checkout:'2026-03-10', nights:2, amount:5000, status:'confirmed'},
+        {id:'BK009', bookingNo:'9', guestName:'คุณนริศรา วันหยุด', phone:'089-012-3456', room:'hus', checkin:'2026-03-14', checkout:'2026-03-16', nights:2, amount:1900, status:'pending'},
+        {id:'BK010', bookingNo:'10', guestName:'คุณกิตติศักดิ์ ครอบครัวสุข', phone:'090-123-4567', room:'hus', checkin:'2026-03-20', checkout:'2026-03-22', nights:2, amount:5700, status:'pending'}
+    ];
+    
+    const statusLabels = {
+        'checked_out': 'เช็คเอาท์แล้ว',
+        'checked_in': 'เข้าพักแล้ว',
+        'confirmed': 'จองแล้ว',
+        'pending': 'รอ确认',
+        'cancelled': 'ยกเลิก'
+    };
+    
+    function loadExcelBookings() {
+        const statusDiv = document.getElementById('status');
+        const statsCard = document.getElementById('statsCard');
+        const bookingListCard = document.getElementById('bookingListCard');
+        const bookingList = document.getElementById('bookingList');
+        
+        // Calculate stats
+        const totalBookings = excelBookings.length;
+        const hytteCount = excelBookings.filter(b => b.room === 'hytte').length;
+        const husCount = excelBookings.filter(b => b.room === 'hus').length;
+        const totalRevenue = excelBookings.reduce((sum, b) => sum + b.amount, 0);
+        
+        // Update stats
+        document.getElementById('totalBookings').textContent = totalBookings;
+        document.getElementById('hytteCount').textContent = hytteCount;
+        document.getElementById('husCount').textContent = husCount;
+        document.getElementById('totalRevenue').textContent = '฿' + totalRevenue.toLocaleString();
+        
+        // Display booking list
+        let html = '';
+        excelBookings.forEach(b => {
+            const roomBadge = b.room === 'hytte' 
+                ? '<span class="badge badge-hytte">🏠 Hytte</span>'
+                : '<span class="badge badge-hus">🏡 Hus</span>';
+            const statusBadge = `<span class="badge badge-status ${b.status}">${statusLabels[b.status] || b.status}</span>`;
+            
+            html += `
+                <div class="booking-item ${b.room}">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                            <strong style="color: #2D3748;">${b.id}</strong>
+                            ${roomBadge}
+                            ${statusBadge}
+                        </div>
+                        <div style="font-weight: 600; color: #4A5568;">${b.guestName}</div>
+                        <div class="info-text">📞 ${b.phone} | 📅 ${b.checkin} → ${b.checkout} (${b.nights} คืน)</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="price">฿${b.amount.toLocaleString()}</div>
+                        <div class="info-text">${b.room === 'hytte' ? 'หมายเลข ' + b.bookingNo : 'ไม่มีชื่อห้อง'}</div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        bookingList.innerHTML = html;
+        
+        // Save to localStorage
+        const formattedBookings = excelBookings.map(b => ({
+            id: b.id,
+            bookingNo: b.bookingNo,
+            guestName: b.guestName,
+            phone: b.phone,
+            room: b.room,
+            roomQuantity: 1,
+            adults: 2,
+            children: 0,
+            checkin: b.checkin,
+            checkout: b.checkout,
+            nights: b.nights,
+            totalPrice: b.amount,
+            status: b.status,
+            paymentStatus: b.status === 'checked_out' || b.status === 'checked_in' ? 'paid' : 'waiting_payment',
+            tours: [],
+            createdAt: new Date().toISOString()
+        }));
+        
+        localStorage.setItem('vela_bookings', JSON.stringify(formattedBookings));
+        
+        // Show results
+        statsCard.style.display = 'block';
+        bookingListCard.style.display = 'block';
+        
+        statusDiv.className = 'status success';
+        statusDiv.innerHTML = `
+            <strong style="font-size: 1.2rem;">✅ สำเร็จ!</strong><br>
+            <div style="margin-top: 0.5rem;">
+                โหลดข้อมูลการจอง <strong>${totalBookings} รายการ</strong> เรียบร้อยแล้ว<br>
+                <strong>🏠 Hytte:</strong> ${hytteCount} รายการ (หมายเลข 1-5) | 
+                <strong>🏡 Hus:</strong> ${husCount} รายการ (ไม่มีชื่อห้อง)<br>
+                <strong>💰 รายได้รวม:</strong> ฿${totalRevenue.toLocaleString()}
+            </div>
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 2px solid rgba(0,0,0,0.1);">
+                🎉 เปิดหน้า BOH เพื่อดูข้อมูลเต็มรูปแบบ!
+            </div>
+        `;
+        
+        // Scroll to results
+        statsCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    </script>
+</body>
+</html>

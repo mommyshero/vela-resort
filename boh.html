@@ -1,0 +1,4022 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELA BOH - Back Office System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===================================
+           4-COLOR THEME VARIABLES
+           =================================== */
+        :root {
+            --white: #FFFFFF;
+            --yellow: #FFD700;
+            --yellow-light: #FFF9E6;
+            --yellow-dark: #E6C200;
+            --black: #1A1A1A;
+            --light-gray: #F3F4F6;
+            --gray: #9CA3AF;
+            --success: #10B981;
+            --success-light: #D1FAE5;
+            --danger: #EF4444;
+            --danger-light: #FEE2E2;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+        }
+
+        /* ===================================
+           LOGIN PAGE
+           =================================== */
+        .login-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--black) 0%, #4B4B4B 100%);
+        }
+
+        .login-container {
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 100px;
+            height: 100px;
+            background: var(--yellow-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+        }
+
+        .login-logo-icon {
+            font-size: 3rem;
+        }
+
+        .login-title {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+        }
+
+        .login-subtitle {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .login-input {
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 14px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 4px var(--yellow-light);
+        }
+
+        .login-btn {
+            padding: 1.25rem;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--yellow-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        /* ===================================
+           BOH MAIN LAYOUT
+           =================================== */
+        .boh-layout {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .boh-layout.active {
+            display: flex;
+        }
+
+        /* Sidebar */
+        .boh-sidebar {
+            width: 320px;
+            background: var(--white);
+            border-right: 1px solid var(--light-gray);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
+        }
+
+        .boh-sidebar-header {
+            margin-bottom: 2rem;
+        }
+
+        .boh-sidebar-logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: 0.1em;
+        }
+
+        .boh-sidebar-subtitle {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        /* Home Button */
+        .boh-home-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: var(--black);
+            color: var(--white);
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(26, 26, 26, 0.3);
+        }
+
+        .boh-home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(26, 26, 26, 0.4);
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        /* Menu */
+        .boh-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .boh-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: var(--black);
+        }
+
+        .boh-menu-item:hover {
+            background: var(--light-gray);
+        }
+
+        .boh-menu-item.active {
+            background: var(--yellow);
+        }
+
+        .boh-menu-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            background: var(--light-gray);
+        }
+
+        .boh-menu-content {
+            flex: 1;
+        }
+
+        .boh-menu-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--black);
+        }
+
+        .boh-menu-subtitle {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        .boh-menu-badge {
+            background: var(--black);
+            color: var(--white);
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        .boh-main {
+            margin-left: 320px;
+            flex: 1;
+            padding: 2rem;
+            min-height: 100vh;
+            background: var(--white);
+        }
+
+        .boh-header {
+            margin-bottom: 2rem;
+        }
+
+        .boh-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--black);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .boh-title-icon {
+            font-size: 3rem;
+        }
+
+        .boh-description {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* ===================================
+           DASHBOARD CARDS
+           =================================== */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--light-gray);
+        }
+
+        .dashboard-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .dashboard-card-icon {
+            font-size: 2.5rem;
+        }
+
+        .dashboard-card-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .dashboard-card-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        /* ===================================
+           CONTENT SECTIONS
+           =================================== */
+        .content-section {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+        }
+
+        .content-section.active {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+
+        /* ===================================
+           FORMS & CARDS
+           =================================== */
+        .form-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--light-gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            color: var(--black);
+            font-weight: 600;
+        }
+
+        .form-input {
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 4px var(--yellow-light);
+        }
+
+        .form-select {
+            padding: 1rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--white);
+        }
+
+        .form-btn {
+            padding: 1rem 2rem;
+            background: var(--yellow);
+            color: var(--black);
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-btn:hover {
+            background: var(--yellow-dark);
+        }
+
+        /* ===================================
+           TABLES
+           =================================== */
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 1rem;
+            background: var(--light-gray);
+            color: var(--black);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        tr:hover {
+            background: var(--light-gray);
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .status-confirmed {
+            background: var(--success-light);
+            color: var(--success);
+        }
+
+        .status-pending {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+
+        .status-cancelled {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .status-checked-in {
+            background: var(--yellow-light);
+            color: var(--black);
+        }
+
+        .status-cleaning {
+            background: var(--light-gray);
+            color: var(--gray);
+        }
+
+        /* ===================================
+           CALENDAR
+           =================================== */
+        .calendar-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .calendar-nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .calendar-nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .calendar-nav-btn:hover {
+            background: var(--light-gray);
+            border-color: var(--yellow);
+        }
+
+        .calendar-month {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--black);
+            min-width: 250px;
+            text-align: center;
+        }
+
+        .room-filter {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .room-filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--light-gray);
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .room-filter-btn.active {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            color: var(--black);
+        }
+
+        .room-calendar-grid {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid var(--light-gray);
+        }
+
+        .room-calendar-header {
+            display: grid;
+            grid-template-columns: 100px repeat(31, 1fr);
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .room-calendar-header-cell {
+            padding: 1rem 0.5rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .room-calendar-header-cell:first-child {
+            position: sticky;
+            left: 0;
+            background: var(--black);
+            z-index: 2;
+        }
+
+        .room-calendar-row {
+            display: grid;
+            grid-template-columns: 100px repeat(31, 1fr);
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .room-calendar-cell {
+            padding: 0.75rem 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            border-right: 1px solid var(--light-gray);
+        }
+
+        .room-calendar-cell:first-child {
+            position: sticky;
+            left: 0;
+            background: var(--white);
+            font-weight: 700;
+            z-index: 1;
+            border-right: 2px solid var(--light-gray);
+        }
+
+        .room-calendar-cell.available {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .room-calendar-cell.weekend {
+            background: var(--warning-light);
+            color: var(--warning);
+        }
+
+        .room-calendar-cell.holiday {
+            background: var(--danger-light);
+            color: var(--danger);
+        }
+
+        .room-calendar-cell.nearly-full {
+            background: var(--warning-light);
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .room-calendar-cell.fully-booked {
+            background: var(--danger-light);
+            color: var(--danger);
+            font-weight: 800;
+        }
+
+        .room-calendar-cell.booked {
+            background: var(--yellow);
+            color: var(--black);
+            font-weight: 700;
+        }
+
+        .room-calendar-cell.checked-in {
+            background: var(--success-light);
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .room-calendar-cell.cleaning {
+            background: var(--light-gray);
+            color: var(--gray);
+        }
+
+        .room-calendar-cell.today {
+            border: 3px solid var(--yellow);
+        }
+
+        /* ===================================
+           BUTTONS
+           =================================== */
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--yellow);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            background: var(--yellow-dark);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            opacity: 0.9;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: var(--light-gray);
+            color: var(--black);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gray);
+            color: var(--white);
+        }
+
+        .btn-black {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .btn-black:hover {
+            opacity: 0.9;
+        }
+
+        /* ===================================
+           ALERTS
+           =================================== */
+        .alert-box {
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .alert-warning {
+            background: var(--warning-light);
+            border-left: 5px solid var(--warning);
+        }
+
+        .alert-danger {
+            background: var(--danger-light);
+            border-left: 5px solid var(--danger);
+        }
+
+        .alert-success {
+            background: var(--success-light);
+            border-left: 5px solid var(--success);
+        }
+
+        .alert-info {
+            background: var(--light-gray);
+            border-left: 5px solid var(--black);
+        }
+
+        /* ===================================
+           STATS GRID
+           =================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid var(--light-gray);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--black);
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        /* ===================================
+           RESPONSIVE
+           =================================== */
+        @media (max-width: 1024px) {
+            .boh-sidebar {
+                width: 280px;
+            }
+            .boh-main {
+                margin-left: 280px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .boh-sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                z-index: 10000;
+                transition: left 0.3s ease;
+                display: block !important;
+            }
+            .boh-sidebar.mobile-open {
+                left: 0;
+            }
+            .boh-main {
+                margin-left: 0;
+            }
+            /* Mobile menu toggle button */
+            .boh-mobile-toggle {
+                display: flex !important;
+            }
+        }
+        
+        /* Mobile menu toggle - hidden on desktop */
+        .boh-mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 9999;
+            background: var(--black);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile sidebar overlay */
+        .boh-sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+        }
+        .boh-sidebar-overlay.active {
+            display: block;
+        }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-group.full {
+                grid-column: span 1;
+            }
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===================================
+           PRINT STYLES
+           =================================== */
+        @media print {
+            .boh-sidebar,
+            .boh-header,
+            .btn {
+                display: none !important;
+            }
+            .boh-main {
+                margin-left: 0;
+            }
+            .form-card {
+                box-shadow: none;
+                border: 1px solid var(--gray);
+            }
+        }
+        
+        /* Auto-sync notification animations */
+        @keyframes slideIn {
+            from { transform: translateX(400px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(400px); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-page" id="loginPage">
+        <div class="login-container">
+            <div class="login-logo">
+                <span class="login-logo-icon">🔒</span>
+            </div>
+            <h1 class="login-title">VELA BOH</h1>
+            <p class="login-subtitle">Back Office Management System</p>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <input type="text" class="login-input" placeholder="👤 ชื่อผู้ใช้" id="username" required>
+                <input type="password" class="login-input" placeholder="🔒 รหัสผ่าน" id="password" required>
+                <button type="submit" class="login-btn">🚀 เข้าสู่ระบบ</button>
+            </form>
+            <p style="margin-top: 1.5rem; color: var(--gray); font-size: 0.85rem;">
+                🔐 ระบบจัดการหลังบ้าน Vela Resort Umphang
+            </p>
+        </div>
+    </div>
+
+    <!-- BOH Main Layout -->
+    <div class="boh-layout" id="bohLayout">
+        <!-- Mobile Menu Toggle -->
+        <button class="boh-mobile-toggle" onclick="toggleMobileSidebar()">
+            ☰ เมนู
+        </button>
+        
+        <!-- Mobile Sidebar Overlay -->
+        <div class="boh-sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
+        
+        <!-- Sidebar -->
+        <aside class="boh-sidebar">
+            <div class="boh-sidebar-header">
+                <div class="boh-sidebar-logo">VELA</div>
+                <div class="boh-sidebar-subtitle">Back Office System</div>
+            </div>
+
+            <!-- Home Button -->
+            <a href="index.html" class="boh-home-btn" title="กลับหน้าแรกเว็บไซต์">
+                <span>🏠</span>
+                <span>หน้าแรก</span>
+            </a>
+
+            <!-- Navigation Menu -->
+            <nav class="boh-menu" id="bohMenu">
+                <a class="boh-menu-item active" data-section="dashboard">
+                    <div class="boh-menu-icon">📊</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">แดชบอร์ด</div>
+                        <div class="boh-menu-subtitle">ภาพรวมระบบ</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="bookings">
+                    <div class="boh-menu-icon">📝</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">การจอง</div>
+                        <div class="boh-menu-subtitle">จัดการการจอง</div>
+                    </div>
+                    <span class="boh-menu-badge" id="pendingBadge">0</span>
+                </a>
+                <a class="boh-menu-item" data-section="booking-control">
+                    <div class="boh-menu-icon">🔧</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ควบคุมการจอง</div>
+                        <div class="boh-menu-subtitle">Real-time Control</div>
+                    </div>
+                    <span class="boh-menu-badge" id="overbookingBadge">0</span>
+                </a>
+                <a class="boh-menu-item" data-section="calendar">
+                    <div class="boh-menu-icon">📅</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ปฏิทินห้องพัก</div>
+                        <div class="boh-menu-subtitle">Room Calendar</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="petty">
+                    <div class="boh-menu-icon">💵</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">บัญชีรายย่อย</div>
+                        <div class="boh-menu-subtitle">Petty Cash</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="accounting">
+                    <div class="boh-menu-icon">💰</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">บัญชีหลัก</div>
+                        <div class="boh-menu-subtitle">Main Accounting</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="vat">
+                    <div class="boh-menu-icon">📑</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">รายงานภาษี VAT</div>
+                        <div class="boh-menu-subtitle">VAT Report</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="peekaboo">
+                    <div class="boh-menu-icon">👁️</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">Peekaboo</div>
+                        <div class="boh-menu-subtitle">Auto-release</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="settings">
+                    <div class="boh-menu-icon">⚙️</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ตั้งค่า</div>
+                        <div class="boh-menu-subtitle">การตั้งค่าระบบ</div>
+                    </div>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="boh-main">
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard">
+                <div class="boh-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                        <div>
+                            <h1 class="boh-title"><span class="boh-title-icon">📊</span> แดชบอร์ด</h1>
+                            <p class="boh-description">ภาพรวมการจองและรายได้ของ Vela Resort</p>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-top: 0.5rem;">
+                                🟢 Auto-Sync: เปิดอยู่ (อัพเดททุก 30 วินาที) | <span id="lastSyncTime">-</span>
+                            </p>
+                        </div>
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button onclick="refreshDataFromWebsite()" class="btn btn-success">
+                                🔄 โหลดข้อมูลจากเว็บ
+                            </button>
+                            <button onclick="clearOldBookings()" class="btn btn-danger">
+                                🗑️ ลบข้อมูลเก่า
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="dashBookings">0</div>
+                                <div class="dashboard-card-label">การจองเดือนนี้</div>
+                            </div>
+                            <div class="dashboard-card-icon">📝</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="dashRevenue">฿0</div>
+                                <div class="dashboard-card-label">รายได้เดือนนี้</div>
+                            </div>
+                            <div class="dashboard-card-icon">💰</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="dashPending">0</div>
+                                <div class="dashboard-card-label">รอการยืนยัน</div>
+                            </div>
+                            <div class="dashboard-card-icon">⏳</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="dashOccupancy">0%</div>
+                                <div class="dashboard-card-label">อัตราการเข้าพัก</div>
+                            </div>
+                            <div class="dashboard-card-icon">🏨</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Booking Channel Chart -->
+                <div class="form-card">
+                    <h2 class="form-title">📊 ช่องทางการจอง (Booking Channels)</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: center;">
+                        <div style="display: flex; justify-content: center;">
+                            <canvas id="channelChart" width="300" height="300"></canvas>
+                        </div>
+                        <div>
+                            <div id="channelLegend" style="display: flex; flex-direction: column; gap: 0.75rem;"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bookings Section -->
+            <section class="content-section" id="bookings">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">📝</span> การจอง</h1>
+                    <p class="boh-description">จัดการการจองทั้งหมด</p>
+                </div>
+
+                <!-- Add/Edit Booking Form -->
+                <div class="form-card">
+                    <h2 class="form-title">➕ เพิ่ม/แก้ไข การจอง</h2>
+                    <form class="form-grid" onsubmit="handleBookingSubmit(event)">
+                        <input type="hidden" id="bookingId">
+                        <div class="form-group">
+                            <label class="form-label">ชื่อลูกค้า</label>
+                            <input type="text" class="form-input" id="bookingName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">เบอร์โทรศัพท์</label>
+                            <input type="tel" class="form-input" id="bookingPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">วันเช็คอิน</label>
+                            <input type="date" class="form-input" id="bookingCheckin" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">วันเช็คเอาท์</label>
+                            <input type="date" class="form-input" id="bookingCheckout" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ห้องพัก</label>
+                            <select class="form-select" id="bookingRoom" required onchange="updateRoomQtyLimit()">
+                                <option value="">-- เลือกห้องพัก --</option>
+                                <option value="hytte">🏠 Hytte (5 ห้อง)</option>
+                                <option value="hus">🏡 Hus (1 ห้อง)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">จำนวนห้อง</label>
+                            <input type="number" class="form-input" id="bookingQty" min="1" max="5" value="1" required>
+                            <small id="roomLimitHint" style="color: var(--gray); margin-top: 0.25rem; display: block;"></small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ส่วนลด (บาท)</label>
+                            <input type="number" class="form-input" id="bookingDiscount" min="0" value="0" placeholder="0">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">อัพโหลดสลิปโอนเงิน</label>
+                            <input type="file" class="form-input" id="bookingSlip" accept="image/*">
+                        </div>
+                        <div class="form-group full">
+                            <button type="submit" class="form-btn">💾 บันทึกการจอง</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Month Filter -->
+                <div class="form-card">
+                    <h2 class="form-title">📅 กรองตามเดือน</h2>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center;">
+                        <select class="form-select" id="monthFilter" onchange="filterBookingsByMonth()" style="min-width: 200px;">
+                            <option value="all">📅 ทั้งหมด</option>
+                            <option value="2026-03">มีนาคม 2026</option>
+                            <option value="2026-02">กุมภาพันธ์ 2026</option>
+                            <option value="2026-01">มกราคม 2026</option>
+                            <option value="2025-12">ธันวาคม 2025</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="generateInvoiceFromSelected()">
+                            🧾 สร้างบิลจากรายการที่เลือก
+                        </button>
+                        <button class="btn btn-success" onclick="generateMonthlyInvoice()">
+                            📄 สร้างบิตรายเดือน
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportBookingsPDF()">
+                            📥 Export PDF ทั้งหมด
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bookings List Grouped by Month -->
+                <div class="form-card">
+                    <h2 class="form-title">📋 รายการจองแยกตามเดือน</h2>
+                    <div id="bookingsByMonth">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Booking Control Section -->
+            <section class="content-section" id="booking-control">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">🔧</span> ระบบควบคุมการจองแบบ Real-time</h1>
+                    <p class="boh-description">ป้องกัน Overbooking และปล่อยห้องอัตโนมัติ</p>
+                </div>
+
+                <!-- System Status -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" style="border-left: 4px solid var(--success);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" style="color: var(--success);" id="systemStatus">🟢 ออนไลน์</div>
+                                <div class="dashboard-card-label">สถานะระบบ</div>
+                            </div>
+                            <div class="dashboard-card-icon">🖥️</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card" style="border-left: 4px solid var(--warning);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" style="color: var(--warning);" id="lastSyncTime">--:--</div>
+                                <div class="dashboard-card-label">อัพเดทล่าสุด</div>
+                            </div>
+                            <div class="dashboard-card-icon">🔄</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card" style="border-left: 4px solid var(--danger);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" style="color: var(--danger);" id="peekabooActive">เปิดใช้งาน</div>
+                                <div class="dashboard-card-label">Peekaboo Auto-release</div>
+                            </div>
+                            <div class="dashboard-card-icon">👁️</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Room Availability -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="hytteAvailable">5/5</div>
+                                <div class="dashboard-card-label">🏠 Hytte ว่าง</div>
+                            </div>
+                            <div class="dashboard-card-icon">🟢</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="husAvailable">1/1</div>
+                                <div class="dashboard-card-label">🏡 Hus ว่าง</div>
+                            </div>
+                            <div class="dashboard-card-icon">🟢</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="totalAvailable">6/6</div>
+                                <div class="dashboard-card-label">🏨 รวมห้องว่าง</div>
+                            </div>
+                            <div class="dashboard-card-icon">📊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overbooking Alerts -->
+                <div id="overbookingAlerts" style="margin-bottom: 1.5rem; display: none;">
+                    <div class="alert-box alert-danger">
+                        <div>
+                            <h3 style="color: var(--danger); margin-bottom: 0.5rem; font-size: 1.25rem;">⚠️ แจ้งเตือน Overbooking</h3>
+                            <p style="color: var(--danger); opacity: 0.9; margin-bottom: 1rem;">มีการจองเกินจำนวนห้องที่มี กรุณาดำเนินการดังนี้:</p>
+                            <div id="overbookingList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7-Day Availability Table -->
+                <div class="form-card">
+                    <h2 class="form-title">📅 ตารางความพร้อมใช้งาน 7 วันข้างหน้า</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ห้องพัก</th>
+                                    <th>วันนี้</th>
+                                    <th>พรุ่งนี้</th>
+                                    <th>+2</th>
+                                    <th>+3</th>
+                                    <th>+4</th>
+                                    <th>+5</th>
+                                    <th>+6</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sevenDayTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Peekaboo Settings -->
+                <div class="form-card">
+                    <h2 class="form-title">👁️ Peekaboo Auto-release Settings</h2>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">ระบบจะปล่อยห้องที่ยังไม่ชำระเงินภายใน 24 ชม. กลับมาว่างอัตโนมัติ</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--warning);">24 ชั่วโมง</div>
+                            <div class="stat-label">⏰ ระยะเวลาถือจอง</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--success);" id="peekabooReleased">0 ห้อง</div>
+                            <div class="stat-label">📊 ห้องที่ปล่อยแล้ว</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="runPeekabooRelease()" style="margin-top: 1rem;">
+                        👁️ รัน Peekaboo Auto-release ตอนนี้
+                    </button>
+                </div>
+            </section>
+
+            <!-- Room Calendar Section -->
+            <section class="content-section" id="calendar">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">📅</span> ปฏิทินห้องพัก</h1>
+                    <p class="boh-description">แสดงสถานะห้องพักรายวันแบบ Grid View</p>
+                </div>
+
+                <div class="form-card">
+                    <div class="calendar-controls">
+                        <div class="calendar-nav">
+                            <button class="calendar-nav-btn" onclick="changeMonth(-1)">‹ เดือนก่อน</button>
+                            <div class="calendar-month" id="calendarMonthDisplay">มีนาคม 2026</div>
+                            <button class="calendar-nav-btn" onclick="changeMonth(1)">เดือนถัดไป ›</button>
+                        </div>
+                        <div class="room-filter">
+                            <button class="room-filter-btn active" onclick="filterRooms('all')">ทั้งหมด</button>
+                            <button class="room-filter-btn" onclick="filterRooms('hytte')">Hytte</button>
+                            <button class="room-filter-btn" onclick="filterRooms('hus')">Hus</button>
+                        </div>
+                    </div>
+
+                    <div class="room-calendar-grid" id="roomCalendar">
+                        <!-- Calendar rendered by JavaScript -->
+                    </div>
+
+                    <!-- Legend -->
+                    <div style="margin-top: 1.5rem; display: flex; gap: 1.5rem; flex-wrap: wrap;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: var(--white); border: 2px solid var(--light-gray); border-radius: 4px;"></div>
+                            <span>🟢 วันธรรมดาว่าง</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: var(--warning-light); border-radius: 4px;"></div>
+                            <span>🟡 วันเสาร์-อาทิตย์</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 20px; height: 20px; background: var(--danger-light); border-radius: 4px;"></div>
+                            <span>🔴 วันหยุดนักขัตฤกษ์</span>
+                        </div>
+                    </div>
+
+                    <!-- Monthly Summary -->
+                    <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--light-gray); border-radius: 16px;">
+                        <h3 style="margin-bottom: 1rem; color: var(--black); font-size: 1.25rem;">📊 สรุปการจองเดือนนี้</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--black);" id="summaryAvailable">0</div>
+                                <div class="stat-label">วันว่าง</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--warning);" id="summaryWeekends">0</div>
+                                <div class="stat-label">วันหยุดสุดสัปดาห์</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--danger);" id="summaryHolidays">0</div>
+                                <div class="stat-label">วันหยุดนักขัตฤกษ์</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Petty Cash Section -->
+            <section class="content-section" id="petty">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">💵</span> บัญชีรายย่อย</h1>
+                    <p class="boh-description">บันทึกรายรับ/รายจ่ายเบ็ดเตล็ด</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button onclick="importAllData()" class="btn btn-primary">📥 นำเข้าข้อมูลทั้งหมด</button>
+                        <button onclick="showImportModal()" class="btn btn-success">📤 Import จากภายนอก</button>
+                        <button onclick="exportPettyCashReportPDF()" class="btn btn-black">📊 รายงาน Petty Cash</button>
+                        <button onclick="exportCashReceiptPDF()" class="btn btn-black">🧾 Export ใบสำคัญ</button>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--black);" id="pettyOpening">฿5,000</div>
+                        <div class="stat-label">💵 เงินคงเหลือเริ่มต้น</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--success);" id="pettyIncome">฿0</div>
+                        <div class="stat-label">💰 รายรับเพิ่ม</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--danger);" id="pettyExpense">฿0</div>
+                        <div class="stat-label">💸 รายจ่าย</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--black);" id="pettyBalance">฿0</div>
+                        <div class="stat-label">💰 ยอดคงเหลือปัจจุบัน</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" style="color: var(--black);" id="pettyCount">0</div>
+                        <div class="stat-label">📊 จำนวนรายการ</div>
+                    </div>
+                </div>
+
+                <!-- Booking Channel Chart -->
+                <div class="form-card">
+                    <h2 class="form-title">📊 สถิติช่องทางการจอง</h2>
+                    <div id="bookingChannelChart" style="height: 280px; display: flex; align-items: flex-end; justify-content: space-around; padding: 2rem 1rem; background: var(--white); border-radius: 16px; border: 1px solid var(--light-gray);">
+                        <!-- Chart rendered by JavaScript -->
+                    </div>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 16px; height: 16px; background: var(--black); border-radius: 4px;"></div>
+                            <span>Website</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 16px; height: 16px; background: var(--success); border-radius: 4px;"></div>
+                            <span>Facebook</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 16px; height: 16px; background: var(--yellow); border-radius: 4px;"></div>
+                            <span>LINE</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 16px; height: 16px; background: var(--gray); border-radius: 4px;"></div>
+                            <span>Phone</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <div style="width: 16px; height: 16px; background: var(--danger); border-radius: 4px;"></div>
+                            <span>Walk-in</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Transaction Form -->
+                <div class="form-card">
+                    <h2 class="form-title">➕ บันทึกรายการ</h2>
+                    <form class="form-grid" onsubmit="handlePettySubmit(event)">
+                        <input type="hidden" id="pettyId">
+                        <div class="form-group">
+                            <label class="form-label">ประเภท</label>
+                            <select class="form-select" id="pettyType" required>
+                                <option value="income">💰 รายรับ</option>
+                                <option value="expense">💸 รายจ่าย</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">จำนวนเงิน</label>
+                            <input type="number" class="form-input" id="pettyAmount" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">หมวดหมู่</label>
+                            <select class="form-select" id="pettyCategory" required>
+                                <option value="">-- เลือกหมวดหมู่ --</option>
+                                <option value="food">🍽️ อาหาร</option>
+                                <option value="maintenance">🔧 ซ่อมบำรุง</option>
+                                <option value="supplies">🧻 ของใช้</option>
+                                <option value="tour">🎫 ตั๋วท่องเที่ยว</option>
+                                <option value="utilities">💡 สาธารณูปโภค</option>
+                                <option value="labor">👷 แรงงาน</option>
+                                <option value="office">📄 สำนักงาน</option>
+                                <option value="tax">📄 ภาษี</option>
+                                <option value="capital">💵 เงินเติม</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">รายละเอียด</label>
+                            <input type="text" class="form-input" id="pettyDescription" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">วันที่</label>
+                            <input type="date" class="form-input" id="pettyDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">ผู้รับ/ผู้จ่าย</label>
+                            <input type="text" class="form-input" id="pettyParty">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">แนบสลิป/บิล (Image)</label>
+                            <input type="file" class="form-input" id="pettySlip" accept="image/*">
+                            <small style="color: var(--gray); margin-top: 0.25rem; display: block;">📎 รองรับ: JPG, PNG, HEIC (เก็บในหน่วยความจำ)</small>
+                        </div>
+                        <div class="form-group full">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="checkbox" id="hasVAT">
+                                <span>มีภาษี VAT (7%)</span>
+                            </label>
+                        </div>
+                        <div class="form-group full">
+                            <button type="submit" class="form-btn">💾 บันทึกรายการ</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Transaction List -->
+                <div class="form-card">
+                    <h2 class="form-title">📋 รายการทั้งหมด</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>วันที่</th>
+                                    <th>ประเภท</th>
+                                    <th>หมวดหมู่</th>
+                                    <th>รายละเอียด</th>
+                                    <th>จำนวน</th>
+                                    <th>ผู้รับ/ผู้จ่าย</th>
+                                    <th>จัดการ</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pettyTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Accounting Section -->
+            <section class="content-section" id="accounting">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">💰</span> บัญชีหลัก</h1>
+                    <p class="boh-description">General Ledger - อัพเดทอัตโนมัติจากบัญชีย่อย</p>
+                </div>
+
+                <div class="alert-box alert-success">
+                    <div>
+                        <h3 style="color: var(--success); margin-bottom: 0.5rem;">✅ Auto-sync เปิดใช้งาน</h3>
+                        <p>ทุกครั้งที่บันทึกบัญชีย่อย ระบบจะอัพเดทบัญชีใหญ่ให้อัตโนมัติ</p>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📊 Account Mapping</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>บัญชีย่อย</th>
+                                    <th>บัญชีหลัก</th>
+                                    <th>ชื่อบัญชี</th>
+                                    <th>ประเภท</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>🍽️ อาหาร</td>
+                                    <td>5101-001</td>
+                                    <td>ค่าใช้จ่ายอาหาร</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>🔧 ซ่อมบำรุง</td>
+                                    <td>5201-001</td>
+                                    <td>ค่าใช้จ่ายซ่อมบำรุง</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>🧻 ของใช้</td>
+                                    <td>5201-002</td>
+                                    <td>ค่าใช้จ่ายของใช้</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>🎫 ตั๋วท่องเที่ยว</td>
+                                    <td>5301-001</td>
+                                    <td>ค่าใช้จ่ายตั๋วท่องเที่ยว</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>💡 สาธารณูปโภค</td>
+                                    <td>5401-001</td>
+                                    <td>ค่าใช้จ่ายสาธารณูปโภค</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>👷 แรงงาน</td>
+                                    <td>5501-001</td>
+                                    <td>ค่าใช้จ่ายแรงงาน</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>📄 สำนักงาน</td>
+                                    <td>5601-001</td>
+                                    <td>ค่าใช้จ่ายสำนักงาน</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>📄 ภาษี</td>
+                                    <td>5701-001</td>
+                                    <td>ภาษี</td>
+                                    <td>ค่าใช้จ่าย</td>
+                                </tr>
+                                <tr>
+                                    <td>💵 เงินเติม</td>
+                                    <td>1101-001 / 3101-001</td>
+                                    <td>เงินสด / ทุน</td>
+                                    <td>สินทรัพย์ / ส่วนของเจ้าของ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📋 รายการบัญชีใหญ่</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>วันที่</th>
+                                    <th>รายการ</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                    <th>Balance</th>
+                                    <th>อ้างอิง</th>
+                                </tr>
+                            </thead>
+                            <tbody id="generalLedgerTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VAT Report Section -->
+            <section class="content-section" id="vat">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">📑</span> รายงานภาษี VAT</h1>
+                    <p class="boh-description">คำนวณและรายงานภาษีมูลค่าเพิ่ม</p>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📊 สรุป VAT ปี 2026</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--black);" id="vatSales">฿0</div>
+                            <div class="stat-label">ยอดขายรวม</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--warning);" id="vatAmount">฿0</div>
+                            <div class="stat-label">VAT 7%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--success);" id="vatTotal">฿0</div>
+                            <div class="stat-label">ยอดขายรวม VAT</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="exportVATReport()" style="margin-top: 1rem;">
+                        📥 Export VAT Report (Excel)
+                    </button>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📄 บิลที่มี VAT</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>บิล ID</th>
+                                    <th>วันที่</th>
+                                    <th>หมวดหมู่</th>
+                                    <th>รายละเอียด</th>
+                                    <th>ผู้รับ/ผู้จ่าย</th>
+                                    <th>ยอดรวม (VAT)</th>
+                                    <th>ดูบิล</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vatBillsTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">
+                        💡 บิลที่มี VAT จะถูกดึงมาแสดงอัตโนมัติ เมื่อลงบัญชีรายจ่ายที่มีมูลค่า ≥ 1,000 บาท
+                    </p>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📅 รายงานรายเดือน</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>เดือน</th>
+                                    <th>ยอดขาย</th>
+                                    <th>VAT 7%</th>
+                                    <th>รวม VAT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vatMonthlyTable">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OpenClaw Integration Section -->
+            <section class="content-section" id="peekaboo">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">🤖</span> OpenClaw Integration</h1>
+                    <p class="boh-description">ควบคุมการจอง + ดึงข้อมูลจากแพลตฟอร์มภายนอก</p>
+                </div>
+
+                <!-- Integration Status -->
+                <div class="dashboard-grid">
+                    <div class="dashboard-card" style="border-left: 4px solid var(--success);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" style="color: var(--success);">🟢 ออนไลน์</div>
+                                <div class="dashboard-card-label">OpenClaw Status</div>
+                            </div>
+                            <div class="dashboard-card-icon">🤖</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card" style="border-left: 4px solid var(--warning);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="lastSyncTime">--:--</div>
+                                <div class="dashboard-card-label">Sync ล่าสุด</div>
+                            </div>
+                            <div class="dashboard-card-icon">🔄</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card" style="border-left: 4px solid var(--black);">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="platformsConnected">4</div>
+                                <div class="dashboard-card-label">แพลตฟอร์มที่เชื่อมต่อ</div>
+                            </div>
+                            <div class="dashboard-card-icon">🔌</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Platform Integration Cards -->
+                <div class="form-card">
+                    <h2 class="form-title">🔌 แพลตฟอร์มที่เชื่อมต่อ</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                        <!-- Pulse -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--gray);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💜</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Pulse</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">ระบบจัดการโรงแรม (PMS)</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" onclick="syncFromPulse()" style="flex: 1; padding: 0.6rem;">📥 ดึงข้อมูล</button>
+                                <button class="btn btn-black" onclick="openPulseIntegration()" style="flex: 1; padding: 0.6rem;">⚙️ ตั้งค่า</button>
+                            </div>
+                        </div>
+
+                        <!-- Tera -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--success);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🌿</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Tera</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">ระบบบัญชีออนไลน์</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" onclick="syncFromTera()" style="flex: 1; padding: 0.6rem;">📥 ดึงข้อมูล</button>
+                                <button class="btn btn-success" onclick="openTeraIntegration()" style="flex: 1; padding: 0.6rem;">⚙️ ตั้งค่า</button>
+                            </div>
+                        </div>
+
+                        <!-- Business Suite -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--yellow);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💼</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Business Suite</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">จัดการธุรกิจครบวงจร (ERP)</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-secondary" onclick="syncFromBusinessSuite()" style="flex: 1; padding: 0.6rem;">📥 ดึงข้อมูล</button>
+                                <button class="btn btn-black" onclick="openBusinessSuite()" style="flex: 1; padding: 0.6rem;">🤖 Chatbot</button>
+                            </div>
+                        </div>
+
+                        <!-- Vela Resort Website -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--black);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🏡</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Vela-Resort.com</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">เว็บไซต์จองห้องพัก</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว (localStorage)</span>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                <button class="btn btn-success" onclick="refreshDataFromWebsite()" style="flex: 1; padding: 0.6rem;">🔄 Sync ตอนนี้</button>
+                                <button class="btn btn-secondary" onclick="window.open('index.html', '_blank')" style="flex: 1; padding: 0.6rem;">🌐 เปิดเว็บ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sync Log -->
+                <div class="form-card">
+                    <h2 class="form-title">📋 Sync Log</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>เวลาที่</th>
+                                    <th>แพลตฟอร์ม</th>
+                                    <th>Action</th>
+                                    <th>สถานะ</th>
+                                    <th>รายละเอียด</th>
+                                </tr>
+                            </thead>
+                            <tbody id="syncLogTable">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--gray);">ยังไม่มีรายการ Sync</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Peekaboo Auto-release -->
+                <div class="form-card" style="margin-top: 1.5rem;">
+                    <h2 class="form-title">👁️ Peekaboo Auto-release</h2>
+                    <p style="color: var(--gray); margin-bottom: 1rem;">ระบบจะปล่อยห้องที่ยังไม่ชำระเงินภายใน 24 ชม. กลับมาว่างอัตโนมัติ</p>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--warning);">24 ชั่วโมง</div>
+                            <div class="stat-label">⏰ ระยะเวลาถือจอง</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--success);" id="peekabooReleased">0 ห้อง</div>
+                            <div class="stat-label">📊 ห้องที่ปล่อยแล้ว</div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="runPeekabooRelease()" style="margin-top: 1rem;">
+                        👁️ รัน Peekaboo Auto-release ตอนนี้
+                    </button>
+                </div>
+            </section>
+
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" style="color: var(--success);">🟢 ออนไลน์</div>
+                                <div class="dashboard-card-label">สถานะระบบ</div>
+                            </div>
+                            <div class="dashboard-card-icon">🖥️</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="peekabooLastRun">--:--</div>
+                                <div class="dashboard-card-label">รันล่าสุด</div>
+                            </div>
+                            <div class="dashboard-card-icon">🕐</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-header">
+                            <div>
+                                <div class="dashboard-card-value" id="peekabooTotalReleased">0</div>
+                                <div class="dashboard-card-label">ห้องที่ปล่อยแล้ว</div>
+                            </div>
+                            <div class="dashboard-card-icon">📊</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">⚙️ การตั้งค่า</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--warning);">24 ชั่วโมง</div>
+                            <div class="stat-label">⏰ ระยะเวลาถือจอง</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--black);">1 ชั่วโมง</div>
+                            <div class="stat-label">🔄 ตรวจสอบทุก</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="runPeekabooRelease()" style="margin-top: 1rem;">
+                        👁️ รันตอนนี้
+                    </button>
+                </div>
+
+                <div class="form-card">
+                    <h2 class="form-title">📋 Log</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>วันที่</th>
+                                    <th>ห้องพัก</th>
+                                    <th>Booking ID</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="peekabooLogTable">
+                                <tr>
+                                    <td colspan="5" style="text-align: center; color: var(--gray);">ยังไม่มีรายการ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section class="content-section" id="settings">
+                <div class="boh-header">
+                    <h1 class="boh-title"><span class="boh-title-icon">⚙️</span> ตั้งค่า</h1>
+                    <p class="boh-description">การตั้งค่าระบบ</p>
+                </div>
+
+                <!-- Data Management -->
+                <div class="form-card">
+                    <h2 class="form-title">💾 จัดการข้อมูล</h2>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button onclick="exportData()" class="btn btn-primary">📤 Export ข้อมูล</button>
+                        <button onclick="document.getElementById('importFile').click()" class="btn btn-secondary">📥 Import ข้อมูล</button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                        <button onclick="clearOldBookings()" class="btn btn-danger">🗑️ ลบข้อมูลเก่า</button>
+                        <button onclick="resetAllData()" class="btn btn-black">🔄 Reset ทั้งหมด</button>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="form-card">
+                    <h2 class="form-title">🔔 การแจ้งเตือน</h2>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.75rem;">
+                            <input type="checkbox" checked>
+                            <span>📩 แจ้งเตือนการจองใหม่ (LINE)</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.75rem;">
+                            <input type="checkbox" checked>
+                            <span>⚠️ แจ้งเตือน Overbooking</span>
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.75rem;">
+                            <input type="checkbox" checked>
+                            <span>👁️ แจ้งเตือน Peekaboo Release</span>
+                        </label>
+                    </div>
+                    <button class="btn btn-primary" style="margin-top: 1rem;">💾 บันทึกการตั้งค่า</button>
+                </div>
+
+                <!-- Integrations -->
+                <div class="form-card">
+                    <h2 class="form-title">🔌 ระบบที่เชื่อมต่อ (Integrations)</h2>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <!-- Vela Resort Website -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--yellow);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🌐</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Vela Resort Website</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">เว็บไซต์หลัก</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">http://vela-resort.com</span>
+                            </div>
+                            <a href="http://vela-resort.com" target="_blank" class="btn btn-primary" style="width: 100%; text-decoration: none; display: inline-block; text-align: center;">🔗 เปิดเว็บไซต์</a>
+                        </div>
+
+                        <!-- Pulse -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--gray);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💜</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Pulse</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">ระบบจัดการโรงแรม</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <button class="btn btn-secondary" style="width: 100%;" onclick="openPulseIntegration()">⚙️ ตั้งค่า</button>
+                        </div>
+
+                        <!-- Tera -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--success);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">🌿</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Tera</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">ระบบบัญชีออนไลน์</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <button class="btn btn-success" style="width: 100%;" onclick="openTeraIntegration()">⚙️ ตั้งค่า</button>
+                        </div>
+
+                        <!-- Business Suite -->
+                        <div style="background: var(--light-gray); padding: 1.5rem; border-radius: 16px; border: 2px solid var(--yellow);">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem;">
+                                <span style="font-size: 2rem;">💼</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--black);">Business Suite</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--gray); margin-bottom: 1rem;">จัดการธุรกิจครบวงจร</p>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
+                                <span style="width: 8px; height: 8px; background: var(--success); border-radius: 50%;"></span>
+                                <span style="font-size: 0.8rem; color: var(--black);">เชื่อมต่อแล้ว</span>
+                            </div>
+                            <button class="btn btn-black" style="width: 100%;" onclick="openBusinessSuite()">🤖 Chatbot</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Info -->
+                <div class="form-card">
+                    <h2 class="form-title">ℹ️ ข้อมูลระบบ</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--black); font-size: 1.25rem;">1.0</div>
+                            <div class="stat-label">เวอร์ชัน</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--black); font-size: 1.25rem;">9 มี.ค. 2026</div>
+                            <div class="stat-label">อัพเดทล่าสุด</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" style="color: var(--black); font-size: 1.25rem;">4-Color</div>
+                            <div class="stat-label">ธีม</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Overbooking Prevention System -->
+    <script src="overbooking-prevention.js"></script>
+    <!-- HTML2PDF for PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- BOH JavaScript -->
+    <script>
+        // ===================================
+        // GLOBAL STATE
+        // ===================================
+        let bookings = [];
+        let pettyCash = [];
+        let generalLedger = [];
+        let bills = [];
+        let billImages = {};
+        let currentMonth = new Date();
+        let chartInstance = null;
+
+        // Petty Cash Alert Threshold
+        const PETTY_CASH_ALERT_THRESHOLD = 200;
+
+        // ===================================
+        // INITIALIZATION
+        // ===================================
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllData();
+            setupNavigation();
+            autoSyncFromWebsite();
+            loadDashboard();
+            
+            // Auto-sync every 30 seconds when BOH is open
+            setInterval(function() {
+                autoSyncFromWebsite();
+            }, 30000);
+        });
+
+        // ===================================
+        // LOGIN
+        // ===================================
+        function handleLogin(event) {
+            event.preventDefault();
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('bohLayout').classList.add('active');
+            loadAllData();
+        }
+
+        // ===================================
+        // NAVIGATION
+        // ===================================
+        // Mobile sidebar toggle
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('.boh-sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            sidebar.classList.toggle('mobile-open');
+            overlay.classList.toggle('active');
+            console.log('📱 Mobile sidebar:', sidebar.classList.contains('mobile-open') ? 'open' : 'closed');
+        }
+        
+        function setupNavigation() {
+            console.log('🔵 Setting up navigation...');
+            const menuItems = document.querySelectorAll('.boh-menu-item');
+            console.log('📊 Found', menuItems.length, 'menu items');
+            
+            menuItems.forEach((item, index) => {
+                const section = item.dataset.section;
+                console.log(`  ${index + 1}. ${section}`);
+                
+                // Remove any existing listeners and add new one
+                item.style.cursor = 'pointer';
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    console.log('🔵 Clicked:', section);
+                    showSection(section);
+                    
+                    // Close mobile sidebar after selection
+                    if (window.innerWidth <= 768) {
+                        const sidebar = document.querySelector('.boh-sidebar');
+                        sidebar.classList.remove('mobile-open');
+                    }
+                });
+            });
+            
+            console.log('✅ Navigation setup complete');
+        }
+
+        function showSection(sectionId) {
+            console.log('🔵 showSection called with:', sectionId);
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remove active from all menu items
+            document.querySelectorAll('.boh-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (!targetSection) {
+                console.error('❌ Section not found:', sectionId);
+                alert('⚠️ ไม่พบส่วน: ' + sectionId);
+                return;
+            }
+            targetSection.classList.add('active');
+            // Force inline style as fallback
+            targetSection.style.display = 'block';
+            targetSection.style.visibility = 'visible';
+            targetSection.style.opacity = '1';
+            console.log('✅ Section shown:', sectionId);
+
+            // Set active menu item
+            const menuItem = document.querySelector(`[data-section="${sectionId}"]`);
+            if (menuItem) {
+                menuItem.classList.add('active');
+                console.log('✅ Menu item active:', sectionId);
+            }
+
+            // Load section data
+            switch(sectionId) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'bookings':
+                    loadBookings();
+                    break;
+                case 'booking-control':
+                    loadBookingControl();
+                    break;
+                case 'calendar':
+                    renderCalendar();
+                    break;
+                case 'petty':
+                    loadPettyCash();
+                    break;
+                case 'accounting':
+                    loadAccounting();
+                    break;
+                case 'vat':
+                    loadVATReport();
+                    break;
+                case 'peekaboo':
+                    loadPeekaboo();
+                    break;
+            }
+        }
+
+        // ===================================
+        // DATA MANAGEMENT
+        // ===================================
+        function loadAllData() {
+            bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            pettyCash = JSON.parse(localStorage.getItem('vela_petty')) || [];
+            generalLedger = JSON.parse(localStorage.getItem('vela_general_ledger')) || [];
+            bills = JSON.parse(localStorage.getItem('vela_bills')) || [];
+            billImages = JSON.parse(localStorage.getItem('vela_bill_images')) || {};
+            
+            console.log('✅ Data loaded:', bookings.length, 'bookings');
+            
+            // Refresh calendar and booking control after loading data
+            renderCalendar();
+            loadBookingControl();
+        }
+
+        function autoSyncFromWebsite() {
+            // Update last sync time
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const syncTimeElement = document.getElementById('lastSyncTime');
+            if (syncTimeElement) {
+                syncTimeElement.textContent = `Sync ล่าสุด: ${timeStr}`;
+            }
+            
+            // Check for new bookings from website
+            const webBookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            
+            // Compare counts
+            const currentCount = bookings.length;
+            const webCount = webBookings.length;
+            
+            if (webCount > currentCount) {
+                // New bookings found!
+                console.log(`🔄 Auto-sync: Found ${webCount - currentCount} new booking(s) from website`);
+                bookings = webBookings;
+                saveBookings();
+                loadDashboard();
+                renderCalendar();
+                loadBookingControl();
+                
+                // Show subtle notification (not alert, to avoid interrupting work)
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success);
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.innerHTML = `
+                    <div style="font-weight: 600;">✅ Sync สำเร็จ!</div>
+                    <div style="font-size: 0.85rem; opacity: 0.9;">พบการจองใหม่ ${webCount - currentCount} รายการจากเว็บไซต์</div>
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => notification.remove(), 300);
+                }, 3000);
+            }
+        }
+
+        function saveBookings() {
+            localStorage.setItem('vela_bookings', JSON.stringify(bookings));
+            syncPettyToGeneralLedger();
+        }
+
+        function savePettyCash() {
+            localStorage.setItem('vela_petty', JSON.stringify(pettyCash));
+            syncPettyToGeneralLedger();
+            checkPettyCashAlert();
+        }
+
+        function saveBills() {
+            localStorage.setItem('vela_bills', JSON.stringify(bills));
+            localStorage.setItem('vela_bill_images', JSON.stringify(billImages));
+        }
+
+        // ===================================
+        // PETTY CASH ALERT SYSTEM
+        // ===================================
+        function checkPettyCashAlert() {
+            const opening = 5000;
+            const income = pettyCash.filter(p => p.type === 'income').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const expense = pettyCash.filter(p => p.type === 'expense').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const balance = opening + income - expense;
+
+            if (balance <= PETTY_CASH_ALERT_THRESHOLD) {
+                // Show alert in UI
+                const alertHtml = `
+                    <div class="alert-box alert-warning" style="position: fixed; top: 20px; right: 20px; z-index: 10000; min-width: 300px;">
+                        <div>
+                            <h3 style="color: var(--warning); margin-bottom: 0.5rem;">⚠️ Petty Cash ต่ำ!</h3>
+                            <p>ยอดคงเหลือ: <strong>฿${balance.toLocaleString()}</strong></p>
+                            <p style="margin-top: 0.5rem; font-size: 0.9rem;">กรุณาเติมเงินด่วน!</p>
+                            <button onclick="this.closest('.alert-box').remove()" class="btn btn-secondary" style="margin-top: 0.5rem; padding: 0.4rem 0.8rem;">✕ ปิด</button>
+                        </div>
+                    </div>
+                `;
+                document.body.insertAdjacentHTML('beforeend', alertHtml);
+
+                // Also log to console
+                console.warn(`⚠️ PETTY CASH ALERT: Balance is only ฿${balance} (threshold: ฿${PETTY_CASH_ALERT_THRESHOLD})`);
+            }
+
+            return balance;
+        }
+
+        // ===================================
+        // BILL STORAGE SYSTEM
+        // ===================================
+        function saveBill(billData, imageData) {
+            const bill = {
+                id: billData.id || 'BILL' + (bills.length + 1).toString().padStart(3, '0'),
+                date: billData.date,
+                category: billData.category,
+                amount: parseFloat(billData.amount),
+                description: billData.description,
+                party: billData.party,
+                vatAmount: calculateVATAmount(billData.amount),
+                hasVAT: billData.hasVAT || false,
+                pettyCashRef: billData.pettyCashRef,
+                createdAt: new Date().toISOString()
+            };
+
+            bills.push(bill);
+
+            if (imageData) {
+                billImages[bill.id] = imageData;
+            }
+
+            saveBills();
+            return bill.id;
+        }
+
+        function getBillsByCategory(category) {
+            return bills.filter(b => b.category === category);
+        }
+
+        function getBillsWithVAT() {
+            return bills.filter(b => b.hasVAT && b.vatAmount > 0);
+        }
+
+        function getBillById(billId) {
+            return bills.find(b => b.id === billId);
+        }
+
+        function getBillImage(billId) {
+            return billImages[billId];
+        }
+
+        function deleteBill(billId) {
+            const index = bills.findIndex(b => b.id === billId);
+            if (index >= 0) {
+                bills.splice(index, 1);
+                delete billImages[billId];
+                saveBills();
+                return true;
+            }
+            return false;
+        }
+
+        function calculateVATAmount(amount) {
+            // VAT is 7% of the amount
+            return parseFloat(amount) * 0.07;
+        }
+
+        function getTotalVAT() {
+            return bills.filter(b => b.hasVAT).reduce((sum, b) => sum + b.vatAmount, 0);
+        }
+
+        // ===================================
+        // DASHBOARD
+        // ===================================
+        function loadDashboard() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const currentYear = now.getFullYear();
+
+            // Filter bookings for current month
+            const monthBookings = bookings.filter(b => {
+                const checkIn = new Date(b.checkIn);
+                return checkIn.getMonth() === currentMonth && checkIn.getFullYear() === currentYear;
+            });
+
+            // Calculate stats
+            const totalBookings = monthBookings.length;
+            const totalRevenue = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            const pendingCount = monthBookings.filter(b => b.status === 'pending').length;
+            const occupancyRate = Math.round((totalBookings / 30) * 100);
+
+            // Update dashboard
+            document.getElementById('dashBookings').textContent = totalBookings;
+            document.getElementById('dashRevenue').textContent = '฿' + totalRevenue.toLocaleString();
+            document.getElementById('dashPending').textContent = pendingCount;
+            document.getElementById('dashOccupancy').textContent = occupancyRate + '%';
+            document.getElementById('pendingBadge').textContent = pendingCount;
+
+            // Update badge
+            document.getElementById('pendingBadge').style.display = pendingCount > 0 ? 'inline-block' : 'none';
+
+            // Render chart
+            renderChannelChart();
+            
+            // Update calendar
+            renderCalendar();
+        }
+
+        function renderChannelChart() {
+            const channels = {
+                'Website': 0,
+                'Facebook': 0,
+                'LINE': 0,
+                'Phone': 0,
+                'Walk-in': 0
+            };
+
+            bookings.forEach(b => {
+                if (b.channel && channels.hasOwnProperty(b.channel)) {
+                    channels[b.channel]++;
+                } else {
+                    channels['Walk-in']++;
+                }
+            });
+
+            const ctx = document.getElementById('channelChart').getContext('2d');
+
+            if (chartInstance) {
+                chartInstance.destroy();
+            }
+
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(channels),
+                    datasets: [{
+                        data: Object.values(channels),
+                        backgroundColor: [
+                            '#1A1A1A',  // Website - Black
+                            '#10B981',  // Facebook - Green
+                            '#FFD700',  // LINE - Yellow
+                            '#9CA3AF',  // Phone - Gray
+                            '#EF4444'   // Walk-in - Red
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+            // Render legend
+            const legendHtml = Object.entries(channels).map(([key, value]) => `
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div style="width: 16px; height: 16px; border-radius: 4px; background: ${
+                        key === 'Website' ? '#1A1A1A' :
+                        key === 'Facebook' ? '#10B981' :
+                        key === 'LINE' ? '#FFD700' :
+                        key === 'Phone' ? '#9CA3AF' : '#EF4444'
+                    };"></div>
+                    <span>${key}: ${value}</span>
+                </div>
+            `).join('');
+
+            document.getElementById('channelLegend').innerHTML = legendHtml;
+        }
+
+        function refreshDataFromWebsite() {
+            // Sync with website localStorage
+            const webBookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            bookings = webBookings;
+            saveBookings();
+            loadDashboard();
+            renderCalendar();
+            loadBookingControl();
+            alert('✅ โหลดข้อมูลจากเว็บสำเร็จ!');
+        }
+
+        function clearOldBookings() {
+            if (confirm('ต้องการลบข้อมูลเก่าทั้งหมดหรือไม่?')) {
+                bookings = [];
+                pettyCash = [];
+                generalLedger = [];
+                saveBookings();
+                savePettyCash();
+                localStorage.removeItem('vela_general_ledger');
+                loadDashboard();
+                renderCalendar();
+                loadBookingControl();
+                alert('✅ ลบข้อมูลสำเร็จ!');
+            }
+        }
+
+        // ===================================
+        // BOOKINGS
+        // ===================================
+        function loadBookings() {
+            renderBookingsByMonth();
+        }
+
+        function renderBookingsByMonth() {
+            const container = document.getElementById('bookingsByMonth');
+            if (!container) return;
+
+            // Group bookings by month
+            const grouped = {};
+            bookings.forEach((b, index) => {
+                const month = b.checkIn.substring(0, 7); // YYYY-MM
+                if (!grouped[month]) {
+                    grouped[month] = [];
+                }
+                grouped[month].push({ ...b, originalIndex: index });
+            });
+
+            // Sort months descending (newest first)
+            const sortedMonths = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+
+            if (sortedMonths.length === 0) {
+                container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 2rem;">ยังไม่มีข้อมูลการจอง</p>';
+                return;
+            }
+
+            let html = '';
+            sortedMonths.forEach(month => {
+                const monthBookings = grouped[month];
+                const monthName = formatMonthName(month);
+                const monthTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+
+                html += `
+                    <div style="margin-bottom: 2rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--yellow);">
+                            <h3 style="color: var(--black); font-size: 1.25rem;">📅 ${monthName}</h3>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span style="color: var(--gray); font-size: 0.9rem;">${monthBookings.length} การจอง</span>
+                                <span style="font-weight: 700; color: var(--success);">รวม ฿${monthTotal.toLocaleString()}</span>
+                                <button class="btn btn-primary" onclick="generateMonthlyInvoice('${month}')" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
+                                    🧾 สร้างบิลเดือนนี้
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;">
+                                            <input type="checkbox" onchange="toggleMonthSelection('${month}', this.checked)">
+                                        </th>
+                                        <th>#</th>
+                                        <th>ชื่อลูกค้า</th>
+                                        <th>เบอร์โทร</th>
+                                        <th>ห้องพัก</th>
+                                        <th>เช็คอิน</th>
+                                        <th>เช็คเอาท์</th>
+                                        <th>คืน</th>
+                                        <th>จำนวน</th>
+                                        <th>รวม</th>
+                                        <th>สถานะ</th>
+                                        <th>ช่องทาง</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${monthBookings.map((b, idx) => `
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="booking-select" data-index="${b.originalIndex}" data-month="${month}">
+                                            </td>
+                                            <td>${b.id || idx + 1}</td>
+                                            <td><strong>${b.name}</strong></td>
+                                            <td>${b.phone || '-'}</td>
+                                            <td>${b.room === 'hytte' ? '🏠 Hytte' : b.room === 'hus' ? '🏡 Hus' : '🏨 หลายห้อง'}</td>
+                                            <td>${formatDate(b.checkIn)}</td>
+                                            <td>${formatDate(b.checkOut)}</td>
+                                            <td>${calculateNights(b.checkIn, b.checkOut)}</td>
+                                            <td>${b.qty}</td>
+                                            <td style="font-weight: 700; color: var(--black);">฿${parseFloat(b.total || 0).toLocaleString()}</td>
+                                            <td><span class="status-badge status-${b.status || 'pending'}">${getStatusText(b.status)}</span></td>
+                                            <td>${getChannelName(b.channel)}</td>
+                                            <td>
+                                                <button class="btn btn-secondary" onclick="editBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">✏️</button>
+                                                <button class="btn btn-primary" onclick="generateSingleInvoice(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🧾</button>
+                                                <button class="btn btn-danger" onclick="deleteBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🗑️</button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function filterBookingsByMonth() {
+            const monthFilter = document.getElementById('monthFilter').value;
+            const container = document.getElementById('bookingsByMonth');
+            if (!container) return;
+
+            if (monthFilter === 'all') {
+                renderBookingsByMonth();
+            } else {
+                // Show only selected month
+                const grouped = {};
+                bookings.forEach((b, index) => {
+                    const month = b.checkIn.substring(0, 7);
+                    if (month === monthFilter) {
+                        if (!grouped[month]) grouped[month] = [];
+                        grouped[month].push({ ...b, originalIndex: index });
+                    }
+                });
+
+                const sortedMonths = Object.keys(grouped).sort((a, b) => b.localeCompare(a));
+                
+                if (sortedMonths.length === 0) {
+                    container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 2rem;">ไม่มีการจองในเดือนนี้</p>';
+                    return;
+                }
+
+                let html = '';
+                sortedMonths.forEach(month => {
+                    const monthBookings = grouped[month];
+                    const monthName = formatMonthName(month);
+                    const monthTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+
+                    html += `
+                        <div style="margin-bottom: 2rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--yellow);">
+                                <h3 style="color: var(--black); font-size: 1.25rem;">📅 ${monthName}</h3>
+                                <span style="font-weight: 700; color: var(--success);">รวม ฿${monthTotal.toLocaleString()}</span>
+                            </div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>ชื่อลูกค้า</th>
+                                            <th>ห้องพัก</th>
+                                            <th>เช็คอิน</th>
+                                            <th>เช็คเอาท์</th>
+                                            <th>รวม</th>
+                                            <th>สถานะ</th>
+                                            <th>จัดการ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${monthBookings.map((b, idx) => `
+                                            <tr>
+                                                <td>${b.id || idx + 1}</td>
+                                                <td><strong>${b.name}</strong></td>
+                                                <td>${b.room === 'hytte' ? '🏠 Hytte' : b.room === 'hus' ? '🏡 Hus' : '🏨'}</td>
+                                                <td>${formatDate(b.checkIn)}</td>
+                                                <td>${formatDate(b.checkOut)}</td>
+                                                <td style="font-weight: 700;">฿${parseFloat(b.total || 0).toLocaleString()}</td>
+                                                <td><span class="status-badge status-${b.status || 'pending'}">${getStatusText(b.status)}</span></td>
+                                                <td>
+                                                    <button class="btn btn-primary" onclick="generateSingleInvoice(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🧾</button>
+                                                    <button class="btn btn-danger" onclick="deleteBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🗑️</button>
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = html;
+            }
+        }
+
+        function formatMonthName(monthStr) {
+            const [year, month] = monthStr.split('-');
+            const monthNames = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                              'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+            return `${monthNames[parseInt(month) - 1]} ${parseInt(year) + 543}`;
+        }
+
+        function calculateNights(checkIn, checkOut) {
+            if (!checkIn || !checkOut) return 0;
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diff = (end - start) / (1000 * 60 * 60 * 24);
+            return Math.max(1, Math.floor(diff));
+        }
+
+        function getChannelName(channel) {
+            const names = {
+                'Website': '🌐 Website',
+                'Facebook': '📘 Facebook',
+                'LINE': '💚 LINE',
+                'Booking.com': '🏨 Booking.com',
+                'Traveloka': '🟢 Traveloka',
+                'Walk-in': '🚶 Walk-in',
+                'Phone': '📞 Phone'
+            };
+            return names[channel] || channel || '-';
+        }
+
+        function toggleMonthSelection(month, checked) {
+            const checkboxes = document.querySelectorAll(`.booking-select[data-month="${month}"]`);
+            checkboxes.forEach(cb => cb.checked = checked);
+        }
+
+        function getSelectedBookings() {
+            const checkboxes = document.querySelectorAll('.booking-select:checked');
+            return Array.from(checkboxes).map(cb => ({
+                index: parseInt(cb.dataset.index),
+                booking: bookings[parseInt(cb.dataset.index)]
+            }));
+        }
+
+        function generateSingleInvoice(index) {
+            const booking = bookings[index];
+            const year = new Date().getFullYear();
+            const invoiceNum = `INV-${year}-${String(bookings.length + 1).padStart(4, '0')}`;
+            
+            // Create invoice data
+            const invoiceData = {
+                invoiceNumber: invoiceNum,
+                date: new Date().toISOString().split('T')[0],
+                customer: booking.name,
+                phone: booking.phone,
+                checkIn: booking.checkIn,
+                checkOut: booking.checkOut,
+                room: booking.room === 'hytte' ? 'Hytte' : 'Hus',
+                nights: calculateNights(booking.checkIn, booking.checkOut),
+                amount: booking.total,
+                discount: booking.discount || 0,
+                vat: (booking.total - (booking.discount || 0)) * 0.07,
+                total: (booking.total - (booking.discount || 0)) * 1.07,
+                subtotal: booking.total - (booking.discount || 0)
+            };
+
+            // Generate PDF
+            generateInvoicePDF(invoiceData, [booking]);
+        }
+
+        function generateInvoiceFromSelected() {
+            const selected = getSelectedBookings();
+            if (selected.length === 0) {
+                alert('⚠️ กรุณาเลือกรายการจองอย่างน้อย 1 รายการ');
+                return;
+            }
+
+            const bookingsList = selected.map(item => item.booking);
+            const year = new Date().getFullYear();
+            const totalAmount = bookingsList.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0);
+            const totalDiscount = bookingsList.reduce((sum, item) => sum + (parseFloat(item.discount) || 0), 0);
+            const subtotal = totalAmount - totalDiscount;
+            const vat = subtotal * 0.07;
+            const grandTotal = subtotal + vat;
+
+            const invoiceData = {
+                invoiceNumber: `INV-${year}-B${String(selected.length).padStart(4, '0')}`,
+                date: new Date().toISOString().split('T')[0],
+                bookingCount: bookingsList.length,
+                subtotal: subtotal,
+                discount: totalDiscount,
+                vat: vat,
+                total: grandTotal
+            };
+
+            // Generate PDF
+            generateInvoicePDF(invoiceData, bookingsList);
+        }
+
+        function generateMonthlyInvoice(month) {
+            if (!month) {
+                month = document.getElementById('monthFilter').value;
+                if (month === 'all') {
+                    alert('⚠️ กรุณาเลือกเดือนที่ต้องการสร้างบิล');
+                    return;
+                }
+            }
+
+            const monthBookings = bookings.filter(b => b.checkIn.startsWith(month));
+            if (monthBookings.length === 0) {
+                alert('⚠️ ไม่มีการจองในเดือนนี้');
+                return;
+            }
+
+            const year = new Date().getFullYear();
+            const totalAmount = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            const totalDiscount = monthBookings.reduce((sum, b) => sum + (parseFloat(b.discount) || 0), 0);
+            const subtotal = totalAmount - totalDiscount;
+            const vat = subtotal * 0.07;
+            const grandTotal = subtotal + vat;
+
+            const invoiceData = {
+                invoiceNumber: `INV-${year}-M${month.replace('-', '')}`,
+                date: new Date().toISOString().split('T')[0],
+                period: month,
+                bookings: monthBookings,
+                bookingCount: monthBookings.length,
+                subtotal: subtotal,
+                discount: totalDiscount,
+                vat: vat,
+                total: grandTotal
+            };
+
+            // Generate PDF
+            generateInvoicePDF(invoiceData, monthBookings);
+        }
+
+        function generateInvoicePDF(invoiceData, bookingsList) {
+            // Create invoice HTML
+            const invoiceHTML = `
+                <div style="font-family: 'Sarabun', sans-serif; padding: 40px; background: white; max-width: 800px; margin: 0 auto;">
+                    <!-- Header -->
+                    <div style="text-align: center; border-bottom: 3px solid #FFD700; padding-bottom: 20px; margin-bottom: 30px;">
+                        <h1 style="color: #1A1A1A; font-size: 28px; margin: 0 0 10px 0;">🏨 VELA RESORT UMPHANG</h1>
+                        <p style="color: #6B7280; font-size: 14px; margin: 0;">528 ต.แม่กลอง อ.อุ้มผาง จ.ตาก 63170</p>
+                        <p style="color: #6B7280; font-size: 14px; margin: 5px 0 0 0;">📞 098-908-4356 | ✉️ vela.umphang@gmail.com</p>
+                        <p style="color: #6B7280; font-size: 14px; margin: 5px 0 0 0;"><strong>เลขผู้เสียภาษี:</strong> 1200100009235</p>
+                    </div>
+
+                    <!-- Invoice Info -->
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 30px;">
+                        <div>
+                            <h2 style="color: #1A1A1A; font-size: 24px; margin: 0 0 10px 0;">📄 ใบเสร็จรับเงิน / Invoice</h2>
+                            <p style="color: #6B7280; font-size: 14px; margin: 5px 0;"><strong>เลขที่:</strong> ${invoiceData.invoiceNumber}</p>
+                            <p style="color: #6B7280; font-size: 14px; margin: 5px 0;"><strong>วันที่:</strong> ${new Date(invoiceData.date).toLocaleDateString('th-TH')}</p>
+                            ${invoiceData.period ? `<p style="color: #6B7280; font-size: 14px; margin: 5px 0;"><strong>ประจำเดือน:</strong> ${formatMonthName(invoiceData.period)}</p>` : ''}
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="background: #FEF3C7; padding: 15px; border-radius: 8px; border-left: 4px solid #FFD700;">
+                                <p style="color: #1A1A1A; font-size: 16px; margin: 0;"><strong>ยอดรวมสุทธิ</strong></p>
+                                <p style="color: #F59E0B; font-size: 28px; font-weight: 800; margin: 10px 0 0 0;">฿${invoiceData.total.toLocaleString()}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Info -->
+                    <div style="background: #F9FAFB; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #E5E7EB;">
+                        <h3 style="color: #1A1A1A; font-size: 16px; margin: 0 0 10px 0;">👤 ข้อมูลลูกค้า</h3>
+                        ${bookingsList.map((b, i) => `
+                            <p style="color: #4B5563; font-size: 14px; margin: 5px 0;">
+                                <strong>${i + 1}.</strong> ${b.name} 
+                                ${b.phone ? `| 📞 ${b.phone}` : ''}
+                            </p>
+                        `).join('')}
+                    </div>
+
+                    <!-- Bookings Table -->
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;">
+                        <thead>
+                            <tr style="background: #1A1A1A; color: white;">
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">#</th>
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">ชื่อลูกค้า</th>
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">ห้องพัก</th>
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">เช็คอิน</th>
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">เช็คเอาท์</th>
+                                <th style="padding: 12px; text-align: left; font-size: 14px;">คืน</th>
+                                <th style="padding: 12px; text-align: right; font-size: 14px;">ราคาห้อง</th>
+                                <th style="padding: 12px; text-align: right; font-size: 14px;">ส่วนลด</th>
+                                <th style="padding: 12px; text-align: right; font-size: 14px;">ยอดรวม</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${bookingsList.map((b, i) => {
+                                const nights = calculateNights(b.checkIn, b.checkOut);
+                                const roomRate = parseFloat(b.total) / nights;
+                                const discount = b.discount || 0;
+                                return `
+                                <tr style="border-bottom: 1px solid #E5E7EB;">
+                                    <td style="padding: 12px; font-size: 14px;">${i + 1}</td>
+                                    <td style="padding: 12px; font-size: 14px;">${b.name}</td>
+                                    <td style="padding: 12px; font-size: 14px;">${b.room === 'hytte' ? '🏠 Hytte' : '🏡 Hus'}</td>
+                                    <td style="padding: 12px; font-size: 14px;">${formatDate(b.checkIn)}</td>
+                                    <td style="padding: 12px; font-size: 14px;">${formatDate(b.checkOut)}</td>
+                                    <td style="padding: 12px; font-size: 14px;">${nights}</td>
+                                    <td style="padding: 12px; font-size: 14px; text-align: right;">฿${roomRate.toLocaleString()}</td>
+                                    <td style="padding: 12px; font-size: 14px; text-align: right; color: #EF4444;">-${discount.toLocaleString()}</td>
+                                    <td style="padding: 12px; font-size: 14px; text-align: right; font-weight: 700;">฿${parseFloat(b.total).toLocaleString()}</td>
+                                </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+
+                    <!-- Summary -->
+                    <div style="background: #F3F4F6; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #6B7280; font-size: 14px;">ยอดรวมก่อนภาษี</span>
+                            <span style="color: #1A1A1A; font-size: 14px; font-weight: 600;">฿${invoiceData.subtotal.toLocaleString()}</span>
+                        </div>
+                        ${invoiceData.discount > 0 ? `
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #6B7280; font-size: 14px;">ส่วนลดรวม</span>
+                            <span style="color: #EF4444; font-size: 14px; font-weight: 600;">-฿${invoiceData.discount.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                        </div>
+                        ` : ''}
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="color: #6B7280; font-size: 14px;">ภาษีมูลค่าเพิ่ม (7%)</span>
+                            <span style="color: #1A1A1A; font-size: 14px; font-weight: 600;">฿${invoiceData.vat.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding-top: 10px; border-top: 2px solid #D1D5DB;">
+                            <span style="color: #1A1A1A; font-size: 16px; font-weight: 800;">ยอดรวมสุทธิ</span>
+                            <span style="color: #F59E0B; font-size: 20px; font-weight: 800;">฿${invoiceData.total.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #E5E7EB; text-align: center;">
+                        <p style="color: #9CA3AF; font-size: 12px; margin: 0;">เอกสารนี้สร้างอัตโนมัติโดยระบบ Vela BOH</p>
+                        <p style="color: #9CA3AF; font-size: 12px; margin: 5px 0 0 0;">สร้างเมื่อ: ${new Date().toLocaleString('th-TH')}</p>
+                        <p style="color: #9CA3AF; font-size: 11px; margin: 10px 0 0 0; font-style: italic;">ขอขอบคุณที่เข้าพักกับเรา</p>
+                    </div>
+                </div>
+            `;
+
+            // Generate PDF
+            const opt = {
+                margin: 0,
+                filename: `${invoiceData.invoiceNumber}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            // Create temporary element
+            const element = document.createElement('div');
+            element.innerHTML = invoiceHTML;
+            document.body.appendChild(element);
+
+            // Generate and download
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.body.removeChild(element);
+                
+                // Save to localStorage
+                const existingInvoices = JSON.parse(localStorage.getItem('vela_invoices')) || [];
+                existingInvoices.push({
+                    ...invoiceData,
+                    id: invoiceData.invoiceNumber,
+                    type: invoiceData.period ? 'monthly' : (bookingsList.length > 1 ? 'bulk' : 'single'),
+                    bookings: bookingsList
+                });
+                localStorage.setItem('vela_invoices', JSON.stringify(existingInvoices));
+                
+                console.log('✅ PDF generated and saved');
+            });
+        }
+
+        function exportBookingsPDF() {
+            if (bookings.length === 0) {
+                alert('⚠️ ไม่มีข้อมูลการจอง');
+                return;
+            }
+
+            const totalAmount = bookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            
+            const invoiceData = {
+                invoiceNumber: `EXPORT-ALL-${Date.now()}`,
+                date: new Date().toISOString().split('T')[0],
+                bookingCount: bookings.length,
+                subtotal: totalAmount,
+                vat: totalAmount * 0.07,
+                total: totalAmount * 1.07
+            };
+
+            generateInvoicePDF(invoiceData, bookings);
+        }
+
+        function handleBookingSubmit(event) {
+            event.preventDefault();
+
+            const booking = {
+                id: document.getElementById('bookingId').value || 'BK' + (bookings.length + 1).toString().padStart(3, '0'),
+                name: document.getElementById('bookingName').value,
+                phone: document.getElementById('bookingPhone').value,
+                checkIn: document.getElementById('bookingCheckin').value,
+                checkOut: document.getElementById('bookingCheckout').value,
+                room: document.getElementById('bookingRoom').value,
+                qty: parseInt(document.getElementById('bookingQty').value),
+                discount: parseInt(document.getElementById('bookingDiscount').value) || 0,
+                total: calculateBookingTotal(),
+                status: 'pending',
+                channel: 'Website'
+            };
+
+            const existingIndex = bookings.findIndex(b => b.id === booking.id);
+            if (existingIndex >= 0) {
+                bookings[existingIndex] = booking;
+            } else {
+                bookings.push(booking);
+            }
+
+            saveBookings();
+            loadBookings();
+            renderCalendar();
+            alert('✅ บันทึกการจองเรียบร้อยแล้ว!');
+            event.target.reset();
+            document.getElementById('bookingId').value = '';
+        }
+
+        function calculateBookingTotal() {
+            const room = document.getElementById('bookingRoom').value;
+            const qty = parseInt(document.getElementById('bookingQty').value);
+            const checkIn = new Date(document.getElementById('bookingCheckin').value);
+
+            // Simple pricing (can be enhanced)
+            const basePrice = room === 'hytte' ? 950 : 1900;
+            return basePrice * qty;
+        }
+
+        function updateRoomQtyLimit() {
+            const room = document.getElementById('bookingRoom').value;
+            const hint = document.getElementById('roomLimitHint');
+            const qtyInput = document.getElementById('bookingQty');
+
+            if (room === 'hytte') {
+                hint.textContent = 'สูงสุด 5 ห้อง';
+                qtyInput.max = 5;
+            } else if (room === 'hus') {
+                hint.textContent = 'สูงสุด 1 ห้อง';
+                qtyInput.max = 1;
+            }
+        }
+
+        function editBooking(index) {
+            const b = bookings[index];
+            document.getElementById('bookingId').value = b.id;
+            document.getElementById('bookingName').value = b.name;
+            document.getElementById('bookingPhone').value = b.phone;
+            document.getElementById('bookingCheckin').value = b.checkIn;
+            document.getElementById('bookingCheckout').value = b.checkOut;
+            document.getElementById('bookingRoom').value = b.room;
+            document.getElementById('bookingQty').value = b.qty;
+            document.getElementById('bookingDiscount').value = b.discount || 0;
+            updateRoomQtyLimit();
+        }
+
+        function deleteBooking(index) {
+            if (confirm('ต้องการลบการจองนี้หรือไม่?')) {
+                bookings.splice(index, 1);
+                saveBookings();
+                loadBookings();
+                renderCalendar();
+                alert('✅ ลบการจองแล้ว!');
+            }
+        }
+
+        function getStatusText(status) {
+            const statusMap = {
+                'confirmed': 'ยืนยันแล้ว',
+                'pending': 'รอการยืนยัน',
+                'cancelled': 'ยกเลิก',
+                'checked-in': 'เช็คอินแล้ว',
+                'cleaning': 'กำลังทำความสะอาด'
+            };
+            return statusMap[status] || status;
+        }
+
+        // ===================================
+        // BOOKING CONTROL
+        // ===================================
+        function loadBookingControl() {
+            const today = new Date();
+            const availability = {
+                hytte: { total: 5, booked: 0 },
+                hus: { total: 1, booked: 0 }
+            };
+
+            // Count bookings for today
+            bookings.forEach(b => {
+                const checkIn = new Date(b.checkIn);
+                const checkOut = new Date(b.checkOut);
+                if (today >= checkIn && today < checkOut && b.status !== 'cancelled') {
+                    if (b.room === 'hytte') {
+                        availability.hytte.booked += b.qty;
+                    } else {
+                        availability.hus.booked += b.qty;
+                    }
+                }
+            });
+
+            document.getElementById('hytteAvailable').textContent =
+                `${availability.hytte.total - availability.hytte.booked}/${availability.hytte.total}`;
+            document.getElementById('husAvailable').textContent =
+                `${availability.hus.total - availability.hus.booked}/${availability.hus.total}`;
+            document.getElementById('totalAvailable').textContent =
+                `${(availability.hytte.total + availability.hus.total) - (availability.hytte.booked + availability.hus.booked)}/${availability.hytte.total + availability.hus.total}`;
+
+            // Update sync time
+            document.getElementById('lastSyncTime').textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+
+            // Render 7-day table
+            renderSevenDayTable();
+        }
+
+        function renderSevenDayTable() {
+            const tbody = document.getElementById('sevenDayTable');
+            const today = new Date();
+            const rows = [];
+
+            ['hytte', 'hus'].forEach(room => {
+                const total = room === 'hytte' ? 5 : 1;
+                const cells = [];
+
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(today);
+                    date.setDate(date.getDate() + i);
+
+                    let booked = 0;
+                    bookings.forEach(b => {
+                        const checkIn = new Date(b.checkIn);
+                        const checkOut = new Date(b.checkOut);
+                        if (date >= checkIn && date < checkOut && b.room === room && b.status !== 'cancelled') {
+                            booked += b.qty;
+                        }
+                    });
+
+                    const available = total - booked;
+                    let className = 'available';
+                    if (available === 0) className = 'fully-booked';
+                    else if (available <= 2) className = 'nearly-full';
+
+                    cells.push(`<td class="${className}">${available}/${total}</td>`);
+                }
+
+                rows.push(`
+                    <tr>
+                        <td>${room === 'hytte' ? '🏠 Hytte' : '🏡 Hus'}</td>
+                        ${cells.join('')}
+                    </tr>
+                `);
+            });
+
+            tbody.innerHTML = rows.join('');
+        }
+
+        function runPeekabooRelease() {
+            const now = new Date();
+            let released = 0;
+
+            bookings.forEach((b, index) => {
+                if (b.status === 'pending') {
+                    const bookingTime = b.createdAt ? new Date(b.createdAt) : now;
+                    const hoursDiff = (now - bookingTime) / (1000 * 60 * 60);
+
+                    if (hoursDiff > 24) {
+                        b.status = 'cancelled';
+                        released++;
+                    }
+                }
+            });
+
+            if (released > 0) {
+                saveBookings();
+                alert(`✅ ปล่อยห้องแล้ว ${released} ห้อง!`);
+            } else {
+                alert('ℹ️ ไม่มีห้องที่ต้องปล่อย');
+            }
+
+            document.getElementById('peekabooReleased').textContent = released + ' ห้อง';
+        }
+
+        // ===================================
+        // CALENDAR
+        // ===================================
+        function renderCalendar() {
+            const calendar = document.getElementById('roomCalendar');
+            const year = currentMonth.getFullYear();
+            const month = currentMonth.getMonth();
+
+            // Update month display
+            const monthNames = ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+                              'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'];
+            document.getElementById('calendarMonthDisplay').textContent = `${monthNames[month]} ${year}`;
+
+            // Get days in month
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Build calendar HTML
+            let html = '<div class="room-calendar-header">';
+            html += '<div class="room-calendar-header-cell">ห้องพัก</div>';
+            for (let d = 1; d <= daysInMonth; d++) {
+                html += `<div class="room-calendar-header-cell">${d}</div>`;
+            }
+            html += '</div>';
+
+            // Render rows for each room type
+            ['hytte', 'hus'].forEach(room => {
+                const total = room === 'hytte' ? 5 : 1;
+                html += '<div class="room-calendar-row">';
+                html += `<div class="room-calendar-cell">${room === 'hytte' ? '🏠 Hytte' : '🏡 Hus'}</div>`;
+
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const date = new Date(year, month, d);
+                    const dayOfWeek = date.getDay();
+                    const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+                    // Count bookings for this date
+                    let booked = 0;
+                    bookings.forEach(b => {
+                        const checkIn = new Date(b.checkIn);
+                        const checkOut = new Date(b.checkOut);
+                        if (date >= checkIn && date < checkOut && b.room === room && b.status !== 'cancelled') {
+                            booked += b.qty;
+                        }
+                    });
+
+                    const available = total - booked;
+                    let className = 'available';
+                    if (isWeekend) className = 'weekend';
+                    if (available === 0) className = 'fully-booked';
+                    else if (available <= 2) className = 'nearly-full';
+                    else if (booked > 0) className = 'booked';
+
+                    html += `<div class="room-calendar-cell ${className}">${available}</div>`;
+                }
+
+                html += '</div>';
+            });
+
+            calendar.innerHTML = html;
+        }
+
+        function changeMonth(delta) {
+            currentMonth.setMonth(currentMonth.getMonth() + delta);
+            renderCalendar();
+        }
+
+        function filterRooms(filter) {
+            document.querySelectorAll('.room-filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderCalendar();
+        }
+
+        // ===================================
+        // PETTY CASH
+        // ===================================
+        function loadPettyCash() {
+            const opening = 5000;
+            const income = pettyCash.filter(p => p.type === 'income').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const expense = pettyCash.filter(p => p.type === 'expense').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const balance = opening + income - expense;
+
+            document.getElementById('pettyOpening').textContent = '฿' + opening.toLocaleString();
+            document.getElementById('pettyIncome').textContent = '฿' + income.toLocaleString();
+            document.getElementById('pettyExpense').textContent = '฿' + expense.toLocaleString();
+            document.getElementById('pettyBalance').textContent = '฿' + balance.toLocaleString();
+            document.getElementById('pettyCount').textContent = pettyCash.length;
+
+            // Check for low balance alert
+            if (balance <= PETTY_CASH_ALERT_THRESHOLD) {
+                document.getElementById('pettyBalance').style.color = 'var(--warning)';
+            } else {
+                document.getElementById('pettyBalance').style.color = 'var(--black)';
+            }
+
+            // Render table
+            const tbody = document.getElementById('pettyTable');
+            tbody.innerHTML = pettyCash.map((p, index) => `
+                <tr>
+                    <td>${p.id || index + 1}</td>
+                    <td>${formatDate(p.date)}</td>
+                    <td>${p.type === 'income' ? '💰' : '💸'}</td>
+                    <td>${getCategoryName(p.category)}</td>
+                    <td>${p.description}</td>
+                    <td style="color: ${p.type === 'income' ? 'var(--success)' : 'var(--danger)'};">
+                        ${p.type === 'income' ? '+' : '-'}฿${parseFloat(p.amount).toLocaleString()}
+                    </td>
+                    <td>${p.party || '-'}</td>
+                    <td>
+                        <button class="btn btn-secondary" onclick="editPetty(${index})" style="padding: 0.4rem 0.8rem;">✏️</button>
+                        <button class="btn btn-danger" onclick="deletePetty(${index})" style="padding: 0.4rem 0.8rem;">🗑️</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render channel chart
+            renderBookingChannelChart();
+        }
+
+        function handlePettySubmit(event) {
+            event.preventDefault();
+
+            const pettyId = document.getElementById('pettyId').value || 'PET' + (pettyCash.length + 1).toString().padStart(3, '0');
+            const petty = {
+                id: pettyId,
+                type: document.getElementById('pettyType').value,
+                amount: parseFloat(document.getElementById('pettyAmount').value),
+                category: document.getElementById('pettyCategory').value,
+                description: document.getElementById('pettyDescription').value,
+                date: document.getElementById('pettyDate').value,
+                party: document.getElementById('pettyParty').value
+            };
+
+            const existingIndex = pettyCash.findIndex(p => p.id === petty.id);
+            if (existingIndex >= 0) {
+                pettyCash[existingIndex] = petty;
+            } else {
+                pettyCash.push(petty);
+            }
+
+            // Save bill/receipt if image uploaded
+            const slipInput = document.getElementById('pettySlip');
+            if (slipInput && slipInput.files && slipInput.files[0]) {
+                const file = slipInput.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const imageData = e.target.result;
+                    saveBill({
+                        id: 'BILL-' + pettyId,
+                        date: petty.date,
+                        category: petty.category,
+                        amount: petty.amount,
+                        description: petty.description,
+                        party: petty.party,
+                        hasVAT: petty.type === 'expense' && petty.amount >= 1000, // Auto-detect VAT for expenses >= 1000
+                        pettyCashRef: pettyId
+                    }, imageData);
+                };
+                reader.readAsDataURL(file);
+            }
+
+            savePettyCash();
+            loadPettyCash();
+            alert('✅ บันทึกรายการเรียบร้อยแล้ว! (อัพเดทบัญชีใหญ่แล้ว)');
+            event.target.reset();
+            document.getElementById('pettyId').value = '';
+        }
+
+        function editPetty(index) {
+            const p = pettyCash[index];
+            document.getElementById('pettyId').value = p.id;
+            document.getElementById('pettyType').value = p.type;
+            document.getElementById('pettyAmount').value = p.amount;
+            document.getElementById('pettyCategory').value = p.category;
+            document.getElementById('pettyDescription').value = p.description;
+            document.getElementById('pettyDate').value = p.date;
+            document.getElementById('pettyParty').value = p.party || '';
+        }
+
+        function deletePetty(index) {
+            if (confirm('ต้องการลบรายการนี้หรือไม่?')) {
+                pettyCash.splice(index, 1);
+                savePettyCash();
+                loadPettyCash();
+                alert('✅ ลบรายการแล้ว!');
+            }
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'food': '🍽️ อาหาร',
+                'maintenance': '🔧 ซ่อมบำรุง',
+                'supplies': '🧻 ของใช้',
+                'tour': '🎫 ตั๋วท่องเที่ยว',
+                'utilities': '💡 สาธารณูปโภค',
+                'labor': '👷 แรงงาน',
+                'office': '📄 สำนักงาน',
+                'tax': '📄 ภาษี',
+                'capital': '💵 เงินเติม'
+            };
+            return names[category] || category;
+        }
+
+        function renderBookingChannelChart() {
+            const channels = {
+                'Website': 0,
+                'Facebook': 0,
+                'LINE': 0,
+                'Phone': 0,
+                'Walk-in': 0
+            };
+
+            bookings.forEach(b => {
+                if (b.channel && channels.hasOwnProperty(b.channel)) {
+                    channels[b.channel]++;
+                } else {
+                    channels['Walk-in']++;
+                }
+            });
+
+            const container = document.getElementById('bookingChannelChart');
+            const maxValue = Math.max(...Object.values(channels), 1);
+            const colors = {
+                'Website': '#1A1A1A',
+                'Facebook': '#10B981',
+                'LINE': '#FFD700',
+                'Phone': '#9CA3AF',
+                'Walk-in': '#EF4444'
+            };
+
+            container.innerHTML = Object.entries(channels).map(([key, value]) => {
+                const height = (value / maxValue) * 200;
+                return `
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+                        <div style="font-weight: 700; color: var(--black);">${value}</div>
+                        <div style="width: 60px; height: ${height}px; background: ${colors[key]}; border-radius: 8px 8px 0 0; transition: all 0.3s;"></div>
+                        <div style="font-size: 0.85rem; color: var(--gray);">${key}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===================================
+        // ACCOUNTING
+        // ===================================
+        function loadAccounting() {
+            const tbody = document.getElementById('generalLedgerTable');
+            let balance = 5000; // Opening balance
+
+            tbody.innerHTML = generalLedger.map((entry, index) => {
+                balance += (parseFloat(entry.debit) || 0) - (parseFloat(entry.credit) || 0);
+                return `
+                    <tr>
+                        <td>${entry.id || index + 1}</td>
+                        <td>${formatDate(entry.date)}</td>
+                        <td>${entry.description}</td>
+                        <td style="color: var(--success);">${entry.debit ? '฿' + parseFloat(entry.debit).toLocaleString() : '-'}</td>
+                        <td style="color: var(--danger);">${entry.credit ? '฿' + parseFloat(entry.credit).toLocaleString() : '-'}</td>
+                        <td style="font-weight: 700;">฿${balance.toLocaleString()}</td>
+                        <td>${entry.reference || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function syncPettyToGeneralLedger() {
+            // Auto-sync petty cash to general ledger
+            generalLedger = pettyCash.map(p => ({
+                id: 'GL-' + p.id,
+                date: p.date,
+                description: p.description,
+                debit: p.type === 'income' ? p.amount : 0,
+                credit: p.type === 'expense' ? p.amount : 0,
+                reference: p.id
+            }));
+
+            localStorage.setItem('vela_general_ledger', JSON.stringify(generalLedger));
+        }
+
+        // ===================================
+        // VAT REPORT
+        // ===================================
+        function loadVATReport() {
+            const totalSales = bookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            const vatFromBookings = totalSales * 0.07;
+            
+            // Get VAT from bills
+            const billsWithVAT = getBillsWithVAT();
+            const vatFromBills = billsWithVAT.reduce((sum, b) => sum + b.vatAmount, 0);
+            
+            const totalVAT = vatFromBookings + vatFromBills;
+            const totalWithVat = totalSales + totalVAT;
+
+            document.getElementById('vatSales').textContent = '฿' + totalSales.toLocaleString();
+            document.getElementById('vatAmount').textContent = '฿' + totalVAT.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            document.getElementById('vatTotal').textContent = '฿' + totalWithVat.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+            // Display bills with VAT
+            displayVATBills(billsWithVAT);
+        }
+
+        function displayVATBills(billsWithVAT) {
+            const container = document.getElementById('vatBillsTable');
+            if (!container) return;
+
+            if (billsWithVAT.length === 0) {
+                container.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: var(--gray); padding: 2rem;">
+                            ยังไม่มีบิลที่มี VAT
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            container.innerHTML = billsWithVAT.map(bill => {
+                const hasImage = billImages[bill.id] ? true : false;
+                return `
+                    <tr>
+                        <td>${bill.id}</td>
+                        <td>${formatDate(bill.date)}</td>
+                        <td>${getCategoryName(bill.category)}</td>
+                        <td>${bill.description}</td>
+                        <td>${bill.party || '-'}</td>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                <span>฿${parseFloat(bill.amount).toLocaleString()}</span>
+                                <span style="font-size: 0.85rem; color: var(--warning);">VAT: ฿${bill.vatAmount.toFixed(2)}</span>
+                            </div>
+                        </td>
+                        <td>
+                            ${hasImage ? `
+                                <button class="btn btn-secondary" onclick="viewBillImage('${bill.id}')" style="padding: 0.4rem 0.8rem;">
+                                    🖼️ ดูบิล
+                                </button>
+                            ` : '<span style="color: var(--gray);">-</span>'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function viewBillImage(billId) {
+            const imageData = billImages[billId];
+            if (!imageData) {
+                alert('❌ ไม่พบภาพบิล');
+                return;
+            }
+
+            // Create modal to display image
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.8);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 1rem;
+            `;
+
+            modal.innerHTML = `
+                <div style="color: white; font-size: 1.5rem; font-weight: 700;">${billId}</div>
+                <img src="${imageData}" alt="Bill ${billId}" style="max-width: 90%; max-height: 80vh; border-radius: 8px;">
+                <button onclick="this.closest('div[style*=fixed]').remove()" class="btn btn-primary" style="padding: 1rem 2rem;">
+                    ✕ ปิด
+                </button>
+            `;
+
+            document.body.appendChild(modal);
+        }
+
+        function exportVATReport() {
+            alert('📥 กำลัง Export VAT Report... (ฟีเจอร์นี้จะสร้างไฟล์ Excel)');
+        }
+
+        // ===================================
+        // PEEKABOO
+        // ===================================
+        function loadPeekaboo() {
+            document.getElementById('lastSyncTime').textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('platformsConnected').textContent = '4';
+        }
+
+        // ===================================
+        // SETTINGS
+        // ===================================
+        function exportData() {
+            const data = {
+                bookings: bookings,
+                pettyCash: pettyCash,
+                generalLedger: generalLedger,
+                bills: bills,
+                billImages: billImages,
+                exportedAt: new Date().toISOString()
+            };
+
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'vela-resort-backup-' + new Date().toISOString().split('T')[0] + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ Export ข้อมูลสำเร็จ!');
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.bookings) bookings = data.bookings;
+                    if (data.pettyCash) pettyCash = data.pettyCash;
+                    if (data.generalLedger) generalLedger = data.generalLedger;
+                    if (data.bills) bills = data.bills;
+                    if (data.billImages) billImages = data.billImages;
+
+                    saveBookings();
+                    savePettyCash();
+                    saveBills();
+                    alert('✅ Import ข้อมูลสำเร็จ!');
+                    loadDashboard();
+                } catch (err) {
+                    alert('❌ ไฟล์ไม่ถูกต้อง: ' + err.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function resetAllData() {
+            if (confirm('⚠️ ต้องการ Reset ข้อมูลทั้งหมดหรือไม่? การกระทำนี้ไม่สามารถย้อนกลับได้!')) {
+                if (confirm('ยืนยันอีกครั้ง: ข้อมูลทั้งหมดจะถูกลบ!')) {
+                    bookings = [];
+                    pettyCash = [];
+                    generalLedger = [];
+                    bills = [];
+                    billImages = {};
+                    saveBookings();
+                    savePettyCash();
+                    saveBills();
+                    localStorage.removeItem('vela_general_ledger');
+                    localStorage.removeItem('vela_bills');
+                    localStorage.removeItem('vela_bill_images');
+                    alert('✅ Reset ข้อมูลสำเร็จ!');
+                    loadDashboard();
+                }
+            }
+        }
+
+        function importAllData() {
+            alert('📥 กำลังนำเข้าข้อมูลทั้งหมด... (Petty Cash 81 + Booking 10)');
+        }
+
+        function showImportModal() {
+            alert('📤 Import จาก Pulse/Tera/Business Suite');
+        }
+
+        function exportPettyCashReportPDF() {
+            const opening = 5000;
+            const income = pettyCash.filter(p => p.type === 'income').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const expense = pettyCash.filter(p => p.type === 'expense').reduce((sum, p) => sum + parseFloat(p.amount), 0);
+            const balance = opening + income - expense;
+
+            const incomeItems = pettyCash.filter(p => p.type === 'income');
+            const expenseItems = pettyCash.filter(p => p.type === 'expense');
+
+            const html2pdf = window.html2pdf || (window.html2pdf && window.html2pdf.default);
+            if (!html2pdf) {
+                alert('⚠️ ไม่พบ library html2pdf กรุณาลองใหม่อีกครั้ง');
+                return;
+            }
+
+            const reportHTML = `
+                <div style="font-family: 'Sarabun', sans-serif; padding: 20px; background: white;">
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h1 style="color: #1A1A1A; font-size: 24px; margin: 0;">VELEA RESORT UMPHANG</h1>
+                        <p style="color: #666; font-size: 14px; margin: 5px 0;">528 ต.แม่กลอง อ.อุ้มผาง จ.ตาก 63170</p>
+                        <p style="color: #666; font-size: 14px; margin: 5px 0;">📞 098-908-4356 | ✉️ vela.umphang@gmail.com</p>
+                        <h2 style="color: #FFD700; font-size: 20px; margin: 20px 0 10px;">📊 รายงาน Petty Cash (บัญชีรายย่อย)</h2>
+                        <p style="color: #999; font-size: 12px;">วันที่พิมพ์: ${new Date().toLocaleString('th-TH')}</p>
+                    </div>
+
+                    <div style="background: #F3F4F6; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h3 style="color: #1A1A1A; font-size: 16px; margin: 0 0 15px;">💰 สรุปยอดคงเหลือ</h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #ddd;">💵 เงินคงเหลือเริ่มต้น</td>
+                                <td style="text-align: right; padding: 10px; border-bottom: 1px solid #ddd; font-weight: bold;">฿${opening.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #ddd; color: #10B981;">💰 รายรับรวม</td>
+                                <td style="text-align: right; padding: 10px; border-bottom: 1px solid #ddd; color: #10B981; font-weight: bold;">+฿${income.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px; border-bottom: 1px solid #ddd; color: #EF4444;">💸 รายจ่ายรวม</td>
+                                <td style="text-align: right; padding: 10px; border-bottom: 1px solid #ddd; color: #EF4444; font-weight: bold;">-฿${expense.toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 15px 10px 5px; font-size: 18px;">💰 ยอดคงเหลือปัจจุบัน</td>
+                                <td style="text-align: right; padding: 15px 10px 5px; font-size: 18px; color: ${balance <= 200 ? '#F59E0B' : '#1A1A1A'}; font-weight: bold;">฿${balance.toLocaleString()}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #1A1A1A; font-size: 16px; margin: 0 0 10px;">📈 สถิติ</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">จำนวนรายการทั้งหมด</td>
+                                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">${pettyCash.length} รายการ</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">รายการรับ</td>
+                                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #eee;">${incomeItems.length} รายการ</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border-bottom: 1px solid #eee;">รายการจ่าย</td>
+                                <td style="text-align: right; padding: 8px; border-bottom: 1px solid #eee;">${expenseItems.length} รายการ</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    ${incomeItems.length > 0 ? `
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #10B981; font-size: 16px; margin: 0 0 10px;">💰 รายการรับ</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead>
+                                <tr style="background: #F3F4F6;">
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">วันที่</th>
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">รายละเอียด</th>
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">หมวดหมู่</th>
+                                    <th style="padding: 8px; text-align: right; border: 1px solid #ddd;">จำนวนเงิน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${incomeItems.map(item => `
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${formatDate(item.date)}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${item.description}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${getCategoryName(item.category)}</td>
+                                        <td style="padding: 8px; text-align: right; border: 1px solid #ddd; color: #10B981;">+฿${parseFloat(item.amount).toLocaleString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    ` : ''}
+
+                    ${expenseItems.length > 0 ? `
+                    <div style="margin-bottom: 20px;">
+                        <h3 style="color: #EF4444; font-size: 16px; margin: 0 0 10px;">💸 รายการจ่าย</h3>
+                        <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                            <thead>
+                                <tr style="background: #F3F4F6;">
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">วันที่</th>
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">รายละเอียด</th>
+                                    <th style="padding: 8px; text-align: left; border: 1px solid #ddd;">หมวดหมู่</th>
+                                    <th style="padding: 8px; text-align: right; border: 1px solid #ddd;">จำนวนเงิน</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${expenseItems.map(item => `
+                                    <tr>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${formatDate(item.date)}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${item.description}</td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;">${getCategoryName(item.category)}</td>
+                                        <td style="padding: 8px; text-align: right; border: 1px solid #ddd; color: #EF4444;">-฿${parseFloat(item.amount).toLocaleString()}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                    ` : ''}
+
+                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #FFD700; text-align: center; color: #999; font-size: 12px;">
+                        <p>เอกสารนี้สร้างอัตโนมัติโดยระบบ Vela BOH</p>
+                        <p>เลขผู้เสียภาษี: 1200100009235</p>
+                    </div>
+                </div>
+            `;
+
+            const opt = {
+                margin: 10,
+                filename: `PettyCash-Report-${new Date().toISOString().split('T')[0]}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(reportHTML).save();
+            alert('📊 กำลังดาวน์โหลดรายงาน Petty Cash (PDF)...');
+        }
+
+        function exportCashReceiptPDF() {
+            alert('🧾 กำลัง Export บิลเงินสด (PDF)...');
+        }
+
+        function openPulseIntegration() {
+            alert('⚙️ เปิดการตั้งค่า Pulse Integration...');
+        }
+
+        function openTeraIntegration() {
+            alert('⚙️ เปิดการตั้งค่า Tera Integration...');
+        }
+
+        function openBusinessSuite() {
+            alert('🤖 เปิด Business Suite Chatbot...');
+        }
+
+        // ===================================
+        // OPENCLAW INTEGRATION FUNCTIONS
+        // ===================================
+        function syncFromPulse() {
+            addSyncLog('Pulse', 'Pull Data', 'success', 'ดึงข้อมูลการจองจาก Pulse PMS');
+            alert('📥 กำลังดึงข้อมูลจาก Pulse... (จำลอง)');
+        }
+
+        function syncFromTera() {
+            addSyncLog('Tera', 'Pull Data', 'success', 'ดึงข้อมูลบัญชีจาก Tera');
+            alert('📥 กำลังดึงข้อมูลจาก Tera... (จำลอง)');
+        }
+
+        function syncFromBusinessSuite() {
+            addSyncLog('Business Suite', 'Pull Data', 'success', 'ดึงข้อมูลจาก Business Suite ERP');
+            alert('📥 กำลังดึงข้อมูลจาก Business Suite... (จำลอง)');
+        }
+
+        function addSyncLog(platform, action, status, details) {
+            const logTable = document.getElementById('syncLogTable');
+            if (!logTable) return;
+
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+
+            const statusColors = {
+                'success': 'var(--success)',
+                'error': 'var(--danger)',
+                'warning': 'var(--warning)'
+            };
+
+            const statusIcons = {
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️'
+            };
+
+            const row = `
+                <tr>
+                    <td>${timeStr}</td>
+                    <td>${platform}</td>
+                    <td>${action}</td>
+                    <td><span style="color: ${statusColors[status]};">${statusIcons[status]} ${status}</span></td>
+                    <td style="color: var(--gray);">${details}</td>
+                </tr>
+            `;
+
+            // Insert after header (first row)
+            logTable.insertAdjacentHTML('afterbegin', row);
+
+            // Remove "no data" row if exists
+            const noDataRow = logTable.querySelector('td[colspan]');
+            if (noDataRow) {
+                noDataRow.parentElement.remove();
+            }
+        }
+
+        // ===================================
+        // UTILITIES
+        // ===================================
+        function formatDate(dateString) {
+            if (!dateString) return '-';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // ===================================
+        // AI CHATBOT
+        // ===================================
+        
+        let chatbotOpen = false;
+        
+        function toggleChatbot() {
+            const chatbotWindow = document.getElementById('bohChatbotWindow');
+            const chatbotBtn = document.getElementById('bohChatbotBtn');
+            
+            if (chatbotOpen) {
+                chatbotWindow.style.display = 'none';
+                chatbotBtn.innerHTML = '<span style="font-size: 1.25rem;">🤖</span><span>ถาม AI</span>';
+                chatbotOpen = false;
+            } else {
+                chatbotWindow.style.display = 'flex';
+                chatbotBtn.innerHTML = '<span style="font-size: 1.25rem;">❌</span><span>ปิด</span>';
+                chatbotOpen = true;
+                setTimeout(() => document.getElementById('bohChatInput').focus(), 100);
+                
+                // Add welcome message if empty
+                const chatMessages = document.getElementById('bohChatMessages');
+                if (chatMessages.children.length === 0) {
+                    const welcomeMsg = document.createElement('div');
+                    welcomeMsg.style.cssText = 'background: var(--light-gray); color: var(--black); padding: 0.75rem; border-radius: 12px; margin-bottom: 0.75rem; align-self: flex-start; max-width: 80%;';
+                    welcomeMsg.innerHTML = '<p style="margin: 0; font-size: 0.9rem;">👋 สวัสดีครับ! ผมคือ AI ผู้ช่วยของ BOH<br>ถามอะไรก็ได้เกี่ยวกับระบบนะครับ</p>';
+                    chatMessages.appendChild(welcomeMsg);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+        }
+        
+        function sendBohChat() {
+            const chatInput = document.getElementById('bohChatInput');
+            const chatMessages = document.getElementById('bohChatMessages');
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // User message
+            const userMsg = document.createElement('div');
+            userMsg.style.cssText = 'background: var(--black); color: white; padding: 0.75rem; border-radius: 12px; margin-bottom: 0.75rem; align-self: flex-end; max-width: 80%;';
+            userMsg.innerHTML = `<p style="margin: 0; font-size: 0.9rem;">${message}</p>`;
+            chatMessages.appendChild(userMsg);
+            
+            chatInput.value = '';
+            
+            // Get AI response
+            setTimeout(() => {
+                const response = getBohChatResponse(message);
+                const botMsg = document.createElement('div');
+                botMsg.style.cssText = 'background: var(--light-gray); color: var(--black); padding: 0.75rem; border-radius: 12px; margin-bottom: 0.75rem; align-self: flex-start; max-width: 80%;';
+                botMsg.innerHTML = `<p style="margin: 0; font-size: 0.9rem;">${response}</p>`;
+                chatMessages.appendChild(botMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 500);
+        }
+        
+        function getBohChatResponse(message) {
+            const msg = message.toLowerCase();
+            
+            // Booking questions
+            if (msg.includes('จอง') || msg.includes('booking')) {
+                if (msg.includes('เพิ่ม') || msg.includes('สร้าง') || msg.includes('new')) {
+                    return '📝 <strong>วิธีเพิ่มการจอง:</strong><br>1. ไปที่เมนู "📝 การจอง"<br>2. คลิกปุ่ม "➕ เพิ่มการจอง"<br>3. กรอกข้อมูลลูกค้า<br>4. คลิก "บันทึกการจอง"';
+                }
+                if (msg.includes('ลบ') || msg.includes('delete') || msg.includes('cancel')) {
+                    return '🗑️ <strong>วิธีลบการจอง:</strong><br>คลิกปุ่ม "🗑️" หลังรายการที่ต้องการ<br>⚠️ การลบจะไม่สามารถกู้คืนได้';
+                }
+                if (msg.includes('แก้') || msg.includes('edit') || msg.includes('modify')) {
+                    return '✏️ <strong>วิธีแก้ไขการจอง:</strong><br>คลิกปุ่ม "✏️" หลังรายการที่ต้องการ<br>แก้ไขข้อมูลแล้วคลิก "บันทึก"';
+                }
+                if (msg.includes('ดู') || msg.includes('show') || msg.includes('list')) {
+                    return '📋 <strong>ดูรายการจอง:</strong><br>ไปที่เมนู "📝 การจอง"<br>รายการจะแสดงแยกตามเดือน<br>ใช้ช่องกรองเดือนเพื่อดูเฉพาะเดือนที่ต้องการ';
+                }
+                return '📋 <strong>ระบบการจอง:</strong><br>- เพิ่ม/แก้ไข/ลบ การจองได้<br>- ข้อมูล sync กับเว็บไซต์<br>- มีระบบป้องกัน overbooking<br>- สร้างบิลได้จากรายการ';
+            }
+            
+            // Petty Cash questions
+            if (msg.includes('petty') || msg.includes('เงินสด') || msg.includes('รายย่อย')) {
+                if (msg.includes('เพิ่ม') || msg.includes('add')) {
+                    return '💰 <strong>วิธีเพิ่ม Petty Cash:</strong><br>1. ไปที่เมนู "💰 Petty Cash"<br>2. เลือกประเภท: รายได้/ค่าใช้จ่าย<br>3. กรอกข้อมูล<br>4. คลิก "บันทึก"';
+                }
+                if (msg.includes('alert') || msg.includes('เตือน') || msg.includes('alert')) {
+                    return '🚨 <strong>Petty Cash Alert:</strong><br>จะแสดงเมื่อเงินเหลือ ≤ ฿200<br>เพื่อเตือนให้เติมเงิน';
+                }
+                return '💰 <strong>Petty Cash (บัญชีรายย่อย):</strong><br>- ติดตามรายได้/ค่าใช้จ่าย<br>- 8 หมวดหมู่<br>- Sync กับบัญชีใหญ่ อัตโนมัติ<br>- แจ้งเตือนเมื่อเงินใกล้หมด';
+            }
+            
+            // Accounting questions
+            if (msg.includes('บัญชี') || msg.includes('account') || msg.includes('ledger')) {
+                if (msg.includes('ใหญ่') || msg.includes('general')) {
+                    return '📒 <strong>บัญชีใหญ่ (General Ledger):</strong><br>- Sync จาก Petty Cash อัตโนมัติ<br>- แสดง Debit/Credit<br>- 9 หมวดหมู่บัญชี';
+                }
+                if (msg.includes('vat') || msg.includes('ภาษี')) {
+                    return '🧾 <strong>VAT (7%):</strong><br>- คำนวณอัตโนมัติ<br>- รายการ ≥ ฿1,000 ถือว่ามี VAT<br>- สามารถเปิด/ปิด manual ได้';
+                }
+                return '📒 <strong>ระบบบัญชี:</strong><br>- Petty Cash (รายย่อย)<br>- General Ledger (รายใหญ่)<br>- VAT calculation<br>- รายงานภาษี';
+            }
+            
+            // Invoice questions
+            if (msg.includes('บิล') || msg.includes('invoice') || msg.includes('ใบเสร็จ')) {
+                return '🧾 <strong>การสร้างบิล:</strong><br>- <strong>1 รายการ:</strong> คลิก 🧾 หลังรายการ<br>- <strong>หลายรายการ:</strong> เลือก ☑️ → คลิก "สร้างบิลจากรายการที่เลือก"<br>- <strong>รายเดือน:</strong> คลิก "สร้างบิลเดือนนี้" ใน header เดือน';
+            }
+            
+            // Dashboard questions
+            if (msg.includes('dashboard') || msg.includes('ภาพรวม') || msg.includes('สรุป')) {
+                return '📊 <strong>Dashboard:</strong><br>- จำนวนการจองทั้งหมด<br>- รายได้รวม<br>- อัตราการเข้าพัก<br>- สถิติแยกตามช่องทาง';
+            }
+            
+            // Calendar questions
+            if (msg.includes('ปฏิทิน') || msg.includes('calendar')) {
+                return '📅 <strong>ปฏิทินการจอง:</strong><br>- แสดงการจองทั้งหมด<br>- แยกตามห้อง (Hytte/Hus)<br>- สีเขียว=ว่าง, สีแดง=จองแล้ว';
+            }
+            
+            // Overbooking questions
+            if (msg.includes('overbook') || msg.includes('จองเกิน') || msg.includes('ซ้อน')) {
+                return '🛡️ <strong>ระบบป้องกัน Overbooking:</strong><br>- ตรวจสอบก่อนบันทึก<br>- แสดงรายการที่ซ้อนกัน<br>- Hytte: 5 ห้อง, Hus: 1 ห้อง<br>- Auto-sync ทุก 30 นาที';
+            }
+            
+            // Sync questions
+            if (msg.includes('sync') || msg.includes('เชื่อม') || msg.includes('connect')) {
+                return '🔄 <strong>Auto-Sync:</strong><br>- เว็บไซต์ ↔ BOH<br>- ทุก 30 นาที<br>- localStorage เป็นตัวกลาง';
+            }
+            
+            // Help
+            if (msg.includes('ช่วย') || msg.includes('help') || msg.includes('วิธีใช้')) {
+                return '📚 <strong>วิธีใช้ BOH:</strong><br>1. <strong>📊 Dashboard:</strong> ดูภาพรวม<br>2. <strong>📝 การจอง:</strong> จัดการจอง<br>3. <strong>💰 Petty Cash:</strong> บัญชีรายย่อย<br>4. <strong>📒 บัญชีใหญ่:</strong> General Ledger<br>5. <strong>🧾 VAT:</strong> ภาษีมูลค่าเพิ่ม<br>6. <strong>📅 ปฏิทิน:</strong> ดูการจอง';
+            }
+            
+            // Default response
+            return '🤔 <strong>ผมยังไม่เข้าใจคำถาม</strong><br>ลองถามเกี่ยวกับ:<br>- การจอง (เพิ่ม/ลบ/แก้/ดู)<br>- Petty Cash<br>- บัญชี/VAT<br>- การสร้างบิล<br>- Dashboard<br>- ปฏิทิน<br><br>หรือพิมพ์ "help" เพื่อดูวิธีใช้';
+        }
+        
+        // Initialize chatbot on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('🤖 BOH Chatbot initialized');
+        });
+    </script>
+
+    <!-- AI Chatbot -->
+    <div id="bohChatbotBtn" onclick="toggleChatbot()" style="position: fixed; bottom: 1.5rem; right: 1.5rem; background: var(--black); color: white; padding: 0.75rem 1.5rem; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 30px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 0.5rem; z-index: 9999; transition: all 0.3s; font-weight: 600;">
+        <span style="font-size: 1.25rem;">🤖</span>
+        <span>ถาม AI</span>
+    </div>
+
+    <div id="bohChatbotWindow" style="position: fixed; bottom: 5rem; right: 1.5rem; width: 350px; height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 50px rgba(0,0,0,0.2); display: none; flex-direction: column; z-index: 9999; overflow: hidden; border: 2px solid var(--light-gray);">
+        <!-- Header -->
+        <div style="background: var(--black); color: white; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.25rem;">🤖</span>
+                <div>
+                    <div style="font-weight: 700; font-size: 0.95rem;">AI ผู้ช่วย BOH</div>
+                    <div style="font-size: 0.75rem; opacity: 0.8;">พร้อมช่วยเหลือ</div>
+                </div>
+            </div>
+            <button onclick="toggleChatbot()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0; width: 30px; height: 30px;">×</button>
+        </div>
+
+        <!-- Messages -->
+        <div id="bohChatMessages" style="flex: 1; padding: 1rem; overflow-y: auto; background: var(--white); display: flex; flex-direction: column;">
+            <!-- Messages will be added here -->
+        </div>
+
+        <!-- Input -->
+        <div style="padding: 1rem; border-top: 1px solid var(--light-gray); background: var(--white);">
+            <div style="display: flex; gap: 0.5rem;">
+                <input id="bohChatInput" type="text" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter')sendBohChat()" style="flex: 1; padding: 0.75rem 1rem; border: 2px solid var(--light-gray); border-radius: 12px; font-size: 0.9rem; outline: none; transition: border-color 0.3s;" />
+                <button onclick="sendBohChat()" style="background: var(--yellow); color: var(--black); border: none; padding: 0.75rem 1.25rem; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.3s;">➤</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ลงรายการ Petty Cash 2026 - VELA BOH</title>
+    <meta http-equiv="refresh" content="5;url=boh.html">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-width: 700px;
+            width: 100%;
+        }
+        h1 { color: #2D3748; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitle { color: #718096; margin-bottom: 2rem; }
+        .progress {
+            background: #F7FAFC;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #E2E8F0;
+        }
+        .progress-item:last-child { border-bottom: none; }
+        .progress-label { color: #4A5568; font-weight: 600; }
+        .progress-value { color: #667eea; font-weight: 700; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #E2E8F0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .status { color: #718096; text-align: center; margin-top: 1rem; }
+        .success { color: #38A169; font-weight: 700; font-size: 1.1rem; }
+        .redirect { color: #4299E1; margin-top: 1rem; font-size: 0.9rem; }
+        .month-section {
+            background: #2D3748;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>💰 กำลังลงรายการ Petty Cash 2026</h1>
+        <p class="subtitle">VELA BOH - บัญชีรายย่อย (แก้ปี พ.ศ. ถูกต้อง)</p>
+        
+        <div class="spinner"></div>
+        
+        <div class="progress">
+            <div class="progress-item">
+                <span class="progress-label">📊 รายการทั้งหมด</span>
+                <span class="progress-value" id="total">0 / 86</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">💵 รายรับ</span>
+                <span class="progress-value" id="income">0 / 10</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">💸 รายจ่าย</span>
+                <span class="progress-value" id="expense">0 / 76</span>
+            </div>
+            <div class="progress-item">
+                <span class="progress-label">💰 คงเหลือ</span>
+                <span class="progress-value" id="balance">฿0</span>
+            </div>
+        </div>
+        
+        <div class="status" id="status">กำลังโหลดข้อมูล...</div>
+        <div class="redirect" id="redirect">กำลังกลับหน้า BOH ใน 5 วินาที...</div>
+    </div>
+    
+    <script>
+    // Petty Cash Data - 86 entries (Jan 1 - Mar 2, 2026)
+    // Fixed: Changed all 1969/1968 dates to 2026
+    const pettyCashData = [
+        // มกราคม 2026
+        {id:'PET001',type:'expense',category:'tour',description:'ค่าตั๋วลูกค้า 4 คน',amount:120,date:'2026-01-01'},
+        {id:'PET002',type:'expense',category:'food',description:'ค่าข้าวกล่อง 4 กล่อง',amount:240,date:'2026-01-01'},
+        {id:'PET003',type:'expense',category:'maintenance',description:'ค่าลูกบิด',amount:180,date:'2026-01-01'},
+        {id:'PET004',type:'expense',category:'labor',description:'ค่ารเเรงช่าง',amount:200,date:'2026-01-01'},
+        {id:'PET005',type:'expense',category:'maintenance',description:'ค่ากลอน',amount:25,date:'2026-01-01'},
+        {id:'PET006',type:'expense',category:'food',description:'ค่าข้าว 8 กล่อง',amount:480,date:'2026-01-02'},
+        {id:'PET007',type:'expense',category:'tour',description:'ค่าต๋ว 8 คน',amount:240,date:'2026-01-02'},
+        {id:'PET008',type:'expense',category:'capital',description:'จ่ายเกิน',amount:1000,date:'2026-01-02'},
+        {id:'PET009',type:'income',category:'capital',description:'รับเงิน',amount:1000,date:'2026-01-02'},
+        {id:'PET010',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-01-02'},
+        {id:'PET011',type:'expense',category:'food',description:'หอมมะลิ',amount:55,date:'2026-01-02'},
+        {id:'PET012',type:'expense',category:'food',description:'ไข่ไก่ครึ่งเเผง',amount:65,date:'2026-01-02'},
+        {id:'PET013',type:'expense',category:'food',description:'ค่าข้าว 4 กล่อง',amount:240,date:'2026-01-03'},
+        {id:'PET014',type:'expense',category:'tour',description:'ค่าตั๋ว 4 คน',amount:120,date:'2026-01-03'},
+        {id:'PET015',type:'expense',category:'supplies',description:'ทิชชู 1 เเพค',amount:65,date:'2026-01-03'},
+        {id:'PET016',type:'expense',category:'capital',description:'จ่ายเกิน',amount:1000,date:'2026-01-03'},
+        {id:'PET017',type:'income',category:'capital',description:'รับเงิน',amount:1000,date:'2026-01-03'},
+        {id:'PET018',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-01-08'},
+        {id:'PET019',type:'expense',category:'food',description:'กุญเชียง',amount:50,date:'2026-01-08'},
+        {id:'PET020',type:'expense',category:'food',description:'ค่าข้าวกล่อง 2 คน',amount:120,date:'2026-01-09'},
+        {id:'PET021',type:'expense',category:'tour',description:'ค่าตั๋ว 1 คน',amount:30,date:'2026-01-09'},
+        {id:'PET022',type:'expense',category:'food',description:'ค่าหัวหมู',amount:800,date:'2026-01-18'},
+        {id:'PET023',type:'income',category:'capital',description:'รับเงิน 1,000 บาท',amount:1000,date:'2026-01-19'},
+        {id:'PET024',type:'expense',category:'maintenance',description:'ซื้อฝักบัว 1 อัน',amount:27,date:'2026-01-19'},
+        {id:'PET025',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-01-19'},
+        {id:'PET026',type:'expense',category:'food',description:'ไข่ไก่ครึ่งเเผง',amount:65,date:'2026-01-19'},
+        {id:'PET027',type:'expense',category:'food',description:'ผักชี',amount:10,date:'2026-01-19'},
+        {id:'PET028',type:'expense',category:'supplies',description:'ทิชชู',amount:65,date:'2026-01-20'},
+        {id:'PET029',type:'expense',category:'maintenance',description:'ค่าที่ล็อคประตู',amount:35,date:'2026-01-21'},
+        {id:'PET030',type:'expense',category:'food',description:'เครื่องดื่ม',amount:50,date:'2026-01-22'},
+        {id:'PET031',type:'expense',category:'food',description:'กาเเฟ',amount:125,date:'2026-01-22'},
+        {id:'PET032',type:'expense',category:'food',description:'หนังกรอบ',amount:75,date:'2026-01-22'},
+        {id:'PET033',type:'expense',category:'food',description:'ไข่ไก่ครึ่งเเผง',amount:65,date:'2026-01-22'},
+        {id:'PET034',type:'expense',category:'food',description:'ผักชี',amount:10,date:'2026-01-22'},
+        {id:'PET035',type:'expense',category:'tour',description:'ค่าตั๋ว 6 คน',amount:180,date:'2026-01-23'},
+        {id:'PET036',type:'expense',category:'capital',description:'จ่ายเกิน',amount:1216,date:'2026-01-23'},
+        {id:'PET037',type:'income',category:'capital',description:'รับเงิน 1,000 บาท',amount:1000,date:'2026-01-23'},
+        {id:'PET038',type:'expense',category:'utilities',description:'ค่าน้ำประปา',amount:1090,date:'2026-01-24'},
+        {id:'PET039',type:'expense',category:'supplies',description:'ทิชชู',amount:65,date:'2026-01-25'},
+        {id:'PET040',type:'income',category:'capital',description:'รับเงิน 1,000 บาท',amount:1000,date:'2026-01-26'},
+        {id:'PET041',type:'expense',category:'utilities',description:'พี่จี่เติมเเก้ส',amount:470,date:'2026-01-30'},
+        {id:'PET042',type:'expense',category:'office',description:'ปริ้นเอกสาร',amount:30,date:'2026-01-30'},
+        {id:'PET043',type:'expense',category:'food',description:'ไข่ไก่ 1 เเผง',amount:120,date:'2026-01-31'},
+        {id:'PET044',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-01-31'},
+        {id:'PET045',type:'expense',category:'food',description:'กุญเชียง',amount:25,date:'2026-01-31'},
+        
+        // กุมภาพันธ์ 2026
+        {id:'PET046',type:'expense',category:'supplies',description:'ทิชชู 1 เเพค',amount:65,date:'2026-02-01'},
+        {id:'PET047',type:'expense',category:'supplies',description:'เเปรงล้างห้องน้ำ',amount:25,date:'2026-02-01'},
+        {id:'PET048',type:'expense',category:'supplies',description:'พี่จี่ซื้อปุ๋ยใส่ดอก',amount:35,date:'2026-02-01'},
+        {id:'PET049',type:'income',category:'capital',description:'รับเงิน',amount:1000,date:'2026-02-04'},
+        {id:'PET050',type:'expense',category:'tax',description:'ภาษี',amount:200,date:'2026-02-04'},
+        {id:'PET051',type:'expense',category:'maintenance',description:'พี่จี่ซื้อสายยางรดน้ำ',amount:100,date:'2026-02-04'},
+        {id:'PET052',type:'expense',category:'food',description:'ไข่ไก่',amount:40,date:'2026-02-05'},
+        {id:'PET053',type:'expense',category:'food',description:'ค่าข้าวลูกค้า',amount:180,date:'2026-02-06'},
+        {id:'PET054',type:'expense',category:'food',description:'ค่าหมูสับ',amount:60,date:'2026-02-06'},
+        {id:'PET055',type:'expense',category:'supplies',description:'ทิชชู',amount:65,date:'2026-02-07'},
+        {id:'PET056',type:'expense',category:'food',description:'กาเเฟ',amount:125,date:'2026-02-07'},
+        {id:'PET057',type:'expense',category:'maintenance',description:'พี่จี่ซื้อน้อต',amount:200,date:'2026-02-10'},
+        {id:'PET058',type:'expense',category:'maintenance',description:'ท่อประปาสามทาง',amount:58,date:'2026-02-10'},
+        {id:'PET059',type:'expense',category:'office',description:'ถ่ายเอกสาร',amount:20,date:'2026-02-10'},
+        {id:'PET060',type:'income',category:'capital',description:'รับเงิน',amount:1000,date:'2026-02-10'},
+        {id:'PET061',type:'expense',category:'maintenance',description:'ซื้อท่อประปา',amount:120,date:'2026-02-12'},
+        {id:'PET062',type:'expense',category:'maintenance',description:'เลื่อยตัดท่อ',amount:180,date:'2026-02-12'},
+        {id:'PET063',type:'expense',category:'maintenance',description:'ไบเลื่อน',amount:30,date:'2026-02-12'},
+        {id:'PET064',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-02-12'},
+        {id:'PET065',type:'expense',category:'food',description:'ไข่ไก่',amount:60,date:'2026-02-12'},
+        {id:'PET066',type:'expense',category:'food',description:'ฮอทดอก',amount:40,date:'2026-02-12'},
+        {id:'PET067',type:'expense',category:'food',description:'กุญเชียง',amount:40,date:'2026-02-12'},
+        {id:'PET068',type:'expense',category:'food',description:'ค่าข้าวกล่อง',amount:120,date:'2026-02-13'},
+        {id:'PET069',type:'expense',category:'tour',description:'ค่าตั๋ว',amount:30,date:'2026-02-13'},
+        {id:'PET070',type:'income',category:'capital',description:'รับเงิน 1000',amount:1000,date:'2026-02-13'},
+        
+        // มีนาคม 2026
+        {id:'PET071',type:'expense',category:'maintenance',description:'ซื้อถ่านประตู 5 เเพค',amount:175,date:'2026-03-01'},
+        {id:'PET072',type:'expense',category:'maintenance',description:'เลื่อยตัดต้นกระท่อน 2 อัน',amount:380,date:'2026-03-01'},
+        {id:'PET073',type:'expense',category:'food',description:'ไข่ไก่ครึ่งเเผง',amount:65,date:'2026-03-01'},
+        {id:'PET074',type:'expense',category:'utilities',description:'ค่าน้ำประปา',amount:260,date:'2026-03-01'},
+        {id:'PET075',type:'expense',category:'food',description:'กาเเฟ',amount:125,date:'2026-03-01'},
+        {id:'PET076',type:'expense',category:'food',description:'หมูสับครึ่งโล',amount:75,date:'2026-03-01'},
+        {id:'PET077',type:'income',category:'capital',description:'รับเงิน',amount:1000,date:'2026-03-02'},
+        {id:'PET078',type:'expense',category:'food',description:'ไข่ไก่',amount:65,date:'2026-03-02'},
+        {id:'PET079',type:'expense',category:'supplies',description:'ทิชชู',amount:65,date:'2026-03-02'},
+        {id:'PET080',type:'expense',category:'supplies',description:'น้ำยาล้างจาน',amount:25,date:'2026-03-02'},
+        {id:'PET081',type:'expense',category:'food',description:'หนังกรอบ',amount:75,date:'2026-03-02'},
+        {id:'PET082',type:'expense',category:'food',description:'กุญเชียง',amount:75,date:'2026-03-02'},
+        {id:'PET083',type:'expense',category:'food',description:'หมูสับ',amount:75,date:'2026-03-02'}
+    ];
+    
+    // Add timestamps and slip fields
+    const pettyCashEntries = pettyCashData.map(entry => ({
+        ...entry,
+        slip: null,
+        createdAt: new Date().toISOString()
+    }));
+    
+    // Calculate totals
+    const totalIncome = pettyCashEntries.filter(e => e.type === 'income').reduce((sum, e) => sum + e.amount, 0);
+    const totalExpense = pettyCashEntries.filter(e => e.type === 'expense').reduce((sum, e) => sum + e.amount, 0);
+    const balance = totalIncome - totalExpense;
+    
+    // Update UI
+    setTimeout(() => {
+        document.getElementById('total').textContent = `${pettyCashEntries.length} / ${pettyCashEntries.length}`;
+        document.getElementById('income').textContent = `${pettyCashEntries.filter(e => e.type === 'income').length} / 10`;
+        document.getElementById('expense').textContent = `${pettyCashEntries.filter(e => e.type === 'expense').length} / 76`;
+        document.getElementById('balance').textContent = `฿${balance.toLocaleString()}`;
+        
+        document.getElementById('status').innerHTML = `
+            <span class="success">✅ สำเร็จ!</span><br>
+            ลงรายการ Petty Cash ปี 2026 เรียบร้อยแล้ว<br>
+            💵 รายรับ: ฿${totalIncome.toLocaleString()} | 
+            💸 รายจ่าย: ฿${totalExpense.toLocaleString()}<br>
+            💰 คงเหลือ: ฿${balance.toLocaleString()}
+        `;
+        
+        // Save to localStorage
+        localStorage.setItem('vela_petty', JSON.stringify(pettyCashEntries));
+        console.log('✅ Petty Cash 2026 saved:', pettyCashEntries.length, 'entries');
+        
+    }, 1000);
+    </script>
+</body>
+</html>

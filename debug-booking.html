@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Booking - Vela Resort</title>
+    <style>
+        body { font-family: monospace; padding: 1rem; background: #000; color: #0f0; }
+        .box { background: #111; padding: 1rem; border: 1px solid #333; margin: 1rem 0; border-radius: 8px; }
+        button { background: #FFD700; color: #000; border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 8px; cursor: pointer; margin: 0.5rem; }
+        button:hover { background: #fff; }
+        #output { background: #000; color: #0f0; padding: 1rem; border-radius: 8px; min-height: 200px; max-height: 400px; overflow-y: auto; }
+        .error { color: #f44; }
+        .success { color: #4f4; }
+        .warning { color: #ff0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Booking System</h1>
+    
+    <div class="box">
+        <h3>Test 1: Check Functions</h3>
+        <button onclick="test1()">🔍 Check if functions exist</button>
+    </div>
+    
+    <div class="box">
+        <h3>Test 2: Check Modal Element</h3>
+        <button onclick="test2()">🪟 Find bookingModal</button>
+    </div>
+    
+    <div class="box">
+        <h3>Test 3: Open Modal</h3>
+        <button onclick="test3()">📅 Try to open modal</button>
+    </div>
+    
+    <div class="box">
+        <h3>Test 4: Console Check</h3>
+        <button onclick="test4()">💻 Show console info</button>
+    </div>
+    
+    <div class="box">
+        <h3>Output:</h3>
+        <div id="output">Ready...</div>
+    </div>
+    
+    <div class="box">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Click each test button in order (1 → 2 → 3 → 4)</li>
+            <li>Take screenshot of output</li>
+            <li>Open browser console (F12 or Cmd+Opt+J)</li>
+            <li>Take screenshot of console</li>
+            <li>Send both screenshots</li>
+        </ol>
+    </div>
+    
+    <script>
+        function log(msg, type = 'info') {
+            const output = document.getElementById('output');
+            const time = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : '';
+            output.innerHTML += `<div class="${className}">[${time}] ${msg}</div>`;
+            output.scrollTop = output.scrollHeight;
+            console.log('[DEBUG]', msg);
+        }
+        
+        function test1() {
+            log('=== TEST 1: Checking Functions ===', 'success');
+            
+            // Check if functions exist
+            if (typeof openBookingModal === 'function') {
+                log('✅ openBookingModal() exists', 'success');
+            } else {
+                log('❌ openBookingModal() NOT FOUND!', 'error');
+            }
+            
+            if (typeof selectRoomType === 'function') {
+                log('✅ selectRoomType() exists', 'success');
+            } else {
+                log('❌ selectRoomType() NOT FOUND!', 'error');
+            }
+            
+            if (typeof calculatePrice === 'function') {
+                log('✅ calculatePrice() exists', 'success');
+            } else {
+                log('❌ calculatePrice() NOT FOUND!', 'error');
+            }
+            
+            // Check if there are any script errors
+            log('📝 Check browser console for any red errors', 'warning');
+        }
+        
+        function test2() {
+            log('=== TEST 2: Finding Modal Element ===', 'success');
+            
+            const modal = document.getElementById('bookingModal');
+            if (!modal) {
+                log('❌ Modal element NOT FOUND!', 'error');
+                log('📝 Element ID "bookingModal" does not exist in DOM', 'error');
+                return;
+            }
+            
+            log('✅ Modal element FOUND!', 'success');
+            log(`📊 Modal classes: "${modal.className}"`, 'info');
+            log(`📊 Modal display: "${modal.style.display}"`, 'info');
+            log(`📊 Modal has "active" class: ${modal.classList.contains('active')}`, 'info');
+        }
+        
+        function test3() {
+            log('=== TEST 3: Trying to Open Modal ===', 'success');
+            
+            try {
+                const modal = document.getElementById('bookingModal');
+                if (!modal) {
+                    log('❌ Cannot open - Modal not found!', 'error');
+                    return;
+                }
+                
+                log('🔵 Adding "active" class to modal...', 'info');
+                modal.classList.add('active');
+                
+                setTimeout(() => {
+                    if (modal.classList.contains('active')) {
+                        log('✅ Modal should be visible now!', 'success');
+                        log('📝 If you see a black overlay with booking form = SUCCESS', 'success');
+                        log('📝 If nothing appears = CSS issue (z-index or display)', 'warning');
+                    } else {
+                        log('❌ Modal class not added!', 'error');
+                    }
+                }, 100);
+                
+            } catch (e) {
+                log(`❌ Error: ${e.message}`, 'error');
+                log(`📝 Full error: ${e.toString()}`, 'error');
+            }
+        }
+        
+        function test4() {
+            log('=== TEST 4: Console Information ===', 'success');
+            log('📝 Opening browser console...', 'info');
+            
+            console.log('=== DEBUG INFO ===');
+            console.log('Modal element:', document.getElementById('bookingModal'));
+            console.log('openBookingModal function:', typeof openBookingModal);
+            console.log('selectRoomType function:', typeof selectRoomType);
+            console.log('calculatePrice function:', typeof calculatePrice);
+            console.log('Window location:', window.location.href);
+            console.log('User agent:', navigator.userAgent);
+            
+            log('✅ Check browser console (F12) for detailed info', 'success');
+            log('📝 Click "Console" tab in DevTools', 'warning');
+            log('📝 Look for any RED error messages', 'warning');
+            log('📝 Take screenshot and send it', 'warning');
+        }
+        
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            log('🟢 Page loaded successfully', 'success');
+            log('🟢 Start testing: Click Test 1 button', 'success');
+            log('', 'info');
+            log('📱 Testing on:', navigator.userAgent, 'info');
+        });
+        
+        // Catch any errors
+        window.onerror = function(msg, url, line, col, error) {
+            log(`❌ ERROR: ${msg}`, 'error');
+            log(`📍 Location: ${url}:${line}:${col}`, 'error');
+            return false;
+        };
+    </script>
+</body>
+</html>

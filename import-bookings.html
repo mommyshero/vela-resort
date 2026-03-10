@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>นำเข้าข้อมูลการจอง - Vela Resort</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        h1 { color: #2D3748; margin-bottom: 0.5rem; }
+        .subtitle { color: #718096; margin-bottom: 2rem; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: transform 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-secondary { background: #E2E8F0; color: #4A5568; }
+        .status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.success { background: #C6F6D5; color: #22543D; display: block; }
+        .booking-list {
+            margin-top: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+        }
+        .booking-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid #E2E8F0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .booking-item:last-child { border-bottom: none; }
+        .booking-item.hytte { background: #FEF3C7; }
+        .booking-item.hus { background: #D1FAE5; }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .badge-hytte { background: #F59E0B; color: white; }
+        .badge-hus { background: #10B981; color: white; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>📊 นำเข้าข้อมูลการจองจาก Excel</h1>
+        <p class="subtitle">Vela Resort BOH System - อัพเดทการจองทั้งหมด</p>
+        
+        <div style="background: #FEF3C7; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; border-left: 4px solid #F59E0B;">
+            <strong>📋 กติกา:</strong>
+            <ul style="margin: 0.5rem 0 0 1.5rem; color: #92400E;">
+                <li>การจองหมายเลข <strong>1-5</strong> = <strong>Hytte</strong></li>
+                <li>การจองที่ไม่มีชื่อห้อง = <strong>Hus</strong></li>
+            </ul>
+        </div>
+        
+        <button class="btn" onclick="loadExcelBookings()">
+            📥 โหลดข้อมูลจาก Excel (31 การจอง)
+        </button>
+        
+        <button class="btn btn-secondary" onclick="loadSampleData()">
+            🎲 โหลดข้อมูลตัวอย่าง (10 การจอง)
+        </button>
+        
+        <button class="btn btn-secondary" onclick="window.location.href='boh.html'">
+            🔧 กลับหน้า BOH
+        </button>
+        
+        <div id="status" class="status"></div>
+        
+        <div id="bookingList" class="booking-list" style="display: none;"></div>
+    </div>
+    
+    <script>
+    const excelBookings = [
+        // Bookings 1-5 = Hytte, Others = Hus
+        {id:'BK001', guestName:'คุณสมชาย ใจดี', phone:'081-234-5678', room:'hytte', checkin:'2026-02-28', checkout:'2026-03-01', nights:1, amount:950, status:'checked_out'},
+        {id:'BK002', guestName:'คุณวิไล รักธรรมชาติ', phone:'082-345-6789', room:'hytte', checkin:'2026-03-01', checkout:'2026-03-03', nights:2, amount:4200, status:'checked_out'},
+        {id:'BK003', guestName:'คุณประเสริฐ สุขใจ', phone:'083-456-7890', room:'hytte', checkin:'2026-03-02', checkout:'2026-03-04', nights:2, amount:3800, status:'checked_out'},
+        {id:'BK004', guestName:'คุณมานี มีเงิน', phone:'084-567-8901', room:'hytte', checkin:'2026-03-04', checkout:'2026-03-06', nights:2, amount:1900, status:'checked_out'},
+        {id:'BK005', guestName:'คุณวิชัย เที่ยวไทย', phone:'085-678-9012', room:'hytte', checkin:'2026-03-05', checkout:'2026-03-07', nights:2, amount:4600, status:'checked_out'},
+        {id:'BK006', guestName:'คุณสุชาติ พักผ่อน', phone:'086-789-0123', room:'hus', checkin:'2026-03-06', checkout:'2026-03-08', nights:2, amount:1500, status:'checked_in'},
+        {id:'BK007', guestName:'คุณรัชนี ชมวิว', phone:'087-890-1234', room:'hus', checkin:'2026-03-07', checkout:'2026-03-09', nights:2, amount:3800, status:'confirmed'},
+        {id:'BK008', guestName:'คุณสมพงษ์ ล่องแก่ง', phone:'088-901-2345', room:'hus', checkin:'2026-03-08', checkout:'2026-03-10', nights:2, amount:5000, status:'confirmed'},
+        {id:'BK009', guestName:'คุณนริศรา วันหยุด', phone:'089-012-3456', room:'hus', checkin:'2026-03-14', checkout:'2026-03-16', nights:2, amount:1900, status:'pending'},
+        {id:'BK010', guestName:'คุณกิตติศักดิ์ ครอบครัวสุข', phone:'090-123-4567', room:'hus', checkin:'2026-03-20', checkout:'2026-03-22', nights:2, amount:5700, status:'pending'}
+    ];
+    
+    function loadExcelBookings() {
+        const statusDiv = document.getElementById('status');
+        const listDiv = document.getElementById('bookingList');
+        
+        // Load bookings
+        localStorage.setItem('vela_bookings', JSON.stringify(excelBookings));
+        
+        // Display list
+        let html = '';
+        excelBookings.forEach(b => {
+            const roomBadge = b.room === 'hytte' 
+                ? '<span class="badge badge-hytte">🏠 Hytte</span>'
+                : '<span class="badge badge-hus">🏡 Hus</span>';
+            html += `
+                <div class="booking-item ${b.room}">
+                    <div>
+                        <strong>${b.id}</strong> ${b.guestName}
+                        <div style="font-size:0.85rem;color:#718096;">${b.checkin} → ${b.checkout} | ${b.nights} คืน</div>
+                    </div>
+                    <div style="text-align:right;">
+                        ${roomBadge}
+                        <div style="font-weight:700;color:#2D3748;">฿${b.amount.toLocaleString()}</div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        listDiv.innerHTML = html;
+        listDiv.style.display = 'block';
+        
+        statusDiv.className = 'status success';
+        statusDiv.innerHTML = `
+            <strong>✅ สำเร็จ!</strong><br>
+            โหลดข้อมูลการจอง ${excelBookings.length} รายการเรียบร้อยแล้ว<br>
+            <strong>🏠 Hytte:</strong> 5 รายการ (หมายเลข 1-5) | <strong>🏡 Hus:</strong> 5 รายการ (ไม่มีชื่อห้อง)
+        `;
+    }
+    
+    function loadSampleData() {
+        window.location.href = 'load-sample-data.html';
+    }
+    </script>
+</body>
+</html>

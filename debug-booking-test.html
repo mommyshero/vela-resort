@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Booking - Vela Resort (Main Page)</title>
+    <style>
+        body { font-family: monospace; padding: 1rem; background: #000; color: #0f0; }
+        .box { background: #111; padding: 1rem; border: 1px solid #333; margin: 1rem 0; border-radius: 8px; }
+        button { background: #FFD700; color: #000; border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 8px; cursor: pointer; margin: 0.5rem; }
+        button:hover { background: #fff; }
+        #output { background: #000; color: #0f0; padding: 1rem; border-radius: 8px; min-height: 200px; max-height: 400px; overflow-y: auto; }
+        .error { color: #f44; }
+        .success { color: #4f4; }
+        .warning { color: #ff0; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Booking (Main Page Test)</h1>
+    <p><strong>⚠️ IMPORTANT:</strong> This test loads the ACTUAL main page to check if functions exist.</p>
+    
+    <div class="box">
+        <h3>Test: Check Main Page Functions</h3>
+        <button onclick="testMainPage()">🔍 Test Main Page Functions</button>
+        <button onclick="openMainPage()">🌐 Open Main Page</button>
+    </div>
+    
+    <div class="box">
+        <h3>Output:</h3>
+        <div id="output">Ready...</div>
+    </div>
+    
+    <div class="box">
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Click "Test Main Page Functions"</li>
+            <li>Check results below</li>
+            <li>If functions NOT FOUND → JavaScript error on main page</li>
+            <li>Click "Open Main Page" to test directly</li>
+            <li>Take screenshot and send</li>
+        </ol>
+    </div>
+    
+    <script>
+        function log(msg, type = 'info') {
+            const output = document.getElementById('output');
+            const time = new Date().toLocaleTimeString();
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : '';
+            output.innerHTML += `<div class="${className}">[${time}] ${msg}</div>`;
+            output.scrollTop = output.scrollHeight;
+            console.log('[DEBUG]', msg);
+        }
+        
+        function testMainPage() {
+            log('=== TESTING MAIN PAGE ===', 'success');
+            log('📱 User Agent: ' + navigator.userAgent, 'info');
+            log('🌐 URL: ' + window.location.href, 'info');
+            log('', 'info');
+            
+            // Try to access functions from main page
+            log('🔍 Checking if we can access main page...', 'warning');
+            
+            // Check if we're on the main page or debug page
+            if (window.location.href.includes('debug-booking-test.html')) {
+                log('⚠️ This is a debug page - functions may not be available', 'warning');
+                log('ℹ️ Click "Open Main Page" to test on actual page', 'info');
+            }
+            
+            // Check functions
+            log('', 'info');
+            log('=== FUNCTION CHECK ===', 'success');
+            
+            if (typeof openBookingModal === 'function') {
+                log('✅ openBookingModal() EXISTS', 'success');
+            } else {
+                log('❌ openBookingModal() NOT FOUND', 'error');
+                log('📝 Possible causes:', 'warning');
+                log('   1. JavaScript error before function definition', 'warning');
+                log('   2. Script tag not loaded', 'warning');
+                log('   3. Syntax error in earlier code', 'warning');
+            }
+            
+            if (typeof selectRoomType === 'function') {
+                log('✅ selectRoomType() EXISTS', 'success');
+            } else {
+                log('❌ selectRoomType() NOT FOUND', 'error');
+            }
+            
+            if (typeof calculatePrice === 'function') {
+                log('✅ calculatePrice() EXISTS', 'success');
+            } else {
+                log('❌ calculatePrice() NOT FOUND', 'error');
+            }
+            
+            // Check modal element
+            log('', 'info');
+            log('=== MODAL ELEMENT CHECK ===', 'success');
+            
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                log('✅ bookingModal element FOUND', 'success');
+                log('📊 Classes: ' + modal.className, 'info');
+            } else {
+                log('❌ bookingModal element NOT FOUND', 'error');
+                log('📝 HTML may be missing or malformed', 'warning');
+            }
+            
+            log('', 'info');
+            log('=== NEXT STEPS ===', 'success');
+            log('1. Open browser console (F12 or Cmd+Opt+J)', 'info');
+            log('2. Look for RED error messages', 'warning');
+            log('3. Take screenshot of console', 'info');
+            log('4. Send screenshot to developer', 'info');
+        }
+        
+        function openMainPage() {
+            log('🌐 Opening main page...', 'info');
+            setTimeout(() => {
+                window.location.href = window.location.origin;
+            }, 1000);
+        }
+        
+        // Auto-run on load
+        window.addEventListener('load', () => {
+            log('🟢 Page loaded', 'success');
+            log('📱 Testing on: ' + navigator.userAgent, 'info');
+            log('Click "Test Main Page Functions" button', 'info');
+        });
+        
+        // Catch errors
+        window.onerror = function(msg, url, line, col, error) {
+            log('❌ ERROR: ' + msg, 'error');
+            log('📍 Location: ' + url + ':' + line + ':' + col, 'error');
+            return false;
+        };
+    </script>
+</body>
+</html>

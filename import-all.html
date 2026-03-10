@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Import All Data - Vela Resort</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        .container { max-width: 1000px; margin: 0 auto; }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+        h1 { color: #2D3748; margin-bottom: 0.5rem; font-size: 2rem; }
+        .subtitle { color: #718096; margin-bottom: 1.5rem; }
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(102,126,234,0.4); }
+        .btn-success { background: linear-gradient(135deg, #48BB78 0%, #38A169 100%); }
+        .btn-success:disabled { background: #CBD5E0; cursor: not-allowed; transform: none; }
+        .status {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            display: none;
+        }
+        .status.success { 
+            background: linear-gradient(135deg, #C6F6D5 0%, #9AE6B4 100%); 
+            color: #22543D; 
+            display: block; 
+        }
+        .progress-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .progress-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 2px solid #E2E8F0;
+        }
+        .progress-item.completed { border-color: #48BB78; background: #F0FFF4; }
+        .progress-item.pending { border-color: #E2E8F0; }
+        .check-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+        .progress-item.completed .check-icon {
+            background: #48BB78;
+            color: white;
+        }
+        .progress-info { flex: 1; }
+        .progress-title { font-weight: 700; color: #2D3748; }
+        .progress-desc { color: #718096; font-size: 0.9rem; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .stat-card {
+            background: #F7FAFC;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value { font-size: 1.5rem; font-weight: 700; color: #667eea; }
+        .stat-label { color: #718096; font-size: 0.85rem; margin-top: 0.25rem; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>📊 Import ข้อมูลทั้งหมด</h1>
+            <p class="subtitle">Vela Resort BOH System - Petty Cash + Bookings</p>
+            
+            <button class="btn btn-success" id="importBtn" onclick="importAll()">
+                🚀 Import ข้อมูลทั้งหมด (2 ขั้นตอน)
+            </button>
+            
+            <button class="btn" onclick="window.location.href='boh.html'" style="background: #E2E8F0; color: #4A5568;">
+                🔧 กลับหน้า BOH
+            </button>
+            
+            <div id="status" class="status"></div>
+        </div>
+        
+        <div id="progressCard" class="progress-card">
+            <h2 style="color: #2D3748; margin-bottom: 1.5rem;">📈 ความคืบหน้า</h2>
+            
+            <div class="progress-item" id="pettyProgress">
+                <div class="check-icon">⏳</div>
+                <div class="progress-info">
+                    <div class="progress-title">💰 บัญชีรายย่อย</div>
+                    <div class="progress-desc">81 รายการ | ฿10,000 รายรับ | ฿9,097 รายจ่าย</div>
+                </div>
+            </div>
+            
+            <div class="progress-item" id="bookingProgress">
+                <div class="check-icon">⏳</div>
+                <div class="progress-info">
+                    <div class="progress-title">📅 การจอง</div>
+                    <div class="progress-desc">10 รายการ | 5 Hytte + 5 Hus | ฿33,350</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="summaryCard" class="card" style="display: none;">
+            <h2 style="color: #2D3748; margin-bottom: 1rem;">✅ สำเร็จ!</h2>
+            <p style="color: #22543D; font-size: 1.1rem;">Import ข้อมูลเสร็จสมบูรณ์</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">81</div>
+                    <div class="stat-label">💰 Petty Cash</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">10</div>
+                    <div class="stat-label">📅 Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">฿903</div>
+                    <div class="stat-label">💰 คงเหลือ</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">฿33,350</div>
+                    <div class="stat-label">💵 รายได้จอง</div>
+                </div>
+            </div>
+            
+            <button class="btn btn-success" onclick="window.location.href='boh.html'" style="margin-top: 1.5rem;">
+                🔧 เปิดหน้า BOH
+            </button>
+        </div>
+    </div>
+    
+    <script>
+    // Petty Cash Data
+    const pettyCashEntries = [
+        { id: 'PET001', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-01' },
+        { id: 'PET002', type: 'expense', category: 'tour', description: 'ค่าตั๋วลูกค้า 4 คน', amount: 120, date: '2026-01-01' },
+        { id: 'PET003', type: 'expense', category: 'food', description: 'ค่าข้าวกล่อง 4 กล่อง', amount: 240, date: '2026-01-01' },
+        { id: 'PET004', type: 'expense', category: 'maintenance', description: 'ค่าลูกบิดประตู', amount: 180, date: '2026-01-01' },
+        { id: 'PET005', type: 'expense', category: 'labor', description: 'ค่าแรงงานช่าง', amount: 200, date: '2026-01-01' },
+        { id: 'PET006', type: 'expense', category: 'maintenance', description: 'ค่ากลอนประตู', amount: 25, date: '2026-01-01' },
+        { id: 'PET007', type: 'expense', category: 'food', description: 'ค่าข้าว 8 กล่อง', amount: 480, date: '2026-01-02' },
+        { id: 'PET008', type: 'expense', category: 'tour', description: 'ค่าตั๋ว 8 คน', amount: 240, date: '2026-01-02' },
+        { id: 'PET009', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-02' },
+        { id: 'PET010', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-01-02' },
+        { id: 'PET011', type: 'expense', category: 'food', description: 'หอมมะลิ', amount: 55, date: '2026-01-02' },
+        { id: 'PET012', type: 'expense', category: 'food', description: 'ไข่ไก่ครึ่งแผง', amount: 65, date: '2026-01-02' },
+        { id: 'PET013', type: 'expense', category: 'food', description: 'ค่าข้าว 4 กล่อง', amount: 240, date: '2026-01-03' },
+        { id: 'PET014', type: 'expense', category: 'tour', description: 'ค่าตั๋ว 4 คน', amount: 120, date: '2026-01-03' },
+        { id: 'PET015', type: 'expense', category: 'supplies', description: 'ทิชชู 1 แพค', amount: 65, date: '2026-01-03' },
+        { id: 'PET016', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-03' },
+        { id: 'PET017', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-01-08' },
+        { id: 'PET018', type: 'expense', category: 'food', description: 'กุยช่าย', amount: 50, date: '2026-01-08' },
+        { id: 'PET019', type: 'expense', category: 'food', description: 'ค่าข้าวกล่อง 2 คน', amount: 120, date: '2026-01-09' },
+        { id: 'PET020', type: 'expense', category: 'tour', description: 'ค่าตั๋ว 1 คน', amount: 30, date: '2026-01-09' },
+        { id: 'PET021', type: 'expense', category: 'food', description: 'ค่าหัวหมู', amount: 800, date: '2026-01-18' },
+        { id: 'PET022', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-19' },
+        { id: 'PET023', type: 'expense', category: 'maintenance', description: 'ซื้อฝักบัว 1 อัน', amount: 27, date: '2026-01-19' },
+        { id: 'PET024', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-01-19' },
+        { id: 'PET025', type: 'expense', category: 'food', description: 'ไข่ไก่ครึ่งแผง', amount: 65, date: '2026-01-19' },
+        { id: 'PET026', type: 'expense', category: 'food', description: 'ผักชี', amount: 10, date: '2026-01-19' },
+        { id: 'PET027', type: 'expense', category: 'supplies', description: 'ทิชชู', amount: 65, date: '2026-01-20' },
+        { id: 'PET028', type: 'expense', category: 'maintenance', description: 'ค่าที่ล็อคประตู', amount: 35, date: '2026-01-21' },
+        { id: 'PET029', type: 'expense', category: 'food', description: 'เครื่องดื่ม', amount: 50, date: '2026-01-22' },
+        { id: 'PET030', type: 'expense', category: 'food', description: 'กาแฟ', amount: 125, date: '2026-01-22' },
+        { id: 'PET031', type: 'expense', category: 'food', description: 'หนังกรอบ', amount: 75, date: '2026-01-22' },
+        { id: 'PET032', type: 'expense', category: 'food', description: 'ไข่ไก่ครึ่งแผง', amount: 65, date: '2026-01-22' },
+        { id: 'PET033', type: 'expense', category: 'food', description: 'ผักชี', amount: 10, date: '2026-01-22' },
+        { id: 'PET034', type: 'expense', category: 'tour', description: 'ค่าตั๋ว 6 คน', amount: 180, date: '2026-01-23' },
+        { id: 'PET035', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-23' },
+        { id: 'PET036', type: 'expense', category: 'utilities', description: 'ค่าน้ำประปา', amount: 1090, date: '2026-01-24' },
+        { id: 'PET037', type: 'expense', category: 'supplies', description: 'ทิชชู', amount: 65, date: '2026-01-25' },
+        { id: 'PET038', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-01-26' },
+        { id: 'PET039', type: 'expense', category: 'utilities', description: 'พี่จี่เติมแก๊ส', amount: 470, date: '2026-01-30' },
+        { id: 'PET040', type: 'expense', category: 'office', description: 'ปริ้นเอกสาร', amount: 30, date: '2026-01-30' },
+        { id: 'PET041', type: 'expense', category: 'food', description: 'ไข่ไก่ 1 แผง', amount: 120, date: '2026-01-31' },
+        { id: 'PET042', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-01-31' },
+        { id: 'PET043', type: 'expense', category: 'food', description: 'กุยช่าย', amount: 25, date: '2026-01-31' },
+        { id: 'PET044', type: 'expense', category: 'supplies', description: 'ทิชชู 1 แพค', amount: 65, date: '2026-02-01' },
+        { id: 'PET045', type: 'expense', category: 'supplies', description: 'แปรงล้างห้องน้ำ', amount: 25, date: '2026-02-01' },
+        { id: 'PET046', type: 'expense', category: 'supplies', description: 'พี่จี่ซื้อปุ๋ยใส่ดอก', amount: 35, date: '2026-02-01' },
+        { id: 'PET047', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-02-04' },
+        { id: 'PET048', type: 'expense', category: 'tax', description: 'ภาษี', amount: 200, date: '2026-02-04' },
+        { id: 'PET049', type: 'expense', category: 'maintenance', description: 'พี่จี่ซื้อสายยางรดน้ำ', amount: 100, date: '2026-02-04' },
+        { id: 'PET050', type: 'expense', category: 'food', description: 'ไข่ไก่', amount: 40, date: '2026-02-05' },
+        { id: 'PET051', type: 'expense', category: 'food', description: 'ค่าข้าวลูกค้า', amount: 180, date: '2026-02-06' },
+        { id: 'PET052', type: 'expense', category: 'food', description: 'ค่าหมูสับ', amount: 60, date: '2026-02-06' },
+        { id: 'PET053', type: 'expense', category: 'supplies', description: 'ทิชชู', amount: 65, date: '2026-02-07' },
+        { id: 'PET054', type: 'expense', category: 'food', description: 'กาแฟ', amount: 125, date: '2026-02-07' },
+        { id: 'PET055', type: 'expense', category: 'maintenance', description: 'พี่จี่ซื้อน็อต', amount: 200, date: '2026-02-10' },
+        { id: 'PET056', type: 'expense', category: 'maintenance', description: 'ท่อประปาสสามทาง', amount: 58, date: '2026-02-10' },
+        { id: 'PET057', type: 'expense', category: 'office', description: 'ถ่ายเอกสาร', amount: 20, date: '2026-02-10' },
+        { id: 'PET058', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-02-10' },
+        { id: 'PET059', type: 'expense', category: 'maintenance', description: 'ซื้อท่อประปา', amount: 120, date: '2026-02-12' },
+        { id: 'PET060', type: 'expense', category: 'maintenance', description: 'เลื่อยตัดท่อ', amount: 180, date: '2026-02-12' },
+        { id: 'PET061', type: 'expense', category: 'maintenance', description: 'ใบเลื่อย', amount: 30, date: '2026-02-12' },
+        { id: 'PET062', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-02-12' },
+        { id: 'PET063', type: 'expense', category: 'food', description: 'ไข่ไก่', amount: 60, date: '2026-02-12' },
+        { id: 'PET064', type: 'expense', category: 'food', description: 'ฮอทดอก', amount: 40, date: '2026-02-12' },
+        { id: 'PET065', type: 'expense', category: 'food', description: 'กุยช่าย', amount: 40, date: '2026-02-12' },
+        { id: 'PET066', type: 'expense', category: 'food', description: 'ค่าข้าวกล่อง', amount: 120, date: '2026-02-13' },
+        { id: 'PET067', type: 'expense', category: 'tour', description: 'ค่าตั๋ว', amount: 30, date: '2026-02-13' },
+        { id: 'PET068', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-02-13' },
+        { id: 'PET069', type: 'expense', category: 'maintenance', description: 'ซื้อถ่านประตู 5 แพค', amount: 175, date: '2026-03-01' },
+        { id: 'PET070', type: 'expense', category: 'maintenance', description: 'เลื่อยตัดต้นกระท่อน 2 อัน', amount: 380, date: '2026-03-01' },
+        { id: 'PET071', type: 'expense', category: 'food', description: 'ไข่ไก่ครึ่งแผง', amount: 65, date: '2026-03-01' },
+        { id: 'PET072', type: 'expense', category: 'utilities', description: 'ค่าน้ำประปา', amount: 260, date: '2026-03-01' },
+        { id: 'PET073', type: 'expense', category: 'food', description: 'กาแฟ', amount: 125, date: '2026-03-01' },
+        { id: 'PET074', type: 'expense', category: 'food', description: 'หมูสับครึ่งโล', amount: 75, date: '2026-03-01' },
+        { id: 'PET075', type: 'income', category: 'capital', description: 'รับเงินเติม Petty Cash', amount: 1000, date: '2026-03-02' },
+        { id: 'PET076', type: 'expense', category: 'food', description: 'ไข่ไก่', amount: 65, date: '2026-03-02' },
+        { id: 'PET077', type: 'expense', category: 'supplies', description: 'ทิชชู', amount: 65, date: '2026-03-02' },
+        { id: 'PET078', type: 'expense', category: 'supplies', description: 'น้ำยาล้างจาน', amount: 25, date: '2026-03-02' },
+        { id: 'PET079', type: 'expense', category: 'food', description: 'หนังกรอบ', amount: 75, date: '2026-03-02' },
+        { id: 'PET080', type: 'expense', category: 'food', description: 'กุยช่าย', amount: 75, date: '2026-03-02' },
+        { id: 'PET081', type: 'expense', category: 'food', description: 'หมูสับ', amount: 75, date: '2026-03-02' }
+    ];
+    
+    // Booking Data
+    const bookings = [
+        {id:'BK001', bookingNo:'1', guestName:'คุณสมชาย ใจดี', phone:'081-234-5678', room:'hytte', roomQuantity:1, adults:2, children:0, checkin:'2026-02-28', checkout:'2026-03-01', nights:1, totalPrice:950, status:'checked_out', paymentStatus:'paid', tours:[]},
+        {id:'BK002', bookingNo:'2', guestName:'คุณวิไล รักธรรมชาติ', phone:'082-345-6789', room:'hytte', roomQuantity:1, adults:2, children:0, checkin:'2026-03-01', checkout:'2026-03-03', nights:2, totalPrice:4200, status:'checked_out', paymentStatus:'paid', tours:['VIP Thilosu']},
+        {id:'BK003', bookingNo:'3', guestName:'คุณประเสริฐ สุขใจ', phone:'083-456-7890', room:'hytte', roomQuantity:2, adults:4, children:0, checkin:'2026-03-02', checkout:'2026-03-04', nights:2, totalPrice:3800, status:'checked_out', paymentStatus:'paid', tours:['4x4 Onsen']},
+        {id:'BK004', bookingNo:'4', guestName:'คุณมานี มีเงิน', phone:'084-567-8901', room:'hytte', roomQuantity:1, adults:2, children:0, checkin:'2026-03-04', checkout:'2026-03-06', nights:2, totalPrice:1900, status:'checked_out', paymentStatus:'paid', tours:[]},
+        {id:'BK005', bookingNo:'5', guestName:'คุณวิชัย เที่ยวไทย', phone:'085-678-9012', room:'hytte', roomQuantity:1, adults:2, children:0, checkin:'2026-03-05', checkout:'2026-03-07', nights:2, totalPrice:4600, status:'checked_out', paymentStatus:'paid', tours:['VIP Thilosu-Kota']},
+        {id:'BK006', bookingNo:'6', guestName:'คุณสุชาติ พักผ่อน', phone:'086-789-0123', room:'hus', roomQuantity:1, adults:2, children:0, checkin:'2026-03-06', checkout:'2026-03-08', nights:2, totalPrice:1500, status:'checked_in', paymentStatus:'paid', tours:[]},
+        {id:'BK007', bookingNo:'7', guestName:'คุณรัชนี ชมวิว', phone:'087-890-1234', room:'hus', roomQuantity:2, adults:4, children:0, checkin:'2026-03-07', checkout:'2026-03-09', nights:2, totalPrice:3800, status:'confirmed', paymentStatus:'paid', tours:['4x4 Thilosu']},
+        {id:'BK008', bookingNo:'8', guestName:'คุณสมพงษ์ ล่องแก่ง', phone:'088-901-2345', room:'hus', roomQuantity:1, adults:2, children:0, checkin:'2026-03-08', checkout:'2026-03-10', nights:2, totalPrice:5000, status:'confirmed', paymentStatus:'waiting_payment', tours:['VIP Thilosu', '4x4 Onsen']},
+        {id:'BK009', bookingNo:'9', guestName:'คุณนริศรา วันหยุด', phone:'089-012-3456', room:'hus', roomQuantity:1, adults:2, children:0, checkin:'2026-03-14', checkout:'2026-03-16', nights:2, totalPrice:1900, status:'pending', paymentStatus:'waiting_payment', tours:[]},
+        {id:'BK010', bookingNo:'10', guestName:'คุณกิตติศักดิ์ ครอบครัวสุข', phone:'090-123-4567', room:'hus', roomQuantity:3, adults:6, children:0, checkin:'2026-03-20', checkout:'2026-03-22', nights:2, totalPrice:5700, status:'pending', paymentStatus:'waiting_payment', tours:['VIP Thilosu-Kota', '4x4 Thilosu']}
+    ];
+    
+    function importAll() {
+        const btn = document.getElementById('importBtn');
+        const statusDiv = document.getElementById('status');
+        const progressCard = document.getElementById('progressCard');
+        const summaryCard = document.getElementById('summaryCard');
+        
+        btn.disabled = true;
+        btn.textContent = '⏳ กำลัง Import...';
+        progressCard.style.display = 'block';
+        
+        // Step 1: Import Petty Cash
+        localStorage.setItem('vela_petty', JSON.stringify(pettyCashEntries));
+        document.getElementById('pettyProgress').classList.add('completed');
+        document.querySelector('#pettyProgress .check-icon').textContent = '✅';
+        
+        // Step 2: Import Bookings
+        setTimeout(() => {
+            localStorage.setItem('vela_bookings', JSON.stringify(bookings));
+            document.getElementById('bookingProgress').classList.add('completed');
+            document.querySelector('#bookingProgress .check-icon').textContent = '✅';
+            
+            // Show success
+            setTimeout(() => {
+                btn.style.display = 'none';
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = `
+                    <strong style="font-size: 1.2rem;">🎉 สำเร็จ!</strong><br>
+                    Import ข้อมูลเสร็จสมบูรณ์ทั้ง 2 รายการ
+                `;
+                summaryCard.style.display = 'block';
+                summaryCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 500);
+        }, 500);
+    }
+    </script>
+</body>
+</html>
