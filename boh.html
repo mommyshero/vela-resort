@@ -985,13 +985,6 @@
                         <div class="boh-menu-subtitle">VAT Report</div>
                     </div>
                 </a>
-                <a class="boh-menu-item" data-section="peekaboo">
-                    <div class="boh-menu-icon">👁️</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">Peekaboo</div>
-                        <div class="boh-menu-subtitle">Auto-release</div>
-                    </div>
-                </a>
                 <a class="boh-menu-item" data-section="settings">
                     <div class="boh-menu-icon">⚙️</div>
                     <div class="boh-menu-content">
@@ -1085,6 +1078,17 @@
                 <div class="boh-header">
                     <h1 class="boh-title"><span class="boh-title-icon">📝</span> การจอง</h1>
                     <p class="boh-description">จัดการการจองทั้งหมด</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn btn-success" onclick="showCsvImportModal()" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+                            📥 Import CSV (Booking.com)
+                        </button>
+                        <button class="btn btn-primary" onclick="window.open('import-booking-com.html', '_blank')" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+                            🌐 นำเข้าจากเว็บ
+                        </button>
+                        <button class="btn btn-secondary" onclick="exportBookingsCSV()" style="padding: 0.75rem 1.5rem; font-size: 0.95rem;">
+                            📤 Export CSV
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Add/Edit Booking Form -->
@@ -1158,6 +1162,27 @@
                     </div>
                 </div>
 
+                <!-- Customer History Section -->
+                <div class="form-card">
+                    <h2 class="form-title">👥 ประวัติลูกค้าแยกตามเดือน</h2>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1.5rem;">
+                        <select class="form-select" id="customerHistoryMonth" onchange="loadCustomerHistory()" style="min-width: 250px;">
+                            <option value="">-- เลือกเดือน --</option>
+                            <option value="2026-03">มีนาคม 2026</option>
+                            <option value="2026-02">กุมภาพันธ์ 2026</option>
+                            <option value="2026-01">มกราคม 2026</option>
+                            <option value="2025-12">ธันวาคม 2025</option>
+                            <option value="2025-11">พฤศจิกายน 2025</option>
+                            <option value="2025-10">ตุลาคม 2025</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="loadCustomerHistory()">🔍 ดูประวัติ</button>
+                        <button class="btn btn-secondary" onclick="exportCustomerHistory()">📤 Export ประวัติ</button>
+                    </div>
+                    <div id="customerHistoryContainer">
+                        <p style="color: var(--gray); text-align: center; padding: 2rem;">เลือกเดือนเพื่อดูประวัติลูกค้า</p>
+                    </div>
+                </div>
+
                 <!-- Bookings List Grouped by Month -->
                 <div class="form-card">
                     <h2 class="form-title">📋 รายการจองแยกตามเดือน</h2>
@@ -1166,6 +1191,143 @@
                     </div>
                 </div>
             </section>
+
+            <!-- CSV Import Modal -->
+            <div id="csvImportModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 10000; align-items: center; justify-content: center;">
+                <div style="background: white; border-radius: 24px; padding: 2rem; max-width: 900px; width: 90%; max-height: 90vh; overflow-y: auto;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="font-size: 1.5rem; color: var(--black);">📥 นำเข้าข้อมูลจาก CSV (Booking.com)</h2>
+                        <button onclick="closeCsvImportModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray);">✕</button>
+                    </div>
+
+                    <!-- Step 1: Upload -->
+                    <div id="csvStep1">
+                        <div class="alert-box alert-info">
+                            <div>
+                                <h3 style="color: var(--black); margin-bottom: 0.5rem;">📋 รูปแบบไฟล์ที่รองรับ</h3>
+                                <p style="color: var(--gray); margin-bottom: 0.5rem;">ไฟล์ CSV จาก Booking.com Extrabook หรือ Report</p>
+                                <ul style="color: var(--gray); font-size: 0.9rem; margin: 0; padding-left: 1.5rem;">
+                                    <li>ต้องมีคอลัมน์: booking_id, guest_name, check_in, check_out, room_type, price</li>
+                                    <li>รองรับไฟล์: .csv, .json</li>
+                                    <li>ระบบจะตรวจสอบข้อมูลซ้ำอัตโนมัติ</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="border: 3px dashed var(--light-gray); border-radius: 16px; padding: 3rem; text-align: center; margin-bottom: 1.5rem;">
+                            <input type="file" id="csvFileInput" accept=".csv,.json" style="display: none;" onchange="handleCsvFileSelect(event)">
+                            <button onclick="document.getElementById('csvFileInput').click()" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                                📎 เลือกไฟล์ CSV
+                            </button>
+                            <p style="color: var(--gray); margin-top: 1rem;">หรือลากไฟล์มาวางที่นี่</p>
+                        </div>
+
+                        <div id="csvFileSelected" style="display: none; background: var(--light-gray); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 1.5rem;">📄</span>
+                                <div>
+                                    <div style="font-weight: 700;" id="csvFileName">-</div>
+                                    <div style="color: var(--gray); font-size: 0.85rem;" id="csvFileSize">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="parseCsvFile()" class="btn btn-success" style="width: 100%; padding: 1rem; font-size: 1.1rem;" id="parseCsvBtn" disabled>
+                            🔍 ตรวจสอบและแสดง Preview
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Preview -->
+                    <div id="csvStep2" style="display: none;">
+                        <div class="alert-box alert-warning">
+                            <div>
+                                <h3 style="color: var(--warning); margin-bottom: 0.5rem;">⚠️ ตรวจสอบข้อมูลก่อนนำเข้า</h3>
+                                <p style="color: var(--gray);">ระบบจะข้ามรายการที่มีอยู่แล้ว (ตรวจสอบจาก booking_id)</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--black);" id="csvTotalRows">0</div>
+                                <div class="stat-label">📊 จำนวนแถวทั้งหมด</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--success);" id="csvNewRows">0</div>
+                                <div class="stat-label">✅ รายการใหม่</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--danger);" id="csvDuplicateRows">0</div>
+                                <div class="stat-label">🔄 ซ้ำ (จะข้าม)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--warning);" id="csvErrorRows">0</div>
+                                <div class="stat-label">❌ ข้อผิดพลาด</div>
+                            </div>
+                        </div>
+
+                        <div style="max-height: 400px; overflow-y: auto; border: 1px solid var(--light-gray); border-radius: 12px; margin-bottom: 1.5rem;">
+                            <table style="width: 100%; font-size: 0.85rem;">
+                                <thead style="position: sticky; top: 0; background: var(--black); color: white;">
+                                    <tr>
+                                        <th style="padding: 0.75rem;">สถานะ</th>
+                                        <th style="padding: 0.75rem;">Booking ID</th>
+                                        <th style="padding: 0.75rem;">ชื่อลูกค้า</th>
+                                        <th style="padding: 0.75rem;">เช็คอิน</th>
+                                        <th style="padding: 0.75rem;">เช็คเอาท์</th>
+                                        <th style="padding: 0.75rem;">ห้องพัก</th>
+                                        <th style="padding: 0.75rem; text-align: right;">ราคา</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="csvPreviewTable">
+                                    <!-- Populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="display: flex; gap: 0.75rem;">
+                            <button onclick="resetCsvImport()" class="btn btn-secondary" style="flex: 1; padding: 1rem;">
+                                ⬅️ ย้อนกลับ
+                            </button>
+                            <button onclick="confirmCsvImport()" class="btn btn-success" style="flex: 1; padding: 1rem;" id="confirmImportBtn">
+                                ✅ ยืนยันการนำเข้า
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Progress -->
+                    <div id="csvStep3" style="display: none; text-align: center; padding: 3rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔄</div>
+                        <h3 style="color: var(--black); margin-bottom: 0.5rem;">กำลังนำเข้าข้อมูล...</h3>
+                        <p style="color: var(--gray);" id="importProgressText">กรุณารอสักครู่</p>
+                        <div style="background: var(--light-gray); border-radius: 12px; height: 8px; margin: 1.5rem 0; overflow: hidden;">
+                            <div id="importProgressBar" style="background: var(--success); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Complete -->
+                    <div id="csvStep4" style="display: none; text-align: center; padding: 2rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+                        <h3 style="color: var(--success); margin-bottom: 0.5rem;">นำเข้าข้อมูลสำเร็จ!</h3>
+                        <div class="stats-grid" style="margin: 1.5rem 0;">
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--success);" id="importSuccessCount">0</div>
+                                <div class="stat-label">✅ สำเร็จ</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--warning);" id="importSkippedCount">0</div>
+                                <div class="stat-label">⏭️ ข้าม (ซ้ำ)</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" style="color: var(--danger);" id="importErrorCount">0</div>
+                                <div class="stat-label">❌ ผิดพลาด</div>
+                            </div>
+                        </div>
+                        <button onclick="closeCsvImportModal()" class="btn btn-primary" style="padding: 1rem 3rem;">
+                            ✕ ปิด
+                        </button>
+                    </div>
+                </div>
+            </div>
 
             <!-- Booking Control Section -->
             <section class="content-section" id="booking-control">
@@ -1194,17 +1356,6 @@
                             <div class="dashboard-card-icon">🔄</div>
                         </div>
                     </div>
-                    <div class="dashboard-card" style="border-left: 4px solid var(--danger);">
-                        <div class="dashboard-card-header">
-                            <div>
-                                <div class="dashboard-card-value" style="color: var(--danger);" id="peekabooActive">เปิดใช้งาน</div>
-                                <div class="dashboard-card-label">Peekaboo Auto-release</div>
-                            </div>
-                            <div class="dashboard-card-icon">👁️</div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Room Availability -->
                 <div class="dashboard-grid">
                     <div class="dashboard-card">
@@ -2140,7 +2291,7 @@
                 console.log('✅ Login successful: Boss');
             } else {
                 // Login failed
-                alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!\n\nUsername: Boss\nPassword: 5281');
+                alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
                 console.log('❌ Login failed:', username);
             }
         }

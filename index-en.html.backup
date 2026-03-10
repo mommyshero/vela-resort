@@ -37,15 +37,15 @@
         }
 
         /* Reduce font sizes to prevent overflow */
-        .section-title { font-size: 1.12rem !important; }
-        .section-subtitle { font-size: 0.64rem !important; }
-        .hero-title { font-size: 1.28rem !important; }
-        .hero-subtitle { font-size: 0.58rem !important; }
-        .room-name { font-size: 0.8rem !important; }
-        .waterfall-title { font-size: 0.96rem !important; }
-        .tour-name { font-size: 0.64rem !important; }
-        .info-card h3 { font-size: 0.8rem !important; }
-        .info-card h4 { font-size: 0.7rem !important; }
+        .section-title { font-size: 1.4rem !important; }
+        .section-subtitle { font-size: 0.8rem !important; }
+        .hero-title { font-size: 1.6rem !important; }
+        .hero-subtitle { font-size: 0.72rem !important; }
+        .room-name { font-size: 1rem !important; }
+        .waterfall-title { font-size: 1.2rem !important; }
+        .tour-name { font-size: 0.8rem !important; }
+        .info-card h3 { font-size: 1rem !important; }
+        .info-card h4 { font-size: 0.88rem !important; }
 
         /* Prevent any element from causing overflow */
         * {
@@ -54,39 +54,39 @@
 
         /* Language Switcher */
         .lang-switch { position: fixed; top: 1rem; right: 1rem; z-index: 1001; display: flex; gap: 0.5rem; }
-        .lang-switch a { padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.9); border-radius: 20px; font-size: 0.83rem; text-decoration: none; color: var(--charcoal); font-weight: 500; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
+        .lang-switch a { padding: 0.4rem 0.8rem; background: rgba(255,255,255,0.9); border-radius: 20px; font-size: 1.04rem; text-decoration: none; color: var(--charcoal); font-weight: 500; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; }
         .lang-switch a:hover { border-color: var(--yellow); }
         .lang-switch a.active { background: var(--yellow); font-weight: 700; }
 
         /* Navigation */
         nav#navbar { position: fixed; top: 0; left: 0; width: 100%; padding: 2rem 4rem; display: flex; justify-content: center; align-items: center; z-index: 1000; transition: all 0.3s ease; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); border-bottom: 2px solid #F3F4F6; }
-        .logo { font-size: 0.95rem; font-weight: 800; color: #000000; text-decoration: none; letter-spacing: 0.1em; position: absolute; left: 3rem; }
+        .logo { font-size: 1.19rem; font-weight: 800; color: #000000; text-decoration: none; letter-spacing: 0.1em; position: absolute; left: 3rem; }
         .nav-links { display: flex; gap: 2%; list-style: none; margin: 0 auto; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 0.25rem; }
-        .nav-link { font-size: 0.8rem; font-weight: 600; color: #1A1A1A; text-decoration: none; }
+        .nav-link { font-size: 1rem; font-weight: 600; color: #1A1A1A; text-decoration: none; }
         .nav-link:hover { color: #FFD700; }
-        .nav-desc { font-size: 0.78rem; color: #6B7280; font-weight: 400; }
+        .nav-desc { font-size: 0.97rem; color: #6B7280; font-weight: 400; }
 
         /* Hero */
         .hero { min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: url('hero-1.jpg') center 35%/cover no-repeat; z-index: -2; transition: background-image 0.5s ease-in-out; }
         .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.5) 100%); z-index: -1; }
         .hero-content { text-align: center; color: white; padding: 2.5rem; max-width: 95%; z-index: 1; }
-        .hero-title { font-size: 3.02rem; font-weight: 800; margin-bottom: 0.5rem; text-shadow: 0 4px 30px rgba(0,0,0,0.5); letter-spacing: 0.15em; }
-        .hero-subtitle { font-size: 0.95rem; color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; }
-        .hero-location { color: rgba(255,255,255,0.8); font-size: 0.61rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+        .hero-title { font-size: 3.78rem; font-weight: 800; margin-bottom: 0.5rem; text-shadow: 0 4px 30px rgba(0,0,0,0.5); letter-spacing: 0.15em; }
+        .hero-subtitle { font-size: 1.19rem; color: rgba(255,255,255,0.9); margin-bottom: 0.5rem; }
+        .hero-location { color: rgba(255,255,255,0.8); font-size: 0.76rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
 
         /* Weather Widget */
-        .weather-widget { position: absolute; top: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.74rem; }
-        .weather-icon { font-size: 0.61rem; }
-        .weather-temp { font-size: 0.61rem; font-weight: 700; color: white; }
-        .weather-location { font-size: 0.78rem; color: rgba(255,255,255,0.9); }
+        .weather-widget { position: absolute; top: 1.5rem; left: 1.5rem; display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.92rem; }
+        .weather-icon { font-size: 0.76rem; }
+        .weather-temp { font-size: 0.76rem; font-weight: 700; color: white; }
+        .weather-location { font-size: 0.97rem; color: rgba(255,255,255,0.9); }
 
         /* Rating Badges */
         .rating-badges { position: absolute; bottom: 2rem; right: 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .rating-badge { background: rgba(255,255,255,0.95); color: var(--charcoal); padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.74rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .rating-badge { background: rgba(255,255,255,0.95); color: var(--charcoal); padding: 0.5rem 1rem; border-radius: 25px; font-size: 0.92rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .brand-logo { width: 100px; height: 32px; display: block; }
-        .rating-badge .score { background: #003580; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.78rem; }
+        .rating-badge .score { background: #003580; color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.97rem; }
         .rating-badge.booking .score { background: #003580; }
         .rating-badge.traveloka .score { background: #1ba0e2; }
 
@@ -95,46 +95,46 @@
             body, html { overflow-x: hidden; }
             .hero-content, .rooms-container, .waterfalls-container, .gallery-grid, .tours-grid { max-width: 100%; padding-left: 2%; padding-right: 2%; }
 
-            .weather-widget { top: 1rem; left: 1rem; padding: 0.4rem 0.8rem; font-size: 0.78rem; }
+            .weather-widget { top: 1rem; left: 1rem; padding: 0.4rem 0.8rem; font-size: 0.97rem; }
             .rating-badges { bottom: 1rem; right: 5rem; }
-            #aiChatbotBtn { bottom: 1rem; left: 1rem; padding: 0.5rem 1rem; font-size: 0.78rem; }
+            #aiChatbotBtn { bottom: 1rem; left: 1rem; padding: 0.5rem 1rem; font-size: 0.97rem; }
             #aiChatbotWindow { bottom: 4rem; left: 1rem; width: 300px; }
         }
         .hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 1.3rem 2.5rem; font-size: 0.8rem; font-weight: 600; text-decoration: none; border-radius: 50px; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn { padding: 1.3rem 2.5rem; font-size: 1rem; font-weight: 600; text-decoration: none; border-radius: 50px; transition: all 0.3s ease; border: none; cursor: pointer; }
         .btn-primary { background: #FFD700; color: #000000; border: 2px solid #FFD700; }
         .btn-primary:hover { background: #FFFFFF; color: #FFD700; transform: translateY(-3px); box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4); }
         .btn-outline { background: rgba(255,255,255,0.15); color: white; border: 2px solid rgba(255,255,255,0.4); backdrop-filter: blur(10px); }
         .btn-outline:hover { background: rgba(255,255,255,0.25); border-color: white; }
 
-        .season-info { text-align: center; padding: 1.3rem; background: var(--yellow-light); border-radius: 20px; margin-bottom: 1.5rem; font-size: 0.78rem; color: var(--dark-gray); }
+        .season-info { text-align: center; padding: 1.3rem; background: var(--yellow-light); border-radius: 20px; margin-bottom: 1.5rem; font-size: 0.97rem; color: var(--dark-gray); }
 
         /* Form */
         .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5%; margin-top: 1.5rem; }
         .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
         .form-group.full { grid-column: span 2; }
-        .form-group label { font-size: 0.78rem; color: var(--dark-gray); font-weight: 600; }
-        .form-group input, .form-group select { padding: 1.3rem 1.25rem; border: 2px solid var(--light-gray); border-radius: 18px; font-size: 0.61rem; background: var(--white); transition: all 0.3s; }
+        .form-group label { font-size: 0.97rem; color: var(--dark-gray); font-weight: 600; }
+        .form-group input, .form-group select { padding: 1.3rem 1.25rem; border: 2px solid var(--light-gray); border-radius: 18px; font-size: 0.76rem; background: var(--white); transition: all 0.3s; }
         .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 4px var(--yellow-light); }
 
         /* Price Display */
         .price-display { margin-top: 1rem; padding: 1.3rem; background: var(--off-white); border-radius: 20px; }
-        .price-display h4 { font-size: 0.78rem; color: var(--gray); margin-bottom: 0.5rem; }
+        .price-display h4 { font-size: 0.97rem; color: var(--gray); margin-bottom: 0.5rem; }
         .price-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--light-gray); }
-        .price-row:last-child { border-bottom: none; font-weight: 700; color: var(--charcoal); font-size: 0.95rem; }
+        .price-row:last-child { border-bottom: none; font-weight: 700; color: var(--charcoal); font-size: 1.19rem; }
 
         /* Calendar Styles */
         .booking-calendar { margin-top: 1rem; padding: 1.3rem; background: #F9FAFB; border-radius: 20px; border: 2px solid #E5E7EB; }
-        .calendar-title { font-size: 0.78rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .calendar-title { font-size: 0.97rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
         .calendar-legend { display: flex; gap: 1rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
-        .calendar-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: #4B5563; }
+        .calendar-legend-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.97rem; color: #4B5563; }
         .calendar-legend-color { width: 12px; height: 12px; border-radius: 3px; }
         .calendar-legend-color.weekday { background: #D1FAE5; }
         .calendar-legend-color.weekend { background: #FEF3C7; }
         .calendar-legend-color.holiday { background: #FEE2E2; }
         .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.25rem; text-align: center; }
-        .calendar-day-header { font-size: 0.61rem; font-weight: 600; color: #6B7280; padding: 0.25rem; text-transform: uppercase; }
-        .calendar-day { padding: 0.5rem 0.25rem; border-radius: 6px; font-size: 0.78rem; font-weight: 500; position: relative; min-height: 65px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s; }
+        .calendar-day-header { font-size: 0.76rem; font-weight: 600; color: #6B7280; padding: 0.25rem; text-transform: uppercase; }
+        .calendar-day { padding: 0.5rem 0.25rem; border-radius: 6px; font-size: 0.97rem; font-weight: 500; position: relative; min-height: 65px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s; }
         .calendar-day.weekday { background: #D1FAE5; color: #065F46; }
         .calendar-day.weekend { background: #FEF3C7; color: #92400E; }
         .calendar-day.holiday { background: #FEE2E2; color: #991B1B; font-weight: 700; }
@@ -142,51 +142,51 @@
         .calendar-day.fully-booked { background: #FEE2E2; color: #DC2626; opacity: 0.7; }
         .calendar-day.low-availability { background: #FEF3C7; color: #D97706; font-weight: 700; }
         .calendar-day .date-num { display: block; font-weight: 600; }
-        .calendar-day .room-count { display: block; font-size: 0.56rem; margin-top: 0.15rem; font-weight: 600; }
+        .calendar-day .room-count { display: block; font-size: 0.7rem; margin-top: 0.15rem; font-weight: 600; }
 
         /* Tour Selection */
         .tour-selection { margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--light-gray); }
-        .tour-selection h4 { font-size: 0.95rem; color: var(--charcoal); margin-bottom: 1rem; font-weight: 700; }
+        .tour-selection h4 { font-size: 1.19rem; color: var(--charcoal); margin-bottom: 1rem; font-weight: 700; }
         .tour-group-warning { background: #F3F4F6; border: 2px solid #E5E7EB; border-radius: 20px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem; }
-        .tour-group-warning-title { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .tour-group-warning-text { font-size: 0.74rem; color: #4B5563; line-height: 1.6; }
+        .tour-group-warning-title { display: flex; align-items: center; gap: 0.5rem; font-size: 1.03rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .tour-group-warning-text { font-size: 0.92rem; color: #4B5563; line-height: 1.6; }
         .tour-options { display: grid; gap: 0.75rem; }
         .tour-option { display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; padding: 1.6rem; border: 2px solid var(--light-gray); border-radius: 18px; cursor: pointer; transition: all 0.3s; align-items: center; }
         .tour-option:hover { border-color: var(--yellow-light); background: var(--off-white); }
         .tour-option.selected { border-color: var(--yellow); background: var(--yellow-light); }
         .tour-option input[type="checkbox"] { width: 24px; height: 24px; accent-color: var(--yellow); cursor: pointer; }
         .tour-group-selector { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; min-width: 90px; }
-        .tour-group-selector label { font-size: 0.78rem; color: var(--dark-gray); font-weight: 600; text-align: center; }
-        .tour-group-selector select { padding: 0.5rem 0.4rem; border: 2px solid var(--light-gray); border-radius: 12px; font-size: 0.83rem; width: 100%; text-align: center; }
+        .tour-group-selector label { font-size: 0.97rem; color: var(--dark-gray); font-weight: 600; text-align: center; }
+        .tour-group-selector select { padding: 0.5rem 0.4rem; border: 2px solid var(--light-gray); border-radius: 12px; font-size: 1.04rem; width: 100%; text-align: center; }
         .tour-info { flex: 1; }
-        .tour-name { font-weight: 700; color: var(--charcoal); font-size: 0.96rem; }
-        .tour-detail { font-size: 0.78rem; color: var(--gray); margin-top: 0.25rem; }
-        .tour-price { font-weight: 800; color: var(--charcoal); font-size: 0.83rem; }
-        .tour-price .unit { font-size: 0.74rem; color: var(--gray); font-weight: 400; }
-        .tour-price-display { font-weight: 700; color: var(--charcoal); font-size: 0.95rem; min-width: 80px; text-align: right; }
+        .tour-name { font-weight: 700; color: var(--charcoal); font-size: 1.2rem; }
+        .tour-detail { font-size: 0.97rem; color: var(--gray); margin-top: 0.25rem; }
+        .tour-price { font-weight: 800; color: var(--charcoal); font-size: 1.04rem; }
+        .tour-price .unit { font-size: 0.92rem; color: var(--gray); font-weight: 400; }
+        .tour-price-display { font-weight: 700; color: var(--charcoal); font-size: 1.19rem; min-width: 80px; text-align: right; }
 
         .total-box { margin-top: 2rem; padding: 2rem 2rem; background: var(--yellow-light); border-radius: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .total-box span:first-child { font-weight: 600; color: var(--charcoal); font-size: 0.95rem; }
+        .total-box span:first-child { font-weight: 600; color: var(--charcoal); font-size: 1.19rem; }
 
-        .submit-btn { width: 100%; padding: 1.6rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 0.83rem; font-weight: 700; cursor: pointer; margin-top: 1.5rem; transition: all 0.3s; }
+        .submit-btn { width: 100%; padding: 1.6rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 1.04rem; font-weight: 700; cursor: pointer; margin-top: 1.5rem; transition: all 0.3s; }
         .submit-btn:hover { background: #FFFFFF; color: #1A1A1A; transform: translateY(-2px); }
 
         /* Booking Modal */
         .booking-form-group { margin-bottom: 1.5rem; }
-        .booking-form-group label { display: block; font-size: 0.82rem; color: var(--dark-gray); font-weight: 600; margin-bottom: 0.5rem; }
-        .booking-form-group input, .booking-form-group select { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--light-gray); border-radius: 20px; font-size: 0.61rem; transition: all 0.3s; }
+        .booking-form-group label { display: block; font-size: 1.03rem; color: var(--dark-gray); font-weight: 600; margin-bottom: 0.5rem; }
+        .booking-form-group input, .booking-form-group select { width: 100%; padding: 0.875rem 1rem; border: 2px solid var(--light-gray); border-radius: 20px; font-size: 0.76rem; transition: all 0.3s; }
         .booking-form-group input:focus, .booking-form-group select:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 4px var(--yellow-light); }
         .booking-price-summary { background: var(--off-white); padding: 1.6rem; border-radius: 20px; margin-bottom: 1.5rem; }
-        .booking-price-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--light-gray); font-size: 0.82rem; }
-        .booking-price-row:last-child { border-bottom: none; font-weight: 700; font-size: 0.95rem; color: var(--charcoal); }
-        .booking-submit-btn { width: 100%; padding: 1.125rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .booking-price-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--light-gray); font-size: 1.03rem; }
+        .booking-price-row:last-child { border-bottom: none; font-weight: 700; font-size: 1.19rem; color: var(--charcoal); }
+        .booking-submit-btn { width: 100%; padding: 1.125rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 1.19rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
         .booking-submit-btn:hover { background: #FFFFFF; color: #1A1A1A; transform: translateY(-2px); }
 
         /* Rooms Section */
         .rooms-section { padding: 6rem 2%; background: var(--off-white); }
         .section-header { text-align: center; margin-bottom: 5rem; }
-        .section-title { font-size: 1.12rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; }
-        .section-subtitle { color: #4B5563; font-size: 0.95rem; max-width: 95%; margin: 0 auto; }
+        .section-title { font-size: 1.4rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; }
+        .section-subtitle { color: #4B5563; font-size: 1.19rem; max-width: 95%; margin: 0 auto; }
 
         .rooms-container { display: flex; max-width: 100%; margin: 0 auto; gap: 1.5%; }
         .room-side { flex: 1; display: flex; flex-direction: column; }
@@ -200,7 +200,7 @@
         .slideshow-slide { min-width: 100%; height: 100%; }
         .slideshow-slide img { width: 100%; height: 100%; object-fit: cover; }
         .slideshow-nav { position: absolute; top: 50%; left: 0; right: 0; display: flex; justify-content: space-between; transform: translateY(-50%); padding: 0 1%; }
-        .slideshow-btn { background: rgba(255,255,255,0.8); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.61rem; color: #1A1A1A; transition: all 0.3s; }
+        .slideshow-btn { background: rgba(255,255,255,0.8); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; color: #1A1A1A; transition: all 0.3s; }
         .slideshow-btn:hover { background: #FFD700; color: #000000; }
         .slideshow-dots { position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.5rem; }
         .slideshow-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.3s; }
@@ -224,7 +224,7 @@
         }
         .tour-addon-header h4 {
             margin: 0;
-            font-size: 0.95rem;
+            font-size: 1.19rem;
             color: #1A1A1A;
         }
         .tour-toggle {
@@ -263,7 +263,7 @@
         }
         .tour-toggle .toggle-label {
             margin-left: 70px;
-            font-size: 0.72rem;
+            font-size: 0.9rem;
             font-weight: 600;
             color: #4B5563;
         }
@@ -284,7 +284,7 @@
         .tour-price-row {
             display: flex;
             justify-content: space-between;
-            font-size: 0.61rem;
+            font-size: 0.76rem;
         }
         .tour-price-row span:last-child {
             font-weight: 700;
@@ -292,55 +292,55 @@
         }
 
         .room-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin: 1.5rem 0; padding: 2rem; background: #F9FAFB; border-radius: 20px; }
-        .room-features span { display: flex; align-items: center; gap: 0.5rem; font-size: 0.74rem; color: #4B5563; }
-        .room-features i { color: #FFD700; font-size: 0.61rem; }
+        .room-features span { display: flex; align-items: center; gap: 0.5rem; font-size: 0.92rem; color: #4B5563; }
+        .room-features i { color: #FFD700; font-size: 0.76rem; }
 
         .room-pricing { margin: 1.5rem 0; padding: 2rem; background: #F3F4F6; border-radius: 20px; border: 1px solid #E5E7EB; }
         .price-season { margin-bottom: 1rem; }
         .price-season:last-child { margin-bottom: 0; }
-        .season-label { display: block; font-size: 0.78rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; }
-        .price-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; font-size: 0.74rem; color: #4B5563; border-bottom: 1px solid #E5E7EB; }
+        .season-label { display: block; font-size: 0.97rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.75rem; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; padding: 0.5rem 0; font-size: 0.92rem; color: #4B5563; border-bottom: 1px solid #E5E7EB; }
         .price-row:last-child { border-bottom: none; }
-        .price-row strong { color: #1A1A1A; font-size: 0.61rem; }
+        .price-row strong { color: #1A1A1A; font-size: 0.76rem; }
 
-        .room-badge { display: inline-block; background: #F3F4F6; color: #1A1A1A; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.74rem; font-weight: 600; margin-bottom: 1rem; }
+        .room-badge { display: inline-block; background: #F3F4F6; color: #1A1A1A; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.92rem; font-weight: 600; margin-bottom: 1rem; }
         .room-badge.popular { background: #FFD700; color: #000000; }
 
-        .room-name { font-size: 0.96rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .room-name span { font-size: 0.61rem; color: #6B7280; font-weight: 400; }
+        .room-name { font-size: 1.2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .room-name span { font-size: 0.76rem; color: #6B7280; font-weight: 400; }
 
-        .room-desc { color: #4B5563; margin-bottom: 1.5rem; line-height: 1.6; font-size: 0.61rem; }
+        .room-desc { color: #4B5563; margin-bottom: 1.5rem; line-height: 1.6; font-size: 0.76rem; }
 
-        .room-price { font-size: 1.28rem; font-weight: 800; color: #1A1A1A; margin-bottom: 1.5rem; }
-        .room-price span { font-size: 0.61rem; color: #6B7280; }
+        .room-price { font-size: 1.6rem; font-weight: 800; color: #1A1A1A; margin-bottom: 1.5rem; }
+        .room-price span { font-size: 0.76rem; color: #6B7280; }
 
-        .btn-primary { width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .btn-primary { width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
         .btn-primary:hover { background: #FFFFFF; color: #FFD700; }
 
         /* Gallery Section */
         .gallery-section { padding: 6rem 2%; background: var(--white); }
         .gallery-tabs { display: flex; gap: 1rem; justify-content: center; margin-bottom: 2.5rem; }
-        .gallery-tab { padding: 0.75rem 1.5rem; border: 2px solid #E5E7EB; background: #FFFFFF; border-radius: 25px; cursor: pointer; font-size: 0.82rem; font-weight: 500; transition: all 0.3s; }
+        .gallery-tab { padding: 0.75rem 1.5rem; border: 2px solid #E5E7EB; background: #FFFFFF; border-radius: 25px; cursor: pointer; font-size: 1.03rem; font-weight: 500; transition: all 0.3s; }
         .gallery-tab.active { background: #FFD700; color: #000000; border-color: #FFD700; }
         .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; max-width: 100%; margin: 0 auto; }
         .gallery-item { aspect-ratio: 4/3; background: var(--light-gray); border-radius: 20px; overflow: hidden; cursor: pointer; position: relative; transition: transform 0.3s; }
         .gallery-item:hover { transform: scale(1.02); }
         .gallery-item img { width: 100%; height: 100%; object-fit: contain; }
-        .gallery-item.video::after { content: '▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.96rem; }
+        .gallery-item.video::after { content: '▶'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; }
         .gallery-item.large { grid-column: span 2; grid-row: span 2; }
 
         /* Doi Hua Mot Slideshow */
         .doi-section { padding: 5rem 2%; margin: 3rem 0; background: #FFFFFF; }
         .doi-container { max-width: 100%; margin: 0 auto; }
         .doi-header { text-align: center; margin-bottom: 2.5rem; }
-        .doi-title { font-size: 1.12rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .doi-subtitle { color: #4B5563; font-size: 0.95rem; }
+        .doi-title { font-size: 1.4rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .doi-subtitle { color: #4B5563; font-size: 1.19rem; }
         .doi-slideshow { position: relative; height: 500px; border-radius: 24px; overflow: hidden; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1); margin-bottom: 2.5rem; }
         .doi-slides { display: flex; transition: transform 1s ease-in-out; height: 100%; }
         .doi-slide { min-width: 100%; height: 100%; position: relative; }
         .doi-slide img { width: 100%; height: 100%; object-fit: contain; }
         .doi-nav { position: absolute; top: 50%; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 2rem; transform: translateY(-50%); }
-        .doi-btn { width: 50px; height: 50px; background: rgba(255,255,255,0.95); border: none; border-radius: 50%; font-size: 0.96rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .doi-btn { width: 50px; height: 50px; background: rgba(255,255,255,0.95); border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .doi-btn:hover { background: white; transform: scale(1.15); box-shadow: 0 6px 25px rgba(0,0,0,0.3); }
         .doi-dots { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); display: flex; gap: 0.75rem; }
         .doi-dot { width: 12px; height: 12px; background: rgba(255,255,255,0.6); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
@@ -348,13 +348,13 @@
         .doi-packages { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5%; max-width: 95%; margin: 0 auto; }
         .doi-package { background: #FFFFFF; padding: 2.5rem; border-radius: 20px; border: 2px solid #E5E7EB; text-align: center; transition: all 0.3s; }
         .doi-package:hover { transform: translateY(-5px); border-color: #FFD700; }
-        .doi-package-icon { font-size: 2rem; margin-bottom: 1rem; }
-        .doi-package-name { font-size: 0.96rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .doi-package-desc { color: #4B5563; font-size: 0.82rem; margin-bottom: 1rem; }
-        .doi-package-price { font-size: 1.12rem; font-weight: 800; color: #1A1A1A; }
-        .doi-package-price span { font-size: 0.82rem; color: #9CA3AF; font-weight: 400; }
-        .doi-package-note { font-size: 0.74rem; color: #9CA3AF; margin-top: 0.5rem; }
-        .doi-book-btn { padding: 2rem 4rem; font-size: 0.95rem; font-weight: 700; margin-top: 2rem; }
+        .doi-package-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .doi-package-name { font-size: 1.2rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .doi-package-desc { color: #4B5563; font-size: 1.03rem; margin-bottom: 1rem; }
+        .doi-package-price { font-size: 1.4rem; font-weight: 800; color: #1A1A1A; }
+        .doi-package-price span { font-size: 1.03rem; color: #9CA3AF; font-weight: 400; }
+        .doi-package-note { font-size: 0.92rem; color: #9CA3AF; margin-top: 0.5rem; }
+        .doi-book-btn { padding: 2rem 4rem; font-size: 1.19rem; font-weight: 700; margin-top: 2rem; }
 
         @media (max-width: 768px) {
             * { max-width: 100%; }
@@ -363,7 +363,7 @@
 
             .doi-slideshow { height: 380px; }
             .doi-packages { grid-template-columns: 1fr; }
-            .doi-title { font-size: 1.12rem; }
+            .doi-title { font-size: 1.4rem; }
         }
 
         /* Lightbox */
@@ -371,8 +371,8 @@
         .lightbox.active { display: flex; }
         .lightbox-content { max-width: 90%; max-height: 90%; }
         .lightbox-content img, .lightbox-content video { max-width: 100%; max-height: 90vh; border-radius: 12px; }
-        .lightbox-close { position: absolute; top: 2rem; right: 2rem; width: 50px; height: 50px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: white; font-size: 0.96rem; cursor: pointer; }
-        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: white; font-size: 0.96rem; cursor: pointer; }
+        .lightbox-close { position: absolute; top: 2rem; right: 2rem; width: 50px; height: 50px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: white; font-size: 1.2rem; cursor: pointer; }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; background: rgba(255,255,255,0.2); border: none; border-radius: 50%; color: white; font-size: 1.2rem; cursor: pointer; }
         .lightbox-prev { left: 2rem; }
         .lightbox-next { right: 2rem; }
 
@@ -398,36 +398,36 @@
             overflow-wrap: break-word !important;
         }
         .waterfall-preview h3 {
-            font-size: 0.88rem !important;
+            font-size: 1.1rem !important;
             line-height: 1.4 !important;
             margin-bottom: 0.5rem !important;
             word-wrap: break-word !important;
         }
         .waterfall-preview .highlight {
-            font-size: 0.72rem !important;
+            font-size: 0.9rem !important;
             line-height: 1.5 !important;
             margin-bottom: 1rem !important;
         }
         .waterfall-preview .info-item strong {
-            font-size: 0.68rem !important;
+            font-size: 0.85rem !important;
             line-height: 1.4 !important;
         }
         .waterfall-preview .info-item span {
-            font-size: 0.64rem !important;
+            font-size: 0.8rem !important;
             line-height: 1.4 !important;
         }
         .waterfall-preview .description {
-            font-size: 0.68rem !important;
+            font-size: 0.85rem !important;
             line-height: 1.6 !important;
             margin: 1rem 0 !important;
         }
         .waterfall-preview .trail-features li {
-            font-size: 0.64rem !important;
+            font-size: 0.8rem !important;
             line-height: 1.5 !important;
             margin-bottom: 0.5rem !important;
         }
         .waterfall-preview .features-grid span {
-            font-size: 0.6rem !important;
+            font-size: 0.75rem !important;
             line-height: 1.4 !important;
         }
         .waterfall-preview .info-item {
@@ -451,9 +451,9 @@
         .lightbox.active { display: flex; animation: fadeIn 0.3s ease; }
         .lightbox-content { position: relative; max-width: 90%; max-height: 90%; }
         .lightbox-content img { max-width: 100%; max-height: 90vh; border-radius: 12px; }
-        .lightbox-close { position: absolute; top: -40px; right: 0; font-size: 1.12rem; color: #FFFFFF; cursor: pointer; background: none; border: none; padding: 0.5rem; transition: all 0.3s; }
+        .lightbox-close { position: absolute; top: -40px; right: 0; font-size: 1.4rem; color: #FFFFFF; cursor: pointer; background: none; border: none; padding: 0.5rem; transition: all 0.3s; }
         .lightbox-close:hover { color: #FFD700; transform: scale(1.2); }
-        .lightbox-caption { text-align: center; color: #FFFFFF; margin-top: 1rem; font-size: 0.95rem; }
+        .lightbox-caption { text-align: center; color: #FFFFFF; margin-top: 1rem; font-size: 1.19rem; }
         .hero-image-clickable { cursor: pointer; transition: opacity 0.3s; }
         .hero-image-clickable:hover { opacity: 0.8; }
         .waterfall-preview {
@@ -540,7 +540,7 @@
             right: 20px;
             width: 50px;
             height: 50px;
-            font-size: 1.6rem;
+            font-size: 2rem;
             color: #FFFFFF;
             cursor: pointer;
             background: rgba(255,255,255,0.2);
@@ -563,7 +563,7 @@
             transform: translateY(-50%);
             width: 50px;
             height: 50px;
-            font-size: 1.6rem;
+            font-size: 2rem;
             color: #FFFFFF;
             cursor: pointer;
             background: rgba(255,255,255,0.2);
@@ -586,7 +586,7 @@
             text-align: center;
             color: #FFFFFF;
             margin-top: 1rem;
-            font-size: 0.88rem;
+            font-size: 1.1rem;
             max-width: 80%;
         }
 
@@ -606,18 +606,18 @@
         }
         .info-card { background: #F9FAFB; padding: 2rem; border-radius: 16px; border: 1px solid #E5E7EB; margin-bottom: 1.5rem; }
         .info-card.main { background: linear-gradient(135deg, #FFD700 0%, #F3F4F6 100%); border: 2px solid #FFD700; }
-        .info-card h3 { font-size: 1.4rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .info-card h4 { font-size: 1rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; }
-        .info-card.main .highlight { font-size: 0.88rem; color: #1A1A1A; font-weight: 600; margin-bottom: 1.5rem; }
+        .info-card h3 { font-size: 1.75rem; font-weight: 800; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .info-card h4 { font-size: 1.25rem; font-weight: 700; color: #1A1A1A; margin-bottom: 1rem; }
+        .info-card.main .highlight { font-size: 1.1rem; color: #1A1A1A; font-weight: 600; margin-bottom: 1.5rem; }
         .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
         .info-item { display: flex; gap: 1rem; align-items: flex-start; }
-        .info-item i { font-size: 1.2rem; color: #1A1A1A; min-width: 24px; }
-        .info-item strong { display: block; font-size: 0.68rem; color: #4B5563; margin-bottom: 0.25rem; }
-        .info-item span { font-size: 0.76rem; color: #1A1A1A; font-weight: 500; }
-        .info-card .description { font-size: 0.8rem; color: #4B5563; line-height: 1.6; }
+        .info-item i { font-size: 1.5rem; color: #1A1A1A; min-width: 24px; }
+        .info-item strong { display: block; font-size: 0.85rem; color: #4B5563; margin-bottom: 0.25rem; }
+        .info-item span { font-size: 0.95rem; color: #1A1A1A; font-weight: 500; }
+        .info-card .description { font-size: 1rem; color: #4B5563; line-height: 1.6; }
         .info-cards-row { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
         .attractions-list, .activities-list { list-style: none; padding: 0; margin: 0; }
-        .attractions-list li, .activities-list li { padding: 0.75rem 0; border-bottom: 1px solid #E5E7EB; font-size: 0.76rem; color: #4B5563; }
+        .attractions-list li, .activities-list li { padding: 0.75rem 0; border-bottom: 1px solid #E5E7EB; font-size: 0.95rem; color: #4B5563; }
         .attractions-list li:last-child, .activities-list li:last-child { border-bottom: none; }
         .attractions-list strong, .activities-list strong { color: #1A1A1A; }
         .info-card.warning { background: #FEF3C7; border: 2px solid #F59E0B; }
@@ -639,8 +639,8 @@
             .info-grid, .trail-features, .features-grid, .nearby-grid { grid-template-columns: repeat(2, 1fr); }
             .info-cards-row { grid-template-columns: 1fr; }
             .thailosu-info-section { padding: 0 1%; }
-            .feature-icon { font-size: 1.28rem; }
-            .highlight-text { font-size: 0.95rem; }
+            .feature-icon { font-size: 1.6rem; }
+            .highlight-text { font-size: 1.19rem; }
         }
 
         /* Pitue Gro Waterfall (Heart-Shaped) */
@@ -685,7 +685,7 @@
             margin: 1.5rem 0;
         }
         .highlight-text {
-            font-size: 0.88rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #1A1A1A;
             margin: 0;
@@ -693,7 +693,7 @@
             font-style: italic;
         }
         .review-text {
-            font-size: 0.8rem;
+            font-size: 1rem;
             color: #4B5563;
             line-height: 1.8;
             margin-bottom: 1.5rem;
@@ -705,7 +705,7 @@
             margin: 1.5rem 0;
         }
         .doi-mamuang-info h5, .trail-review h5 {
-            font-size: 1rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1A1A1A;
             margin-bottom: 1rem;
@@ -726,8 +726,8 @@
             background: #FFFFFF;
             border-radius: 12px;
         }
-        .feature-icon { font-size: 1.2rem; }
-        .feature-text { font-size: 0.76rem; font-weight: 600; color: #1A1A1A; }
+        .feature-icon { font-size: 1.5rem; }
+        .feature-text { font-size: 0.95rem; font-weight: 600; color: #1A1A1A; }
 
         /* Khota Waterfall */
         .khota-info-section { max-width: 600px; margin: 0 auto; }
@@ -783,15 +783,15 @@
             background: #FFFFFF;
             border-radius: 16px;
         }
-        .nearby-icon { font-size: 2rem; }
+        .nearby-icon { font-size: 2.5rem; }
         .nearby-item h5 {
-            font-size: 1rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1A1A1A;
             margin: 0;
         }
         .nearby-item span {
-            font-size: 0.76rem;
+            font-size: 0.95rem;
             color: #4B5563;
         }
         .info-card.info {
@@ -834,15 +834,15 @@
             background: #FFFFFF;
             border-radius: 16px;
         }
-        .feature-icon-large { font-size: 2rem; }
+        .feature-icon-large { font-size: 2.5rem; }
         .feature-item h5 {
-            font-size: 1rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #1A1A1A;
             margin: 0;
         }
         .feature-item span {
-            font-size: 0.76rem;
+            font-size: 0.95rem;
             color: #4B5563;
         }
 
@@ -872,27 +872,27 @@
             border-radius: 16px;
             margin-top: 1.5rem;
         }
-        .adventure-badge i { font-size: 1.2rem; color: #1A1A1A; }
-        .adventure-badge span { font-size: 0.88rem; font-weight: 600; color: #1A1A1A; }
+        .adventure-badge i { font-size: 1.5rem; color: #1A1A1A; }
+        .adventure-badge span { font-size: 1.1rem; font-weight: 600; color: #1A1A1A; }
         .travel-steps { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
         .step { display: flex; gap: 1rem; align-items: flex-start; background: rgba(255,255,255,0.7); padding: 1rem; border-radius: 12px; }
-        .step-icon { font-size: 1.2rem; min-width: 40px; color: #1A1A1A; }
-        .step-content strong { display: block; font-size: 0.68rem; color: #1A1A1A; margin-bottom: 0.25rem; }
-        .step-content span { font-size: 0.76rem; color: #4B5563; }
+        .step-icon { font-size: 1.5rem; min-width: 40px; color: #1A1A1A; }
+        .step-content strong { display: block; font-size: 0.85rem; color: #1A1A1A; margin-bottom: 0.25rem; }
+        .step-content span { font-size: 0.95rem; color: #4B5563; }
 
         .tours-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; max-width: 1400px; margin: 0 auto; }
         .tours-section-header { text-align: center; margin-bottom: 2.5rem; }
-        .tours-section-header h2 { font-size: 1.28rem; font-weight: 800; color: var(--charcoal); margin-bottom: 0.5rem; }
-        .tours-section-header p { color: var(--gray); font-size: 0.61rem; }
+        .tours-section-header h2 { font-size: 1.6rem; font-weight: 800; color: var(--charcoal); margin-bottom: 0.5rem; }
+        .tours-section-header p { color: var(--gray); font-size: 0.76rem; }
         .tour-card { background: #FFFFFF; border-radius: 24px; padding: 2.5rem; border: 2px solid #E5E7EB; transition: all 0.4s; }
         .tour-card:hover { border-color: #FFD700; background: #FEF3C7; transform: translateY(-6px); }
         .tour-card.vip { border-color: #FFD700; background: linear-gradient(135deg, #FEF3C7 0%, #FFFFFF 100%); }
-        .tour-card-badge { display: inline-block; background: #F3F4F6; color: #1A1A1A; padding: 0.5rem 1.1rem; border-radius: 24px; font-size: 0.83rem; font-weight: 700; margin-bottom: 1rem; }
+        .tour-card-badge { display: inline-block; background: #F3F4F6; color: #1A1A1A; padding: 0.5rem 1.1rem; border-radius: 24px; font-size: 1.04rem; font-weight: 700; margin-bottom: 1rem; }
         .tour-card.vip .tour-card-badge { background: #FFD700; color: #000000; }
-        .tour-card-title { font-size: 1.08rem; font-weight: 800; color: var(--charcoal); margin-bottom: 0.75rem; }
-        .tour-card-route { font-size: 0.61rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.5; }
-        .tour-card-price { font-size: 1.52rem; font-weight: 800; color: var(--charcoal); }
-        .tour-card-price span { font-size: 0.82rem; color: var(--gray); font-weight: 400; }
+        .tour-card-title { font-size: 1.35rem; font-weight: 800; color: var(--charcoal); margin-bottom: 0.75rem; }
+        .tour-card-route { font-size: 0.76rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.5; }
+        .tour-card-price { font-size: 1.9rem; font-weight: 800; color: var(--charcoal); }
+        .tour-card-price span { font-size: 1.03rem; color: var(--gray); font-weight: 400; }
 
         /* Tour Detail Popup */
         .tour-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 5000; display: flex; align-items: center; justify-content: center; }
@@ -903,9 +903,9 @@
         .tour-price-table th { background: #FFD700; color: #000000; padding: 1.3rem; font-weight: 700; }
         .tour-price-table td { padding: 1.3rem; text-align: center; border-bottom: 1px solid #E5E7EB; }
         .tour-details, .tour-prepare { margin: 1.5rem 0; padding: 2rem; background: #F3F4F6; border-radius: 20px; }
-        .tour-details h5, .tour-prepare h5 { font-size: 0.95rem; margin-bottom: 1rem; color: #1A1A1A; }
+        .tour-details h5, .tour-prepare h5 { font-size: 1.19rem; margin-bottom: 1rem; color: #1A1A1A; }
         .tour-details li, .tour-prepare li { padding: 0.5rem 0; color: #4B5563; }
-        .popup-close { background: none; border: none; font-size: 1.28rem; cursor: pointer; color: #9CA3AF; line-height: 1; }
+        .popup-close { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #9CA3AF; line-height: 1; }
         .popup-close:hover { color: #1A1A1A; }
         .tour-popup-footer { padding: 2rem 2rem; border-top: 2px solid #E5E7EB; text-align: center; }
 
@@ -913,9 +913,9 @@
         .tour-itinerary-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 5100; display: flex; align-items: center; justify-content: center; }
         .tour-itinerary-content { background: #FFFFFF; border-radius: 24px; max-width: 700px; width: 95%; max-height: 85vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); border: 2px solid #E5E7EB; }
         .tour-itinerary-header { padding: 1.5rem 2rem; border-bottom: 2px solid #E5E7EB; display: flex; justify-content: space-between; align-items: center; background: #1A1A1A; border-radius: 24px 24px 0 0; }
-        .tour-itinerary-header h3 { font-size: 1.04rem; font-weight: 700; color: #FFFFFF; margin: 0; }
+        .tour-itinerary-header h3 { font-size: 1.3rem; font-weight: 700; color: #FFFFFF; margin: 0; }
         .tour-itinerary-body { padding: 0; }
-        .itinerary-close { background: none; border: none; font-size: 1.6rem; cursor: pointer; color: #9CA3AF; line-height: 1; }
+        .itinerary-close { background: none; border: none; font-size: 2rem; cursor: pointer; color: #9CA3AF; line-height: 1; }
         .itinerary-close:hover { color: #FFFFFF; }
         .itinerary-table { width: 100%; border-collapse: collapse; }
         .itinerary-table tr { border-bottom: 1px solid #E5E7EB; }
@@ -979,12 +979,12 @@
         }
         @keyframes modalSlideIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         .modal-header { padding: 2rem 2rem; border-bottom: 2px solid #E5E7EB; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #FFFFFF; z-index: 1; border-radius: 24px 24px 0 0; }
-        .modal-header h3 { font-size: 0.96rem; font-weight: 800; color: #1A1A1A; margin: 0; }
-        .modal-close { width: 40px; height: 40px; background: #F3F4F6; border: none; border-radius: 50%; font-size: 0.96rem; cursor: pointer; transition: all 0.3s; color: #1A1A1A; }
+        .modal-header h3 { font-size: 1.2rem; font-weight: 800; color: #1A1A1A; margin: 0; }
+        .modal-close { width: 40px; height: 40px; background: #F3F4F6; border: none; border-radius: 50%; font-size: 1.2rem; cursor: pointer; transition: all 0.3s; color: #1A1A1A; }
         .modal-close:hover { background: #EF4444; color: white; transform: rotate(90deg); }
         .modal-body { padding: 2.5rem; }
         .modal-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .modal-tab { flex: 1; padding: 1.3rem; border: 2px solid #E5E7EB; border-radius: 18px; background: #FFFFFF; cursor: pointer; font-size: 0.61rem; font-weight: 600; color: #1A1A1A; transition: all 0.3s; text-align: center; }
+        .modal-tab { flex: 1; padding: 1.3rem; border: 2px solid #E5E7EB; border-radius: 18px; background: #FFFFFF; cursor: pointer; font-size: 0.76rem; font-weight: 600; color: #1A1A1A; transition: all 0.3s; text-align: center; }
         .modal-tab:hover { border-color: #FFD700; background: #FEF3C7; }
         .modal-tab.active { border-color: #FFD700; background: #FFD700; color: #000000; }
         .modal-content { display: none; }
@@ -994,8 +994,8 @@
         .room-type-card { flex: 1; padding: 2rem; border: 2px solid #E5E7EB; border-radius: 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: #FFFFFF; }
         .room-type-card:hover { border-color: #FFD700; transform: translateY(-4px); }
         .room-type-card.selected { border-color: #FFD700; background: #FEF3C7; }
-        .room-type-card h3 { font-size: 0.96rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
-        .room-type-card p { font-size: 0.78rem; color: #4B5563; margin-bottom: 1rem; }
+        .room-type-card h3 { font-size: 1.2rem; font-weight: 700; color: #1A1A1A; margin-bottom: 0.5rem; }
+        .room-type-card p { font-size: 0.97rem; color: #4B5563; margin-bottom: 1rem; }
         .room-type-card button { padding: 0.75rem 1.5rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
         .room-type-card button:hover { background: #FFFFFF; color: #1A1A1A; }
 
@@ -1003,23 +1003,23 @@
         .booking-type-option { flex: 1; padding: 2rem; border: 2px solid #E5E7EB; border-radius: 20px; cursor: pointer; transition: all 0.3s; text-align: center; background: #FFFFFF; }
         .booking-type-option:hover { border-color: #FFD700; background: #FEF3C7; transform: translateY(-4px); }
         .booking-type-option.selected { border-color: #FFD700; background: #FEF3C7; }
-        .booking-type-icon { font-size: 1.28rem; margin-bottom: 0.5rem; }
-        .booking-type-name { font-weight: 700; color: #1A1A1A; font-size: 0.96rem; }
-        .booking-type-desc { font-size: 0.74rem; color: #4B5563; margin-top: 0.25rem; }
+        .booking-type-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .booking-type-name { font-weight: 700; color: #1A1A1A; font-size: 1.2rem; }
+        .booking-type-desc { font-size: 0.92rem; color: #4B5563; margin-top: 0.25rem; }
 
         .room-availability { margin-top: 1rem; padding: 1.3rem; background: #F3F4F6; border-radius: 20px; border: 2px solid #E5E7EB; }
         .room-availability.low { background: #FEF3C7; border-color: #FFD700; }
         .room-availability.none { background: #FEE2E2; border-color: #EF4444; }
-        .availability-title { font-weight: 700; color: #1A1A1A; font-size: 0.82rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
-        .availability-list { font-size: 0.74rem; color: #4B5563; line-height: 1.8; }
+        .availability-title { font-weight: 700; color: #1A1A1A; font-size: 1.03rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .availability-list { font-size: 0.92rem; color: #4B5563; line-height: 1.8; }
 
         .modal-footer { padding: 2rem 2rem; border-top: 2px solid #E5E7EB; background: #FFFFFF; border-radius: 0 0 24px 24px; }
         .booking-summary { background: white; padding: 1.6rem; border-radius: 18px; margin-bottom: 1rem; }
-        .summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--light-gray); font-size: 0.82rem; }
-        .summary-row:last-child { border-bottom: none; font-weight: 700; font-size: 0.95rem; color: var(--charcoal); }
+        .summary-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--light-gray); font-size: 1.03rem; }
+        .summary-row:last-child { border-bottom: none; font-weight: 700; font-size: 1.19rem; color: var(--charcoal); }
         .summary-label { color: var(--dark-gray); }
         .summary-value { font-weight: 600; color: var(--charcoal); }
-        .confirm-btn { width: 100%; padding: 1.6rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .confirm-btn { width: 100%; padding: 1.6rem; background: #1A1A1A; color: white; border: 2px solid #1A1A1A; border-radius: 20px; font-size: 1.04rem; font-weight: 700; cursor: pointer; transition: all 0.3s; }
         .confirm-btn:hover { background: #FFFFFF; color: #1A1A1A; transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); }
         .confirm-btn:disabled { background: var(--gray); cursor: not-allowed; transform: none; box-shadow: none; }
 
@@ -1051,8 +1051,8 @@
 
         /* Footer */
         footer { background: var(--charcoal); color: white; padding: 5rem 2%; text-align: center; }
-        footer .logo { font-size: 1.28rem; font-weight: 800; color: white; margin-bottom: 1rem; display: inline-block; letter-spacing: 0.15em; }
-        footer p { color: var(--gray); font-size: 0.61rem; }
+        footer .logo { font-size: 1.6rem; font-weight: 800; color: white; margin-bottom: 1rem; display: inline-block; letter-spacing: 0.15em; }
+        footer p { color: var(--gray); font-size: 0.76rem; }
         footer .social-links { margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; }
         footer .social-links a { width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 18px; display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; font-weight: 600; transition: all 0.3s; }
         footer .social-links a:hover { background: var(--yellow); color: var(--charcoal); }
@@ -1062,7 +1062,7 @@
             body, html { overflow-x: hidden; }
             .hero-content, .rooms-container, .waterfalls-container, .gallery-grid, .tours-grid { max-width: 100%; padding-left: 2%; padding-right: 2%; }
 
-            .hero-title { font-size: 1.12rem; }
+            .hero-title { font-size: 1.4rem; }
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full { grid-column: span 1; }
             .rooms-grid { grid-template-columns: 1fr; }
@@ -1079,49 +1079,49 @@
         /* Mobile Navigation */
         @media (max-width: 768px) {
             nav#navbar { padding: 0.75rem 1rem; flex-wrap: wrap; }
-            .logo { font-size: 0.8rem; left: 1rem; }
+            .logo { font-size: 1rem; left: 1rem; }
             .nav-links { gap: 1rem; flex-wrap: wrap; justify-content: center; }
-            .nav-link { font-size: 0.68rem; }
-            .nav-desc { font-size: 0.52rem; }
+            .nav-link { font-size: 0.85rem; }
+            .nav-desc { font-size: 0.65rem; }
             .lang-switch { top: 0.5rem; right: 0.5rem; }
-            .lang-switch a { padding: 0.3rem 0.6rem; font-size: 0.56rem; }
+            .lang-switch a { padding: 0.3rem 0.6rem; font-size: 0.7rem; }
         }
 
         /* Hero Section - Mobile */
         @media (max-width: 768px) {
             .hero-content { padding: 1rem; max-width: 100%; }
-            .hero-title { font-size: 2rem; letter-spacing: 0.1em; }
-            .hero-subtitle { font-size: 0.8rem; }
-            .hero-location { font-size: 0.68rem; }
+            .hero-title { font-size: 2.5rem; letter-spacing: 0.1em; }
+            .hero-subtitle { font-size: 1rem; }
+            .hero-location { font-size: 0.85rem; }
             .hero-cta { flex-direction: column; gap: 0.75rem; }
-            .btn { padding: 0.875rem 1.5rem; font-size: 0.72rem; }
+            .btn { padding: 0.875rem 1.5rem; font-size: 0.9rem; }
         }
 
         @media (max-width: 414px) {
-            .hero-title { font-size: 1.6rem; }
-            .hero-subtitle { font-size: 0.72rem; }
+            .hero-title { font-size: 2rem; }
+            .hero-subtitle { font-size: 0.9rem; }
         }
 
         @media (max-width: 375px) {
-            .hero-title { font-size: 1.4rem; }
+            .hero-title { font-size: 1.75rem; }
         }
 
         @media (max-width: 320px) {
-            .hero-title { font-size: 1.2rem; }
-            .hero-subtitle { font-size: 0.64rem; }
-            .hero-location { font-size: 0.56rem; }
+            .hero-title { font-size: 1.5rem; }
+            .hero-subtitle { font-size: 0.8rem; }
+            .hero-location { font-size: 0.7rem; }
         }
 
         /* Room Slideshow - Responsive */
         @media (max-width: 768px) {
             .room-slideshow { height: 250px; }
-            .slideshow-btn { width: 32px; height: 32px; font-size: 0.8rem; }
+            .slideshow-btn { width: 32px; height: 32px; font-size: 1rem; }
             .room-content { padding: 1.25rem; }
             .room-features { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem; }
-            .room-features span { font-size: 0.64rem; }
+            .room-features span { font-size: 0.8rem; }
             .room-pricing { padding: 1rem; }
-            .room-name { font-size: 1rem; }
-            .room-desc { font-size: 0.72rem; }
+            .room-name { font-size: 1.25rem; }
+            .room-desc { font-size: 0.9rem; }
         }
 
         @media (max-width: 414px) {
@@ -1130,25 +1130,25 @@
 
         @media (max-width: 320px) {
             .room-slideshow { height: 180px; }
-            .room-name { font-size: 0.88rem; }
+            .room-name { font-size: 1.1rem; }
         }
 
         /* Section Titles - Responsive */
         @media (max-width: 768px) {
-            .section-title { font-size: 1.4rem; }
-            .section-subtitle { font-size: 0.76rem; }
+            .section-title { font-size: 1.75rem; }
+            .section-subtitle { font-size: 0.95rem; }
             .rooms-section, .gallery-section, .tours-detail { padding: 3rem 1rem; }
         }
 
         @media (max-width: 414px) {
-            .section-title { font-size: 1.2rem; }
+            .section-title { font-size: 1.5rem; }
         }
 
         /* Gallery - Responsive */
         @media (max-width: 768px) {
             .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.5rem; }
             .gallery-tabs { gap: 0.5rem; flex-wrap: wrap; }
-            .gallery-tab { padding: 0.5rem 1rem; font-size: 0.68rem; }
+            .gallery-tab { padding: 0.5rem 1rem; font-size: 0.85rem; }
             .gallery-item img { object-fit: cover; }
         }
 
@@ -1163,11 +1163,11 @@
         /* Doi Hua Mot - Responsive */
         @media (max-width: 768px) {
             .doi-slideshow { height: 250px; }
-            .doi-btn { width: 40px; height: 40px; font-size: 1rem; }
+            .doi-btn { width: 40px; height: 40px; font-size: 1.25rem; }
             .doi-nav { padding: 0 1rem; }
             .doi-package { padding: 1.5rem; }
-            .doi-package-icon { font-size: 1.6rem; }
-            .doi-package-name { font-size: 1rem; }
+            .doi-package-icon { font-size: 2rem; }
+            .doi-package-name { font-size: 1.25rem; }
         }
 
         @media (max-width: 414px) {
@@ -1186,22 +1186,22 @@
             .info-grid { grid-template-columns: 1fr; gap: 1rem; }
             .info-cards-row { grid-template-columns: 1fr; }
             .info-item { gap: 0.75rem; }
-            .info-item i { font-size: 1rem; }
-            .info-card h3 { font-size: 1.2rem; }
-            .info-card h4 { font-size: 0.88rem; }
+            .info-item i { font-size: 1.25rem; }
+            .info-card h3 { font-size: 1.5rem; }
+            .info-card h4 { font-size: 1.1rem; }
             .adventure-review-image, .doi-mamuang-info, .trail-review { padding: 1rem; }
             .trail-features { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .features-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
             .nearby-grid { grid-template-columns: 1fr; gap: 1rem; }
-            .nearby-icon { font-size: 1.6rem; }
+            .nearby-icon { font-size: 2rem; }
             .travel-steps { gap: 1rem; }
             .step { padding: 0.75rem; }
-            .step-icon { font-size: 1.2rem; }
+            .step-icon { font-size: 1.5rem; }
         }
 
         @media (max-width: 414px) {
             .thailosu-hero-image, .pituegro-hero-image, .thailore-hero-image, .palata-hero-image, .saepalata-hero-image, .khota-hero-image { height: 200px; }
-            .info-card h3 { font-size: 1rem; }
+            .info-card h3 { font-size: 1.25rem; }
             .trail-features, .features-grid { grid-template-columns: 1fr; }
         }
 
@@ -1217,39 +1217,39 @@
         @media (max-width: 768px) {
             .tours-grid { grid-template-columns: 1fr; gap: 1rem; }
             .tour-card { padding: 1.5rem; }
-            .tour-card-title { font-size: 0.92rem; }
-            .tour-card-route { font-size: 0.72rem; }
-            .tour-card-price { font-size: 1.2rem; }
+            .tour-card-title { font-size: 1.15rem; }
+            .tour-card-route { font-size: 0.9rem; }
+            .tour-card-price { font-size: 1.5rem; }
         }
 
         @media (max-width: 414px) {
             .tour-card { padding: 1.25rem; }
-            .tour-card-title { font-size: 0.8rem; }
-            .tour-card-price { font-size: 1rem; }
+            .tour-card-title { font-size: 1rem; }
+            .tour-card-price { font-size: 1.25rem; }
         }
 
         /* Tour Popup - Responsive */
         @media (max-width: 768px) {
             .tour-popup-content { width: 95%; max-width: 400px; }
             .tour-popup-header, .tour-popup-body, .tour-popup-footer { padding: 1rem; }
-            .tour-price-table { font-size: 0.68rem; }
+            .tour-price-table { font-size: 0.85rem; }
             .tour-price-table th, .tour-price-table td { padding: 0.75rem; }
         }
 
         /* Booking Modal - Responsive */
         @media (max-width: 768px) {
             .modal-container { width: 95%; max-width: 100%; margin: 1rem; }
-            .modal-header h3 { font-size: 1rem; }
+            .modal-header h3 { font-size: 1.25rem; }
             .modal-body { padding: 1rem; }
             .room-selection-row { flex-direction: column; gap: 1rem; }
             .room-type-card { padding: 1rem; }
-            .room-type-card h3 { font-size: 1rem; }
+            .room-type-card h3 { font-size: 1.25rem; }
             .booking-type-selector { flex-direction: column; gap: 1rem; }
             .form-grid { gap: 1rem; }
-            .form-group input, .form-group select { padding: 0.875rem 1rem; font-size: 0.72rem; }
+            .form-group input, .form-group select { padding: 0.875rem 1rem; font-size: 0.9rem; }
             .booking-calendar { padding: 0.75rem; }
-            .calendar-day { min-height: 40px; font-size: 0.52rem; }
-            .calendar-day-header { font-size: 0.48rem; }
+            .calendar-day { min-height: 40px; font-size: 0.65rem; }
+            .calendar-day-header { font-size: 0.6rem; }
             .tour-addon-section { padding: 1rem; }
         }
 
@@ -1261,42 +1261,42 @@
         }
 
         @media (max-width: 320px) {
-            .modal-header h3 { font-size: 0.88rem; }
-            .form-group input, .form-group select { font-size: 0.68rem; padding: 0.75rem; }
+            .modal-header h3 { font-size: 1.1rem; }
+            .form-group input, .form-group select { font-size: 0.85rem; padding: 0.75rem; }
         }
 
         /* Lightbox - Responsive */
         @media (max-width: 768px) {
-            .lightbox-close { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.2rem; }
-            .lightbox-nav { width: 40px; height: 40px; font-size: 1.2rem; }
+            .lightbox-close { top: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.5rem; }
+            .lightbox-nav { width: 40px; height: 40px; font-size: 1.5rem; }
             .lightbox-prev { left: 10px; }
             .lightbox-next { right: 10px; }
             .lightbox-content img { max-height: 75vh; }
-            .lightbox-caption { font-size: 0.72rem; max-width: 90%; }
+            .lightbox-caption { font-size: 0.9rem; max-width: 90%; }
         }
 
         @media (max-width: 414px) {
-            .lightbox-close { width: 35px; height: 35px; font-size: 1rem; }
+            .lightbox-close { width: 35px; height: 35px; font-size: 1.25rem; }
             .lightbox-nav { width: 35px; height: 35px; }
         }
 
         /* Footer - Responsive */
         @media (max-width: 768px) {
             footer { padding: 3rem 1rem; }
-            footer .logo { font-size: 1.2rem; }
-            footer p { font-size: 0.72rem; }
+            footer .logo { font-size: 1.5rem; }
+            footer p { font-size: 0.9rem; }
             footer .social-links a { width: 40px; height: 40px; }
         }
 
         @media (max-width: 414px) {
             footer { padding: 2rem 1rem; }
-            footer .logo { font-size: 1rem; }
+            footer .logo { font-size: 1.25rem; }
         }
 
         /* Rating Badges - Mobile */
         @media (max-width: 414px) {
             .rating-badges { right: 1rem; bottom: 0.5rem; }
-            .rating-badge { padding: 0.4rem 0.75rem; font-size: 0.6rem; }
+            .rating-badge { padding: 0.4rem 0.75rem; font-size: 0.75rem; }
             .brand-logo { width: 80px; height: 28px; }
         }
 
@@ -1306,39 +1306,39 @@
 
         /* Weather Widget - Mobile */
         @media (max-width: 414px) {
-            .weather-widget { padding: 0.35rem 0.65rem; font-size: 0.56rem; }
-            .weather-icon { font-size: 0.68rem; }
-            .weather-temp { font-size: 0.68rem; }
+            .weather-widget { padding: 0.35rem 0.65rem; font-size: 0.7rem; }
+            .weather-icon { font-size: 0.85rem; }
+            .weather-temp { font-size: 0.85rem; }
         }
 
         /* Calendar - Mobile */
         @media (max-width: 414px) {
             .calendar-legend { gap: 0.5rem; }
-            .calendar-legend-item { font-size: 0.52rem; }
+            .calendar-legend-item { font-size: 0.65rem; }
             .calendar-legend-color { width: 10px; height: 10px; }
         }
 
         /* Room Features - Mobile */
         @media (max-width: 414px) {
             .room-features { grid-template-columns: repeat(2, 1fr); }
-            .room-features span { font-size: 0.6rem; }
-            .room-features i { font-size: 0.68rem; }
+            .room-features span { font-size: 0.75rem; }
+            .room-features i { font-size: 0.85rem; }
         }
 
         /* Price Rows - Mobile */
         @media (max-width: 414px) {
-            .price-row { font-size: 0.64rem; }
-            .price-row strong { font-size: 0.68rem; }
-            .season-label { font-size: 0.68rem; }
+            .price-row { font-size: 0.8rem; }
+            .price-row strong { font-size: 0.85rem; }
+            .season-label { font-size: 0.85rem; }
         }
 
         /* Buttons - Mobile */
         @media (max-width: 414px) {
-            .btn-primary, .submit-btn, .booking-submit-btn, .confirm-btn { padding: 0.75rem 1.25rem; font-size: 0.72rem; }
+            .btn-primary, .submit-btn, .booking-submit-btn, .confirm-btn { padding: 0.75rem 1.25rem; font-size: 0.9rem; }
         }
 
         @media (max-width: 320px) {
-            .btn-primary, .submit-btn, .booking-submit-btn, .confirm-btn { padding: 0.65rem 1rem; font-size: 0.68rem; }
+            .btn-primary, .submit-btn, .booking-submit-btn, .confirm-btn { padding: 0.65rem 1rem; font-size: 0.85rem; }
         }
 
         /* Tour Options - Mobile */
@@ -1346,7 +1346,7 @@
             .tour-option { grid-template-columns: auto 1fr; gap: 0.75rem; padding: 1rem; }
             .tour-group-selector { flex-direction: row; min-width: auto; }
             .tour-group-selector select { width: auto; }
-            .tour-price { font-size: 0.8rem; }
+            .tour-price { font-size: 1rem; }
         }
 
         @media (max-width: 414px) {
@@ -1362,7 +1362,7 @@
         /* Booking Summary - Mobile */
         @media (max-width: 414px) {
             .booking-summary, .booking-price-summary { padding: 1rem; }
-            .booking-price-row, .summary-row { font-size: 0.68rem; }
+            .booking-price-row, .summary-row { font-size: 0.85rem; }
         }
 
         /* Tour Addon - Mobile */
@@ -1373,14 +1373,14 @@
 
         /* Gallery Section Headers - Mobile */
         @media (max-width: 414px) {
-            .gallery-section h3 { font-size: 1rem; }
-            .gallery-section p { font-size: 0.64rem; }
+            .gallery-section h3 { font-size: 1.25rem; }
+            .gallery-section p { font-size: 0.8rem; }
         }
 
         /* Park Fee Notice - Mobile */
         @media (max-width: 414px) {
             .waterfalls-section > div[style*="background: #FEF3C7"] { padding: 0.75rem 1rem; }
-            .waterfalls-section > div[style*="background: #FEF3C7"] p { font-size: 0.68rem; }
+            .waterfalls-section > div[style*="background: #FEF3C7"] p { font-size: 0.85rem; }
         }
 
         /* Ensure all containers are responsive */
@@ -1402,25 +1402,25 @@
         /* 🚨 CRITICAL MOBILE FIXES - Added 2026-03-10 */
         @media (max-width: 480px) {
             /* Hero Section */
-            .hero-title { font-size: 1.4rem !important; }
-            .hero-subtitle { font-size: 0.72rem !important; }
+            .hero-title { font-size: 1.75rem !important; }
+            .hero-subtitle { font-size: 0.9rem !important; }
 
             /* Navigation */
             nav#navbar { padding: 0.5rem 1rem !important; }
             .nav-links { gap: 1rem !important; }
-            .nav-links a { font-size: 0.68rem !important; padding: 0.4rem 0.6rem !important; }
+            .nav-links a { font-size: 0.85rem !important; padding: 0.4rem 0.6rem !important; }
 
             /* Sections */
             .rooms-section, .tours-detail, .waterfalls-section { padding: 2rem 1rem !important; }
-            .section-title { font-size: 1.2rem !important; }
+            .section-title { font-size: 1.5rem !important; }
 
             /* Rooms */
             .room-slideshow { height: 200px !important; }
             .room-content { padding: 1rem !important; }
-            .room-name { font-size: 1rem !important; }
+            .room-name { font-size: 1.25rem !important; }
 
             /* Forms */
-            .form-group input, .form-group select { padding: 0.75rem 1rem !important; font-size: 0.72rem !important; }
+            .form-group input, .form-group select { padding: 0.75rem 1rem !important; font-size: 0.9rem !important; }
 
             /* Gallery */
             .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -1429,55 +1429,55 @@
             .waterfall-preview { grid-template-columns: 1fr !important; }
 
             /* Buttons */
-            .btn-primary, .btn { padding: 0.75rem 1.5rem !important; font-size: 0.72rem !important; }
+            .btn-primary, .btn { padding: 0.75rem 1.5rem !important; font-size: 0.9rem !important; }
         }
 
         /* iPhone 12/13/14 (390px) */
         @media (max-width: 390px) {
-            .hero-title { font-size: 1.12rem !important; }
-            .section-title { font-size: 0.96rem !important; }
-            .section-subtitle { font-size: 0.72rem !important; }
-            .room-name { font-size: 0.84rem !important; }
-            .waterfall-title { font-size: 0.8rem !important; }
+            .hero-title { font-size: 1.4rem !important; }
+            .section-title { font-size: 1.2rem !important; }
+            .section-subtitle { font-size: 0.9rem !important; }
+            .room-name { font-size: 1.05rem !important; }
+            .waterfall-title { font-size: 1rem !important; }
             .waterfall-preview {
                 padding: 0.75rem !important;
             }
-            .waterfall-preview h3 { font-size: 0.76rem !important; line-height: 1.4 !important; }
-            .waterfall-preview .highlight { font-size: 0.64rem !important; line-height: 1.5 !important; }
-            .waterfall-preview .info-item strong { font-size: 0.6rem !important; }
-            .waterfall-preview .info-item span { font-size: 0.56rem !important; }
-            .waterfall-preview .description { font-size: 0.6rem !important; line-height: 1.6 !important; }
-            .waterfall-preview .trail-features li { font-size: 0.56rem !important; line-height: 1.5 !important; }
-            .waterfall-preview .features-grid span { font-size: 0.52rem !important; }
-            .info-card h3 { font-size: 0.92rem !important; }
-            .info-card h4 { font-size: 0.84rem !important; }
+            .waterfall-preview h3 { font-size: 0.95rem !important; line-height: 1.4 !important; }
+            .waterfall-preview .highlight { font-size: 0.8rem !important; line-height: 1.5 !important; }
+            .waterfall-preview .info-item strong { font-size: 0.75rem !important; }
+            .waterfall-preview .info-item span { font-size: 0.7rem !important; }
+            .waterfall-preview .description { font-size: 0.75rem !important; line-height: 1.6 !important; }
+            .waterfall-preview .trail-features li { font-size: 0.7rem !important; line-height: 1.5 !important; }
+            .waterfall-preview .features-grid span { font-size: 0.65rem !important; }
+            .info-card h3 { font-size: 1.15rem !important; }
+            .info-card h4 { font-size: 1.05rem !important; }
             .nav-links { display: none !important; }
             .gallery-grid { grid-template-columns: 1fr !important; }
         }
 
         @media (max-width: 480px) {
-            .hero-title { font-size: 1.2rem !important; }
-            .section-title { font-size: 1.04rem !important; }
-            .room-name { font-size: 0.88rem !important; }
-            .waterfall-title { font-size: 0.96rem !important; }
+            .hero-title { font-size: 1.5rem !important; }
+            .section-title { font-size: 1.3rem !important; }
+            .room-name { font-size: 1.1rem !important; }
+            .waterfall-title { font-size: 1.2rem !important; }
         }
 
         @media (max-width: 414px) {
-            .hero-title { font-size: 1.04rem !important; }
-            .section-title { font-size: 0.96rem !important; }
+            .hero-title { font-size: 1.3rem !important; }
+            .section-title { font-size: 1.2rem !important; }
             .nav-links { display: none !important; }
             .gallery-grid { grid-template-columns: 1fr !important; }
-            .room-name { font-size: 0.8rem !important; }
-            .waterfall-title { font-size: 0.88rem !important; }
+            .room-name { font-size: 1rem !important; }
+            .waterfall-title { font-size: 1.1rem !important; }
         }
 
         @media (max-width: 375px) {
-            .hero-title { font-size: 0.96rem !important; }
-            .hero-subtitle { font-size: 0.64rem !important; }
-            .section-title { font-size: 0.88rem !important; }
+            .hero-title { font-size: 1.2rem !important; }
+            .hero-subtitle { font-size: 0.8rem !important; }
+            .section-title { font-size: 1.1rem !important; }
             .room-slideshow { height: 180px !important; }
-            .info-card h3 { font-size: 0.88rem !important; }
-            .info-card h4 { font-size: 0.8rem !important; }
+            .info-card h3 { font-size: 1.1rem !important; }
+            .info-card h4 { font-size: 1rem !important; }
         }
 
         /* Fix overflow issues */
@@ -1566,17 +1566,17 @@
             <p class="section-subtitle">Cozy houses in Umphang District - Peaceful riverside retreat</p>
             <div style="display: flex; align-items: center; justify-content: center; gap: 1.5%; margin-top: 2rem; flex-wrap: wrap;">
                 <div style="display: flex; align-items: center; gap: 0.75rem; background: #F3F4F6; padding: 0.875rem 1.75rem; border-radius: 50px; border: 1px solid #E5E7EB;">
-                    <i class="fas fa-house-chimney" style="font-size: 1.28rem; color: #1A1A1A;"></i>
+                    <i class="fas fa-house-chimney" style="font-size: 1.6rem; color: #1A1A1A;"></i>
                     <div>
-                        <div style="font-weight: 700; color: #1A1A1A; font-size: 0.83rem;">Hytte</div>
-                        <div style="font-size: 0.74rem; color: #4B5563;">5 Room • Riverside</div>
+                        <div style="font-weight: 700; color: #1A1A1A; font-size: 1.04rem;">Hytte</div>
+                        <div style="font-size: 0.92rem; color: #4B5563;">5 Room • Riverside</div>
                     </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 0.75rem; background: #F3F4F6; padding: 0.875rem 1.75rem; border-radius: 50px; border: 1px solid #E5E7EB;">
-                    <i class="fas fa-house-chimney-window" style="font-size: 1.28rem; color: #1A1A1A;"></i>
+                    <i class="fas fa-house-chimney-window" style="font-size: 1.6rem; color: #1A1A1A;"></i>
                     <div>
-                        <div style="font-weight: 700; color: #1A1A1A; font-size: 0.83rem;">Hus</div>
-                        <div style="font-size: 0.74rem; color: #4B5563;">1 Room • Field View</div>
+                        <div style="font-weight: 700; color: #1A1A1A; font-size: 1.04rem;">Hus</div>
+                        <div style="font-size: 0.92rem; color: #4B5563;">1 Room • Field View</div>
                     </div>
                 </div>
             </div>
@@ -1730,8 +1730,8 @@
         <div class="gallery-grid" id="galleryGrid">
             <!-- Video Section -->
             <div style="grid-column: 1/-1; text-align: center; margin: 2rem 0 1rem;">
-                <h3 style="color: var(--charcoal); font-size: 1.2rem; margin: 0;">🎥 Videos</h3>
-                <p style="color: var(--gray); font-size: 0.72rem; margin: 0.25rem 0 0;">Videos from Vela Resort and Attractions</p>
+                <h3 style="color: var(--charcoal); font-size: 1.5rem; margin: 0;">🎥 Videos</h3>
+                <p style="color: var(--gray); font-size: 0.9rem; margin: 0.25rem 0 0;">Videos from Vela Resort and Attractions</p>
             </div>
 
             <div class="gallery-item video large" data-type="video" style="grid-column: 1/-1; aspect-ratio: 16/9;">
@@ -1757,8 +1757,8 @@
 
             <!-- View Section -->
             <div style="grid-column: 1/-1; text-align: center; margin: 2rem 0 1rem;">
-                <h3 style="color: var(--charcoal); font-size: 1.2rem; margin: 0;">🏞️ View</h3>
-                <p style="color: var(--gray); font-size: 0.72rem; margin: 0.25rem 0 0;">Beautiful views of the resort and attractions</p>
+                <h3 style="color: var(--charcoal); font-size: 1.5rem; margin: 0;">🏞️ View</h3>
+                <p style="color: var(--gray); font-size: 0.9rem; margin: 0.25rem 0 0;">Beautiful views of the resort and attractions</p>
             </div>
 
             <!-- View Images (gallery-1 to gallery-10) -->
@@ -1795,8 +1795,8 @@
 
             <!-- Guest Adventure Images (gallery-11 to gallery-20) -->
             <div style="grid-column: 1/-1; text-align: center; margin: 2rem 0 1rem;">
-                <h3 style="color: var(--charcoal); font-size: 1.2rem; margin: 0;">🎒 Guest Adventure</h3>
-                <p style="color: var(--gray); font-size: 0.72rem; margin: 0.25rem 0 0;">Photos from our guests</p>
+                <h3 style="color: var(--charcoal); font-size: 1.5rem; margin: 0;">🎒 Guest Adventure</h3>
+                <p style="color: var(--gray); font-size: 0.9rem; margin: 0.25rem 0 0;">Photos from our guests</p>
             </div>
 
             <div class="gallery-item" data-type="adventure" onclick="openLightbox('gallery-11.jpg')">
@@ -1832,8 +1832,8 @@
 
             <!-- More Images (gallery-21 to gallery-33) -->
             <div style="grid-column: 1/-1; text-align: center; margin: 2rem 0 1rem;">
-                <h3 style="color: var(--charcoal); font-size: 1.2rem; margin: 0;">📸 More Photos</h3>
-                <p style="color: var(--gray); font-size: 0.72rem; margin: 0.25rem 0 0;">More photos</p>
+                <h3 style="color: var(--charcoal); font-size: 1.5rem; margin: 0;">📸 More Photos</h3>
+                <p style="color: var(--gray); font-size: 0.9rem; margin: 0.25rem 0 0;">More photos</p>
             </div>
 
             <div class="gallery-item" data-type="more" onclick="openLightbox('gallery-21.jpg')">
@@ -2563,72 +2563,72 @@
         <div style="background: linear-gradient(135deg, #FEF3C7 0%, #FEF9E7 100%); border: 2px solid #F59E0B; padding: 2rem 2rem; border-radius: 20px; margin: 2rem 0; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);">
             <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                 <div style="background: #F59E0B; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <span style="font-size: 1.12rem;">🎫</span>
+                    <span style="font-size: 1.4rem;">🎫</span>
                 </div>
                 <div>
-                    <h3 style="font-weight: 800; color: #92400E; font-size: 0.95rem; margin: 0;">📢 Important Notice for Foreign Tourists</h3>
-                    <p style="color: #78350F; font-size: 0.78rem; margin: 0.25rem 0 0;">National Park Entrance Fee (Foreigners Only)</p>
+                    <h3 style="font-weight: 800; color: #92400E; font-size: 1.19rem; margin: 0;">📢 Important Notice for Foreign Tourists</h3>
+                    <p style="color: #78350F; font-size: 0.97rem; margin: 0.25rem 0 0;">National Park Entrance Fee (Foreigners Only)</p>
                 </div>
             </div>
             <div style="background: white; padding: 1.6rem; border-radius: 20px; margin-top: 1rem;">
-                <p style="color: #1A1A1A; font-size: 0.61rem; line-height: 1.6; margin: 0;">
+                <p style="color: #1A1A1A; font-size: 0.76rem; line-height: 1.6; margin: 0;">
                     <strong style="color: #F59E0B;">Tour price does NOT include</strong> Thi Lo Su National Park entrance fee.<br>
-                    <span style="color: #6B7280; font-size: 0.78rem;">Please pay directly at the park entrance.</span>
+                    <span style="color: #6B7280; font-size: 0.97rem;">Please pay directly at the park entrance.</span>
                 </p>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed #E5E7EB;">
                     <div style="background: #D1FAE5; padding: 1rem; border-radius: 12px; border: 2px solid #10B981;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 0.95rem;">🇹🇭</span>
+                            <span style="font-size: 1.19rem;">🇹🇭</span>
                             <span style="font-weight: 700; color: #1A1A1A;">Thai Nationals</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.2rem;">✅</span>
-                            <span style="color: #10B981; font-weight: 800; font-size: 0.95rem;">FREE</span>
-                            <span style="color: #6B7280; font-size: 0.68rem;">(Included in package)</span>
+                            <span style="font-size: 1.5rem;">✅</span>
+                            <span style="color: #10B981; font-weight: 800; font-size: 1.19rem;">FREE</span>
+                            <span style="color: #6B7280; font-size: 0.85rem;">(Included in package)</span>
                         </div>
                     </div>
                     <div style="background: #FEF9E7; padding: 1rem; border-radius: 12px; border: 2px solid #F59E0B;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 0.95rem;">🌏</span>
+                            <span style="font-size: 1.19rem;">🌏</span>
                             <span style="font-weight: 700; color: #1A1A1A;">Foreigners</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.95rem;">👨‍🦱</span>
-                            <span style="color: #6B7280; font-size: 0.74rem;">Adults</span>
-                            <span style="color: #F59E0B; font-weight: 800; font-size: 0.95rem;">฿400</span>
+                            <span style="font-size: 1.19rem;">👨‍🦱</span>
+                            <span style="color: #6B7280; font-size: 0.92rem;">Adults</span>
+                            <span style="color: #F59E0B; font-weight: 800; font-size: 1.19rem;">฿400</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.95rem;">👶</span>
-                            <span style="color: #6B7280; font-size: 0.74rem;">Children</span>
-                            <span style="color: #F59E0B; font-weight: 800; font-size: 0.95rem;">฿200</span>
+                            <span style="font-size: 1.19rem;">👶</span>
+                            <span style="color: #6B7280; font-size: 0.92rem;">Children</span>
+                            <span style="color: #F59E0B; font-weight: 800; font-size: 1.19rem;">฿200</span>
                         </div>
                     </div>
                 </div>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 2px dashed #E5E7EB;">
                     <div style="background: #D1FAE5; padding: 1rem; border-radius: 12px; border: 2px solid #10B981;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 0.95rem;">🇹🇭</span>
+                            <span style="font-size: 1.19rem;">🇹🇭</span>
                             <span style="font-weight: 700; color: #1A1A1A;">Thai Nationals</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 1.2rem;">✅</span>
-                            <span style="color: #10B981; font-weight: 800; font-size: 0.95rem;">FREE</span>
+                            <span style="font-size: 1.5rem;">✅</span>
+                            <span style="color: #10B981; font-weight: 800; font-size: 1.19rem;">FREE</span>
                         </div>
                     </div>
                     <div style="background: #FEF9E7; padding: 1rem; border-radius: 12px; border: 2px solid #F59E0B;">
                         <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 0.95rem;">🌏</span>
+                            <span style="font-size: 1.19rem;">🌏</span>
                             <span style="font-weight: 700; color: #1A1A1A;">Foreigners</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.95rem;">👨‍🦱</span>
-                            <span style="color: #6B7280; font-size: 0.74rem;">Adults</span>
-                            <span style="color: #F59E0B; font-weight: 800; font-size: 0.95rem;">฿800</span>
+                            <span style="font-size: 1.19rem;">👨‍🦱</span>
+                            <span style="color: #6B7280; font-size: 0.92rem;">Adults</span>
+                            <span style="color: #F59E0B; font-weight: 800; font-size: 1.19rem;">฿800</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span style="font-size: 0.95rem;">👶</span>
-                            <span style="color: #6B7280; font-size: 0.74rem;">Children</span>
-                            <span style="color: #F59E0B; font-weight: 800; font-size: 0.95rem;">฿400</span>
+                            <span style="font-size: 1.19rem;">👶</span>
+                            <span style="color: #6B7280; font-size: 0.92rem;">Children</span>
+                            <span style="color: #F59E0B; font-weight: 800; font-size: 1.19rem;">฿400</span>
                         </div>
                     </div>
                 </div>
@@ -2644,24 +2644,24 @@
                 
                 <!-- Booking Type Selector -->
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Tour Type</label>
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Tour Type</label>
                     <div class="booking-type-selector" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
                         <div class="booking-type-option" onclick="selectBookingType(1, 'private')" id="tour1-private" style="padding: 1rem; border: 2px solid #FFD700; border-radius: 12px; background: #FEF3C7; cursor: pointer; text-align: center;">
-                            <div style="font-weight: 700; color: #1A1A1A; font-size: 0.76rem;">Private</div>
-                            <div style="font-size: 0.64rem; color: #4B5563;">฿5,800 (1-6 ppl)</div>
+                            <div style="font-weight: 700; color: #1A1A1A; font-size: 0.95rem;">Private</div>
+                            <div style="font-size: 0.8rem; color: #4B5563;">฿5,800 (1-6 ppl)</div>
                         </div>
                         <div class="booking-type-option" onclick="selectBookingType(1, 'join')" id="tour1-join" style="padding: 1rem; border: 2px solid #E5E7EB; border-radius: 12px; background: #FFFFFF; cursor: pointer; text-align: center;">
-                            <div style="font-weight: 700; color: #1A1A1A; font-size: 0.76rem;">Join Trip</div>
-                            <div style="font-size: 0.64rem; color: #4B5563;">฿2,100/person</div>
+                            <div style="font-weight: 700; color: #1A1A1A; font-size: 0.95rem;">Join Trip</div>
+                            <div style="font-size: 0.8rem; color: #4B5563;">฿2,100/person</div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="tour-card-price" id="tour1-price" style="margin-top: 0.75rem;">฿5,800 <span>/Group (1-6 People)</span></div>
-                <p style="font-size: 0.74rem; color: var(--gray); margin-top: 0.5rem;">7-10 People: ฿8,300 | 11-12 People: ฿10,800 | 13-15 People: ฿13,800</p>
+                <p style="font-size: 0.92rem; color: var(--gray); margin-top: 0.5rem;">7-10 People: ฿8,300 | 11-12 People: ฿10,800 | 13-15 People: ฿13,800</p>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
-                    <select id="tour1-people" onchange="updateTourPrice(1)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 0.82rem;">
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
+                    <select id="tour1-people" onchange="updateTourPrice(1)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1.03rem;">
                         <option value="1">1 People</option>
                         <option value="2">2 People</option>
                         <option value="3">3 People</option>
@@ -2680,11 +2680,11 @@
                     </select>
                 </div>
                 <div class="tour-total-price" id="tour1-total" style="margin-top: 0.75rem; padding: 0.75rem; background: var(--yellow-light); border-radius: 10px; text-align: center;">
-                    <span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span>
-                    <span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿5,800</span>
+                    <span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span>
+                    <span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿5,800</span>
                 </div>
-                <button onclick="toggleTourItinerary(1)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
-                <button onclick="openTourBookingModal(1)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
+                <button onclick="toggleTourItinerary(1)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
+                <button onclick="openTourBookingModal(1)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
             </div>
 
             <!-- Tour 2: VIP Thi Lo Su-Kotha 1 Day -->
@@ -2693,10 +2693,10 @@
                 <h4 class="tour-card-title">🏆 VIP Thi Lo Su-Kotha 1 Day</h4>
                 <p class="tour-card-route">Private Vehicle + Guide + Lunch</p>
                 <div class="tour-card-price" id="tour2-price">฿7,500 <span>/Group (1-6 People)</span></div>
-                <p style="font-size: 0.74rem; color: var(--gray); margin-top: 0.5rem;">7-10 People: ฿10,000 | 11-12 People: ฿12,500 | 13-15 People: ฿15,500</p>
+                <p style="font-size: 0.92rem; color: var(--gray); margin-top: 0.5rem;">7-10 People: ฿10,000 | 11-12 People: ฿12,500 | 13-15 People: ฿15,500</p>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
-                    <select id="tour2-people" onchange="updateTourPrice(2)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 0.82rem;">
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
+                    <select id="tour2-people" onchange="updateTourPrice(2)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1.03rem;">
                         <option value="1">1 People</option>
                         <option value="2">2 People</option>
                         <option value="3">3 People</option>
@@ -2715,11 +2715,11 @@
                     </select>
                 </div>
                 <div class="tour-total-price" id="tour2-total" style="margin-top: 0.75rem; padding: 0.75rem; background: var(--yellow-light); border-radius: 10px; text-align: center;">
-                    <span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span>
-                    <span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿7,500</span>
+                    <span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span>
+                    <span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿7,500</span>
                 </div>
-                <button onclick="toggleTourItinerary(2)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
-                <button onclick="openTourBookingModal(2)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
+                <button onclick="toggleTourItinerary(2)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
+                <button onclick="openTourBookingModal(2)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
             </div>
 
             <!-- Tour 3: Vehicle 4x4 Thi Lo Su -->
@@ -2729,8 +2729,8 @@
                 <p class="tour-card-route">4x4 vehicle to Thi Lo Su Waterfall</p>
                 <div class="tour-card-price" id="tour3-price">฿2,500 <span>/Group (1-10 People)</span></div>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
-                    <select id="tour3-people" onchange="updateTourPrice(3)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 0.82rem;">
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
+                    <select id="tour3-people" onchange="updateTourPrice(3)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1.03rem;">
                         <option value="1">1 People</option>
                         <option value="2">2 People</option>
                         <option value="3">3 People</option>
@@ -2744,11 +2744,11 @@
                     </select>
                 </div>
                 <div class="tour-total-price" id="tour3-total" style="margin-top: 0.75rem; padding: 0.75rem; background: var(--yellow-light); border-radius: 10px; text-align: center;">
-                    <span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span>
-                    <span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿2,500</span>
+                    <span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span>
+                    <span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿2,500</span>
                 </div>
-                <button onclick="toggleTourItinerary(3)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
-                <button onclick="openTourBookingModal(3)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
+                <button onclick="toggleTourItinerary(3)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
+                <button onclick="openTourBookingModal(3)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
             </div>
 
             <!-- Tour 4: Vehicle 4x4 Onsen -->
@@ -2757,10 +2757,10 @@
                 <h4 class="tour-card-title">♨️ Vehicle 4x4 Onsen</h4>
                 <p class="tour-card-route">To Takoe Bi Hot Spring (~2 km round trip walk)</p>
                 <div class="tour-card-price" id="tour4-price">฿1,850 <span>/Group (1-5 People)</span></div>
-                <p style="font-size: 0.74rem; color: var(--gray); margin-top: 0.5rem;">6-10 People: ฿2,500</p>
+                <p style="font-size: 0.92rem; color: var(--gray); margin-top: 0.5rem;">6-10 People: ฿2,500</p>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
-                    <select id="tour4-people" onchange="updateTourPrice(4)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 0.82rem;">
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
+                    <select id="tour4-people" onchange="updateTourPrice(4)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1.03rem;">
                         <option value="1">1 People</option>
                         <option value="2">2 People</option>
                         <option value="3">3 People</option>
@@ -2774,11 +2774,11 @@
                     </select>
                 </div>
                 <div class="tour-total-price" id="tour4-total" style="margin-top: 0.75rem; padding: 0.75rem; background: var(--yellow-light); border-radius: 10px; text-align: center;">
-                    <span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span>
-                    <span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿1,850</span>
+                    <span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span>
+                    <span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿1,850</span>
                 </div>
-                <button onclick="toggleTourItinerary(4)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
-                <button onclick="openTourBookingModal(4)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
+                <button onclick="toggleTourItinerary(4)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
+                <button onclick="openTourBookingModal(4)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
             </div>
 
             <!-- Tour 5: Doi Hua Mot -->
@@ -2787,10 +2787,10 @@
                 <h4 class="tour-card-title">🏔️ Doi Hua Mot</h4>
                 <p class="tour-card-route">Sea of mist view at Doi Hua Mot summit</p>
                 <div class="tour-card-price" id="tour5-price">฿1,000 <span>/Group (1-5 People)</span></div>
-                <p style="font-size: 0.74rem; color: var(--gray); margin-top: 0.5rem;">6-10 People: ฿1,500</p>
+                <p style="font-size: 0.92rem; color: var(--gray); margin-top: 0.5rem;">6-10 People: ฿1,500</p>
                 <div class="form-group" style="margin-top: 1rem;">
-                    <label style="font-size: 0.74rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
-                    <select id="tour5-people" onchange="updateTourPrice(5)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 0.82rem;">
+                    <label style="font-size: 0.92rem; color: var(--dark-gray); font-weight: 600;">Number of People</label>
+                    <select id="tour5-people" onchange="updateTourPrice(5)" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 10px; font-size: 1.03rem;">
                         <option value="1">1 People</option>
                         <option value="2">2 People</option>
                         <option value="3">3 People</option>
@@ -2804,11 +2804,11 @@
                     </select>
                 </div>
                 <div class="tour-total-price" id="tour5-total" style="margin-top: 0.75rem; padding: 0.75rem; background: var(--yellow-light); border-radius: 10px; text-align: center;">
-                    <span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span>
-                    <span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿1,000</span>
+                    <span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span>
+                    <span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿1,000</span>
                 </div>
-                <button onclick="toggleTourItinerary(5)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.72rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
-                <button onclick="openTourBookingModal(5)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.61rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
+                <button onclick="toggleTourItinerary(5)" class="btn" style="width: 100%; padding: 0.75rem; background: #F3F4F6; color: #1A1A1A; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📋 View Itinerary</button>
+                <button onclick="openTourBookingModal(5)" class="btn btn-primary" style="width: 100%; padding: 1.3rem; background: #FFD700; color: #000000; border: 2px solid #FFD700; border-radius: 20px; font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 0.75rem;">📝 Book This Tour</button>
             </div>
         </div>
     </section>
@@ -2858,7 +2858,7 @@
                     <tr><td class="time">03:30 PM</td><td>Depart from the waterfalls and begin the return journey.</td></tr>
                     <tr><td class="time">05:00 PM</td><td>Arrive back at the resort. Free time to relax.</td></tr>
                 </table>
-                <p style="margin-top: 1rem; padding: 0.75rem; background: #FEF3C7; border-radius: 8px; color: #92400E; font-size: 0.72rem; text-align: center;">⚠️ Note: Joytrip does not include Doi Hua Mot</p>
+                <p style="margin-top: 1rem; padding: 0.75rem; background: #FEF3C7; border-radius: 8px; color: #92400E; font-size: 0.9rem; text-align: center;">⚠️ Note: Joytrip does not include Doi Hua Mot</p>
             </div>
         </div>
     </div>
@@ -2918,7 +2918,7 @@
                     <tr><td class="time">07:30 AM</td><td>Descend from the mountain</td></tr>
                     <tr><td class="time">08:00 AM</td><td>Arrive back at resort (free to rest)</td></tr>
                 </table>
-                <p style="margin-top: 1rem; padding: 0.75rem; background: #FEF3C7; border-radius: 8px; color: #92400E; font-size: 0.72rem; text-align: center;">🎁 Easy walk: FREE! | 🏔️ Summit climb: ฿1,000-1,500/group</p>
+                <p style="margin-top: 1rem; padding: 0.75rem; background: #FEF3C7; border-radius: 8px; color: #92400E; font-size: 0.9rem; text-align: center;">🎁 Easy walk: FREE! | 🏔️ Summit climb: ฿1,000-1,500/group</p>
             </div>
         </div>
     </div>
@@ -3104,8 +3104,8 @@
                         <span id="seasonType">-</span>
                     </div>
                     <div class="booking-price-row" style="border-top: 2px solid var(--light-gray); padding-top: 0.75rem; margin-top: 0.5rem;">
-                        <span style="font-size: 0.95rem; font-weight: 700;">TotalAll:</span>
-                        <span id="roomTotalPrice" style="font-size: 0.95rem; font-weight: 800; color: var(--charcoal);">฿0</span>
+                        <span style="font-size: 1.19rem; font-weight: 700;">TotalAll:</span>
+                        <span id="roomTotalPrice" style="font-size: 1.19rem; font-weight: 800; color: var(--charcoal);">฿0</span>
                     </div>
                 </div>
 
@@ -3178,13 +3178,13 @@
                         <span class="summary-value" id="summaryTour">-</span>
                     </div>
                     <div class="summary-row" style="border-top: 2px solid var(--charcoal); padding-top: 0.75rem; margin-top: 0.5rem;">
-                        <span style="font-size: 0.95rem; font-weight: 800;">TotalAll:</span>
-                        <span class="summary-value" id="summaryTotal" style="font-size: 0.95rem; font-weight: 800; color: var(--charcoal);">฿0</span>
+                        <span style="font-size: 1.19rem; font-weight: 800;">TotalAll:</span>
+                        <span class="summary-value" id="summaryTotal" style="font-size: 1.19rem; font-weight: 800; color: var(--charcoal);">฿0</span>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <p id="confirmBtnHint" style="text-align: center; color: var(--warning); font-size: 0.72rem; margin-bottom: 1rem; font-weight: 600;">⚠️ Please enter your name and phone number to book</p>
+                <p id="confirmBtnHint" style="text-align: center; color: var(--warning); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">⚠️ Please enter your name and phone number to book</p>
                 <button id="confirmBookingBtn" class="confirm-btn" onclick="confirmRoomBooking()" disabled style="opacity: 0.6; cursor: not-allowed;">✅ Confirm Booking</button>
             </div>
         </div>
@@ -3199,22 +3199,22 @@
             </div>
             <div class="modal-body" style="padding: 2.5rem; text-align: center;">
                 <div style="background: #FEF3C7; border-left: 4px solid #F59E0B; padding: 2rem; margin: 1.5rem 0; border-radius: 12px;">
-                    <p style="margin: 0 0 1rem 0; font-size: 0.95rem; font-weight: 600; color: #92400E;">📢 Important Notice</p>
+                    <p style="margin: 0 0 1rem 0; font-size: 1.19rem; font-weight: 600; color: #92400E;">📢 Important Notice</p>
                     <p style="margin: 0 0 1.5rem 0; color: #78350F; line-height: 1.6;">Tour price does <strong>NOT</strong> include Thi Lo Su National Park entrance fee. Please pay directly at the park entrance.</p>
                     <div style="display: flex; justify-content: center; gap: 2%; flex-wrap: wrap;">
                         <div style="background: #FFFFFF; padding: 1.3rem 1.5rem; border-radius: 12px; border: 2px solid #F59E0B;">
-                            <p style="margin: 0; font-size: 0.78rem; color: #6B7280;">👨‍🦱 Adults</p>
-                            <p style="margin: 0.5rem 0 0 0; font-size: 0.96rem; font-weight: 700; color: #1A1A1A;">฿400</p>
-                            <p style="margin: 0; font-size: 0.83rem; color: #6B7280;">/ person</p>
+                            <p style="margin: 0; font-size: 0.97rem; color: #6B7280;">👨‍🦱 Adults</p>
+                            <p style="margin: 0.5rem 0 0 0; font-size: 1.2rem; font-weight: 700; color: #1A1A1A;">฿400</p>
+                            <p style="margin: 0; font-size: 1.04rem; color: #6B7280;">/ person</p>
                         </div>
                         <div style="background: #FFFFFF; padding: 1.3rem 1.5rem; border-radius: 12px; border: 2px solid #F59E0B;">
-                            <p style="margin: 0; font-size: 0.78rem; color: #6B7280;">👶 Children</p>
-                            <p style="margin: 0.5rem 0 0 0; font-size: 0.96rem; font-weight: 700; color: #1A1A1A;">฿200</p>
-                            <p style="margin: 0; font-size: 0.83rem; color: #6B7280;">/ person</p>
+                            <p style="margin: 0; font-size: 0.97rem; color: #6B7280;">👶 Children</p>
+                            <p style="margin: 0.5rem 0 0 0; font-size: 1.2rem; font-weight: 700; color: #1A1A1A;">฿200</p>
+                            <p style="margin: 0; font-size: 1.04rem; color: #6B7280;">/ person</p>
                         </div>
                     </div>
                 </div>
-                <button onclick="proceedToBooking()" style="width: 100%; padding: 1.3rem; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; border: none; border-radius: 20px; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 1rem;">
+                <button onclick="proceedToBooking()" style="width: 100%; padding: 1.3rem; background: linear-gradient(135deg, #10B981 0%, #059669 100%); color: #FFFFFF; border: none; border-radius: 20px; font-size: 1.19rem; font-weight: 700; cursor: pointer; transition: all 0.3s; margin-top: 1rem;">
                     ✅ I Understand - Proceed to Booking
                 </button>
             </div>
@@ -3254,7 +3254,7 @@
                     <div class="booking-price-summary">
                         <div class="booking-price-row">
                             <span>PriceTotal:</span>
-                            <span id="bookingTotalPrice" style="font-weight: 800; font-size: 0.61rem;">฿0</span>
+                            <span id="bookingTotalPrice" style="font-weight: 800; font-size: 0.76rem;">฿0</span>
                         </div>
                     </div>
                     <button type="submit" class="booking-submit-btn">✅ ConfirmBook Tour</button>
@@ -3269,7 +3269,7 @@
             <h2 class="section-title">Contact Us</h2>
         </div>
         <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-            <p style="font-size: 0.95rem; color: var(--dark-gray); margin-bottom: 1.5rem;">
+            <p style="font-size: 1.19rem; color: var(--dark-gray); margin-bottom: 1.5rem;">
                 📍 528 Moo 1, Umphang District, Tak Province 63170<br>
                 📞 098-908-4356 (Khun Linji - Always available)<br>
                 📞 080-899-5394 (Khun A)<br>
@@ -3293,8 +3293,8 @@
     </footer>
 
     <!-- AI Chatbot Button -->
-    <button id="aiChatbotBtn" onclick="toggleChatbot()" style="position: absolute; bottom: 2rem; left: 2rem; width: auto; padding: 0.75rem 1.5rem; background: #1A1A1A; border: 2px solid #FFD700; border-radius: 50px; color: #FFFFFF; font-size: 0.61rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); z-index: 10; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
-        <span style="font-size: 0.95rem;">🤖</span>
+    <button id="aiChatbotBtn" onclick="toggleChatbot()" style="position: absolute; bottom: 2rem; left: 2rem; width: auto; padding: 0.75rem 1.5rem; background: #1A1A1A; border: 2px solid #FFD700; border-radius: 50px; color: #FFFFFF; font-size: 0.76rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); z-index: 10; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+        <span style="font-size: 1.19rem;">🤖</span>
         <span>Ask AI</span>
     </button>
 
@@ -3302,29 +3302,29 @@
     <div id="aiChatbotWindow" style="position: absolute; bottom: 5rem; left: 2rem; width: 350px; max-height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 10; display: none; flex-direction: column; overflow: hidden; border: 2px solid #E5E7EB;">
         <div style="background: #1A1A1A; color: white; padding: 1.3rem; display: flex; justify-content: space-between; align-items: center;">
             <div>
-                <h4 style="margin: 0; font-size: 0.61rem;">🤖 Ask AI About Vela Resort</h4>
-                <p style="margin: 0.25rem 0 0; font-size: 0.83rem; opacity: 0.9;">Respond immediately 24/7</p>
+                <h4 style="margin: 0; font-size: 0.76rem;">🤖 Ask AI About Vela Resort</h4>
+                <p style="margin: 0.25rem 0 0; font-size: 1.04rem; opacity: 0.9;">Respond immediately 24/7</p>
             </div>
-            <button onclick="toggleChatbot()" style="background: none; border: none; color: white; font-size: 0.96rem; cursor: pointer;">×</button>
+            <button onclick="toggleChatbot()" style="background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer;">×</button>
         </div>
         <div id="chatMessages" style="flex: 1; padding: 1.3rem; overflow-y: auto; background: #f9f9f9; min-height: 380px; max-height: 500px;">
             <div style="background: white; padding: 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                <p style="margin: 0; font-size: 0.78rem; color: var(--dark-gray);"><strong>🤖 HelloReceive! Welcome to Vela Resort</strong></p>
-                <p style="margin: 0.5rem 0 0; font-size: 0.78rem; color: var(--dark-gray);"><strong>Ask AI About:</strong></p>
-                <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem; font-size: 0.74rem; color: var(--gray);">
+                <p style="margin: 0; font-size: 0.97rem; color: var(--dark-gray);"><strong>🤖 HelloReceive! Welcome to Vela Resort</strong></p>
+                <p style="margin: 0.5rem 0 0; font-size: 0.97rem; color: var(--dark-gray);"><strong>Ask AI About:</strong></p>
+                <ul style="margin: 0.5rem 0 0; padding-left: 1.25rem; font-size: 0.92rem; color: var(--gray);">
                     <li>🏨 Rooms Price AndAndReady</li>
                     <li>🗺️ TourVarious ProgramAndPrice</li>
                     <li>📅 Booking Rules AndMethods</li>
                     <li>📍 Nearby Attractions</li>
                     <li>❓ FAQs about the resort</li>
                 </ul>
-                <p style="margin: 0.75rem 0 0; font-size: 0.74rem; color: #667eea; font-weight: 600;">💬 Type wordAskyour below AI Will respond immediately!</p>
+                <p style="margin: 0.75rem 0 0; font-size: 0.92rem; color: #667eea; font-weight: 600;">💬 Type wordAskyour below AI Will respond immediately!</p>
             </div>
         </div>
         <div style="padding: 1.3rem; border-top: 1px solid var(--light-gray); background: white;">
             <div style="display: flex; gap: 0.5rem;">
-                <input type="text" id="chatInput" placeholder="🤖 Ask AI AboutRooms, Tour, Booking..." style="flex: 1; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 20px; font-size: 0.78rem;" onkeypress="if(event.key==='Enter')sendChat()">
-                <button onclick="sendChat()" style="background: #1A1A1A; color: #FFFFFF; border: 2px solid #FFD700; padding: 0.75rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.61rem;">Send</button>
+                <input type="text" id="chatInput" placeholder="🤖 Ask AI AboutRooms, Tour, Booking..." style="flex: 1; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 20px; font-size: 0.97rem;" onkeypress="if(event.key==='Enter')sendChat()">
+                <button onclick="sendChat()" style="background: #1A1A1A; color: #FFFFFF; border: 2px solid #FFD700; padding: 0.75rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.76rem;">Send</button>
             </div>
         </div>
     </div>
@@ -4009,7 +4009,7 @@
                 if (totalEl) {
                     const people = parseInt(document.getElementById(`tour${tourId}-people`).value);
                     const total = people * 2100;
-                    totalEl.innerHTML = `<span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span><span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿${total.toLocaleString()}</span>`;
+                    totalEl.innerHTML = `<span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span><span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿${total.toLocaleString()}</span>`;
                 }
             }
         }
@@ -4031,7 +4031,7 @@
 
             const totalEl = document.getElementById(`tour${tourId}-total`);
             if (totalEl) {
-                totalEl.innerHTML = `<span style="font-size: 0.74rem; color: var(--dark-gray);">PriceTotal: </span><span style="font-size: 0.73rem; font-weight: 800; color: var(--charcoal);">฿${price.toLocaleString()}</span>`;
+                totalEl.innerHTML = `<span style="font-size: 0.92rem; color: var(--dark-gray);">PriceTotal: </span><span style="font-size: 0.91rem; font-weight: 800; color: var(--charcoal);">฿${price.toLocaleString()}</span>`;
             }
 
             return price;
@@ -4328,11 +4328,11 @@
 
             if (chatbotOpen) {
                 chatbotWindow.style.display = 'none';
-                chatbotBtn.innerHTML = '<span style="font-size: 0.95rem;">🤖</span><span>Ask AI</span>';
+                chatbotBtn.innerHTML = '<span style="font-size: 1.19rem;">🤖</span><span>Ask AI</span>';
                 chatbotOpen = false;
             } else {
                 chatbotWindow.style.display = 'flex';
-                chatbotBtn.innerHTML = '<span style="font-size: 0.95rem;">❌</span><span>Closed</span>';
+                chatbotBtn.innerHTML = '<span style="font-size: 1.19rem;">❌</span><span>Closed</span>';
                 chatbotOpen = true;
                 setTimeout(() => document.getElementById('chatInput').focus(), 100);
             }
@@ -4346,7 +4346,7 @@
 
             const userMsg = document.createElement('div');
             userMsg.style.cssText = 'background: #1A1A1A; color: white; padding: 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; align-self: flex-end; max-width: 80%;';
-            userMsg.innerHTML = `<p style="margin: 0; font-size: 0.78rem;">${message}</p>`;
+            userMsg.innerHTML = `<p style="margin: 0; font-size: 0.97rem;">${message}</p>`;
             chatMessages.appendChild(userMsg);
             chatInput.value = '';
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -4355,7 +4355,7 @@
                 const response = generateAIResponse(message);
                 const aiMsg = document.createElement('div');
                 aiMsg.style.cssText = 'background: white; padding: 0.75rem; border-radius: 20px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); max-width: 85%;';
-                aiMsg.innerHTML = `<p style="margin: 0; font-size: 0.78rem; color: var(--dark-gray);">${response}</p>`;
+                aiMsg.innerHTML = `<p style="margin: 0; font-size: 0.97rem; color: var(--dark-gray);">${response}</p>`;
                 chatMessages.appendChild(aiMsg);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }, 500);
