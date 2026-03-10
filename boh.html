@@ -2017,6 +2017,51 @@
                     </div>
                 </div>
 
+                <!-- User Management -->
+                <div class="form-card">
+                    <h2 class="form-title">👥 จัดการผู้ใช้งาน</h2>
+                    <div style="background: #FEF9E7; border: 2px solid #FFD700; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span style="font-size: 1.2rem;">🔐</span>
+                            <strong>บัญชีปัจจุบัน:</strong>
+                        </div>
+                        <div style="font-size: 0.95rem; color: #1A1A1A;">
+                            <strong>Username:</strong> Boss<br>
+                            <strong>Password:</strong> 5281
+                        </div>
+                    </div>
+
+                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--black);">➕ เพิ่มพนักงาน</h3>
+                    <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
+                        <div class="form-group">
+                            <label>👤 ชื่อผู้ใช้</label>
+                            <input type="text" id="newUsername" placeholder="เช่น: staff01, lingji, A" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
+                        </div>
+                        <div class="form-group">
+                            <label>🔒 รหัสผ่าน</label>
+                            <input type="password" id="newPassword" placeholder="รหัสผ่านอย่างน้อย 4 หลัก" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
+                        </div>
+                        <div class="form-group">
+                            <label>📛 ชื่อพนักงาน</label>
+                            <input type="text" id="newFullName" placeholder="ชื่อจริง" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
+                        </div>
+                        <div class="form-group">
+                            <label>🎭 สิทธิ์</label>
+                            <select id="newUserRole" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
+                                <option value="staff">👤 พนักงาน (ดู booking, เพิ่ม petty cash)</option>
+                                <option value="manager">👔 ผู้จัดการ (แก้ไข booking, export report)</option>
+                                <option value="admin">⚙️ Admin (ตั้งค่าระบบ, จัดการ user)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="createUser()" class="btn btn-primary" style="width: 100%;">➕ สร้างผู้ใช้งาน</button>
+
+                    <h3 style="font-size: 1rem; font-weight: 700; margin: 1.5rem 0 1rem; color: var(--black);">📋 รายชื่อผู้ใช้งาน</h3>
+                    <div id="userList" style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <!-- User list will be populated here -->
+                    </div>
+                </div>
+
                 <!-- System Info -->
                 <div class="form-card">
                     <h2 class="form-title">ℹ️ ข้อมูลระบบ</h2>
@@ -2082,9 +2127,22 @@
         // ===================================
         function handleLogin(event) {
             event.preventDefault();
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('bohLayout').classList.add('active');
-            loadAllData();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Check credentials
+            if (username === 'Boss' && password === '5281') {
+                // Login successful
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('bohLayout').classList.add('active');
+                loadAllData();
+                console.log('✅ Login successful: Boss');
+            } else {
+                // Login failed
+                alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!\n\nUsername: Boss\nPassword: 5281');
+                console.log('❌ Login failed:', username);
+            }
         }
 
         // ===================================
@@ -3979,10 +4037,145 @@
             // Default response
             return '🤔 <strong>ผมยังไม่เข้าใจคำถาม</strong><br>ลองถามเกี่ยวกับ:<br>- การจอง (เพิ่ม/ลบ/แก้/ดู)<br>- Petty Cash<br>- บัญชี/VAT<br>- การสร้างบิล<br>- Dashboard<br>- ปฏิทิน<br><br>หรือพิมพ์ "help" เพื่อดูวิธีใช้';
         }
+
+        // ==================== USER MANAGEMENT ====================
         
+        // Create new user
+        function createUser() {
+            const username = document.getElementById('newUsername').value.trim();
+            const password = document.getElementById('newPassword').value.trim();
+            const fullName = document.getElementById('newFullName').value.trim();
+            const role = document.getElementById('newUserRole').value;
+            
+            if (!username || !password || !fullName) {
+                alert('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน');
+                return;
+            }
+            
+            if (password.length < 4) {
+                alert('⚠️ รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร');
+                return;
+            }
+            
+            // Get existing users
+            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
+            
+            // Check if username exists
+            if (users.find(u => u.username === username)) {
+                alert('⚠️ ชื่อผู้ใช้นี้มีอยู่แล้ว');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                id: Date.now(),
+                username: username,
+                password: password,
+                fullName: fullName,
+                role: role,
+                createdAt: new Date().toISOString(),
+                status: 'active'
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('vela_users', JSON.stringify(users));
+            
+            alert('✅ สร้างผู้ใช้งานสำเร็จ!\n\nUsername: ' + username + '\nRole: ' + (role === 'staff' ? 'พนักงาน' : role === 'manager' ? 'ผู้จัดการ' : 'Admin'));
+            
+            // Clear form
+            document.getElementById('newUsername').value = '';
+            document.getElementById('newPassword').value = '';
+            document.getElementById('newFullName').value = '';
+            
+            // Refresh user list
+            loadUserList();
+        }
+        
+        // Load user list
+        function loadUserList() {
+            const userList = document.getElementById('userList');
+            if (!userList) return;
+            
+            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
+            
+            // Add default Boss user
+            const bossUser = {
+                id: 1,
+                username: 'Boss',
+                password: '5281',
+                fullName: 'เจ้าของระบบ',
+                role: 'owner',
+                createdAt: '2026-03-10',
+                status: 'active'
+            };
+            
+            userList.innerHTML = `
+                <div style="background: #FEF9E7; border: 2px solid #FFD700; border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 1.5rem;">👑</span>
+                        <div>
+                            <div style="font-weight: 700; color: #1A1A1A;">Boss</div>
+                            <div style="font-size: 0.8rem; color: #6B7280;">เจ้าของระบบ | รหัส: 5281</div>
+                        </div>
+                    </div>
+                    <span style="background: #10B981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Active</span>
+                </div>
+            `;
+            
+            if (users.length === 0) {
+                userList.innerHTML += `
+                    <div style="text-align: center; padding: 2rem; color: #9CA3AF; font-size: 0.9rem;">
+                        ยังไม่มีพนักงาน<br>คลิก "➕ สร้างผู้ใช้งาน" เพื่อเพิ่ม
+                    </div>
+                `;
+            } else {
+                users.forEach(user => {
+                    const roleIcon = user.role === 'admin' ? '⚙️' : user.role === 'manager' ? '👔' : '👤';
+                    const roleName = user.role === 'admin' ? 'Admin' : user.role === 'manager' ? 'ผู้จัดการ' : 'พนักงาน';
+                    
+                    userList.innerHTML += `
+                        <div style="background: var(--light-gray); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 1.5rem;">${roleIcon}</span>
+                                <div>
+                                    <div style="font-weight: 700; color: #1A1A1A;">${user.username}</div>
+                                    <div style="font-size: 0.8rem; color: #6B7280;">${user.fullName} | ${roleName}</div>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span style="background: ${user.status === 'active' ? '#10B981' : '#EF4444'}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
+                                    ${user.status === 'active' ? 'Active' : 'Inactive'}
+                                </span>
+                                <button onclick="deleteUser(${user.id})" style="background: #EF4444; color: white; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1rem;">🗑️</button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        // Delete user
+        function deleteUser(userId) {
+            if (!confirm('⚠️ คุณต้องการลบผู้ใช้นี้หรือไม่?')) return;
+            
+            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
+            users = users.filter(u => u.id !== userId);
+            localStorage.setItem('vela_users', JSON.stringify(users));
+            
+            alert('✅ ลบผู้ใช้งานสำเร็จ');
+            loadUserList();
+        }
+        
+        // Initialize user management on page load
+        function initUserManagement() {
+            loadUserList();
+            console.log('👥 User management initialized');
+        }
+
         // Initialize chatbot on page load
         window.addEventListener('DOMContentLoaded', function() {
             console.log('🤖 BOH Chatbot initialized');
+            initUserManagement();
         });
     </script>
 
