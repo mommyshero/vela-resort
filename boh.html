@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VELA BOH - Back Office System</title>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ===================================
@@ -887,11 +888,31 @@
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(400px); opacity: 0; }
         }
+        
+        /* Import Modal Styles */
+        .import-type-btn {
+            transition: all 0.3s ease;
+        }
+        .import-type-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        #importDropZone:hover {
+            border-color: var(--yellow) !important;
+            background: var(--yellow-light) !important;
+        }
+        
+        #importDropZone.dragover {
+            border-color: var(--yellow) !important;
+            background: var(--yellow-light) !important;
+            transform: scale(1.02);
+        }
     </style>
 </head>
 <body>
     <!-- Login Page -->
-    <div class="login-page" id="loginPage">
+    <div class="login-page" id="loginPage" style="display: none;">
         <div class="login-container">
             <div class="login-logo">
                 <span class="login-logo-icon">🔒</span>
@@ -910,7 +931,7 @@
     </div>
 
     <!-- BOH Main Layout -->
-    <div class="boh-layout" id="bohLayout">
+    <div class="boh-layout active" id="bohLayout">
         <!-- Mobile Menu Toggle -->
         <button class="boh-mobile-toggle" onclick="toggleMobileSidebar()">
             ☰ เมนู
@@ -1078,6 +1099,14 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Upcoming Arrivals -->
+                <div class="form-card">
+                    <h2 class="form-title">🛬 รายชื่อที่จะมาถึง (7 วันข้างหน้า)</h2>
+                    <div id="upcomingArrivals">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </div>
             </section>
 
             <!-- Bookings Section -->
@@ -1102,28 +1131,125 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">วันเช็คอิน</label>
-                            <input type="date" class="form-input" id="bookingCheckin" required>
+                            <input type="date" class="form-input" id="bookingCheckin" required onchange="updateNightsDisplay()">
                         </div>
                         <div class="form-group">
                             <label class="form-label">วันเช็คเอาท์</label>
-                            <input type="date" class="form-input" id="bookingCheckout" required>
+                            <input type="date" class="form-input" id="bookingCheckout" required onchange="updateNightsDisplay()">
+                        </div>
+                        <div class="form-group full">
+                            <label class="form-label">🏨 ห้องพัก (เลือกได้หลายห้อง)</label>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hytte1" style="width: 20px; height: 20px;">
+                                    <span>🏠 Hytte 1 - Apus</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hytte2" style="width: 20px; height: 20px;">
+                                    <span>🏠 Hytte 2 - Cetus</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hytte3" style="width: 20px; height: 20px;">
+                                    <span>🏠 Hytte 3 - Lepus</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hytte4" style="width: 20px; height: 20px;">
+                                    <span>🏠 Hytte 4 - Pyxis</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hytte5" style="width: 20px; height: 20px;">
+                                    <span>🏠 Hytte 5 - Volans</span>
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px; cursor: pointer; border: 2px solid transparent; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--yellow)'" onmouseout="this.style.borderColor='transparent'">
+                                    <input type="checkbox" name="bookingRoom" value="hus" style="width: 20px; height: 20px;">
+                                    <span>🏡 Hus - ไม่มีชื่อ</span>
+                                </label>
+                            </div>
+                            <small style="color: var(--gray); margin-top: 0.5rem; display: block;">✅ เลือกได้หลายห้องต่อการจอง</small>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">ห้องพัก</label>
-                            <select class="form-select" id="bookingRoom" required onchange="updateRoomQtyLimit()">
-                                <option value="">-- เลือกห้องพัก --</option>
-                                <option value="hytte">🏠 Hytte (5 ห้อง)</option>
-                                <option value="hus">🏡 Hus (1 ห้อง)</option>
+                            <label class="form-label">📅 จำนวนคืน</label>
+                            <input type="number" class="form-input" id="bookingNights" min="1" value="1" readonly>
+                            <small style="color: var(--gray); margin-top: 0.25rem; display: block;">คำนวณอัตโนมัติจากวันเช็คอิน-เอาท์</small>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">📢 ช่องทางการจอง</label>
+                            <select class="form-select" id="bookingChannel" required>
+                                <option value="">-- เลือกช่องทาง --</option>
+                                <option value="Website">🌐 Website</option>
+                                <option value="Facebook">📘 Facebook/Meta</option>
+                                <option value="LINE">💬 LINE</option>
+                                <option value="Booking.com">🏨 Booking.com</option>
+                                <option value="Traveloka">✈️ Traveloka</option>
+                                <option value="Agoda">🏢 Agoda</option>
+                                <option value="Phone">📞 Phone</option>
+                                <option value="Walk-in">🚶 Walk-in</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">จำนวนห้อง</label>
-                            <input type="number" class="form-input" id="bookingQty" min="1" max="5" value="1" required>
-                            <small id="roomLimitHint" style="color: var(--gray); margin-top: 0.25rem; display: block;"></small>
+                            <label class="form-label">🏠 ประเภทห้อง & ราคา</label>
+                            <select class="form-select" id="bookingRoomPrice" onchange="updateRoomPriceDisplay()" required>
+                                <option value="">-- เลือกราคาห้อง --</option>
+                                <optgroup label="🏠 Hytte - 🌿 ฤดูร้อนและฝน (มี.ค. - ก.ย.)">
+                                    <option value="750">จันทร์-พฤหัส: 750฿</option>
+                                    <option value="950">ศุกร์-อาทิตย์/วันหยุด: 950฿</option>
+                                </optgroup>
+                                <optgroup label="🏠 Hytte - ❄️ ฤดูท่องเที่ยว (ต.ค. - ก.พ.)">
+                                    <option value="1250">จันทร์-พฤหัส: 1,250฿</option>
+                                    <option value="1500">ศุกร์-อาทิตย์/วันหยุด: 1,500฿</option>
+                                </optgroup>
+                                <optgroup label="🏡 Hus - 🌿 ฤดูร้อนและฝน (มี.ค. - ก.ย.)">
+                                    <option value="1200">จันทร์-พฤหัส: 1,200฿</option>
+                                    <option value="1800">ศุกร์-อาทิตย์/วันหยุด: 1,800฿</option>
+                                </optgroup>
+                                <optgroup label="🏡 Hus - ❄️ ฤดูท่องเที่ยว (ต.ค. - ก.พ.)">
+                                    <option value="2100">จันทร์-พฤหัส: 2,100฿</option>
+                                    <option value="2500">ศุกร์-อาทิตย์/วันหยุด: 2,500฿</option>
+                                </optgroup>
+                            </select>
+                            <input type="hidden" id="bookingRoomPriceValue" value="0">
                         </div>
                         <div class="form-group">
-                            <label class="form-label">ส่วนลด (บาท)</label>
-                            <input type="number" class="form-input" id="bookingDiscount" min="0" value="0" placeholder="0">
+                            <label class="form-label">🎯 แพ็คเกจทัวร์</label>
+                            <select class="form-select" id="bookingTourPackage" onchange="updateTourPrice()">
+                                <option value="">-- ไม่มีทัวร์ --</option>
+                                <optgroup label="⭐ VIP ทัวร์">
+                                    <option value="5800" data-price="5800">VIP ทีลอซู 1 วัน - ฿5,800/กลุ่ม (1-6 คน)</option>
+                                    <option value="8300" data-price="8300">VIP ทีลอซู 1 วัน - ฿8,300/กลุ่ม (7-10 คน)</option>
+                                    <option value="10800" data-price="10800">VIP ทีลอซู 1 วัน - ฿10,800/กลุ่ม (11-12 คน)</option>
+                                    <option value="13800" data-price="13800">VIP ทีลอซู 1 วัน - ฿13,800/กลุ่ม (13-15 คน)</option>
+                                    <option value="2100" data-price="2100">จอยทริป ทีลอซู - ฿2,100/คน</option>
+                                    <option value="4200" data-price="4200">จอยทริป - ฿4,200/2คน</option>
+                                    <option value="7500" data-price="7500">VIP ทีลอซู-โคทะ 1 วัน - ฿7,500/กลุ่ม (1-6 คน)</option>
+                                    <option value="10000" data-price="10000">VIP ทีลอซู-โคทะ 1 วัน - ฿10,000/กลุ่ม (7-10 คน)</option>
+                                    <option value="12500" data-price="12500">VIP ทีลอซู-โคทะ 1 วัน - ฿12,500/กลุ่ม (11-12 คน)</option>
+                                    <option value="15500" data-price="15500">VIP ทีลอซู-โคทะ 1 วัน - ฿15,500/กลุ่ม (13-15 คน)</option>
+                                </optgroup>
+                                <optgroup label="🚙 รถ 4x4">
+                                    <option value="2500" data-price="2500">รถ 4x4 ทีลอซู - ฿2,500/กลุ่ม (1-10 คน)</option>
+                                    <option value="1850" data-price="1850">รถ 4x4 ออนเซ็น (1-5 คน) - ฿1,850</option>
+                                    <option value="2500" data-price="2500">รถ 4x4 ออนเซ็น (6-10 คน) - ฿2,500</option>
+                                    <option value="1000" data-price="1000">ดอยหัวหมด (1-5 คน) - ฿1,000</option>
+                                    <option value="1500" data-price="1500">ดอยหัวหมด (6-10 คน) - ฿1,500</option>
+                                </optgroup>
+                            </select>
+                            <input type="hidden" id="bookingTourPrice" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">🛏️ เตียงเสริม</label>
+                            <select class="form-select" id="bookingExtraBed" onchange="updateTotalDisplay()">
+                                <option value="0">-- ไม่มีเตียงเสริม --</option>
+                                <option value="350">เตียงเสริม - ฿350</option>
+                                <option value="650">เตียงเสริม - ฿650</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">🏷️ ส่วนลด (บาท)</label>
+                            <input type="number" class="form-input" id="bookingDiscount" min="0" value="0" placeholder="0" oninput="updateTotalDisplay()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">📊 รายได้รวม (บาท)</label>
+                            <input type="number" class="form-input" id="bookingTotal" readonly style="background: #f3f4f6; font-weight: 700;">
                         </div>
                         <div class="form-group full">
                             <label class="form-label">อัพโหลดสลิปโอนเงิน</label>
@@ -1154,6 +1280,16 @@
                         </button>
                         <button class="btn btn-secondary" onclick="exportBookingsPDF()">
                             📥 Export PDF ทั้งหมด
+                        </button>
+                    </div>
+                    <!-- Data Management -->
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 2px solid var(--danger-light);">
+                        <span style="color: var(--danger); font-size: 0.9rem; align-self: center; margin-right: 0.5rem;">⚠️ จัดการข้อมูล:</span>
+                        <button class="btn btn-danger" onclick="deleteAllBookings()" style="background: #ef4444; color: white; font-weight: 600;">
+                            🗑️ ลบการจองทั้งหมด
+                        </button>
+                        <button class="btn" onclick="cleanupCorruptedBookings()" style="background: #f59e0b; color: white; font-weight: 600;">
+                            🧹 ล้างข้อมูลเสียหาย
                         </button>
                     </div>
                 </div>
@@ -1188,7 +1324,7 @@
                     <div class="dashboard-card" style="border-left: 4px solid var(--warning);">
                         <div class="dashboard-card-header">
                             <div>
-                                <div class="dashboard-card-value" style="color: var(--warning);" id="lastSyncTime">--:--</div>
+                                <div class="dashboard-card-value" style="color: var(--warning);" id="lastSyncTimeBooking">--:--</div>
                                 <div class="dashboard-card-label">อัพเดทล่าสุด</div>
                             </div>
                             <div class="dashboard-card-icon">🔄</div>
@@ -1465,6 +1601,10 @@
                             <label class="form-label">ผู้รับ/ผู้จ่าย</label>
                             <input type="text" class="form-input" id="pettyParty">
                         </div>
+                        <div class="form-group">
+                            <label class="form-label">📝 หมายเหตุ</label>
+                            <input type="text" class="form-input" id="pettyNote" placeholder="เช่น ค่าอาหารกลางวัน, ค่าน้ำมัน">
+                        </div>
                         <div class="form-group full">
                             <label class="form-label">แนบสลิป/บิล (Image)</label>
                             <input type="file" class="form-input" id="pettySlip" accept="image/*">
@@ -1489,13 +1629,14 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width: 80px;">ลำดับ/หมายเหตุ</th>
                                     <th>วันที่</th>
                                     <th>ประเภท</th>
                                     <th>หมวดหมู่</th>
                                     <th>รายละเอียด</th>
                                     <th>จำนวน</th>
                                     <th>ผู้รับ/ผู้จ่าย</th>
+                                    <th>หมายเหตุ</th>
                                     <th>จัดการ</th>
                                 </tr>
                             </thead>
@@ -1710,7 +1851,7 @@
                     <div class="dashboard-card" style="border-left: 4px solid var(--warning);">
                         <div class="dashboard-card-header">
                             <div>
-                                <div class="dashboard-card-value" id="lastSyncTime">--:--</div>
+                                <div class="dashboard-card-value" id="lastSyncTimePeekaboo">--:--</div>
                                 <div class="dashboard-card-label">Sync ล่าสุด</div>
                             </div>
                             <div class="dashboard-card-icon">🔄</div>
@@ -1846,76 +1987,6 @@
                 </div>
             </section>
 
-                <div class="dashboard-grid">
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-header">
-                            <div>
-                                <div class="dashboard-card-value" style="color: var(--success);">🟢 ออนไลน์</div>
-                                <div class="dashboard-card-label">สถานะระบบ</div>
-                            </div>
-                            <div class="dashboard-card-icon">🖥️</div>
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-header">
-                            <div>
-                                <div class="dashboard-card-value" id="peekabooLastRun">--:--</div>
-                                <div class="dashboard-card-label">รันล่าสุด</div>
-                            </div>
-                            <div class="dashboard-card-icon">🕐</div>
-                        </div>
-                    </div>
-                    <div class="dashboard-card">
-                        <div class="dashboard-card-header">
-                            <div>
-                                <div class="dashboard-card-value" id="peekabooTotalReleased">0</div>
-                                <div class="dashboard-card-label">ห้องที่ปล่อยแล้ว</div>
-                            </div>
-                            <div class="dashboard-card-icon">📊</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-card">
-                    <h2 class="form-title">⚙️ การตั้งค่า</h2>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--warning);">24 ชั่วโมง</div>
-                            <div class="stat-label">⏰ ระยะเวลาถือจอง</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" style="color: var(--black);">1 ชั่วโมง</div>
-                            <div class="stat-label">🔄 ตรวจสอบทุก</div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="runPeekabooRelease()" style="margin-top: 1rem;">
-                        👁️ รันตอนนี้
-                    </button>
-                </div>
-
-                <div class="form-card">
-                    <h2 class="form-title">📋 Log</h2>
-                    <div class="table-container">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>วันที่</th>
-                                    <th>ห้องพัก</th>
-                                    <th>Booking ID</th>
-                                    <th>Action</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody id="peekabooLogTable">
-                                <tr>
-                                    <td colspan="5" style="text-align: center; color: var(--gray);">ยังไม่มีรายการ</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-
             <!-- Settings Section -->
             <section class="content-section" id="settings">
                 <div class="boh-header">
@@ -1928,11 +1999,13 @@
                     <h2 class="form-title">💾 จัดการข้อมูล</h2>
                     <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                         <button onclick="exportData()" class="btn btn-primary">📤 Export ข้อมูล</button>
-                        <button onclick="document.getElementById('importFile').click()" class="btn btn-secondary">📥 Import ข้อมูล</button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                        <button onclick="showImportModal()" class="btn btn-success">📥 Import ข้อมูล</button>
                         <button onclick="clearOldBookings()" class="btn btn-danger">🗑️ ลบข้อมูลเก่า</button>
                         <button onclick="resetAllData()" class="btn btn-black">🔄 Reset ทั้งหมด</button>
                     </div>
+                    <p style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">
+                        💡 รองรับไฟล์: JSON, CSV, Excel (.xlsx) | มี preview ก่อนนำเข้า | แสดง feedback ขณะประมวลผล
+                    </p>
                 </div>
 
                 <!-- Notifications -->
@@ -2017,51 +2090,6 @@
                     </div>
                 </div>
 
-                <!-- User Management -->
-                <div class="form-card">
-                    <h2 class="form-title">👥 จัดการผู้ใช้งาน</h2>
-                    <div style="background: #FEF9E7; border: 2px solid #FFD700; border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
-                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                            <span style="font-size: 1.2rem;">🔐</span>
-                            <strong>บัญชีปัจจุบัน:</strong>
-                        </div>
-                        <div style="font-size: 0.95rem; color: #1A1A1A;">
-                            <strong>Username:</strong> Boss<br>
-                            <strong>Password:</strong> 5281
-                        </div>
-                    </div>
-
-                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 1rem; color: var(--black);">➕ เพิ่มพนักงาน</h3>
-                    <div style="display: grid; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="form-group">
-                            <label>👤 ชื่อผู้ใช้</label>
-                            <input type="text" id="newUsername" placeholder="เช่น: staff01, lingji, A" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
-                        </div>
-                        <div class="form-group">
-                            <label>🔒 รหัสผ่าน</label>
-                            <input type="password" id="newPassword" placeholder="รหัสผ่านอย่างน้อย 4 หลัก" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
-                        </div>
-                        <div class="form-group">
-                            <label>📛 ชื่อพนักงาน</label>
-                            <input type="text" id="newFullName" placeholder="ชื่อจริง" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
-                        </div>
-                        <div class="form-group">
-                            <label>🎭 สิทธิ์</label>
-                            <select id="newUserRole" style="width: 100%; padding: 0.75rem; border: 2px solid var(--light-gray); border-radius: 8px; font-size: 0.95rem;">
-                                <option value="staff">👤 พนักงาน (ดู booking, เพิ่ม petty cash)</option>
-                                <option value="manager">👔 ผู้จัดการ (แก้ไข booking, export report)</option>
-                                <option value="admin">⚙️ Admin (ตั้งค่าระบบ, จัดการ user)</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button onclick="createUser()" class="btn btn-primary" style="width: 100%;">➕ สร้างผู้ใช้งาน</button>
-
-                    <h3 style="font-size: 1rem; font-weight: 700; margin: 1.5rem 0 1rem; color: var(--black);">📋 รายชื่อผู้ใช้งาน</h3>
-                    <div id="userList" style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <!-- User list will be populated here -->
-                    </div>
-                </div>
-
                 <!-- System Info -->
                 <div class="form-card">
                     <h2 class="form-title">ℹ️ ข้อมูลระบบ</h2>
@@ -2116,10 +2144,10 @@
             autoSyncFromWebsite();
             loadDashboard();
             
-            // Auto-sync every 30 seconds when BOH is open
+            // Auto-sync every 10 minutes when BOH is open
             setInterval(function() {
                 autoSyncFromWebsite();
-            }, 30000);
+            }, 600000);
         });
 
         // ===================================
@@ -2127,22 +2155,9 @@
         // ===================================
         function handleLogin(event) {
             event.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Check credentials
-            if (username === 'Boss' && password === '5281') {
-                // Login successful
-                document.getElementById('loginPage').style.display = 'none';
-                document.getElementById('bohLayout').classList.add('active');
-                loadAllData();
-                console.log('✅ Login successful: Boss');
-            } else {
-                // Login failed
-                alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง!\n\nUsername: Boss\nPassword: 5281');
-                console.log('❌ Login failed:', username);
-            }
+            document.getElementById('loginPage').style.display = 'none';
+            document.getElementById('bohLayout').classList.add('active');
+            loadAllData();
         }
 
         // ===================================
@@ -2333,6 +2348,91 @@
         }
 
         // ===================================
+        // DELETE ALL BOOKINGS
+        // ===================================
+        function deleteAllBookings() {
+            console.log('deleteAllBookings called, bookings.length:', bookings.length);
+            const bookingCount = bookings.length;
+            
+            if (bookingCount === 0) {
+                alert('ℹ️ ไม่มีการจองในระบบ');
+                return;
+            }
+            
+            // Double confirmation
+            if (!confirm(`⚠️ คำเตือน!\n\nคุณกำลังจะลบการจองทั้งหมด ${bookingCount} รายการ\n\nการกระทำนี้ไม่สามารถย้อนกลับได้!`)) {
+                console.log('First confirmation cancelled');
+                return;
+            }
+            
+            if (!confirm('🔴 ยืนยันอีกครั้ง:\n\nลบการจองทั้งหมดจริง ๆ หรือไม่?')) {
+                console.log('Second confirmation cancelled');
+                return;
+            }
+            
+            // Clear bookings array
+            console.log('Clearing bookings array...');
+            bookings = [];
+            
+            // Save to localStorage
+            console.log('Saving to localStorage...');
+            saveBookings();
+            
+            // Refresh UI
+            console.log('Refreshing UI...');
+            loadDashboard();
+            renderCalendar();
+            loadBookings();
+            
+            // Show success notification
+            alert(`🗑️ ลบการจองทั้งหมด ${bookingCount} รายการเรียบร้อยแล้ว`);
+            
+            console.log(`✅ Deleted all ${bookingCount} bookings`);
+        }
+
+        // Clean up corrupted bookings (Unknown, Invalid Date, NaN)
+        function cleanupCorruptedBookings() {
+            const originalCount = bookings.length;
+            
+            // Filter out corrupted bookings
+            const validBookings = bookings.filter(b => {
+                const isCorrupted = 
+                    b.guestName === 'Unknown' || 
+                    b.checkIn === 'Invalid Date' || 
+                    isNaN(b.nights) || 
+                    b.nights === 'NaN' ||
+                    (b.channel === 'CSV Import' && b.total === 0 && b.guestName === 'Unknown');
+                return !isCorrupted;
+            });
+            
+            const removedCount = originalCount - validBookings.length;
+            
+            if (removedCount === 0) {
+                alert('ℹ️ ไม่พบข้อมูลเสียหาย');
+                return;
+            }
+            
+            if (!confirm(`🧹 พบข้อมูลเสียหาย ${removedCount} รายการ\n\nต้องการลบหรือไม่?`)) {
+                return;
+            }
+            
+            // Update bookings array
+            bookings = validBookings;
+            
+            // Save to localStorage
+            saveBookings();
+            
+            // Refresh UI
+            loadDashboard();
+            renderCalendar();
+            loadBookings();
+            
+            showImportNotification(`🧹 ล้างข้อมูลเสียหาย ${removedCount} รายการเรียบร้อยแล้ว`, 'success');
+            
+            console.log(`✅ Cleaned up ${removedCount} corrupted bookings`);
+        }
+
+        // ===================================
         // PETTY CASH ALERT SYSTEM
         // ===================================
         function checkPettyCashAlert() {
@@ -2458,46 +2558,142 @@
             // Render chart
             renderChannelChart();
             
+            // Render upcoming arrivals
+            renderUpcomingArrivals();
+            
             // Update calendar
             renderCalendar();
         }
 
-        function renderChannelChart() {
-            const channels = {
-                'Website': 0,
-                'Facebook': 0,
-                'LINE': 0,
-                'Phone': 0,
-                'Walk-in': 0
-            };
-
-            bookings.forEach(b => {
-                if (b.channel && channels.hasOwnProperty(b.channel)) {
-                    channels[b.channel]++;
-                } else {
-                    channels['Walk-in']++;
-                }
+        function renderUpcomingArrivals() {
+            const container = document.getElementById('upcomingArrivals');
+            if (!container) return;
+            
+            // Get bookings for next 7 days
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const nextWeek = new Date(today);
+            nextWeek.setDate(today.getDate() + 7);
+            
+            const upcoming = bookings.filter(b => {
+                const checkIn = new Date(b.checkIn);
+                return checkIn >= today && checkIn <= nextWeek;
+            }).sort((a, b) => new Date(a.checkIn) - new Date(b.checkIn));
+            
+            if (upcoming.length === 0) {
+                container.innerHTML = '<p style="color: var(--gray); text-align: center; padding: 1rem;">ไม่มีรายการเข้าพักใน 7 วันข้างหน้า</p>';
+                return;
+            }
+            
+            // Group by date
+            const grouped = {};
+            upcoming.forEach(b => {
+                const date = b.checkIn;
+                if (!grouped[date]) grouped[date] = [];
+                grouped[date].push(b);
             });
+            
+            // Render
+            let html = '<div style="display: flex; flex-direction: column; gap: 1rem;">';
+            Object.keys(grouped).sort().forEach(date => {
+                const dayBookings = grouped[date];
+                const dateObj = new Date(date);
+                const dayName = dateObj.toLocaleDateString('th-TH', { weekday: 'short' });
+                const dateStr = dateObj.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
+                const isToday = dateObj.toDateString() === today.toDateString();
+                const highlightStyle = isToday ? 'background: #fef3c7; border-left: 4px solid #f59e0b;' : 'background: #f9fafb;';
+                
+                html += `
+                    <div style="${highlightStyle} padding: 1rem; border-radius: 8px;">
+                        <div style="font-weight: 700; margin-bottom: 0.5rem; color: var(--black);">
+                            ${isToday ? '🔥 วันนี้: ' : '📅 '}${dayName} ${dateStr} (${dayBookings.length} รายการ)
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            ${dayBookings.map(b => {
+                                const roomDisplay = b.rooms && b.rooms.length > 1 ? `🏨 ${b.rooms.length} ห้อง` : 
+                                    b.room === 'hus' ? '🏡 Hus' : `🏠 Hytte ${b.room?.replace('hytte', '') || '1'}`;
+                                return `
+                                    <div style="background: white; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--light-gray); font-size: 0.9rem;">
+                                        <strong>${b.guestName || b.name}</strong> 
+                                        <span style="color: var(--gray);">|</span> 
+                                        ${roomDisplay}
+                                        ${b.tourPrice > 0 ? '<span style="color: var(--success);">🎯</span>' : ''}
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            
+            container.innerHTML = html;
+        }
+
+        function renderChannelChart() {
+            // Count all channels dynamically
+            const channelCounts = {};
+            
+            bookings.forEach(b => {
+                // Normalize channel name
+                let channel = b.channel || 'Walk-in';
+                
+                // Map similar channels
+                if (channel.toLowerCase().includes('meta') || channel.toLowerCase().includes('facebook')) {
+                    channel = 'Facebook/Meta';
+                } else if (channel.toLowerCase().includes('line')) {
+                    channel = 'LINE';
+                } else if (channel.toLowerCase().includes('booking')) {
+                    channel = 'Booking.com';
+                } else if (channel.toLowerCase().includes('traveloka')) {
+                    channel = 'Traveloka';
+                } else if (channel.toLowerCase().includes('agoda')) {
+                    channel = 'Agoda';
+                } else if (channel.toLowerCase().includes('phone') || channel.toLowerCase().includes('โทร')) {
+                    channel = 'Phone';
+                } else if (channel.toLowerCase().includes('web') || channel.toLowerCase().includes('เว็บ')) {
+                    channel = 'Website';
+                } else if (channel === '' || channel === '-' || channel === 'none' || channel === 'null') {
+                    channel = 'Walk-in';
+                }
+                
+                channelCounts[channel] = (channelCounts[channel] || 0) + 1;
+            });
+            
+            // Default channels if no data
+            if (Object.keys(channelCounts).length === 0) {
+                channelCounts['Walk-in'] = 0;
+            }
 
             const ctx = document.getElementById('channelChart').getContext('2d');
 
             if (chartInstance) {
                 chartInstance.destroy();
             }
+            
+            // Color mapping for channels
+            const colorMap = {
+                'Website': '#1A1A1A',
+                'Facebook/Meta': '#10B981',
+                'LINE': '#06C755',
+                'Phone': '#9CA3AF',
+                'Walk-in': '#EF4444',
+                'Booking.com': '#003580',
+                'Traveloka': '#1BA0E2',
+                'Agoda': '#7B1FA2'
+            };
+            
+            const labels = Object.keys(channelCounts);
+            const data = Object.values(channelCounts);
+            const colors = labels.map(l => colorMap[l] || '#' + Math.floor(Math.random()*16777215).toString(16));
 
             chartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
-                    labels: Object.keys(channels),
+                    labels: labels,
                     datasets: [{
-                        data: Object.values(channels),
-                        backgroundColor: [
-                            '#1A1A1A',  // Website - Black
-                            '#10B981',  // Facebook - Green
-                            '#FFD700',  // LINE - Yellow
-                            '#9CA3AF',  // Phone - Gray
-                            '#EF4444'   // Walk-in - Red
-                        ]
+                        data: data,
+                        backgroundColor: colors
                     }]
                 },
                 options: {
@@ -2511,15 +2707,11 @@
             });
 
             // Render legend
-            const legendHtml = Object.entries(channels).map(([key, value]) => `
+            const legendHtml = Object.entries(channelCounts).map(([key, value]) => `
                 <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <div style="width: 16px; height: 16px; border-radius: 4px; background: ${
-                        key === 'Website' ? '#1A1A1A' :
-                        key === 'Facebook' ? '#10B981' :
-                        key === 'LINE' ? '#FFD700' :
-                        key === 'Phone' ? '#9CA3AF' : '#EF4444'
-                    };"></div>
-                    <span>${key}: ${value}</span>
+                    <div style="width: 16px; height: 16px; border-radius: 4px; background: ${colorMap[key] || '#ccc'};"></div>
+                    <span style="font-weight: 500;">${key}:</span>
+                    <span style="font-weight: 700; margin-left: auto;">${value}</span>
                 </div>
             `).join('');
 
@@ -2566,7 +2758,18 @@
             // Group bookings by month
             const grouped = {};
             bookings.forEach((b, index) => {
-                const month = b.checkIn.substring(0, 7); // YYYY-MM
+                // Skip corrupted bookings
+                if (!b.checkIn || b.checkIn === 'Invalid Date' || b.guestName === 'Unknown') {
+                    return;
+                }
+                
+                let month;
+                try {
+                    month = b.checkIn.substring(0, 7); // YYYY-MM
+                } catch (e) {
+                    month = 'unknown';
+                }
+                
                 if (!grouped[month]) {
                     grouped[month] = [];
                 }
@@ -2585,7 +2788,12 @@
             sortedMonths.forEach(month => {
                 const monthBookings = grouped[month];
                 const monthName = formatMonthName(month);
+                
+                // Calculate revenue breakdown
                 const monthTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+                const roomTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.roomPrice) || 0), 0);
+                const tourTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.tourPrice) || 0), 0);
+                const extraBedTotal = monthBookings.reduce((sum, b) => sum + (parseFloat(b.extraBed) || 0), 0);
 
                 html += `
                     <div style="margin-bottom: 2rem;">
@@ -2599,6 +2807,27 @@
                                 </button>
                             </div>
                         </div>
+                        
+                        <!-- Revenue Breakdown -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1rem; padding: 1rem; background: #f9fafb; border-radius: 8px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.85rem; color: var(--gray);">💰 ค่าห้อง</div>
+                                <div style="font-weight: 700; color: var(--black);">฿${roomTotal.toLocaleString()}</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.85rem; color: var(--gray);">🎯 ทัวร์</div>
+                                <div style="font-weight: 700; color: var(--success);">฿${tourTotal.toLocaleString()}</div>
+                            </div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 0.85rem; color: var(--gray);">🛏️ เสริม</div>
+                                <div style="font-weight: 700; color: var(--warning);">฿${extraBedTotal.toLocaleString()}</div>
+                            </div>
+                            <div style="text-align: center; border-left: 2px solid var(--yellow); padding-left: 1rem;">
+                                <div style="font-size: 0.85rem; color: var(--gray);">📊 รวมทั้งหมด</div>
+                                <div style="font-weight: 700; color: var(--black); font-size: 1.1rem;">฿${monthTotal.toLocaleString()}</div>
+                            </div>
+                        </div>
+                        
                         <div class="table-container">
                             <table>
                                 <thead>
@@ -2614,6 +2843,7 @@
                                         <th>เช็คเอาท์</th>
                                         <th>คืน</th>
                                         <th>จำนวน</th>
+                                        <th>ทัวร์</th>
                                         <th>รวม</th>
                                         <th>สถานะ</th>
                                         <th>ช่องทาง</th>
@@ -2621,20 +2851,76 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    ${monthBookings.map((b, idx) => `
+                                    ${monthBookings.map((b, idx) => {
+                                        const roomPrice = b.roomPrice || 0;
+                                        const tourPrice = b.tourPrice || 0;
+                                        const extraBed = b.extraBed || 0;
+                                        const total = roomPrice + tourPrice + extraBed;
+                                        const breakdown = [];
+                                        if (roomPrice > 0) breakdown.push(`ห้อง: ${roomPrice}`);
+                                        if (tourPrice > 0) breakdown.push(`ทัวร์: ${tourPrice}`);
+                                        if (extraBed > 0) breakdown.push(`เสริม: ${extraBed}`);
+                                        const breakdownText = breakdown.join(' | ') || 'ไม่มีข้อมูล';
+                                        
+                                        const getRoomDisplay = (b) => {
+                                            if (b.rooms && Array.isArray(b.rooms) && b.rooms.length > 1) {
+                                                return `🏨 ${b.rooms.length} ห้อง`;
+                                            }
+                                            const room = b.room || (b.rooms && b.rooms[0]) || 'hytte1';
+                                            const roomNames = {
+                                                'hytte': '🏠 Hytte',
+                                                'hus': '🏡 Hus',
+                                                'hytte1': '🏠 Hytte 1',
+                                                'hytte2': '🏠 Hytte 2',
+                                                'hytte3': '🏠 Hytte 3',
+                                                'hytte4': '🏠 Hytte 4',
+                                                'hytte5': '🏠 Hytte 5',
+                                                'multiple': '🏨 หลายห้อง'
+                                            };
+                                            return roomNames[room] || `🏨 ${room}`;
+                                        };
+                                        
+                                        const getTourDisplay = (b) => {
+                                            if (!b.tourPrice || b.tourPrice == 0) return '-';
+                                            // Map tour prices to names
+                                            const tourNames = {
+                                                5800: 'VIP ทีลอซู (1-6 คน)',
+                                                8300: 'VIP ทีลอซู (7-10 คน)',
+                                                10800: 'VIP ทีลอซู (11-12 คน)',
+                                                13800: 'VIP ทีลอซู (13-15 คน)',
+                                                2100: 'จอยทริป ทีลอซู',
+                                                4200: 'จอยทริป (2 คน)',
+                                                7500: 'VIP ทีลอซู-โคทะ (1-6 คน)',
+                                                10000: 'VIP ทีลอซู-โคทะ (7-10 คน)',
+                                                12500: 'VIP ทีลอซู-โคทะ (11-12 คน)',
+                                                15500: 'VIP ทีลอซู-โคทะ (13-15 คน)',
+                                                2500: 'รถ 4x4 ทีลอซู',
+                                                1850: 'รถ 4x4 ออนเซ็น (1-5 คน)',
+                                                1500: 'ดอยหัวหมด (6-10 คน)',
+                                                1000: 'ดอยหัวหมด (1-5 คน)'
+                                            };
+                                            const tourName = tourNames[b.tourPrice] || 'ทัวร์อื่นๆ';
+                                            return `🎯 ${tourName}<br><small>฿${parseInt(b.tourPrice).toLocaleString()}</small>`;
+                                        };
+                                        
+                                        return `
                                         <tr>
                                             <td>
                                                 <input type="checkbox" class="booking-select" data-index="${b.originalIndex}" data-month="${month}">
                                             </td>
                                             <td>${b.id || idx + 1}</td>
-                                            <td><strong>${b.name}</strong></td>
+                                            <td><strong>${b.name || b.guestName || 'ไม่ระบุชื่อ'}</strong></td>
                                             <td>${b.phone || '-'}</td>
-                                            <td>${b.room === 'hytte' ? '🏠 Hytte' : b.room === 'hus' ? '🏡 Hus' : '🏨 หลายห้อง'}</td>
+                                            <td>${getRoomDisplay(b)}</td>
                                             <td>${formatDate(b.checkIn)}</td>
                                             <td>${formatDate(b.checkOut)}</td>
                                             <td>${calculateNights(b.checkIn, b.checkOut)}</td>
                                             <td>${b.qty}</td>
-                                            <td style="font-weight: 700; color: var(--black);">฿${parseFloat(b.total || 0).toLocaleString()}</td>
+                                            <td>${getTourDisplay(b)}</td>
+                                            <td style="font-weight: 700; color: var(--black);" title="${breakdownText}">
+                                                ฿${(total || parseFloat(b.total) || 0).toLocaleString()}
+                                                ${breakdown.length > 1 ? '<br><small style="font-weight: normal; color: var(--gray);">' + breakdownText + '</small>' : ''}
+                                            </td>
                                             <td><span class="status-badge status-${b.status || 'pending'}">${getStatusText(b.status)}</span></td>
                                             <td>${getChannelName(b.channel)}</td>
                                             <td>
@@ -2643,7 +2929,7 @@
                                                 <button class="btn btn-danger" onclick="deleteBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🗑️</button>
                                             </td>
                                         </tr>
-                                    `).join('')}
+                                    `;}).join('')}
                                 </tbody>
                             </table>
                         </div>
@@ -2964,6 +3250,25 @@
                         </div>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div style="margin-top: 40px; padding: 30px; background: #FEF3C7; border-radius: 12px; border: 2px dashed #F59E0B;">
+                        <h3 style="color: #1A1A1A; font-size: 18px; margin: 0 0 20px 0; text-align: center;">✍️ ลงนามรับเงิน / Signature</h3>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                            <div style="flex: 1; margin-right: 20px;">
+                                <p style="color: #4B5563; font-size: 14px; margin: 0 0 10px 0;">ผู้จ่ายเงิน (Payer):</p>
+                                <div style="border-bottom: 2px solid #1A1A1A; height: 60px; margin-bottom: 10px;"></div>
+                                <p style="color: #6B7280; font-size: 12px; margin: 0;">ลงนาม ___________________________</p>
+                                <p style="color: #6B7280; font-size: 12px; margin: 5px 0 0 0;">วันที่ _____/_____/__________</p>
+                            </div>
+                            <div style="flex: 1; margin-left: 20px;">
+                                <p style="color: #4B5563; font-size: 14px; margin: 0 0 10px 0;">ผู้รับเงิน (Receiver):</p>
+                                <div style="border-bottom: 2px solid #1A1A1A; height: 60px; margin-bottom: 10px;"></div>
+                                <p style="color: #6B7280; font-size: 12px; margin: 0;">ลงนาม ___________________________</p>
+                                <p style="color: #6B7280; font-size: 12px; margin: 5px 0 0 0;">วันที่ _____/_____/__________</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Footer -->
                     <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #E5E7EB; text-align: center;">
                         <p style="color: #9CA3AF; font-size: 12px; margin: 0;">เอกสารนี้สร้างอัตโนมัติโดยระบบ Vela BOH</p>
@@ -3028,18 +3333,44 @@
         function handleBookingSubmit(event) {
             event.preventDefault();
 
+            const roomPricePerRoom = parseFloat(document.getElementById('bookingRoomPrice').value) || 0;
+            const tourPrice = parseFloat(document.getElementById('bookingTourPrice').value) || 0;
+            const extraBed = parseFloat(document.getElementById('bookingExtraBed').value) || 0;
+            const discount = parseFloat(document.getElementById('bookingDiscount')?.value) || 0;
+            
+            // Get selected rooms
+            const selectedRooms = Array.from(document.querySelectorAll('input[name="bookingRoom"]:checked')).map(cb => cb.value);
+            const roomsText = selectedRooms.length > 0 ? selectedRooms.join(', ') : 'hytte1';
+            const roomCount = selectedRooms.length || 1;
+            
+            // Calculate total room price based on number of rooms
+            const roomPrice = roomPricePerRoom * roomCount;
+            const subtotal = roomPrice + tourPrice + extraBed;
+            const total = Math.max(0, subtotal - discount);
+            
             const booking = {
                 id: document.getElementById('bookingId').value || 'BK' + (bookings.length + 1).toString().padStart(3, '0'),
                 name: document.getElementById('bookingName').value,
+                guestName: document.getElementById('bookingName').value,
+                bookerName: document.getElementById('bookingName').value,
                 phone: document.getElementById('bookingPhone').value,
                 checkIn: document.getElementById('bookingCheckin').value,
                 checkOut: document.getElementById('bookingCheckout').value,
-                room: document.getElementById('bookingRoom').value,
-                qty: parseInt(document.getElementById('bookingQty').value),
-                discount: parseInt(document.getElementById('bookingDiscount').value) || 0,
-                total: calculateBookingTotal(),
-                status: 'pending',
-                channel: 'Website'
+                nights: calculateNights(document.getElementById('bookingCheckin').value, document.getElementById('bookingCheckout').value),
+                room: selectedRooms.length === 1 ? selectedRooms[0] : 'multiple',
+                rooms: selectedRooms,
+                qty: selectedRooms.length,
+                guests: 1,
+                roomPrice: roomPrice,
+                tourPrice: tourPrice,
+                extraBed: extraBed,
+                discount: discount,
+                total: total,
+                status: 'confirmed',
+                channel: document.getElementById('bookingChannel').value || 'Website',
+                notes: `ห้อง: ${roomsText} (${roomCount} ห้อง x ฿${roomPricePerRoom}) | ทัวร์: ${tourPrice} | เสริม: ${extraBed} | ส่วนลด: ${discount}`,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             };
 
             const existingIndex = bookings.findIndex(b => b.id === booking.id);
@@ -3049,49 +3380,279 @@
                 bookings.push(booking);
             }
 
+            // Create accounting entries for tour and extra bed
+            createBookingAccountingEntries(booking);
+
             saveBookings();
             loadBookings();
             renderCalendar();
-            alert('✅ บันทึกการจองเรียบร้อยแล้ว!');
+            loadDashboard();
+            
+            showImportNotification('✅ บันทึกการจองและลงบัญชีเรียบร้อยแล้ว!', 'success');
             event.target.reset();
             document.getElementById('bookingId').value = '';
+            updateTotalDisplay();
         }
+
+        function calculateNights(checkIn, checkOut) {
+            if (!checkIn || !checkOut) return 1;
+            const start = new Date(checkIn);
+            const end = new Date(checkOut);
+            const diff = Math.round((end - start) / (1000 * 60 * 60 * 24));
+            return Math.max(1, diff);
+        }
+
+        function getRoomName(roomValue) {
+            const roomNames = {
+                'hytte1': 'Hytte 1 - Apus',
+                'hytte2': 'Hytte 2 - Cetus',
+                'hytte3': 'Hytte 3 - Lepus',
+                'hytte4': 'Hytte 4 - Pyxis',
+                'hytte5': 'Hytte 5 - Volans',
+                'hus': 'Hus - ไม่มีชื่อ'
+            };
+            return roomNames[roomValue] || roomValue;
+        }
+
+        function createBookingAccountingEntries(booking) {
+            const accounting = JSON.parse(localStorage.getItem('vela_accounting')) || [];
+            const timestamp = Date.now();
+            const today = new Date().toISOString().split('T')[0];
+            
+            // 1. Tour Revenue
+            if (booking.tourPrice > 0) {
+                accounting.push({
+                    id: 'ACC-' + timestamp + '-TOUR-' + booking.id,
+                    date: today,
+                    type: 'income',
+                    category: 'รายได้ค่าทัวร์',
+                    subcategory: 'ทัวร์น้ำตก',
+                    description: `ค่าทัวร์ - ${booking.guestName}`,
+                    amount: booking.tourPrice,
+                    vat: 0,
+                    total: booking.tourPrice,
+                    reference: `ลูกค้า: ${booking.guestName} | ห้อง: ${getRoomName(booking.room)}`,
+                    document: 'Booking Form',
+                    taxDeductible: false,
+                    createdAt: new Date().toISOString()
+                });
+            }
+            
+            // 2. Extra Bed Revenue
+            if (booking.extraBed > 0) {
+                accounting.push({
+                    id: 'ACC-' + timestamp + '-BED-' + booking.id,
+                    date: today,
+                    type: 'income',
+                    category: 'รายได้เตียงเสริม',
+                    subcategory: 'บริการเสริม',
+                    description: `ค่าเตียงเสริม - ${booking.guestName}`,
+                    amount: booking.extraBed,
+                    vat: 0,
+                    total: booking.extraBed,
+                    reference: `ลูกค้า: ${booking.guestName}`,
+                    document: 'Booking Form',
+                    taxDeductible: false,
+                    createdAt: new Date().toISOString()
+                });
+            }
+            
+            // 3. Room Revenue (simplified - you may want to handle this separately)
+            if (booking.roomPrice > 0) {
+                accounting.push({
+                    id: 'ACC-' + timestamp + '-ROOM-' + booking.id,
+                    date: today,
+                    type: 'income',
+                    category: 'รายได้ค่าห้องพัก',
+                    subcategory: 'ห้องพัก',
+                    description: `ค่าห้องพัก - ${booking.guestName}`,
+                    amount: booking.roomPrice,
+                    vat: 0,
+                    total: booking.roomPrice,
+                    reference: `ลูกค้า: ${booking.guestName} | ห้อง: ${getRoomName(booking.room)}`,
+                    document: 'Booking Form',
+                    taxDeductible: false,
+                    createdAt: new Date().toISOString()
+                });
+            }
+            
+            localStorage.setItem('vela_accounting', JSON.stringify(accounting));
+        }
+
+        function updateNightsDisplay() {
+            const checkIn = document.getElementById('bookingCheckin')?.value;
+            const checkOut = document.getElementById('bookingCheckout')?.value;
+            const nightsInput = document.getElementById('bookingNights');
+            
+            if (checkIn && checkOut && nightsInput) {
+                const nights = calculateNights(checkIn, checkOut);
+                nightsInput.value = nights;
+            }
+        }
+
+        function updateRoomPriceDisplay() {
+            const roomPriceSelect = document.getElementById('bookingRoomPrice');
+            const roomPriceValue = document.getElementById('bookingRoomPriceValue');
+            if (roomPriceSelect && roomPriceValue) {
+                roomPriceValue.value = roomPriceSelect.value || 0;
+            }
+            updateTotalDisplay();
+        }
+
+        function updateTourPrice() {
+            const tourSelect = document.getElementById('bookingTourPackage');
+            const tourPriceInput = document.getElementById('bookingTourPrice');
+            if (tourSelect && tourPriceInput) {
+                const selectedOption = tourSelect.options[tourSelect.selectedIndex];
+                const price = selectedOption.getAttribute('data-price') || 0;
+                tourPriceInput.value = price;
+            }
+            updateTotalDisplay();
+        }
+
+        function updateTotalDisplay() {
+            const roomPricePerRoom = parseFloat(document.getElementById('bookingRoomPrice')?.value) || 0;
+            const selectedRooms = document.querySelectorAll('input[name="bookingRoom"]:checked').length || 1;
+            const roomPrice = roomPricePerRoom * selectedRooms;
+            
+            const tourPrice = parseFloat(document.getElementById('bookingTourPrice')?.value) || 0;
+            const extraBed = parseFloat(document.getElementById('bookingExtraBed')?.value) || 0;
+            const discount = parseFloat(document.getElementById('bookingDiscount')?.value) || 0;
+            
+            const subtotal = roomPrice + tourPrice + extraBed;
+            const total = Math.max(0, subtotal - discount);
+            
+            const totalInput = document.getElementById('bookingTotal');
+            if (totalInput) {
+                totalInput.value = total;
+            }
+        }
+
+        // Auto-calculate total when price fields change
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomPriceSelect = document.getElementById('bookingRoomPrice');
+            const tourPackageSelect = document.getElementById('bookingTourPackage');
+            const extraBedInput = document.getElementById('bookingExtraBed');
+            const roomCheckboxes = document.querySelectorAll('input[name="bookingRoom"]');
+            
+            if (roomPriceSelect) {
+                roomPriceSelect.addEventListener('change', updateRoomPriceDisplay);
+            }
+            if (tourPackageSelect) {
+                tourPackageSelect.addEventListener('change', updateTourPrice);
+            }
+            if (extraBedInput) {
+                extraBedInput.addEventListener('change', updateTotalDisplay);
+            }
+            // Add listener for discount input
+            const discountInput = document.getElementById('bookingDiscount');
+            if (discountInput) {
+                discountInput.addEventListener('input', updateTotalDisplay);
+            }
+            // Add listeners to room checkboxes
+            roomCheckboxes.forEach(cb => {
+                cb.addEventListener('change', updateTotalDisplay);
+            });
+            updateTotalDisplay();
+        });
 
         function calculateBookingTotal() {
-            const room = document.getElementById('bookingRoom').value;
-            const qty = parseInt(document.getElementById('bookingQty').value);
-            const checkIn = new Date(document.getElementById('bookingCheckin').value);
-
-            // Simple pricing (can be enhanced)
-            const basePrice = room === 'hytte' ? 950 : 1900;
-            return basePrice * qty;
-        }
-
-        function updateRoomQtyLimit() {
-            const room = document.getElementById('bookingRoom').value;
-            const hint = document.getElementById('roomLimitHint');
-            const qtyInput = document.getElementById('bookingQty');
-
-            if (room === 'hytte') {
-                hint.textContent = 'สูงสุด 5 ห้อง';
-                qtyInput.max = 5;
-            } else if (room === 'hus') {
-                hint.textContent = 'สูงสุด 1 ห้อง';
-                qtyInput.max = 1;
-            }
+            // Deprecated - use updateTotalDisplay instead
+            return 0;
         }
 
         function editBooking(index) {
             const b = bookings[index];
             document.getElementById('bookingId').value = b.id;
-            document.getElementById('bookingName').value = b.name;
-            document.getElementById('bookingPhone').value = b.phone;
+            document.getElementById('bookingName').value = b.guestName || b.name || '';
+            document.getElementById('bookingPhone').value = b.phone || '';
             document.getElementById('bookingCheckin').value = b.checkIn;
             document.getElementById('bookingCheckout').value = b.checkOut;
-            document.getElementById('bookingRoom').value = b.room;
-            document.getElementById('bookingQty').value = b.qty;
-            document.getElementById('bookingDiscount').value = b.discount || 0;
-            updateRoomQtyLimit();
+            
+            // Set checkboxes for rooms
+            document.querySelectorAll('input[name="bookingRoom"]').forEach(cb => cb.checked = false);
+            if (b.rooms && Array.isArray(b.rooms)) {
+                b.rooms.forEach(room => {
+                    const checkbox = document.querySelector(`input[name="bookingRoom"][value="${room}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+            } else if (b.room) {
+                const checkbox = document.querySelector(`input[name="bookingRoom"][value="${b.room}"]`);
+                if (checkbox) checkbox.checked = true;
+            }
+            
+            // Set nights display
+            document.getElementById('bookingNights').value = b.nights || calculateNights(b.checkIn, b.checkOut);
+            
+            // Set channel
+            document.getElementById('bookingChannel').value = b.channel || 'Website';
+            
+            // Set room price dropdown - try to find matching option
+            const roomPriceSelect = document.getElementById('bookingRoomPrice');
+            const roomCount = (b.rooms && b.rooms.length) || 1;
+            if (roomPriceSelect && b.roomPrice) {
+                // Calculate per-room price (since we store total)
+                const perRoomPrice = Math.round(b.roomPrice / roomCount);
+                // Try to find option with matching value
+                let found = false;
+                for (let i = 0; i < roomPriceSelect.options.length; i++) {
+                    if (roomPriceSelect.options[i].value === String(perRoomPrice)) {
+                        roomPriceSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                // If not found, select first option
+                if (!found) {
+                    roomPriceSelect.selectedIndex = 0;
+                }
+            }
+            document.getElementById('bookingRoomPriceValue').value = b.roomPrice || 0;
+            
+            // Set tour package - find by price
+            const tourSelect = document.getElementById('bookingTourPackage');
+            if (tourSelect && b.tourPrice) {
+                let found = false;
+                for (let i = 0; i < tourSelect.options.length; i++) {
+                    const price = tourSelect.options[i].getAttribute('data-price');
+                    if (price === String(b.tourPrice)) {
+                        tourSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    tourSelect.selectedIndex = 0;
+                }
+            }
+            document.getElementById('bookingTourPrice').value = b.tourPrice || 0;
+            
+            // Set extra bed
+            const extraBedSelect = document.getElementById('bookingExtraBed');
+            if (extraBedSelect && b.extraBed) {
+                const extraBedValue = String(b.extraBed);
+                let found = false;
+                for (let i = 0; i < extraBedSelect.options.length; i++) {
+                    if (extraBedSelect.options[i].value === extraBedValue) {
+                        extraBedSelect.selectedIndex = i;
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    extraBedSelect.selectedIndex = 0;
+                }
+            } else if (extraBedSelect) {
+                extraBedSelect.selectedIndex = 0;
+            }
+            
+            // Set discount
+            const discountInput = document.getElementById('bookingDiscount');
+            if (discountInput) {
+                discountInput.value = b.discount || 0;
+            }
+            
+            updateTotalDisplay();
         }
 
         function deleteBooking(index) {
@@ -3146,7 +3707,10 @@
                 `${(availability.hytte.total + availability.hus.total) - (availability.hytte.booked + availability.hus.booked)}/${availability.hytte.total + availability.hus.total}`;
 
             // Update sync time
-            document.getElementById('lastSyncTime').textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            const syncTimeEl = document.getElementById('lastSyncTimeBooking') || document.getElementById('lastSyncTime');
+            if (syncTimeEl) {
+                syncTimeEl.textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            }
 
             // Render 7-day table
             renderSevenDayTable();
@@ -3317,23 +3881,26 @@
 
             // Render table
             const tbody = document.getElementById('pettyTable');
-            tbody.innerHTML = pettyCash.map((p, index) => `
+            tbody.innerHTML = pettyCash.map((p, index) => {
+                const seqNumber = `${index + 1}/${p.id || '-'}`;
+                return `
                 <tr>
-                    <td>${p.id || index + 1}</td>
+                    <td style="font-weight: 600; color: var(--black);">${seqNumber}</td>
                     <td>${formatDate(p.date)}</td>
-                    <td>${p.type === 'income' ? '💰' : '💸'}</td>
+                    <td>${p.type === 'income' ? '💰 รายรับ' : '💸 รายจ่าย'}</td>
                     <td>${getCategoryName(p.category)}</td>
                     <td>${p.description}</td>
-                    <td style="color: ${p.type === 'income' ? 'var(--success)' : 'var(--danger)'};">
+                    <td style="color: ${p.type === 'income' ? 'var(--success)' : 'var(--danger)'}; font-weight: 600;">
                         ${p.type === 'income' ? '+' : '-'}฿${parseFloat(p.amount).toLocaleString()}
                     </td>
                     <td>${p.party || '-'}</td>
+                    <td>${p.note || p.notes || '-'}</td>
                     <td>
                         <button class="btn btn-secondary" onclick="editPetty(${index})" style="padding: 0.4rem 0.8rem;">✏️</button>
                         <button class="btn btn-danger" onclick="deletePetty(${index})" style="padding: 0.4rem 0.8rem;">🗑️</button>
                     </td>
                 </tr>
-            `).join('');
+            `;}).join('');
 
             // Render channel chart
             renderBookingChannelChart();
@@ -3350,7 +3917,8 @@
                 category: document.getElementById('pettyCategory').value,
                 description: document.getElementById('pettyDescription').value,
                 date: document.getElementById('pettyDate').value,
-                party: document.getElementById('pettyParty').value
+                party: document.getElementById('pettyParty').value,
+                note: document.getElementById('pettyNote').value
             };
 
             const existingIndex = pettyCash.findIndex(p => p.id === petty.id);
@@ -3397,6 +3965,7 @@
             document.getElementById('pettyDescription').value = p.description;
             document.getElementById('pettyDate').value = p.date;
             document.getElementById('pettyParty').value = p.party || '';
+            document.getElementById('pettyNote').value = p.note || p.notes || '';
         }
 
         function deletePetty(index) {
@@ -3606,7 +4175,10 @@
         // PEEKABOO
         // ===================================
         function loadPeekaboo() {
-            document.getElementById('lastSyncTime').textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            const peekabooSyncEl = document.getElementById('lastSyncTimePeekaboo') || document.getElementById('lastSyncTime');
+            if (peekabooSyncEl) {
+                peekabooSyncEl.textContent = new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+            }
             document.getElementById('platformsConnected').textContent = '4';
         }
 
@@ -3636,11 +4208,28 @@
         function importData(event) {
             const file = event.target.files[0];
             if (!file) return;
+            
+            // Show loading notification
+            showImportNotification('⏳ กำลังอ่านไฟล์...', 'warning');
 
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
+                    const content = e.target.result;
+                    let data;
+                    
+                    // Detect file type from extension
+                    const ext = file.name.split('.').pop().toLowerCase();
+                    
+                    if (ext === 'csv') {
+                        data = parseCSV(content);
+                    } else if (ext === 'xlsx' || ext === 'xls') {
+                        showImportNotification('📤 ไฟล์ Excel ต้องใช้ library เพิ่มเติม กรุณาแปลงเป็น CSV หรือ JSON ก่อน', 'warning');
+                        return;
+                    } else {
+                        data = JSON.parse(content);
+                    }
+                    
                     if (data.bookings) bookings = data.bookings;
                     if (data.pettyCash) pettyCash = data.pettyCash;
                     if (data.generalLedger) generalLedger = data.generalLedger;
@@ -3650,11 +4239,17 @@
                     saveBookings();
                     savePettyCash();
                     saveBills();
-                    alert('✅ Import ข้อมูลสำเร็จ!');
+                    
+                    showImportNotification('✅ Import ข้อมูลสำเร็จ!', 'success');
                     loadDashboard();
+                    loadPettyCash();
+                    renderCalendar();
                 } catch (err) {
-                    alert('❌ ไฟล์ไม่ถูกต้อง: ' + err.message);
+                    showImportNotification('❌ ไฟล์ไม่ถูกต้อง: ' + err.message, 'error');
                 }
+            };
+            reader.onerror = function() {
+                showImportNotification('❌ ไม่สามารถอ่านไฟล์ได้', 'error');
             };
             reader.readAsText(file);
         }
@@ -3683,8 +4278,928 @@
             alert('📥 กำลังนำเข้าข้อมูลทั้งหมด... (Petty Cash 81 + Booking 10)');
         }
 
+        // Import Modal & File Handler
+        let importModal = null;
+        
         function showImportModal() {
-            alert('📤 Import จาก Pulse/Tera/Business Suite');
+            // Remove existing modal if any
+            if (importModal) {
+                importModal.remove();
+            }
+            
+            // Create modal
+            importModal = document.createElement('div');
+            importModal.id = 'importModal';
+            importModal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                backdrop-filter: blur(4px);
+            `;
+            
+            importModal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 2rem; max-width: 500px; width: 90%; box-shadow: 0 25px 80px rgba(0,0,0,0.3); animation: slideIn 0.3s ease;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <h2 style="margin: 0; color: var(--black); font-size: 1.5rem;">📤 Import ข้อมูล</h2>
+                        <button onclick="closeImportModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--gray);">✕</button>
+                    </div>
+                    
+                    <div style="margin-bottom: 1.5rem;">
+                        <p style="color: var(--gray); margin-bottom: 1rem;">เลือกประเภทไฟล์ที่ต้องการนำเข้า:</p>
+                        
+                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+                            <button onclick="setImportType('json')" id="btnJson" class="import-type-btn" style="flex: 1; padding: 0.75rem; border: 2px solid var(--yellow); background: var(--yellow); border-radius: 12px; cursor: pointer; font-weight: 600;">JSON</button>
+                            <button onclick="setImportType('csv')" id="btnCsv" class="import-type-btn" style="flex: 1; padding: 0.75rem; border: 2px solid var(--light-gray); background: white; border-radius: 12px; cursor: pointer; font-weight: 600;">CSV</button>
+                            <button onclick="setImportType('excel')" id="btnExcel" class="import-type-btn" style="flex: 1; padding: 0.75rem; border: 2px solid var(--light-gray); background: white; border-radius: 12px; cursor: pointer; font-weight: 600;">Excel</button>
+                        </div>
+                        
+                        <div id="importDropZone" style="border: 3px dashed var(--light-gray); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s; cursor: pointer;" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" onclick="document.getElementById('importFileInput').click()">
+                            <div style="font-size: 3rem; margin-bottom: 1rem;">📁</div>
+                            <p style="color: var(--black); font-weight: 600; margin-bottom: 0.5rem;">คลิกหรือลากไฟล์มาวางที่นี่</p>
+                            <p style="color: var(--gray); font-size: 0.9rem;">รองรับ: .json, .csv, .xlsx, .xls</p>
+                            <input type="file" id="importFileInput" accept=".json,.csv,.xlsx,.xls" style="display: none;" onchange="handleImportFile(event)">
+                        </div>
+                    </div>
+                    
+                    <div id="importPreview" style="display: none; margin-bottom: 1rem; padding: 1rem; background: var(--light-gray); border-radius: 12px;">
+                        <p style="margin: 0; color: var(--black); font-weight: 600;">📋 ข้อมูลที่จะนำเข้า:</p>
+                        <p id="importPreviewText" style="margin: 0.5rem 0 0 0; color: var(--gray); font-size: 0.9rem;"></p>
+                    </div>
+                    
+                    <div id="importProgress" style="display: none; margin-bottom: 1rem;">
+                        <div style="background: var(--light-gray); border-radius: 10px; overflow: hidden; height: 8px;">
+                            <div id="importProgressBar" style="background: var(--yellow); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                        </div>
+                        <p id="importProgressText" style="text-align: center; margin-top: 0.5rem; color: var(--gray); font-size: 0.85rem;">กำลังประมวลผล...</p>
+                    </div>
+                    
+                    <div id="importActions" style="display: flex; gap: 0.75rem;">
+                        <button onclick="closeImportModal()" class="btn btn-secondary" style="flex: 1;">ยกเลิก</button>
+                        <button onclick="confirmImport()" id="confirmImportBtn" class="btn btn-primary" style="flex: 1;" disabled>📥 นำเข้าข้อมูล</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(importModal);
+            window.currentImportType = 'json';
+            window.currentImportFile = null;
+            window.currentImportData = null;
+        }
+        
+        function closeImportModal() {
+            if (importModal) {
+                importModal.remove();
+                importModal = null;
+            }
+            window.currentImportFile = null;
+            window.currentImportData = null;
+        }
+        
+        function setImportType(type) {
+            window.currentImportType = type;
+            document.querySelectorAll('.import-type-btn').forEach(btn => {
+                btn.style.background = 'white';
+                btn.style.borderColor = 'var(--light-gray)';
+            });
+            document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).style.background = 'var(--yellow)';
+            document.getElementById('btn' + type.charAt(0).toUpperCase() + type.slice(1)).style.borderColor = 'var(--yellow)';
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.currentTarget.style.borderColor = 'var(--yellow)';
+            e.currentTarget.style.background = 'var(--yellow-light)';
+        }
+        
+        function handleDragLeave(e) {
+            e.currentTarget.style.borderColor = 'var(--light-gray)';
+            e.currentTarget.style.background = 'white';
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.currentTarget.style.borderColor = 'var(--light-gray)';
+            e.currentTarget.style.background = 'white';
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processImportFile(files[0]);
+            }
+        }
+        
+        function handleImportFile(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processImportFile(file);
+            }
+        }
+        
+        function processImportFile(file) {
+            window.currentImportFile = file;
+            
+            // Show preview
+            const preview = document.getElementById('importPreview');
+            const previewText = document.getElementById('importPreviewText');
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            
+            preview.style.display = 'block';
+            previewText.textContent = `ไฟล์: ${file.name} (${formatFileSize(file.size)})`;
+            confirmBtn.disabled = false;
+            
+            // Auto-detect type from extension
+            const ext = file.name.split('.').pop().toLowerCase();
+            if (ext === 'csv') setImportType('csv');
+            else if (ext === 'xlsx' || ext === 'xls') setImportType('excel');
+            else setImportType('json');
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+        }
+        
+        function confirmImport() {
+            const file = window.currentImportFile;
+            if (!file) return;
+            
+            const progress = document.getElementById('importProgress');
+            const progressBar = document.getElementById('importProgressBar');
+            const progressText = document.getElementById('importProgressText');
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            
+            progress.style.display = 'block';
+            confirmBtn.disabled = true;
+            
+            // Simulate progress
+            let progressValue = 0;
+            const progressInterval = setInterval(() => {
+                progressValue += 10;
+                progressBar.style.width = progressValue + '%';
+                if (progressValue >= 90) clearInterval(progressInterval);
+            }, 100);
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+                progressText.textContent = 'ประมวลผลเสร็จสิ้น!';
+                
+                setTimeout(() => {
+                    try {
+                        const content = e.target.result;
+                        let data;
+                        
+                        if (window.currentImportType === 'json') {
+                            data = JSON.parse(content);
+                        } else if (window.currentImportType === 'csv') {
+                            data = parseCSV(content);
+                        } else if (window.currentImportType === 'excel') {
+                            // For Excel, we'd need a library like SheetJS
+                            // For now, show message about Excel support
+                            showImportNotification('📤 ไฟล์ Excel ต้องใช้ library เพิ่มเติม กรุณาแปลงเป็น CSV หรือ JSON ก่อน', 'warning');
+                            closeImportModal();
+                            return;
+                        }
+                        
+                        // Process imported data
+                        processImportedData(data);
+                        
+                        showImportNotification(`✅ Import สำเร็จ! นำเข้าข้อมูลแล้ว`, 'success');
+                        closeImportModal();
+                    } catch (err) {
+                        showImportNotification(`❌ Import ล้มเหลว: ${err.message}`, 'error');
+                        progress.style.display = 'none';
+                        confirmBtn.disabled = false;
+                    }
+                }, 500);
+            };
+            
+            reader.onerror = function() {
+                clearInterval(progressInterval);
+                showImportNotification('❌ ไม่สามารถอ่านไฟล์ได้', 'error');
+                progress.style.display = 'none';
+                confirmBtn.disabled = false;
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+            const data = [];
+            
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                const obj = {};
+                headers.forEach((h, idx) => {
+                    obj[h] = values[idx] || '';
+                });
+                data.push(obj);
+            }
+            
+            return { pettyCash: data };
+        }
+        
+        function processImportedData(data) {
+            if (data.bookings) {
+                bookings = [...bookings, ...data.bookings];
+                saveBookings();
+            }
+            if (data.pettyCash) {
+                pettyCash = [...pettyCash, ...data.pettyCash];
+                savePettyCash();
+            }
+            if (data.generalLedger) {
+                generalLedger = [...generalLedger, ...data.generalLedger];
+                localStorage.setItem('vela_general_ledger', JSON.stringify(generalLedger));
+            }
+            
+            loadDashboard();
+            loadPettyCash();
+            renderCalendar();
+        }
+        
+        function showImportNotification(message, type) {
+            const notification = document.createElement('div');
+            const colors = {
+                success: 'var(--success)',
+                error: 'var(--danger)',
+                warning: 'var(--warning)'
+            };
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type]};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                z-index: 10001;
+                animation: slideIn 0.3s ease;
+                max-width: 400px;
+            `;
+            notification.innerHTML = `<p style="margin: 0; font-weight: 500;">${message}</p>`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // ===================================
+        // IMPORT CSV & EXCEL FUNCTIONS
+        // ===================================
+        
+        // Helper function to map room names (Apus/Cetus/Lepus/Pyxis/Volans → hytte1-5)
+        function mapRoom(roomRaw) {
+            if (!roomRaw || roomRaw === '' || roomRaw === 'null' || roomRaw === 'None' || roomRaw === 'undefined') return 'hus';
+            const r = String(roomRaw).toLowerCase().trim();
+            if (r.includes('apus')) return 'hytte1';
+            if (r.includes('cetus')) return 'hytte2';
+            if (r.includes('lepus')) return 'hytte3';
+            if (r.includes('pyxis')) return 'hytte4';
+            if (r.includes('volans')) return 'hytte5';
+            if (r.includes('hytte1')) return 'hytte1';
+            if (r.includes('hytte2')) return 'hytte2';
+            if (r.includes('hytte3')) return 'hytte3';
+            if (r.includes('hytte4')) return 'hytte4';
+            if (r.includes('hytte5')) return 'hytte5';
+            if (r.includes('hytte')) return 'hytte';
+            if (r.includes('hus')) return 'hus';
+            return 'hus';
+        }
+        
+        // Robust date parser - handles multiple formats
+        function parseDateRobust(dateVal) {
+            if (!dateVal || dateVal === '' || dateVal === 'null' || dateVal === 'None' || dateVal === 'undefined') {
+                return new Date().toISOString().split('T')[0];
+            }
+            
+            const strVal = String(dateVal).trim();
+            
+            // Handle Excel serial date (number)
+            if (!isNaN(parseFloat(strVal)) && !strVal.includes('-') && !strVal.includes('/')) {
+                const excelEpoch = new Date(1899, 11, 30);
+                const date = new Date(excelEpoch.getTime() + parseFloat(strVal) * 24 * 60 * 60 * 1000);
+                if (!isNaN(date.getTime())) {
+                    return date.toISOString().split('T')[0];
+                }
+            }
+            
+            // Handle Thai date format (DD/MM/YYYY or D/M/YYYY)
+            const thaiMatch = strVal.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+            if (thaiMatch) {
+                const day = thaiMatch[1].padStart(2, '0');
+                const month = thaiMatch[2].padStart(2, '0');
+                const year = thaiMatch[3];
+                // Validate year is reasonable (2020-2100)
+                const y = parseInt(year);
+                if (y >= 2020 && y <= 2100) {
+                    return `${year}-${month}-${day}`;
+                }
+            }
+            
+            // Handle ISO format (YYYY-MM-DD)
+            const isoMatch = strVal.match(/(\d{4})-(\d{2})-(\d{2})/);
+            if (isoMatch) {
+                return strVal.substring(0, 10);
+            }
+            
+            // Default: try to parse
+            const parsed = new Date(strVal);
+            if (!isNaN(parsed.getTime())) {
+                return parsed.toISOString().split('T')[0];
+            }
+            
+            return new Date().toISOString().split('T')[0];
+        }
+        
+        // Safe number parser
+        function parseNumberSafe(val, defaultVal = 0) {
+            if (val === null || val === undefined || val === '' || val === 'null' || val === 'None' || val === 'undefined') {
+                return defaultVal;
+            }
+            const num = parseFloat(String(val).replace(/,/g, ''));
+            return isNaN(num) ? defaultVal : num;
+        }
+        
+        // Safe string parser
+        function parseStringSafe(val, defaultVal = '') {
+            if (val === null || val === undefined || val === 'null' || val === 'undefined') {
+                return defaultVal;
+            }
+            return String(val).trim();
+        }
+        
+        // Duplicate detection - checks by guest name + checkIn date
+        function isDuplicateBooking(guestName, checkIn, existingBookings) {
+            if (!guestName || !checkIn) return false;
+            const normalizedName = String(guestName).toLowerCase().trim();
+            return existingBookings.some(b => {
+                const existingName = String(b.guestName || b.name || '').toLowerCase().trim();
+                return existingName === normalizedName && b.checkIn === checkIn;
+            });
+        }
+        
+        function importBookingsCSV(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            showImportNotification('📄 กำลังอ่านไฟล์ CSV...', 'warning');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const text = e.target.result;
+                    const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+                    
+                    if (lines.length < 2) {
+                        showImportNotification('❌ ไฟล์ CSV ไม่มีข้อมูล', 'error');
+                        return;
+                    }
+                    
+                    // Detect separator
+                    const separators = [',', '\t', ';'];
+                    let bestSeparator = ',';
+                    let bestCount = 0;
+                    
+                    for (const sep of separators) {
+                        const count = lines[0].split(sep).length;
+                        if (count > bestCount) {
+                            bestCount = count;
+                            bestSeparator = sep;
+                        }
+                    }
+                    
+                    const headers = lines[0].split(bestSeparator).map(h => h.trim().replace(/^"|"$/g, ''));
+                    
+                    // Find column indices (Thai format)
+                    const colIdx = {
+                        date: headers.findIndex(h => h.includes('วันที่')),
+                        room: headers.findIndex(h => h.includes('ห้อง')),
+                        name: headers.findIndex(h => h.includes('ชื่อ')),
+                        channel: headers.findIndex(h => h.includes('ช่องทาง')),
+                        roomPrice: headers.findIndex(h => h.includes('ค่าห้อง')),
+                        tour: headers.findIndex(h => h.includes('ทัวร์') && !h.includes('ต้นทุน')),
+                        extraBed: headers.findIndex(h => h.includes('เสริมฟูก') || h.includes('เตียงเสริม')),
+                        tourCost: headers.findIndex(h => h.includes('ต้นทุนทัวร์') || h.includes('ต้นทุน')),
+                        guests: headers.findIndex(h => h.includes('แขก') || h.includes('จำนวน')),
+                        mealCost: headers.findIndex(h => h.includes('ข้าวทัวร์') || h.includes('ค่าข้าว')),
+                        boat: headers.findIndex(h => h.includes('เรือ')),
+                        car: headers.findIndex(h => h.includes('รถ'))
+                    };
+                    
+                    // Fallback to generic format if Thai headers not found
+                    const isThaiFormat = colIdx.name >= 0;
+                    
+                    let imported = 0;
+                    let skipped = 0;
+                    let filtered = 0;
+                    let accounting = JSON.parse(localStorage.getItem('vela_accounting')) || [];
+                    
+                    for (let i = 1; i < lines.length; i++) {
+                        const values = lines[i].split(bestSeparator).map(v => v.trim().replace(/^"|"$/g, ''));
+                        
+                        let booking;
+                        
+                        if (isThaiFormat) {
+                            // Thai format processing
+                            const guestName = values[colIdx.name] || '';
+                            if (!guestName || guestName === 'None') continue;
+                            
+                            const channel = String(values[colIdx.channel] || '').toLowerCase();
+                            // Note: Allow Booking.com to be imported
+                            
+                            // Parse date from various formats
+                            let checkIn = new Date().toISOString().split('T')[0];
+                            let checkOut = checkIn;
+                            
+                            if (values[colIdx.date] && values[colIdx.date] !== 'None') {
+                                const dateVal = values[colIdx.date].trim();
+                                
+                                // Handle Thai date format (DD/MM/YYYY or D/M/YYYY)
+                                const thaiMatch = dateVal.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+                                if (thaiMatch) {
+                                    const day = thaiMatch[1].padStart(2, '0');
+                                    const month = thaiMatch[2].padStart(2, '0');
+                                    const year = thaiMatch[3];
+                                    checkIn = `${year}-${month}-${day}`;
+                                }
+                                // Handle Excel serial date (number)
+                                else if (!isNaN(parseFloat(dateVal))) {
+                                    const excelEpoch = new Date(1899, 11, 30);
+                                    const date = new Date(excelEpoch.getTime() + parseFloat(dateVal) * 24 * 60 * 60 * 1000);
+                                    checkIn = date.toISOString().split('T')[0];
+                                }
+                                // Handle ISO format (YYYY-MM-DD)
+                                else if (dateVal.match(/^\d{4}-\d{2}-\d{2}/)) {
+                                    checkIn = dateVal.substring(0, 10);
+                                }
+                                // Default: try to parse
+                                else {
+                                    const parsed = new Date(dateVal);
+                                    if (!isNaN(parsed.getTime())) {
+                                        checkIn = parsed.toISOString().split('T')[0];
+                                    }
+                                }
+                                
+                                // Set checkOut to next day by default (for day trips)
+                                const nextDay = new Date(checkIn);
+                                nextDay.setDate(nextDay.getDate() + 1);
+                                checkOut = nextDay.toISOString().split('T')[0];
+                            }
+                            
+                            // Map room
+                            const roomRaw = values[colIdx.room] || '';
+                            let room = 'hus';
+                            if (roomRaw.includes('Apus')) room = 'hytte1';
+                            else if (roomRaw.includes('Cetus')) room = 'hytte2';
+                            else if (roomRaw.includes('Lepus')) room = 'hytte3';
+                            else if (roomRaw.includes('Pyxis')) room = 'hytte4';
+                            else if (roomRaw.includes('Volans')) room = 'hytte5';
+                            
+                            const roomPrice = parseFloat(values[colIdx.roomPrice]) || 0;
+                            const tourRevenue = colIdx.tour >= 0 ? (parseFloat(values[colIdx.tour]) || 0) : 0;
+                            const extraBedRevenue = colIdx.extraBed >= 0 ? (parseFloat(values[colIdx.extraBed]) || 0) : 0;
+                            const totalRevenue = roomPrice + tourRevenue + extraBedRevenue;
+                            const tourCost = colIdx.tourCost >= 0 ? (parseFloat(values[colIdx.tourCost]) || 0) : 0;
+                            const mealCost = colIdx.mealCost >= 0 ? (parseFloat(values[colIdx.mealCost]) || 0) : 0;
+                            
+                            let notes = `ห้อง: ${roomRaw}`;
+                            if (colIdx.tour >= 0 && values[colIdx.tour]) notes += ` | ทัวร์: ${values[colIdx.tour]}`;
+                            if (colIdx.boat >= 0 && values[colIdx.boat]) notes += ` | เรือ: ${values[colIdx.boat]}`;
+                            if (colIdx.car >= 0 && values[colIdx.car]) notes += ` | รถ: ${values[colIdx.car]}`;
+                            
+                            // Calculate nights from dates
+                            const checkInDate = new Date(checkIn);
+                            const checkOutDate = new Date(checkOut);
+                            const nights = Math.max(1, Math.round((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24)));
+                            
+                            booking = {
+                                id: 'BK' + Date.now().toString().slice(-6) + '-' + i,
+                                name: guestName,
+                                guestName: guestName,
+                                bookerName: guestName,
+                                phone: '-',
+                                email: '',
+                                checkIn: checkIn,
+                                checkOut: checkOut,
+                                nights: nights,
+                                room: room,
+                                qty: 1,
+                                guests: parseInt(values[colIdx.guests]) || 1,
+                                total: totalRevenue,
+                                status: 'confirmed',
+                                channel: channel || 'Walk-in',
+                                notes: notes,
+                                createdAt: new Date().toISOString(),
+                                updatedAt: new Date().toISOString()
+                            };
+                            
+                            // Create accounting entries
+                            const timestamp = Date.now();
+                            const today = new Date().toISOString().split('T')[0];
+                            
+                            if (tourRevenue > 0) {
+                                accounting.push({
+                                    id: 'ACC-' + timestamp + '-TOUR-' + i,
+                                    date: today, type: 'income', category: 'รายได้ค่าทัวร์',
+                                    subcategory: 'ทัวร์น้ำตก', description: `ค่าทัวร์ - ${guestName}`,
+                                    amount: tourRevenue, vat: 0, total: tourRevenue,
+                                    reference: `ลูกค้า: ${guestName} | ห้อง: ${roomRaw}`,
+                                    document: 'CSV Import', taxDeductible: false,
+                                    createdAt: new Date().toISOString()
+                                });
+                            }
+                            if (extraBedRevenue > 0) {
+                                accounting.push({
+                                    id: 'ACC-' + timestamp + '-BED-' + i,
+                                    date: today, type: 'income', category: 'รายได้เตียงเสริม',
+                                    subcategory: 'บริการเสริม', description: `ค่าเตียงเสริม - ${guestName}`,
+                                    amount: extraBedRevenue, vat: 0, total: extraBedRevenue,
+                                    reference: `ลูกค้า: ${guestName}`, document: 'CSV Import',
+                                    taxDeductible: false, createdAt: new Date().toISOString()
+                                });
+                            }
+                            if (tourCost > 0) {
+                                accounting.push({
+                                    id: 'ACC-' + timestamp + '-TOURCOST-' + i,
+                                    date: today, type: 'expense', category: 'ค่าใช้จ่ายในการดำเนินงาน',
+                                    subcategory: 'ค่าจ้างพนักงานทัวร์', description: `ค่าจ้างพนักงานนำเที่ยว - ${guestName}`,
+                                    amount: tourCost, vat: 0, total: tourCost,
+                                    reference: `ลูกค้า: ${guestName}`, document: 'CSV Import',
+                                    taxDeductible: true, createdAt: new Date().toISOString()
+                                });
+                            }
+                            if (mealCost > 0) {
+                                accounting.push({
+                                    id: 'ACC-' + timestamp + '-MEAL-' + i,
+                                    date: today, type: 'expense', category: 'ค่าใช้จ่ายในการดำเนินงาน',
+                                    subcategory: 'ค่าอาหาร', description: `ค่าข้าวกล่องทัวร์ - ${guestName}`,
+                                    amount: mealCost, vat: 0, total: mealCost,
+                                    reference: `ลูกค้า: ${guestName}`, document: 'CSV Import',
+                                    taxDeductible: true, createdAt: new Date().toISOString()
+                                });
+                            }
+                        } else {
+                            // Generic CSV format
+                            const row = {};
+                            headers.forEach((h, idx) => row[h] = values[idx] || '');
+                            
+                            booking = {
+                                id: row['ID'] || row['id'] || row['BookingID'] || 'BK' + Date.now() + '-' + i,
+                                guestName: row['Guest'] || row['Guest Name'] || row['Name'] || row['guestName'] || 'Unknown',
+                                bookerName: row['Booker'] || row['Booker Name'] || row['Guest'] || 'Unknown',
+                                phone: row['Phone'] || row['phone'] || '-',
+                                email: row['Email'] || row['email'] || '',
+                                checkIn: formatDate(row['CheckIn'] || row['Check In'] || row['Arrival'] || new Date().toISOString()),
+                                checkOut: formatDate(row['CheckOut'] || row['Check Out'] || row['Departure'] || new Date().toISOString()),
+                                room: mapRoom(row['Room'] || row['room'] || 'hytte'),
+                                qty: parseInt(row['Qty'] || row['Quantity'] || row['Rooms'] || '1'),
+                                guests: parseInt(row['Guests'] || row['Pax'] || '2'),
+                                total: parseFloat(row['Total'] || row['Amount'] || row['Price'] || '0'),
+                                status: 'confirmed',
+                                channel: row['Channel'] || row['Source'] || 'CSV Import',
+                                notes: row['Notes'] || row['Note'] || `Imported from ${file.name}`,
+                                createdAt: new Date().toISOString(),
+                                updatedAt: new Date().toISOString()
+                            };
+                        }
+                        
+                        // Check duplicate
+                        const exists = bookings.find(b => b.guestName === booking.guestName && b.checkIn === booking.checkIn);
+                        if (exists) {
+                            skipped++;
+                            continue;
+                        }
+                        
+                        bookings.push(booking);
+                        imported++;
+                    }
+                    
+                    // Save accounting data
+                    localStorage.setItem('vela_accounting', JSON.stringify(accounting));
+                    
+                    saveBookings();
+                    loadDashboard();
+                    renderCalendar();
+                    
+                    showImportNotification(`✅ Import CSV สำเร็จ! นำเข้า ${imported} รายการ`, 'success');
+                    
+                } catch (err) {
+                    showImportNotification(`❌ Import CSV ล้มเหลว: ${err.message}`, 'error');
+                }
+                input.value = '';
+            };
+            
+            reader.onerror = function() {
+                showImportNotification('❌ ไม่สามารถอ่านไฟล์ได้', 'error');
+                input.value = '';
+            };
+            
+            reader.readAsText(file);
+        }
+        
+        function importBookingsExcel(input) {
+            const file = input.files[0];
+            if (!file) return;
+            
+            showImportNotification('📊 กำลังอ่านไฟล์ Excel...', 'warning');
+            
+            // Check if SheetJS is available
+            if (typeof XLSX === 'undefined') {
+                // Fallback: try to use CSV import if user exports Excel to CSV
+                showImportNotification('⚠️ กำลังโหลด SheetJS library...', 'warning');
+                // Load SheetJS dynamically
+                const script = document.createElement('script');
+                script.src = 'https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js';
+                script.onload = function() {
+                    showImportNotification('✅ โหลด SheetJS สำเร็จ กรุณาเลือกไฟล์อีกครั้ง', 'success');
+                };
+                script.onerror = function() {
+                    showImportNotification('❌ โหลด SheetJS ไม่สำเร็จ กรุณาแปลงไฟล์เป็น CSV ก่อน', 'error');
+                };
+                document.head.appendChild(script);
+                input.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    
+                    let totalImported = 0;
+                    let totalSkipped = 0;
+                    let totalFiltered = 0;
+                    const processedSheets = [];
+                    
+                    // Process all sheets
+                    workbook.SheetNames.forEach((sheetName) => {
+                        const worksheet = workbook.Sheets[sheetName];
+                        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        
+                        if (jsonData.length < 2) return; // Skip empty sheets
+                        
+                        const result = processThaiFormatSheet(jsonData, sheetName);
+                        totalImported += result.imported;
+                        totalSkipped += result.skipped;
+                        totalFiltered += result.filtered;
+                        
+                        if (result.imported > 0) {
+                            processedSheets.push(sheetName);
+                        }
+                    });
+                    
+                    saveBookings();
+                    loadDashboard();
+                    renderCalendar();
+                    
+                    const sheetMsg = processedSheets.length > 0 ? `(${processedSheets.join(', ')})` : '';
+                    showImportNotification(
+                        `✅ Import Excel สำเร็จ! นำเข้า ${totalImported} รายการ ${sheetMsg}`,
+                        'success'
+                    );
+                    
+                } catch (err) {
+                    showImportNotification(`❌ Import Excel ล้มเหลว: ${err.message}`, 'error');
+                    console.error('Excel import error:', err);
+                }
+                input.value = '';
+            };
+            
+            reader.onerror = function() {
+                showImportNotification('❌ ไม่สามารถอ่านไฟล์ได้', 'error');
+                input.value = '';
+            };
+            
+            reader.readAsArrayBuffer(file);
+        }
+        
+        // Process Thai format Excel sheet
+        function processThaiFormatSheet(jsonData, sheetName) {
+            const headers = jsonData[0].map(h => String(h || '').trim());
+            
+            // Find column indices for Thai format
+            const colIdx = {
+                date: headers.findIndex(h => h.includes('วันที่')),
+                room: headers.findIndex(h => h.includes('ห้อง')),
+                name: headers.findIndex(h => h.includes('ชื่อ')),
+                channel: headers.findIndex(h => h.includes('ช่องทาง')),
+                roomPrice: headers.findIndex(h => h.includes('ค่าห้อง')),
+                tour: headers.findIndex(h => h.includes('ทัวร์') && !h.includes('ต้นทุน')),
+                extraBed: headers.findIndex(h => h.includes('เสริมฟูก') || h.includes('เตียงเสริม')),
+                tourCost: headers.findIndex(h => h.includes('ต้นทุนทัวร์') || h.includes('ต้นทุน')),
+                guests: headers.findIndex(h => h.includes('แขก') || h.includes('จำนวน')),
+                mealCost: headers.findIndex(h => h.includes('ข้าวทัวร์') || h.includes('ค่าข้าว')),
+                boat: headers.findIndex(h => h.includes('เรือ')),
+                car: headers.findIndex(h => h.includes('รถ')),
+                netIncome: headers.findIndex(h => h.includes('รายได้สุทธิ'))
+            };
+            
+            console.log(`📊 Sheet "${sheetName}" columns:`, colIdx);
+            
+            let imported = 0;
+            let skipped = 0;
+            let filtered = 0;
+            
+            // Load accounting data
+            let accounting = JSON.parse(localStorage.getItem('vela_accounting')) || [];
+            
+            for (let i = 1; i < jsonData.length; i++) {
+                const row = jsonData[i];
+                if (!row || row.length === 0) continue;
+                
+                const guestName = String(row[colIdx.name] || '').trim();
+                if (!guestName || guestName === 'None' || guestName === 'null') continue;
+                
+                const channel = String(row[colIdx.channel] || '').toLowerCase().trim();
+                
+                // Note: Allow Booking.com to be imported
+                
+                // Parse date (Excel serial or string)
+                let checkIn = new Date().toISOString().split('T')[0];
+                if (row[colIdx.date]) {
+                    const dateVal = row[colIdx.date];
+                    if (typeof dateVal === 'number') {
+                        // Excel serial date
+                        const excelEpoch = new Date(1899, 11, 30);
+                        const date = new Date(excelEpoch.getTime() + dateVal * 24 * 60 * 60 * 1000);
+                        checkIn = date.toISOString().split('T')[0];
+                    } else {
+                        checkIn = formatDate(String(dateVal));
+                    }
+                }
+                
+                // Map room
+                const roomRaw = String(row[colIdx.room] || '');
+                let room = 'hus';
+                if (roomRaw.includes('Apus')) room = 'hytte1';
+                else if (roomRaw.includes('Cetus')) room = 'hytte2';
+                else if (roomRaw.includes('Lepus')) room = 'hytte3';
+                else if (roomRaw.includes('Pyxis')) room = 'hytte4';
+                else if (roomRaw.includes('Volans')) room = 'hytte5';
+                else if (roomRaw.includes('ไม่มีชื่อ') || roomRaw === '' || roomRaw === 'None') room = 'hus';
+                
+                // Calculate prices
+                const roomPrice = parseFloat(row[colIdx.roomPrice]) || 0;
+                const tourRevenue = colIdx.tour >= 0 ? (parseFloat(row[colIdx.tour]) || 0) : 0;
+                const extraBedRevenue = colIdx.extraBed >= 0 ? (parseFloat(row[colIdx.extraBed]) || 0) : 0;
+                const totalRevenue = roomPrice + tourRevenue + extraBedRevenue;
+                
+                // Tour costs
+                const tourCost = colIdx.tourCost >= 0 ? (parseFloat(row[colIdx.tourCost]) || 0) : 0;
+                const mealCost = colIdx.mealCost >= 0 ? (parseFloat(row[colIdx.mealCost]) || 0) : 0;
+                
+                // Build notes
+                let notes = `ห้อง: ${roomRaw}`;
+                if (colIdx.tour >= 0 && row[colIdx.tour]) notes += ` | ทัวร์: ${row[colIdx.tour]}`;
+                if (colIdx.boat >= 0 && row[colIdx.boat]) notes += ` | เรือ: ${row[colIdx.boat]}`;
+                if (colIdx.car >= 0 && row[colIdx.car]) notes += ` | รถ: ${row[colIdx.car]}`;
+                
+                // Calculate nights (default 1 for day trips)
+                const nights = 1;
+                
+                const booking = {
+                    id: 'BK' + Date.now().toString().slice(-6) + '-' + i,
+                    guestName: guestName,
+                    bookerName: guestName,
+                    phone: '-',
+                    email: '',
+                    checkIn: checkIn,
+                    checkOut: checkIn, // Same day for day trips
+                    nights: nights,
+                    room: room,
+                    qty: 1,
+                    guests: parseInt(row[colIdx.guests]) || 1,
+                    total: totalRevenue,
+                    status: 'confirmed',
+                    channel: channel || 'Walk-in',
+                    notes: notes,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                    // Store breakdown for accounting
+                    breakdown: {
+                        roomPrice: roomPrice,
+                        tourRevenue: tourRevenue,
+                        extraBedRevenue: extraBedRevenue,
+                        tourCost: tourCost,
+                        mealCost: mealCost
+                    }
+                };
+                
+                // Check duplicate
+                const exists = bookings.find(b => b.guestName === booking.guestName && b.checkIn === booking.checkIn);
+                if (exists) {
+                    console.warn(`⚠️ Duplicate: ${guestName} on ${checkIn}`);
+                    skipped++;
+                    continue;
+                }
+                
+                bookings.push(booking);
+                imported++;
+                
+                // Create accounting entries (only for non-zero amounts)
+                const timestamp = Date.now();
+                const today = new Date().toISOString().split('T')[0];
+                
+                // 1. Tour Revenue (if > 0)
+                if (tourRevenue > 0) {
+                    accounting.push({
+                        id: 'ACC-' + timestamp + '-TOUR-' + i,
+                        date: today,
+                        type: 'income',
+                        category: 'รายได้ค่าทัวร์',
+                        subcategory: 'ทัวร์น้ำตก',
+                        description: `ค่าทัวร์ - ${guestName}`,
+                        amount: tourRevenue,
+                        vat: 0,
+                        total: tourRevenue,
+                        reference: `ลูกค้า: ${guestName} | ห้อง: ${roomRaw} | วันที่: ${checkIn}`,
+                        document: `Excel Import: ${sheetName}`,
+                        taxDeductible: false,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                
+                // 2. Extra Bed Revenue (if > 0)
+                if (extraBedRevenue > 0) {
+                    accounting.push({
+                        id: 'ACC-' + timestamp + '-BED-' + i,
+                        date: today,
+                        type: 'income',
+                        category: 'รายได้เตียงเสริม',
+                        subcategory: 'บริการเสริม',
+                        description: `ค่าเตียงเสริม - ${guestName}`,
+                        amount: extraBedRevenue,
+                        vat: 0,
+                        total: extraBedRevenue,
+                        reference: `ลูกค้า: ${guestName} | ห้อง: ${roomRaw}`,
+                        document: `Excel Import: ${sheetName}`,
+                        taxDeductible: false,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                
+                // 3. Tour Cost Expense (if > 0)
+                if (tourCost > 0) {
+                    accounting.push({
+                        id: 'ACC-' + timestamp + '-TOURCOST-' + i,
+                        date: today,
+                        type: 'expense',
+                        category: 'ค่าใช้จ่ายในการดำเนินงาน',
+                        subcategory: 'ค่าจ้างพนักงานทัวร์',
+                        description: `ค่าจ้างพนักงานนำเที่ยว - ${guestName}`,
+                        amount: tourCost,
+                        vat: 0,
+                        total: tourCost,
+                        reference: `ลูกค้า: ${guestName} | ห้อง: ${roomRaw}`,
+                        document: `Excel Import: ${sheetName}`,
+                        taxDeductible: true,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                
+                // 4. Meal Cost Expense (if > 0)
+                if (mealCost > 0) {
+                    accounting.push({
+                        id: 'ACC-' + timestamp + '-MEAL-' + i,
+                        date: today,
+                        type: 'expense',
+                        category: 'ค่าใช้จ่ายในการดำเนินงาน',
+                        subcategory: 'ค่าอาหาร',
+                        description: `ค่าข้าวกล่องทัวร์ - ${guestName}`,
+                        amount: mealCost,
+                        vat: 0,
+                        total: mealCost,
+                        reference: `ลูกค้า: ${guestName} | ห้อง: ${roomRaw}`,
+                        document: `Excel Import: ${sheetName}`,
+                        taxDeductible: true,
+                        createdAt: new Date().toISOString()
+                    });
+                }
+                
+                console.log(`✅ Imported: ${guestName} | ห้อง: ${room} | รายได้: ฿${totalRevenue} | ทัวร์: ฿${tourRevenue} | ต้นทุน: ฿${tourCost + mealCost}`);
+            }
+            
+            // Save accounting data
+            localStorage.setItem('vela_accounting', JSON.stringify(accounting));
+            
+            return { imported, skipped, filtered };
         }
 
         function exportPettyCashReportPDF() {
@@ -4037,145 +5552,10 @@
             // Default response
             return '🤔 <strong>ผมยังไม่เข้าใจคำถาม</strong><br>ลองถามเกี่ยวกับ:<br>- การจอง (เพิ่ม/ลบ/แก้/ดู)<br>- Petty Cash<br>- บัญชี/VAT<br>- การสร้างบิล<br>- Dashboard<br>- ปฏิทิน<br><br>หรือพิมพ์ "help" เพื่อดูวิธีใช้';
         }
-
-        // ==================== USER MANAGEMENT ====================
         
-        // Create new user
-        function createUser() {
-            const username = document.getElementById('newUsername').value.trim();
-            const password = document.getElementById('newPassword').value.trim();
-            const fullName = document.getElementById('newFullName').value.trim();
-            const role = document.getElementById('newUserRole').value;
-            
-            if (!username || !password || !fullName) {
-                alert('⚠️ กรุณากรอกข้อมูลให้ครบถ้วน');
-                return;
-            }
-            
-            if (password.length < 4) {
-                alert('⚠️ รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร');
-                return;
-            }
-            
-            // Get existing users
-            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
-            
-            // Check if username exists
-            if (users.find(u => u.username === username)) {
-                alert('⚠️ ชื่อผู้ใช้นี้มีอยู่แล้ว');
-                return;
-            }
-            
-            // Create new user
-            const newUser = {
-                id: Date.now(),
-                username: username,
-                password: password,
-                fullName: fullName,
-                role: role,
-                createdAt: new Date().toISOString(),
-                status: 'active'
-            };
-            
-            users.push(newUser);
-            localStorage.setItem('vela_users', JSON.stringify(users));
-            
-            alert('✅ สร้างผู้ใช้งานสำเร็จ!\n\nUsername: ' + username + '\nRole: ' + (role === 'staff' ? 'พนักงาน' : role === 'manager' ? 'ผู้จัดการ' : 'Admin'));
-            
-            // Clear form
-            document.getElementById('newUsername').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('newFullName').value = '';
-            
-            // Refresh user list
-            loadUserList();
-        }
-        
-        // Load user list
-        function loadUserList() {
-            const userList = document.getElementById('userList');
-            if (!userList) return;
-            
-            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
-            
-            // Add default Boss user
-            const bossUser = {
-                id: 1,
-                username: 'Boss',
-                password: '5281',
-                fullName: 'เจ้าของระบบ',
-                role: 'owner',
-                createdAt: '2026-03-10',
-                status: 'active'
-            };
-            
-            userList.innerHTML = `
-                <div style="background: #FEF9E7; border: 2px solid #FFD700; border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                    <div style="display: flex; align-items: center; gap: 0.75rem;">
-                        <span style="font-size: 1.5rem;">👑</span>
-                        <div>
-                            <div style="font-weight: 700; color: #1A1A1A;">Boss</div>
-                            <div style="font-size: 0.8rem; color: #6B7280;">เจ้าของระบบ | รหัส: 5281</div>
-                        </div>
-                    </div>
-                    <span style="background: #10B981; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">Active</span>
-                </div>
-            `;
-            
-            if (users.length === 0) {
-                userList.innerHTML += `
-                    <div style="text-align: center; padding: 2rem; color: #9CA3AF; font-size: 0.9rem;">
-                        ยังไม่มีพนักงาน<br>คลิก "➕ สร้างผู้ใช้งาน" เพื่อเพิ่ม
-                    </div>
-                `;
-            } else {
-                users.forEach(user => {
-                    const roleIcon = user.role === 'admin' ? '⚙️' : user.role === 'manager' ? '👔' : '👤';
-                    const roleName = user.role === 'admin' ? 'Admin' : user.role === 'manager' ? 'ผู้จัดการ' : 'พนักงาน';
-                    
-                    userList.innerHTML += `
-                        <div style="background: var(--light-gray); border-radius: 12px; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
-                            <div style="display: flex; align-items: center; gap: 0.75rem;">
-                                <span style="font-size: 1.5rem;">${roleIcon}</span>
-                                <div>
-                                    <div style="font-weight: 700; color: #1A1A1A;">${user.username}</div>
-                                    <div style="font-size: 0.8rem; color: #6B7280;">${user.fullName} | ${roleName}</div>
-                                </div>
-                            </div>
-                            <div style="display: flex; gap: 0.5rem; align-items: center;">
-                                <span style="background: ${user.status === 'active' ? '#10B981' : '#EF4444'}; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">
-                                    ${user.status === 'active' ? 'Active' : 'Inactive'}
-                                </span>
-                                <button onclick="deleteUser(${user.id})" style="background: #EF4444; color: white; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: 1rem;">🗑️</button>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-        }
-        
-        // Delete user
-        function deleteUser(userId) {
-            if (!confirm('⚠️ คุณต้องการลบผู้ใช้นี้หรือไม่?')) return;
-            
-            let users = JSON.parse(localStorage.getItem('vela_users') || '[]');
-            users = users.filter(u => u.id !== userId);
-            localStorage.setItem('vela_users', JSON.stringify(users));
-            
-            alert('✅ ลบผู้ใช้งานสำเร็จ');
-            loadUserList();
-        }
-        
-        // Initialize user management on page load
-        function initUserManagement() {
-            loadUserList();
-            console.log('👥 User management initialized');
-        }
-
         // Initialize chatbot on page load
         window.addEventListener('DOMContentLoaded', function() {
             console.log('🤖 BOH Chatbot initialized');
-            initUserManagement();
         });
     </script>
 
