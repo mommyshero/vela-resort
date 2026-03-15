@@ -139,17 +139,43 @@
             display: flex;
         }
 
-        /* Sidebar */
+        /* Collapsible Sidebar */
         .boh-sidebar {
-            width: 320px;
+            width: 60px;
             background: var(--white);
             border-right: 1px solid var(--light-gray);
-            padding: 2rem 1.5rem;
-            overflow-y: auto;
+            padding: 1rem 0.5rem;
             position: fixed;
             height: 100vh;
             left: 0;
             top: 0;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: width 0.3s ease;
+            overflow: hidden;
+        }
+        .boh-sidebar.expanded {
+            width: 240px;
+            padding: 1rem;
+        }
+        .boh-sidebar-toggle {
+            width: 40px;
+            height: 40px;
+            background: var(--yellow);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+        .boh-sidebar-toggle:hover {
+            background: var(--yellow-dark);
         }
 
         .boh-sidebar-header {
@@ -198,18 +224,21 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            width: 100%;
         }
 
         .boh-menu-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 14px;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             color: var(--black);
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .boh-menu-item:hover {
@@ -221,29 +250,38 @@
         }
 
         .boh-menu-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             flex-shrink: 0;
             background: var(--light-gray);
         }
 
         .boh-menu-content {
             flex: 1;
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .boh-sidebar.expanded .boh-menu-content {
+            opacity: 1;
+            width: auto;
         }
 
         .boh-menu-title {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: var(--black);
         }
 
         .boh-menu-subtitle {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--gray);
             margin-top: 0.25rem;
         }
@@ -259,11 +297,15 @@
 
         /* Main Content */
         .boh-main {
-            margin-left: 320px;
+            margin-left: 60px;
             flex: 1;
             padding: 2rem;
             min-height: 100vh;
             background: var(--white);
+            transition: margin-left 0.3s ease;
+        }
+        .boh-sidebar.expanded ~ .boh-main {
+            margin-left: 240px;
         }
 
         .boh-header {
@@ -800,22 +842,30 @@
         @media (max-width: 768px) {
             .boh-sidebar {
                 position: fixed;
-                left: -100%;
+                left: -240px;
                 top: 0;
                 height: 100vh;
+                width: 240px;
                 z-index: 10000;
                 transition: left 0.3s ease;
-                display: block !important;
+                padding: 1rem;
             }
             .boh-sidebar.mobile-open {
                 left: 0;
             }
+            .boh-sidebar.expanded {
+                width: 240px;
+            }
+            .boh-sidebar .boh-menu-content {
+                opacity: 1;
+                width: auto;
+            }
             .boh-main {
                 margin-left: 0;
+                padding: 1rem;
             }
-            /* Mobile menu toggle button */
-            .boh-mobile-toggle {
-                display: flex !important;
+            .boh-sidebar-toggle {
+                display: none;
             }
         }
         
@@ -912,16 +962,16 @@
 </head>
 <body>
     <!-- Login Page -->
-    <div class="login-page" id="loginPage" style="display: none;">
+    <!-- Login Page -->
+    <div class="login-page" id="loginPage">
         <div class="login-container">
             <div class="login-logo">
-                <span class="login-logo-icon">🔒</span>
+                <span class="login-logo-icon">🏨</span>
             </div>
             <h1 class="login-title">VELA BOH</h1>
             <p class="login-subtitle">Back Office Management System</p>
             <form class="login-form" onsubmit="handleLogin(event)">
-                <input type="text" class="login-input" placeholder="👤 ชื่อผู้ใช้" id="username" required>
-                <input type="password" class="login-input" placeholder="🔒 รหัสผ่าน" id="password" required>
+                <input type="password" class="login-input" placeholder="🔒 รหัสผ่าน" id="loginPassword" required>
                 <button type="submit" class="login-btn">🚀 เข้าสู่ระบบ</button>
             </form>
             <p style="margin-top: 1.5rem; color: var(--gray); font-size: 0.85rem;">
@@ -930,8 +980,8 @@
         </div>
     </div>
 
-    <!-- BOH Main Layout -->
-    <div class="boh-layout active" id="bohLayout">
+    <!-- BOH Main Layout (Hidden until login) -->
+    <div class="boh-layout" id="bohLayout" style="display: none;">
         <!-- Mobile Menu Toggle -->
         <button class="boh-mobile-toggle" onclick="toggleMobileSidebar()">
             ☰ เมนู
@@ -941,10 +991,13 @@
         <div class="boh-sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
         
         <!-- Sidebar -->
-        <aside class="boh-sidebar">
+        <aside class="boh-sidebar" id="bohSidebar">
+            <button class="boh-sidebar-toggle" onclick="toggleSidebar()" title="เปิด/ปิดเมนู">
+                <span id="toggleIcon">☰</span>
+            </button>
             <div class="boh-sidebar-header">
                 <div class="boh-sidebar-logo">VELA</div>
-                <div class="boh-sidebar-subtitle">Back Office System</div>
+                <div class="boh-sidebar-subtitle">BOH</div>
             </div>
 
             <!-- Home Button -->
@@ -953,72 +1006,36 @@
                 <span>หน้าแรก</span>
             </a>
 
-            <!-- Navigation Menu -->
+            <!-- Navigation Menu (Icons Only) -->
             <nav class="boh-menu" id="bohMenu">
-                <a class="boh-menu-item active" data-section="dashboard">
+                <a class="boh-menu-item active" data-section="dashboard" title="แดชบอร์ด">
                     <div class="boh-menu-icon">📊</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">แดชบอร์ด</div>
-                        <div class="boh-menu-subtitle">ภาพรวมระบบ</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="bookings">
+                <a class="boh-menu-item" data-section="bookings" title="การจอง">
                     <div class="boh-menu-icon">📝</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">การจอง</div>
-                        <div class="boh-menu-subtitle">จัดการการจอง</div>
-                    </div>
                     <span class="boh-menu-badge" id="pendingBadge">0</span>
                 </a>
-                <a class="boh-menu-item" data-section="booking-control">
+                <a class="boh-menu-item" data-section="booking-control" title="ควบคุมการจอง">
                     <div class="boh-menu-icon">🔧</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">ควบคุมการจอง</div>
-                        <div class="boh-menu-subtitle">Real-time Control</div>
-                    </div>
                     <span class="boh-menu-badge" id="overbookingBadge">0</span>
                 </a>
-                <a class="boh-menu-item" data-section="calendar">
+                <a class="boh-menu-item" data-section="calendar" title="ปฏิทินห้องพัก">
                     <div class="boh-menu-icon">📅</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">ปฏิทินห้องพัก</div>
-                        <div class="boh-menu-subtitle">Room Calendar</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="petty">
+                <a class="boh-menu-item" data-section="petty" title="บัญชีรายย่อย">
                     <div class="boh-menu-icon">💵</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">บัญชีรายย่อย</div>
-                        <div class="boh-menu-subtitle">Petty Cash</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="accounting">
+                <a class="boh-menu-item" data-section="accounting" title="บัญชีหลัก">
                     <div class="boh-menu-icon">💰</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">บัญชีหลัก</div>
-                        <div class="boh-menu-subtitle">Main Accounting</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="vat">
+                <a class="boh-menu-item" data-section="vat" title="รายงานภาษี VAT">
                     <div class="boh-menu-icon">📑</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">รายงานภาษี VAT</div>
-                        <div class="boh-menu-subtitle">VAT Report</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="peekaboo">
+                <a class="boh-menu-item" data-section="peekaboo" title="Peekaboo">
                     <div class="boh-menu-icon">👁️</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">Peekaboo</div>
-                        <div class="boh-menu-subtitle">Auto-release</div>
-                    </div>
                 </a>
-                <a class="boh-menu-item" data-section="settings">
+                <a class="boh-menu-item" data-section="settings" title="ตั้งค่า">
                     <div class="boh-menu-icon">⚙️</div>
-                    <div class="boh-menu-content">
-                        <div class="boh-menu-title">ตั้งค่า</div>
-                        <div class="boh-menu-subtitle">การตั้งค่าระบบ</div>
-                    </div>
                 </a>
             </nav>
         </aside>
@@ -1114,6 +1131,11 @@
                 <div class="boh-header">
                     <h1 class="boh-title"><span class="boh-title-icon">📝</span> การจอง</h1>
                     <p class="boh-description">จัดการการจองทั้งหมด</p>
+                    <div style="background: #FEF3C7; border: 2px solid #F59E0B; padding: 1rem; border-radius: 12px; margin-top: 1rem;">
+                        <p style="color: #92400E; font-size: 0.9rem; margin: 0;">
+                            <strong>ℹ️ หมายเหตุ:</strong> ยอดเงินจาก <strong>Booking.com</strong> ไม่ถูกนำมาคำนวณในรายได้ เพราะจะถูกนำเข้าผ่าน <strong>Invoice</strong> ภายหลัง
+                        </p>
+                    </div>
                 </div>
 
                 <!-- Add/Edit Booking Form -->
@@ -2155,14 +2177,28 @@
         // ===================================
         function handleLogin(event) {
             event.preventDefault();
-            document.getElementById('loginPage').style.display = 'none';
-            document.getElementById('bohLayout').classList.add('active');
-            loadAllData();
+            const password = document.getElementById('loginPassword').value;
+            if (password === '5281') {
+                document.getElementById('loginPage').style.display = 'none';
+                document.getElementById('bohLayout').style.display = 'flex';
+                document.getElementById('bohLayout').classList.add('active');
+                loadAllData();
+            } else {
+                alert('รหัสผ่านไม่ถูกต้อง');
+            }
         }
 
         // ===================================
         // NAVIGATION
         // ===================================
+        // Sidebar toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('bohSidebar');
+            const toggleIcon = document.getElementById('toggleIcon');
+            sidebar.classList.toggle('expanded');
+            toggleIcon.textContent = sidebar.classList.contains('expanded') ? '✕' : '☰';
+        }
+
         // Mobile sidebar toggle
         function toggleMobileSidebar() {
             const sidebar = document.querySelector('.boh-sidebar');
@@ -2539,9 +2575,12 @@
                 return checkIn.getMonth() === currentMonth && checkIn.getFullYear() === currentYear;
             });
 
-            // Calculate stats
+            // Calculate stats (exclude Booking.com from revenue - will be added via invoice later)
             const totalBookings = monthBookings.length;
-            const totalRevenue = monthBookings.reduce((sum, b) => sum + (parseFloat(b.total) || 0), 0);
+            const totalRevenue = monthBookings.reduce((sum, b) => {
+                if (b.channel === 'Booking.com') return sum; // Skip Booking.com revenue
+                return sum + (parseFloat(b.total) || 0);
+            }, 0);
             const pendingCount = monthBookings.filter(b => b.status === 'pending').length;
             const occupancyRate = Math.round((totalBookings / 30) * 100);
 

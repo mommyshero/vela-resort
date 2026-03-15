@@ -970,18 +970,7 @@
            ======================================== */
         
         /* Base responsive images */
-        img { max-width: 100%; height: auto; display: block; }
-        img, video { max-width: 100%; height: auto; }
-        
-        /* Prevent all overflow */
-        html { overflow-x: hidden; width: 100%; }
-        body { overflow-x: hidden; width: 100%; position: relative; }
-        
-        /* Ensure all containers respect viewport */
-        .hero, .rooms-section, .gallery-section, .tours-detail, .waterfalls-section, footer {
-            max-width: 100vw;
-            overflow-x: hidden;
-        }
+        img { max-width: 100%; height: auto; }
         
         /* Mobile Navigation */
         @media (max-width: 768px) {
@@ -992,80 +981,6 @@
             .nav-desc { font-size: 0.65rem; }
             .lang-switch { top: 0.5rem; right: 0.5rem; }
             .lang-switch a { padding: 0.3rem 0.6rem; font-size: 0.7rem; }
-        }
-        
-        /* Hamburger Menu for Mobile */
-        .hamburger { 
-            display: none; 
-            flex-direction: column; 
-            cursor: pointer; 
-            width: 30px; 
-            height: 25px; 
-            justify-content: space-between;
-            padding: 0;
-            background: none;
-            border: none;
-            z-index: 1001;
-        }
-        .hamburger span { 
-            display: block; 
-            width: 100%; 
-            height: 3px; 
-            background: #1A1A1A; 
-            border-radius: 2px; 
-            transition: all 0.3s;
-        }
-        
-        @media (max-width: 768px) {
-            .hamburger { 
-                display: flex; 
-                position: relative;
-                z-index: 1002;
-            }
-            .nav-links { 
-                display: none; 
-                position: fixed; 
-                top: 60px; 
-                left: 0; 
-                width: 100%; 
-                background: white; 
-                flex-direction: column; 
-                padding: 1rem; 
-                gap: 0.5rem;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-                z-index: 1001;
-                max-height: calc(100vh - 60px);
-                overflow-y: auto;
-            }
-            .nav-links.active { 
-                display: flex; 
-                animation: slideDown 0.3s ease;
-            }
-            .nav-item { 
-                flex-direction: row; 
-                justify-content: center; 
-                padding: 0.75rem;
-                border-bottom: 1px solid #F3F4F6;
-            }
-            .nav-item:last-child { border-bottom: none; }
-            .nav-link { font-size: 1rem; font-weight: 700; }
-            .nav-desc { display: none; }
-            .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-            .hamburger.active span:nth-child(2) { opacity: 0; }
-            .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-        }
-        
-        @media (max-width: 414px) {
-            .hamburger { width: 28px; height: 22px; }
-            .hamburger span { height: 2.5px; }
-            .nav-item { padding: 0.6rem; }
-            .nav-link { font-size: 0.95rem; }
-            .nav-links { top: 55px; }
-        }
-        
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
         
         /* Hero Section - Mobile */
@@ -1219,17 +1134,9 @@
         
         /* Booking Modal - Responsive */
         @media (max-width: 768px) {
-            .modal-container { 
-                width: 95%; 
-                max-width: 100%; 
-                margin: 1rem; 
-                max-height: 90vh;
-                overflow-y: auto;
-            }
+            .modal-container { width: 95%; max-width: 100%; margin: 1rem; }
             .modal-header h3 { font-size: 1.25rem; }
-            .modal-header { padding: 1rem; }
             .modal-body { padding: 1rem; }
-            .modal-footer { padding: 1rem; }
             .room-selection-row { flex-direction: column; gap: 1rem; }
             .room-type-card { padding: 1rem; }
             .room-type-card h3 { font-size: 1.25rem; }
@@ -1240,404 +1147,18 @@
             .calendar-day { min-height: 40px; font-size: 0.65rem; }
             .calendar-day-header { font-size: 0.6rem; }
             .tour-addon-section { padding: 1rem; }
-            .modal-close { width: 35px; height: 35px; font-size: 1.25rem; }
         }
         
         @media (max-width: 414px) {
-            .modal-container { 
-                margin: 0.5rem; 
-                width: calc(100% - 1rem); 
-                max-height: 95vh;
-                overflow-y: auto;
-            }
+            .modal-container { margin: 0.5rem; width: calc(100% - 1rem); }
             .modal-header { padding: 0.75rem 1rem; }
             .modal-body { padding: 0.75rem; }
-            .modal-footer { padding: 0.75rem; flex-direction: column; gap: 0.5rem; }
-            .modal-footer button { width: 100%; }
-            .form-group input, .form-group select { font-size: 0.85rem; padding: 0.75rem; }
-            .room-type-card { padding: 0.75rem; }
-            .room-type-card h3 { font-size: 1.1rem; }
-        }
-        
-        @media (max-width: 375px) {
-            .modal-container { 
-                margin: 0.25rem; 
-                width: calc(100% - 0.5rem);
-                max-height: 98vh;
-            }
-            .modal-header h3 { font-size: 1.1rem; }
-            .modal-body { padding: 0.5rem; }
-            .form-group input, .form-group select { font-size: 0.8rem; padding: 0.65rem; }
-            .calendar-day { min-height: 35px; font-size: 0.6rem; }
+            .modal-footer { padding: 1rem; }
         }
         
         @media (max-width: 320px) {
-            .modal-header h3 { font-size: 1rem; }
-            .form-group input, .form-group select { font-size: 0.75rem; padding: 0.6rem; min-height: 44px; }
-            .modal-close { width: 30px; height: 30px; font-size: 1.1rem; }
-        }
-        
-        /* Chatbot - Mobile positioning (doesn't cover booking modal) */
-        @media (max-width: 480px) {
-            #aiChatbotBtn { 
-                bottom: 1rem !important; 
-                left: 1rem !important; 
-                padding: 0.625rem 1rem !important;
-                font-size: 0.85rem !important;
-                z-index: 998 !important;
-            }
-            #aiChatbotBtn span:last-child { 
-                display: none !important; /* Show only icon on small screens */
-            }
-            #aiChatbotWindow { 
-                bottom: 4rem !important; 
-                left: 1rem !important; 
-                right: 1rem !important;
-                width: calc(100% - 2rem) !important;
-                max-height: 60vh !important;
-                z-index: 998 !important;
-            }
-        }
-        
-        /* Hide chatbot when booking modal is open */
-        .modal-overlay.active ~ #aiChatbotBtn,
-        .modal-overlay.active ~ #aiChatbotWindow {
-            display: none !important;
-        }
-
-        /* 📱 MOBILE BOOKING MODAL ENHANCEMENTS */
-        @media (max-width: 480px) {
-            /* Modal container - full width with padding */
-            .modal-container { 
-                width: 100% !important; 
-                max-width: 100% !important;
-                margin: 0 !important;
-                border-radius: 20px 20px 0 0 !important;
-                max-height: 95vh !important;
-            }
-            
-            /* Modal header - sticky and clear */
-            .modal-header { 
-                padding: 1rem 1.25rem !important; 
-                position: sticky !important;
-                top: 0 !important;
-                background: #FFFFFF !important;
-                z-index: 10 !important;
-                border-bottom: 2px solid #E5E7EB !important;
-            }
-            .modal-header h3 { 
-                font-size: 1.25rem !important; 
-                font-weight: 800 !important;
-            }
-            .modal-close { 
-                width: 44px !important; 
-                height: 44px !important; 
-                font-size: 1.5rem !important;
-                min-height: 44px !important;
-            }
-            
-            /* Modal body - comfortable padding */
-            .modal-body { 
-                padding: 1.25rem !important; 
-                padding-bottom: 1rem !important;
-            }
-            
-            /* Modal footer - sticky at bottom */
-            .modal-footer { 
-                padding: 1.25rem !important; 
-                position: sticky !important;
-                bottom: 0 !important;
-                background: #FFFFFF !important;
-                border-top: 2px solid #E5E7EB !important;
-                z-index: 10 !important;
-            }
-            
-            /* Room type cards - large touch targets */
-            .room-type-card { 
-                padding: 1.25rem !important; 
-                min-height: 100px !important;
-            }
-            .room-type-card h3 { 
-                font-size: 1.25rem !important; 
-                margin-bottom: 0.5rem !important;
-            }
-            .room-type-card p { 
-                font-size: 0.85rem !important; 
-                margin-bottom: 0.75rem !important;
-            }
-            .room-type-card button { 
-                padding: 0.875rem 1.5rem !important; 
-                min-height: 44px !important;
-                font-size: 0.95rem !important;
-            }
-            
-            /* Form inputs - easy to tap */
-            .booking-form-group input, 
-            .booking-form-group select,
-            .form-group input, 
-            .form-group select { 
-                padding: 1rem 1.25rem !important; 
-                font-size: 1rem !important; 
-                min-height: 48px !important;
-                border: 2px solid #E5E7EB !important;
-                border-radius: 12px !important;
-            }
-            .booking-form-group label,
-            .form-group label { 
-                font-size: 0.95rem !important; 
-                font-weight: 700 !important;
-                margin-bottom: 0.5rem !important;
-                display: block !important;
-            }
-            
-            /* Date inputs - extra padding for easy selection */
-            input[type="date"] { 
-                padding: 1rem !important; 
-                font-size: 1rem !important;
-                min-height: 48px !important;
-                -webkit-appearance: none !important;
-            }
-            
-            /* Booking type selector - clear options */
-            .booking-type-option { 
-                padding: 1.25rem !important; 
-                min-height: 80px !important;
-                border-width: 2px !important;
-                border-radius: 12px !important;
-            }
-            .booking-type-option .booking-type-name { 
-                font-size: 1rem !important; 
-                font-weight: 700 !important;
-            }
-            .booking-type-option .booking-type-desc { 
-                font-size: 0.85rem !important;
-            }
-            
-            /* Tour addon toggle - large and clear */
-            .tour-toggle { 
-                width: 60px !important; 
-                height: 34px !important;
-            }
-            .tour-toggle .toggle-label { 
-                font-size: 1rem !important; 
-                font-weight: 700 !important;
-                margin-left: 70px !important;
-            }
-            
-            /* Tour selector dropdown - not hidden */
-            #tourSelector, 
-            #tourBookingType,
-            #tourPeopleAddon { 
-                padding: 1rem !important; 
-                font-size: 1rem !important;
-                min-height: 48px !important;
-            }
-            
-            /* Calendar - readable on mobile */
-            .booking-calendar { 
-                padding: 1rem !important; 
-                margin-top: 1rem !important;
-            }
-            .calendar-day { 
-                min-height: 45px !important; 
-                font-size: 0.7rem !important;
-                padding: 0.5rem 0.25rem !important;
-            }
-            .calendar-day-header { 
-                font-size: 0.65rem !important;
-            }
-            .calendar-day .date-num { 
-                font-size: 0.75rem !important; 
-                font-weight: 700 !important;
-            }
-            .calendar-day .room-count { 
-                font-size: 0.6rem !important;
-            }
-            
-            /* Room availability - clear status */
-            .room-availability { 
-                padding: 1rem !important; 
-                margin-top: 1rem !important;
-                border-radius: 12px !important;
-                border-width: 2px !important;
-            }
-            .availability-title { 
-                font-size: 1rem !important; 
-                font-weight: 700 !important;
-                margin-bottom: 0.5rem !important;
-            }
-            .availability-list { 
-                font-size: 0.9rem !important; 
-                line-height: 1.6 !important;
-            }
-            
-            /* Price display - prominent */
-            .booking-price-summary,
-            .booking-summary { 
-                padding: 1.25rem !important; 
-                border-radius: 12px !important;
-                background: #FEF3C7 !important;
-                border: 2px solid #FFD700 !important;
-            }
-            .booking-price-row,
-            .summary-row { 
-                font-size: 0.95rem !important; 
-                padding: 0.625rem 0 !important;
-            }
-            #roomTotalPrice,
-            #summaryTotal { 
-                font-size: 1.5rem !important; 
-                font-weight: 800 !important;
-                color: #1A1A1A !important;
-            }
-            
-            /* Confirm button - large and visible */
-            .confirm-btn,
-            .booking-submit-btn,
-            .submit-btn { 
-                padding: 1.25rem !important; 
-                font-size: 1.1rem !important; 
-                font-weight: 800 !important;
-                min-height: 56px !important;
-                border-radius: 16px !important;
-                letter-spacing: 0.02em !important;
-            }
-            
-            /* Disabled button styling - clear visual feedback */
-            .confirm-btn:disabled,
-            .booking-submit-btn:disabled,
-            .submit-btn:disabled { 
-                background: #9CA3AF !important; 
-                color: #E5E7EB !important;
-                border-color: #9CA3AF !important;
-                cursor: not-allowed !important; 
-                opacity: 0.7 !important;
-                transform: none !important;
-                box-shadow: none !important;
-            }
-            
-            /* Error messages - clear and readable */
-            .error-message,
-            .availability-list { 
-                font-size: 0.95rem !important; 
-                line-height: 1.6 !important;
-                padding: 1rem !important;
-                border-radius: 8px !important;
-            }
-            .room-availability.none { 
-                background: #FEE2E2 !important; 
-                border-color: #EF4444 !important;
-                color: #991B1B !important;
-            }
-            .room-availability.low { 
-                background: #FEF3C7 !important; 
-                border-color: #F59E0B !important;
-                color: #92400E !important;
-            }
-            
-            /* Success message styling */
-            .success-message { 
-                background: #D1FAE5 !important; 
-                border: 2px solid #10B981 !important;
-                color: #065F46 !important;
-                padding: 1.25rem !important;
-                border-radius: 12px !important;
-                font-size: 1rem !important;
-                font-weight: 600 !important;
-                line-height: 1.6 !important;
-            }
-            
-            /* Sync Toast - Mobile friendly positioning */
-            .sync-toast { 
-                top: auto !important;
-                bottom: 100px !important;
-                left: 50% !important;
-                right: auto !important;
-                transform: translateX(-50%) !important;
-                max-width: calc(100% - 2rem) !important;
-                margin: 0 1rem !important;
-            }
-            
-            /* Tour addon section - clear layout */
-            .tour-addon-section { 
-                padding: 1.25rem !important; 
-                margin: 1.5rem 0 !important;
-                border-radius: 12px !important;
-                border-width: 2px !important;
-            }
-            .tour-addon-header h4 { 
-                font-size: 1.05rem !important; 
-                font-weight: 700 !important;
-            }
-            .tour-price-display { 
-                padding: 1rem !important; 
-                margin-top: 1rem !important;
-                background: #FEF3C7 !important;
-                border: 2px solid #FFD700 !important;
-                border-radius: 8px !important;
-            }
-            .tour-price-row { 
-                font-size: 1rem !important;
-            }
-            .tour-price-row span:last-child { 
-                font-weight: 800 !important; 
-                font-size: 1.25rem !important;
-            }
-        }
-        
-        /* Sync Toast - Default Desktop Position */
-        .sync-toast {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
-            color: white;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.3);
-            z-index: 10000;
-            animation: slideInRight 0.3s ease;
-            max-width: 350px;
-        }
-        
-        /* Confirm Button Hint - Clear error message */
-        .confirm-btn-hint {
-            text-align: center;
-            color: #F59E0B;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            padding: 0.75rem;
-            background: #FEF3C7;
-            border-radius: 8px;
-            border: 1px solid #F59E0B;
-        }
-        
-        @media (max-width: 480px) {
-            .confirm-btn-hint {
-                font-size: 1rem !important;
-                padding: 1rem !important;
-                background: #FEF3C7 !important;
-                border-radius: 10px !important;
-            }
-        }
-        
-        /* Sync Toast Animation */
-        @keyframes slideInRight {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(400px); opacity: 0; }
-        }
-        @keyframes slideInUp {
-            from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-            to { transform: translateX(-50%) translateY(0); opacity: 1; }
-        }
-        @keyframes slideOutUp {
-            from { transform: translateX(-50%) translateY(0); opacity: 1; }
-            to { transform: translateX(-50%) translateY(100px); opacity: 0; }
+            .modal-header h3 { font-size: 1.1rem; }
+            .form-group input, .form-group select { font-size: 0.85rem; padding: 0.75rem; }
         }
         
         /* Lightbox - Responsive */
@@ -1783,12 +1304,8 @@
             .room-content { padding: 1rem !important; }
             .room-name { font-size: 1.25rem !important; }
             
-            /* Forms - Mobile Touch Targets (≥44px) */
-            .form-group input, .form-group select { 
-                padding: 0.875rem 1rem !important; 
-                font-size: 0.95rem !important; 
-                min-height: 48px !important;
-            }
+            /* Forms */
+            .form-group input, .form-group select { padding: 0.75rem 1rem !important; font-size: 0.9rem !important; }
             
             /* Gallery */
             .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
@@ -1796,12 +1313,8 @@
             /* Waterfalls */
             .waterfall-preview { grid-template-columns: 1fr !important; }
             
-            /* Buttons - Large Touch Targets */
-            .btn-primary, .btn, .submit-btn, .booking-submit-btn, .confirm-btn { 
-                padding: 1rem 1.5rem !important; 
-                font-size: 1rem !important; 
-                min-height: 48px !important;
-            }
+            /* Buttons */
+            .btn-primary, .btn { padding: 0.75rem 1.5rem !important; font-size: 0.9rem !important; }
         }
         
         /* iPhone 12/13/14 (390px) */
@@ -1844,428 +1357,26 @@
         /* Fix overflow issues */
         html, body { overflow-x: hidden !important; max-width: 100vw !important; }
         * { box-sizing: border-box !important; }
+            overflow-x: hidden;
+        }
         
         /* Prevent horizontal scroll */
         body {
             overflow-x: hidden;
-            max-width: 100vw;
-            position: relative;
         }
         
         /* Fix for any overflowing elements */
         * {
             box-sizing: border-box;
-            max-width: 100%;
-        }
-        
-        /* ========================================
-           📱 COMPREHENSIVE MOBILE OPTIMIZATION
-           Last Updated: 2026-03-10
-           ======================================== */
-        
-        /* Base Mobile Touch Targets - All buttons ≥44px */
-        @media (max-width: 768px) {
-            button, .btn, a, input, select {
-                min-height: 44px;
-                touch-action: manipulation;
-            }
-            
-            /* Ensure all clickable areas are finger-friendly */
-            .btn-primary, .submit-btn, .booking-submit-btn, .confirm-btn,
-            .slideshow-btn, .doi-btn, .lightbox-close, .lightbox-nav,
-            .modal-close, .popup-close, .itinerary-close, .expand-btn {
-                min-height: 44px;
-                min-width: 44px;
-                padding: 0.75rem 1rem;
-            }
-            
-            /* Form inputs easier to tap */
-            .form-group input, .form-group select,
-            .booking-form-group input, .booking-form-group select {
-                font-size: 16px; /* Prevents iOS zoom */
-                padding: 0.875rem 1rem;
-            }
-        }
-        
-        /* iPhone SE (320px) - Smallest iPhone */
-        @media (max-width: 320px) {
-            /* Typography */
-            body { font-size: 14px; }
-            .hero-title { font-size: 1.4rem !important; line-height: 1.2; }
-            .hero-subtitle { font-size: 0.85rem !important; }
-            .hero-location { font-size: 0.75rem !important; }
-            .section-title { font-size: 1.3rem !important; }
-            .section-subtitle { font-size: 0.85rem !important; }
-            
-            /* Navigation */
-            nav#navbar { padding: 0.5rem 0.75rem !important; }
-            .logo { font-size: 0.9rem !important; left: 0.75rem !important; }
-            .nav-link { font-size: 0.85rem !important; }
-            
-            /* Rooms */
-            .room-slideshow { height: 160px !important; }
-            .room-name { font-size: 1.1rem !important; }
-            .room-desc { font-size: 0.85rem !important; line-height: 1.5; }
-            .room-features { grid-template-columns: 1fr !important; }
-            .room-features span { font-size: 0.75rem !important; }
-            
-            /* Pricing */
-            .room-pricing { padding: 0.75rem !important; }
-            .price-row { font-size: 0.75rem !important; }
-            .season-label { font-size: 0.8rem !important; }
-            
-            /* Buttons */
-            .btn-primary { font-size: 0.85rem !important; padding: 0.7rem 1rem !important; }
-            
-            /* Gallery */
-            .gallery-grid { grid-template-columns: 1fr !important; }
-            .gallery-item { aspect-ratio: 1/1 !important; }
-            
-            /* Waterfalls */
-            .thailosu-hero-image, .pituegro-hero-image, .thailore-hero-image,
-            .palata-hero-image, .saepalata-hero-image, .khota-hero-image {
-                height: 160px !important;
-            }
-            .info-card { padding: 0.75rem !important; }
-            .info-card h3 { font-size: 1.1rem !important; }
-            .info-card h4 { font-size: 1rem !important; }
-            .info-item { gap: 0.5rem !important; }
-            .info-item i { font-size: 1rem !important; }
-            .info-item strong { font-size: 0.7rem !important; }
-            .info-item span { font-size: 0.7rem !important; }
-            
-            /* Tours */
-            .tour-card { padding: 1rem !important; }
-            .tour-card-title { font-size: 1rem !important; }
-            .tour-card-price { font-size: 1.2rem !important; }
-            
-            /* Modals */
-            .modal-container { width: 100% !important; margin: 0 !important; border-radius: 0 !important; }
-            .modal-header { padding: 0.75rem !important; }
-            .modal-header h3 { font-size: 1rem !important; }
-            .modal-body { padding: 0.75rem !important; }
-            .modal-footer { padding: 0.75rem !important; }
-            
-            /* Calendar */
-            .calendar-day { min-height: 32px !important; font-size: 0.55rem !important; }
-            .calendar-day-header { font-size: 0.5rem !important; }
-            
-            /* Lightbox */
-            .lightbox-close { width: 35px !important; height: 35px !important; font-size: 1.2rem !important; }
-            .lightbox-nav { width: 35px !important; height: 35px !important; }
-        }
-        
-        /* iPhone 12/13 Mini (375px) */
-        @media (max-width: 375px) {
-            /* Typography */
-            .hero-title { font-size: 1.6rem !important; }
-            .hero-subtitle { font-size: 0.9rem !important; }
-            .section-title { font-size: 1.4rem !important; }
-            
-            /* Rooms */
-            .room-slideshow { height: 180px !important; }
-            .room-name { font-size: 1.15rem !important; }
-            .room-desc { font-size: 0.875rem !important; }
-            .room-features span { font-size: 0.775rem !important; }
-            
-            /* Waterfalls */
-            .thailosu-hero-image, .pituegro-hero-image, .thailore-hero-image,
-            .palata-hero-image, .saepalata-hero-image, .khota-hero-image {
-                height: 180px !important;
-            }
-            .info-card h3 { font-size: 1.15rem !important; }
-            
-            /* Tours */
-            .tour-card-title { font-size: 1.05rem !important; }
-            .tour-card-price { font-size: 1.25rem !important; }
-            
-            /* Calendar */
-            .calendar-day { min-height: 36px !important; font-size: 0.6rem !important; }
-            
-            /* Gallery */
-            .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-        
-        /* iPhone Plus/Max (414px) */
-        @media (max-width: 414px) {
-            /* Typography */
-            .hero-title { font-size: 1.8rem !important; }
-            .hero-subtitle { font-size: 0.95rem !important; }
-            .section-title { font-size: 1.5rem !important; }
-            .section-subtitle { font-size: 0.9rem !important; }
-            
-            /* Navigation */
-            .logo { font-size: 1rem !important; }
-            .nav-link { font-size: 0.9rem !important; }
-            
-            /* Rooms */
-            .room-slideshow { height: 200px !important; }
-            .room-name { font-size: 1.2rem !important; }
-            .room-desc { font-size: 0.9rem !important; }
-            .room-features { grid-template-columns: repeat(2, 1fr) !important; }
-            .room-features span { font-size: 0.8rem !important; }
-            .room-pricing { padding: 1rem !important; }
-            
-            /* Pricing */
-            .price-row { font-size: 0.85rem !important; }
-            .season-label { font-size: 0.85rem !important; }
-            
-            /* Waterfalls */
-            .thailosu-hero-image, .pituegro-hero-image, .thailore-hero-image,
-            .palata-hero-image, .saepalata-hero-image, .khota-hero-image {
-                height: 200px !important;
-            }
-            .info-card h3 { font-size: 1.2rem !important; }
-            .info-card h4 { font-size: 1.05rem !important; }
-            .info-item strong { font-size: 0.75rem !important; }
-            .info-item span { font-size: 0.75rem !important; }
-            .trail-features, .features-grid, .nearby-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-            
-            /* Tours */
-            .tour-card { padding: 1.25rem !important; }
-            .tour-card-title { font-size: 1.1rem !important; }
-            .tour-card-price { font-size: 1.3rem !important; }
-            
-            /* Gallery */
-            .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            .gallery-tab { padding: 0.5rem 0.875rem !important; font-size: 0.85rem !important; }
-            
-            /* Doi Hua Mot */
-            .doi-slideshow { height: 200px !important; }
-            .doi-package { padding: 1.25rem !important; }
-            .doi-package-name { font-size: 1.15rem !important; }
-            
-            /* Modals */
-            .modal-container { width: 98% !important; margin: 0.5rem !important; }
-            .room-type-card h3 { font-size: 1.1rem !important; }
-            
-            /* Calendar */
-            .calendar-day { min-height: 40px !important; font-size: 0.65rem !important; }
-            .calendar-day-header { font-size: 0.55rem !important; }
-            .calendar-legend { gap: 0.5rem !important; }
-            .calendar-legend-item { font-size: 0.65rem !important; }
-            
-            /* Lightbox */
-            .lightbox-close { width: 40px !important; height: 40px !important; }
-            .lightbox-nav { width: 40px !important; height: 40px !important; }
-            
-            /* Rating badges */
-            .rating-badges { right: 0.5rem !important; bottom: 0.5rem !important; }
-            .rating-badge { padding: 0.4rem 0.65rem !important; font-size: 0.7rem !important; }
-            .brand-logo { width: 70px !important; height: 24px !important; }
-            
-            /* Weather widget */
-            .weather-widget { padding: 0.4rem 0.65rem !important; font-size: 0.7rem !important; }
-            
-            /* Footer */
-            footer { padding: 2rem 1rem !important; }
-            footer .logo { font-size: 1.25rem !important; }
-            footer p { font-size: 0.85rem !important; }
-            
-            /* Chatbot */
-            #aiChatbotBtn { padding: 0.6rem 1rem !important; font-size: 0.85rem !important; }
-            #aiChatbotWindow { width: 300px !important; left: 0.5rem !important; bottom: 4rem !important; }
-        }
-        
-        /* Android Small (480px) */
-        @media (max-width: 480px) {
-            /* Typography */
-            .hero-title { font-size: 2rem !important; }
-            .hero-subtitle { font-size: 1rem !important; }
-            .section-title { font-size: 1.6rem !important; }
-            
-            /* Navigation */
-            nav#navbar { padding: 0.6rem 1rem !important; }
-            
-            /* Rooms */
-            .room-slideshow { height: 220px !important; }
-            .room-content { padding: 1.25rem !important; }
-            
-            /* Waterfalls */
-            .waterfalls-container { gap: 1.25rem !important; }
-            .info-card { padding: 1.25rem !important; }
-            
-            /* Tours */
-            .tours-grid { gap: 1.25rem !important; }
-            .tour-card { padding: 1.5rem !important; }
-            
-            /* Sections */
-            .rooms-section, .gallery-section, .tours-detail, .waterfalls-section {
-                padding: 3rem 1rem !important;
-            }
-            
-            /* Buttons */
-            .btn-primary, .btn { padding: 0.875rem 1.5rem !important; font-size: 0.95rem !important; }
-        }
-        
-        /* iPad (768px) */
-        @media (max-width: 768px) {
-            /* Container widths */
-            .rooms-container, .waterfalls-container, .doi-container,
-            .gallery-grid, .tours-grid { max-width: 100% !important; }
-            
-            /* Navigation */
-            nav#navbar { padding: 0.75rem 1rem !important; }
-            .logo { font-size: 1.1rem !important; left: 1rem !important; }
-            .nav-links { gap: 0.75rem !important; }
-            .nav-link { font-size: 0.9rem !important; }
-            .nav-desc { font-size: 0.7rem !important; }
-            
-            /* Hero */
-            .hero-content { padding: 1.5rem !important; max-width: 95% !important; }
-            .hero-title { font-size: 2.5rem !important; }
-            .hero-subtitle { font-size: 1.1rem !important; }
-            .hero-location { font-size: 0.9rem !important; }
-            .hero-cta { flex-direction: column !important; gap: 0.75rem !important; width: 100% !important; }
-            .btn { width: 100% !important; text-align: center !important; }
-            
-            /* Weather & Ratings */
-            .weather-widget { top: 0.75rem !important; left: 0.75rem !important; }
-            .rating-badges { bottom: 1rem !important; right: 1rem !important; flex-direction: row !important; }
-            
-            /* Rooms */
-            .rooms-container { flex-direction: column !important; }
-            .room-side { width: 100% !important; }
-            .room-slideshow { height: 280px !important; }
-            .room-content { padding: 1.5rem !important; }
-            .room-name { font-size: 1.4rem !important; }
-            .room-desc { font-size: 0.95rem !important; }
-            .room-features { grid-template-columns: repeat(2, 1fr) !important; }
-            
-            /* Sections */
-            .section-title { font-size: 1.8rem !important; }
-            .section-subtitle { font-size: 1rem !important; }
-            .rooms-section, .gallery-section, .tours-detail { padding: 4rem 1.5rem !important; }
-            
-            /* Gallery */
-            .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important; gap: 0.75rem !important; }
-            .gallery-tabs { flex-wrap: wrap !important; gap: 0.5rem !important; }
-            .gallery-tab { padding: 0.6rem 1rem !important; font-size: 0.875rem !important; }
-            
-            /* Doi Hua Mot */
-            .doi-slideshow { height: 280px !important; }
-            .doi-title { font-size: 1.75rem !important; }
-            .doi-subtitle { font-size: 0.95rem !important; }
-            .doi-packages { grid-template-columns: 1fr !important; gap: 1rem !important; }
-            .doi-package { padding: 1.5rem !important; }
-            
-            /* Waterfalls */
-            .waterfalls-container { grid-template-columns: 1fr !important; gap: 1.5rem !important; padding: 0 0.5rem !important; }
-            .thailosu-hero-image, .pituegro-hero-image, .thailore-hero-image,
-            .palata-hero-image, .saepalata-hero-image, .khota-hero-image {
-                height: 250px !important;
-            }
-            .info-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
-            .info-cards-row { grid-template-columns: 1fr !important; gap: 1rem !important; }
-            .trail-features, .features-grid, .nearby-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            
-            /* Tours */
-            .tours-grid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
-            .tour-card { padding: 1.5rem !important; }
-            .tour-card-title { font-size: 1.2rem !important; }
-            .tour-card-price { font-size: 1.5rem !important; }
-            .booking-type-selector { grid-template-columns: 1fr !important; }
-            
-            /* Tour Popup */
-            .tour-popup-content { width: 95% !important; max-width: 450px !important; }
-            .tour-popup-header, .tour-popup-body, .tour-popup-footer { padding: 1.25rem !important; }
-            
-            /* Booking Modal */
-            .modal-container { width: 95% !important; max-width: 600px !important; max-height: 95vh !important; }
-            .modal-header { padding: 1.25rem !important; }
-            .modal-header h3 { font-size: 1.25rem !important; }
-            .modal-body { padding: 1.25rem !important; }
-            .modal-footer { padding: 1.25rem !important; }
-            .room-selection-row { flex-direction: column !important; gap: 1rem !important; }
-            .room-type-card { padding: 1.25rem !important; }
-            .room-type-card h3 { font-size: 1.25rem !important; }
-            .form-grid { grid-template-columns: 1fr !important; gap: 1rem !important; }
-            .form-group.full { grid-column: span 1 !important; }
-            
-            /* Calendar in Modal */
-            .booking-calendar { padding: 1rem !important; }
-            .calendar-day { min-height: 45px !important; font-size: 0.7rem !important; }
-            .calendar-day-header { font-size: 0.6rem !important; }
-            
-            /* Tour Itinerary Modal */
-            .tour-itinerary-content { width: 95% !important; max-width: 500px !important; }
-            .tour-itinerary-header { padding: 1.25rem !important; }
-            .itinerary-table td { padding: 0.75rem !important; font-size: 0.85rem !important; }
-            .itinerary-table .time { width: 100px !important; font-size: 0.8rem !important; }
-            
-            /* Footer */
-            footer { padding: 3rem 1.5rem !important; }
-            footer .logo { font-size: 1.5rem !important; }
-            footer .social-links a { width: 44px !important; height: 44px !important; }
-            
-            /* Chatbot */
-            #aiChatbotBtn { bottom: 1rem !important; left: 1rem !important; padding: 0.75rem 1.25rem !important; }
-            #aiChatbotWindow { bottom: 4.5rem !important; left: 1rem !important; width: 320px !important; }
-        }
-        
-        /* Tablet (769px - 1024px) */
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .rooms-container { flex-direction: column !important; }
-            .room-side { width: 100% !important; }
-            .waterfalls-container { grid-template-columns: repeat(2, 1fr) !important; }
-            .tours-grid { grid-template-columns: repeat(2, 1fr) !important; }
-            .info-cards-row { grid-template-columns: 1fr !important; }
-            .info-grid, .trail-features, .features-grid, .nearby-grid {
-                grid-template-columns: repeat(2, 1fr) !important;
-            }
-        }
-        
-        /* Touch device optimizations */
-        @media (hover: none) and (pointer: coarse) {
-            /* Larger touch targets */
-            button, .btn, a, .gallery-item, .tour-option, .room-type-card,
-            .booking-type-option, .modal-tab, .gallery-tab {
-                min-height: 48px;
-                min-width: 48px;
-            }
-            
-            /* Remove hover effects on touch devices */
-            .btn-primary:hover, .tour-card:hover, .room-card:hover,
-            .gallery-item:hover {
-                transform: none;
-            }
-            
-            /* Better form interaction */
-            input, select, textarea {
-                font-size: 16px; /* Prevents iOS zoom on focus */
-            }
-        }
-        
-        /* Print styles */
-        @media print {
-            nav, .lang-switch, .weather-widget, .rating-badges,
-            #aiChatbotBtn, #aiChatbotWindow, footer .social-links {
-                display: none !important;
-            }
-        }
-        
-        /* High contrast mode support */
-        @media (prefers-contrast: high) {
-            .btn-primary { border: 3px solid #000000 !important; }
-            .modal-container { border: 3px solid #000000 !important; }
-        }
-        
-        /* Reduced motion support */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
         }
     </style>
 </head>
 <body>
     <!-- Language Switcher -->
     <div class="lang-switch">
+        <a href="boh.html" style="background: #FFD700; border: 2px solid #FFD700; font-weight: 700;" title="Back Office System">
+            <i class="fas fa-key"></i>
+        </a>
         <a href="index.html" class="active">TH</a>
         <a href="index-en.html">EN</a>
     </div>
@@ -2273,11 +1384,6 @@
     <!-- Navigation -->
     <nav id="navbar">
         <a href="#" class="logo">VELA</a>
-        <div class="hamburger" onclick="toggleMobileMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
         <ul class="nav-links">
             <li class="nav-item">
                 <a href="#rooms" class="nav-link">ห้องพัก</a>
@@ -3846,18 +2952,11 @@
                             <label>🎯 เลือกทัวร์</label>
                             <select id="tourSelector" onchange="updateTourAddonPrice()">
                                 <option value="">-- เลือกทัวร์ --</option>
-                                <option value="1">ทริปทีลอซู (มี Private/Join)</option>
-                                <option value="2">รถ 4x4 ทีลอซู</option>
-                                <option value="3">รถ 4x4 ออนเซ็น</option>
-                                <option value="4">ดอยหัวหมด</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group" id="tourBookingTypeGroup" style="display: none;">
-                            <label>🚌 ประเภททัวร์</label>
-                            <select id="tourBookingType" onchange="updateTourAddonPrice()">
-                                <option value="private">🚗 Private (เหมาคัน)</option>
-                                <option value="join">👥 Join Trip (จอยทริป)</option>
+                                <option value="1">VIP ทีลอซู-โคทะ 1 วัน</option>
+                                <option value="2">จอยทริปทีลอซู (฿2,100/คน)</option>
+                                <option value="3">รถ 4x4 ทีลอซู</option>
+                                <option value="4">รถ 4x4 ออนเซ็น</option>
+                                <option value="5">ดอยหัวหมด</option>
                             </select>
                         </div>
 
@@ -3912,8 +3011,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <p id="confirmBtnHint" class="confirm-btn-hint">⚠️ กรุณากรอกชื่อและเบอร์โทรศัพท์ เพื่อกดจอง</p>
-                <button id="confirmBookingBtn" class="confirm-btn" onclick="confirmRoomBooking()" disabled>✅ ยืนยันการจอง</button>
+                <p id="confirmBtnHint" style="text-align: center; color: var(--warning); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">⚠️ กรุณากรอกชื่อและเบอร์โทรศัพท์ เพื่อกดจอง</p>
+                <button id="confirmBookingBtn" class="confirm-btn" onclick="confirmRoomBooking()" disabled style="opacity: 0.6; cursor: not-allowed;">✅ ยืนยันการจอง</button>
             </div>
         </div>
     </div>
@@ -3999,13 +3098,13 @@
     </footer>
 
     <!-- AI Chatbot Button -->
-    <button id="aiChatbotBtn" onclick="toggleChatbot()" style="position: fixed; bottom: 2rem; left: 2rem; width: auto; padding: 0.75rem 1.5rem; background: #1A1A1A; border: 2px solid #FFD700; border-radius: 50px; color: #FFFFFF; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); z-index: 999; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
+    <button id="aiChatbotBtn" onclick="toggleChatbot()" style="position: absolute; bottom: 2rem; left: 2rem; width: auto; padding: 0.75rem 1.5rem; background: #1A1A1A; border: 2px solid #FFD700; border-radius: 50px; color: #FFFFFF; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); z-index: 10; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; font-weight: 700;">
         <span style="font-size: 1.25rem;">🤖</span>
         <span>ถาม AI</span>
     </button>
 
     <!-- AI Chatbot Window -->
-    <div id="aiChatbotWindow" style="position: fixed; bottom: 5rem; left: 2rem; width: 350px; max-height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 999; display: none; flex-direction: column; overflow: hidden; border: 2px solid #E5E7EB;">
+    <div id="aiChatbotWindow" style="position: absolute; bottom: 5rem; left: 2rem; width: 350px; max-height: 500px; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); z-index: 10; display: none; flex-direction: column; overflow: hidden; border: 2px solid #E5E7EB;">
         <div style="background: #1A1A1A; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <h4 style="margin: 0; font-size: 1rem;">🤖 ถาม AI เกี่ยวกับ Vela Resort</h4>
@@ -4168,36 +3267,6 @@
             localStorage.setItem('vela_bookings', JSON.stringify(bookings));
         }
 
-        // Show sync toast notification
-        function showSyncToast() {
-            // Remove any existing toast first
-            const existingToast = document.querySelector('.sync-toast');
-            if (existingToast) existingToast.remove();
-            
-            const toast = document.createElement('div');
-            toast.className = 'sync-toast';
-            toast.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.75rem;">
-                    <span style="font-size: 1.5rem;">⚡</span>
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.95rem;">Sync ทันที!</div>
-                        <div style="font-size: 0.8rem; opacity: 0.9;">ข้อมูลจองส่งไปยัง BOH แล้ว</div>
-                        <div style="font-size: 0.75rem; opacity: 0.8; margin-top: 0.25rem;">🔄 Auto-sync ทุก 10 นาที</div>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(toast);
-            
-            // Auto remove after 4 seconds with smooth animation
-            setTimeout(() => {
-                const isMobile = window.innerWidth <= 480;
-                toast.style.animation = isMobile ? 'slideOutUp 0.3s ease' : 'slideOutRight 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 4000);
-            
-            console.log('⚡ Sync toast shown');
-        }
-
         function getAvailableRooms(roomType, dateStr) {
             const totalRooms = roomType === 'hytte' ? 5 : 1;
             const bookings = getBookings();
@@ -4319,9 +3388,6 @@
             const bookings = getBookings();
             const totalRooms = selectedRoomType === 'hytte' ? 5 : 1;
 
-            // Check if mobile device for optimized display
-            const isMobile = window.innerWidth <= 768;
-
             for (let i = 0; i < 35; i++) {
                 const currentDate = new Date(startDate);
                 currentDate.setDate(currentDate.getDate() + i);
@@ -4362,20 +3428,10 @@
                     availabilityIcon = '✅';
                 }
 
-                // Mobile: Simplified display for small screens
-                if (isMobile && window.innerWidth <= 375) {
-                    html += `<div class="calendar-day ${dayClass}${isSelected ? ' selected' : ''}${availabilityClass}" 
-                        title="${available}/${totalRooms} ห้องว่าง (${dayNum}/${monthNum})"
-                        style="min-height: 36px; padding: 0.25rem 0.15rem;">`;
-                    html += `<span class="date-num" style="font-size: 0.65rem; font-weight: 700;">${dayNum}</span>`;
-                    html += `<span class="room-count" style="font-size: 0.55rem;">${available}</span>`;
-                    html += `</div>`;
-                } else {
-                    html += `<div class="calendar-day ${dayClass}${isSelected ? ' selected' : ''}${availabilityClass}" title="${available}/${totalRooms} ห้องว่าง">`;
-                    html += `<span class="date-num">${dayNum}/${monthNum}</span>`;
-                    html += `<span class="room-count">${availabilityIcon} ${available}/${totalRooms}</span>`;
-                    html += `</div>`;
-                }
+                html += `<div class="calendar-day ${dayClass}${isSelected ? ' selected' : ''}${availabilityClass}" title="${available}/${totalRooms} ห้องว่าง">`;
+                html += `<span class="date-num">${dayNum}/${monthNum}</span>`;
+                html += `<span class="room-count">${availabilityIcon} ${available}/${totalRooms}</span>`;
+                html += `</div>`;
             }
 
             calendarGrid.innerHTML = html;
@@ -4502,52 +3558,6 @@
 
         // ==================== MODAL FUNCTIONS ====================
 
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            const body = document.body;
-            
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-            
-            // Prevent body scroll when menu is open
-            if (navLinks.classList.contains('active')) {
-                body.style.overflow = 'hidden';
-            } else {
-                body.style.overflow = '';
-            }
-            
-            console.log('📱 Mobile menu:', navLinks.classList.contains('active') ? 'open' : 'closed');
-        }
-
-        // Close mobile menu when clicking nav link
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                const hamburger = document.querySelector('.hamburger');
-                const navLinks = document.querySelector('.nav-links');
-                const body = document.body;
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-                body.style.overflow = '';
-            });
-        });
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            const hamburger = document.querySelector('.hamburger');
-            const navLinks = document.querySelector('.nav-links');
-            const body = document.body;
-            
-            if (navLinks.classList.contains('active') && 
-                !hamburger.contains(e.target) && 
-                !navLinks.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-                body.style.overflow = '';
-            }
-        });
-
         function openBookingModal(type = 'room', roomType = 'hytte') {
             const modal = document.getElementById('bookingModal');
             if (!modal) {
@@ -4556,12 +3566,6 @@
             }
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            
-            // Mobile: Scroll modal to top
-            const modalContainer = modal.querySelector('.modal-container');
-            if (modalContainer) {
-                modalContainer.scrollTop = 0;
-            }
 
             console.log('✅ Booking modal opened for', roomType);
 
@@ -4594,16 +3598,10 @@
         function updateTourAddonPrice() {
             const tourId = document.getElementById('tourSelector').value;
             const people = parseInt(document.getElementById('tourPeopleAddon').value) || 1;
-            const bookingType = document.getElementById('tourBookingType') ? document.getElementById('tourBookingType').value : 'private';
-
-            // Show/hide Private/Join selector (only for Tour 1)
-            const bookingTypeGroup = document.getElementById('tourBookingTypeGroup');
-            if (bookingTypeGroup) {
-                bookingTypeGroup.style.display = (tourId === '1') ? 'block' : 'none';
-            }
 
             if (!tourId) {
                 document.getElementById('tourAddonPriceDisplay').style.display = 'none';
+                document.getElementById('tourTypeSelector').style.display = 'none';
                 window.tourAddonPrice = 0;
                 updateTotalWithTour();
                 return;
@@ -4612,38 +3610,25 @@
             let price = 0;
             let tourName = '';
 
-            // Tour pricing with Private/Join option for Tour 1
+            // Tour pricing (4 tiers) - Modified for Joytrip
             const tourPrices = {
-                '1': { 
-                    name: 'ทริปทีลอซู', 
-                    private: { tiers: [[1,6,5800], [7,10,8300], [11,12,10800], [13,15,13300]] },
-                    join: { pricePerPerson: 2100 }
-                },
-                '2': { name: 'รถ 4x4 ทีลอซู', tiers: [[1,6,2500], [7,10,2500], [11,12,2500], [13,15,2500]] },
-                '3': { name: 'รถ 4x4 ออนเซ็น', tiers: [[1,5,1850], [6,10,2500], [11,12,2500], [13,15,2500]] },
-                '4': { name: 'ดอยหัวหมด', tiers: [[1,5,1000], [6,10,1500], [11,12,1500], [13,15,1500]] }
+                '1': { name: 'VIP ทีลอซู-โคทะ 1 วัน', tiers: [[1,6,7500], [7,10,10000], [11,12,12500], [13,15,15500]] },
+                '2': { name: 'จอยทริปทีลอซู', joinPrice: 2100 },  // Joytrip only, no private option
+                '3': { name: 'รถ 4x4 ทีลอซู', tiers: [[1,6,2500], [7,10,2500], [11,12,2500], [13,15,2500]] },
+                '4': { name: 'รถ 4x4 ออนเซ็น', tiers: [[1,5,1850], [6,10,2500], [11,12,2500], [13,15,2500]] },
+                '5': { name: 'ดอยหัวหมด', tiers: [[1,5,1000], [6,10,1500], [11,12,1500], [13,15,1500]] }
             };
 
             const tour = tourPrices[tourId];
             if (tour) {
                 tourName = tour.name;
                 
-                // Tour 1: Has Private/Join option
-                if (tourId === '1') {
-                    if (bookingType === 'join') {
-                        // Join Trip: ฿2,100 × number of people
-                        price = tour.join.pricePerPerson * people;
-                    } else {
-                        // Private: Group rate by tiers
-                        for (const [min, max, p] of tour.private.tiers) {
-                            if (people >= min && people <= max) {
-                                price = p;
-                                break;
-                            }
-                        }
-                    }
+                // Check if Joytrip (Tour 2 only)
+                if (tourId === '2' && tour.joinPrice) {
+                    // Joytrip pricing: ฿2,100 × number of people
+                    price = tour.joinPrice * people;
                 } else if (tour.tiers) {
-                    // Other tours: Group rate only
+                    // Private tour pricing (group rate)
                     for (const [min, max, p] of tour.tiers) {
                         if (people >= min && people <= max) {
                             price = p;
@@ -4749,9 +3734,6 @@
             };
 
             saveBooking(booking);
-            
-            // Immediate sync notification
-            showSyncToast();
             
             // Refresh calendar to show updated availability
             renderCalendar();
@@ -4879,14 +3861,7 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('tourBookingDate').setAttribute('min', today);
 
-            const modal = document.getElementById('tourBookingModal');
-            modal.style.display = 'flex';
-            
-            // Mobile: Scroll modal to top
-            const modalContainer = modal.querySelector('.modal-container');
-            if (modalContainer) {
-                modalContainer.scrollTop = 0;
-            }
+            document.getElementById('tourBookingModal').style.display = 'flex';
         }
 
         function closeTourBookingModal() {
