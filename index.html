@@ -14,6 +14,21 @@
         
         /* Navigation - Mobile First */
         nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.98); padding: 10px 15px; display: flex; justify-content: center; gap: 12px; z-index: 1000; border-bottom: 1px solid #eee; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        /* Burger Menu */
+        .burger-menu { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 5px; }
+        .burger-menu span { width: 25px; height: 3px; background: #333; border-radius: 2px; transition: 0.3s; }
+        .burger-menu.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .burger-menu.active span:nth-child(2) { opacity: 0; }
+        .burger-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .nav-mobile { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #fff; flex-direction: column; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 1px solid #eee; }
+        .nav-mobile a { padding: 12px; border-bottom: 1px solid #eee; }
+        
+        @media (max-width: 768px) {
+            .burger-menu { display: flex; }
+            nav { display: none !important; }
+            .nav-mobile.show { display: flex; }
+        }
+
         nav a { text-decoration: none; color: #333; font-size: 10px; font-weight: 500; white-space: nowrap; padding: 6px 10px; }
         nav a:hover { color: #FFD700; }
         .nav-ai { background: #1A1A1A !important; color: #FFD700 !important; border-radius: 15px; font-weight: 600; border: 1px solid #FFD700; }
@@ -490,6 +505,19 @@
     
     <!-- Navigation -->
     <nav>
+
+        <div class="burger-menu" onclick="toggleMobileNav()">
+            <span></span><span></span><span></span>
+        </div>
+        <div class="nav-mobile" id="navMobile">
+            <a href="#" onclick="scrollToSection('rooms')">🏨 ห้องพัก</a>
+            <a href="#" onclick="scrollToSection('tours')">🚙 ทัวร์</a>
+            <a href="#" onclick="scrollToSection('gallery')">📸 แกลเลอรี</a>
+            <a href="#" onclick="scrollToSection('contact')">📞 ติดต่อ</a>
+            <a href="boh.html">🔐 BOH</a>
+            <a href="javascript:void(0)" onclick="openAIChat()">🤖 Ask AI</a>
+        </div>
+
         <a href="#rooms">ห้องพัก</a>
         <a href="#tours-packages">ทัวร์</a>
         <a href="#tours">น้ำตก</a>
@@ -1876,6 +1904,11 @@
             }, 1000);
         }
     }
-    </script>
+    
+        function toggleMobileNav() {
+            document.getElementById('navMobile').classList.toggle('show');
+            document.querySelector('.burger-menu').classList.toggle('active');
+        }
+</script>
 </body>
 </html>
