@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - VELA BOH</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .test-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 400px;
+            width: 100%;
+        }
+        h1 {
+            color: #1A1A1A;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        button {
+            width: 100%;
+            padding: 1rem;
+            background: #FFD700;
+            color: #1A1A1A;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #E6C200;
+            transform: translateY(-2px);
+        }
+        .result {
+            margin-top: 2rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+        .result.success {
+            background: #D1FAE5;
+            color: #065F46;
+            border: 1px solid #10B981;
+        }
+        .result.error {
+            background: #FEE2E2;
+            color: #991B1B;
+            border: 1px solid #EF4444;
+        }
+        .debug {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #F3F4F6;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+        .debug h3 {
+            margin-top: 0;
+            color: #1A1A1A;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔐 Test Login</h1>
+        <p class="subtitle">VELA BOH System</p>
+        
+        <form id="testForm">
+            <div class="form-group">
+                <label>Username:</label>
+                <input type="text" id="username" value="Boss" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <label>Password:</label>
+                <input type="password" id="password" value="5281" placeholder="Password">
+            </div>
+            <button type="submit">🔑 Login Test</button>
+        </form>
+        
+        <div id="result" class="result"></div>
+        
+        <div class="debug">
+            <h3>🔍 Debug Info:</h3>
+            <div id="debugInfo">Loading...</div>
+        </div>
+    </div>
+    
+    <script>
+        // Show debug info
+        document.getElementById('debugInfo').innerHTML = `
+            <strong>File:</strong> boh.html<br>
+            <strong>Size:</strong> 90,183 bytes<br>
+            <strong>Modified:</strong> Mar 11, 2026 1:17 PM<br>
+            <strong>Login Line:</strong> 787<br>
+            <strong>Expected:</strong> Boss / 5281<br>
+            <strong>URL:</strong> http://localhost:8083/boh.html<br>
+            <strong>Time:</strong> ${new Date().toLocaleString('th-TH')}<br>
+        `;
+        
+        // Test login
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            
+            console.log('🔵 Testing login...');
+            console.log('Username:', username);
+            console.log('Password:', password);
+            
+            // Test the same logic as boh.html line 787
+            if (username === 'Boss' && password === '5281') {
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <strong>✅ SUCCESS!</strong><br>
+                    Login credentials are correct!<br>
+                    <br>
+                    <strong>Next Step:</strong><br>
+                    1. Hard refresh boh.html (Cmd+Shift+R)<br>
+                    2. Try login again<br>
+                    3. If still not working, check browser console (F12)
+                `;
+                
+                console.log('✅ Login test PASSED!');
+            } else {
+                resultDiv.className = 'result error';
+                resultDiv.innerHTML = `
+                    <strong>❌ FAILED!</strong><br>
+                    Login credentials do not match!<br>
+                    <br>
+                    <strong>Expected:</strong><br>
+                    Username: Boss<br>
+                    Password: 5281<br>
+                    <br>
+                    <strong>Got:</strong><br>
+                    Username: ${username}<br>
+                    Password: ${password}
+                `;
+                
+                console.log('❌ Login test FAILED!');
+            }
+        });
+        
+        // Auto-test on load
+        window.addEventListener('load', function() {
+            console.log('🔵 Test page loaded');
+            console.log('📄 boh.html should be at: http://localhost:8083/boh.html');
+        });
+    </script>
+</body>
+</html>

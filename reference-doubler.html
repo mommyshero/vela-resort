@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎙️ Reference Doubler - เสียงคู่เสียงซ้อน</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #9CA3AF;
+            font-size: 1.1rem;
+        }
+
+        .main-card {
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid #FFD700;
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.1);
+        }
+
+        .visualizer-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .visualizer {
+            background: #0A0A0A;
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+        }
+
+        .visualizer h3 {
+            color: #FFD700;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 120px;
+            background: #0A0A0A;
+            border-radius: 8px;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            background: #0A0A0A;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .control-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .control-group input[type="range"] {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #333;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .control-group input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #FFD700;
+            cursor: pointer;
+        }
+
+        .value-display {
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 0.85rem;
+        }
+
+        .btn-start {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            color: #1A1A1A;
+            margin-bottom: 20px;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-start.active {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            color: white;
+        }
+
+        .mode-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .mode-btn {
+            padding: 15px;
+            border: 2px solid #FFD700;
+            border-radius: 12px;
+            background: transparent;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .mode-btn:hover {
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .mode-btn.active {
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            color: #1A1A1A;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .status.ready {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+            border: 1px solid #10B981;
+        }
+
+        .status.active {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+            border: 1px solid #F59E0B;
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+            border: 1px solid #EF4444;
+        }
+
+        .info-section {
+            background: #0A0A0A;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 10px 0;
+            color: #9CA3AF;
+            border-bottom: 1px solid #1A1A1A;
+        }
+
+        .info-section li:before {
+            content: "🎙️ ";
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: #1A1A1A;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid #FFD700;
+        }
+
+        .feature-card h4 {
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            color: #9CA3AF;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .visualizer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎙️ Reference Doubler</h1>
+            <p class="subtitle">สร้างเสียงคู่ เสียงซ้อน แบบมืออาชีพ</p>
+        </header>
+
+        <div class="main-card">
+            <div class="visualizer-container">
+                <div class="visualizer">
+                    <h3>📈 Input (Original)</h3>
+                    <canvas id="inputWaveform"></canvas>
+                </div>
+                <div class="visualizer">
+                    <h3>📈 Output (Doubled)</h3>
+                    <canvas id="outputWaveform"></canvas>
+                </div>
+            </div>
+
+            <div class="mode-buttons">
+                <button class="mode-btn active" data-mode="single">🎤 Single (100%)</button>
+                <button class="mode-btn" data-mode="double">👯 Double (50/50)</button>
+                <button class="mode-btn" data-mode="thick">🎚️ Thick (70/30)</button>
+                <button class="mode-btn" data-mode="chorus">🌊 Chorus</button>
+                <button class="mode-btn" data-mode="octave">🎼 Octave</button>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-group">
+                    <label>⏱️ Delay Time (ms)</label>
+                    <input type="range" id="delayTime" min="0" max="100" value="20">
+                    <div class="value-display" id="delayValue">20 ms</div>
+                </div>
+
+                <div class="control-group">
+                    <label>🎚️ Mix Balance</label>
+                    <input type="range" id="mixBalance" min="0" max="100" value="50">
+                    <div class="value-display" id="mixValue">50/50</div>
+                </div>
+
+                <div class="control-group">
+                    <label>🎛️ Detune (cents)</label>
+                    <input type="range" id="detune" min="-100" max="100" value="10">
+                    <div class="value-display" id="detuneValue">+10 cents</div>
+                </div>
+
+                <div class="control-group">
+                    <label>🔊 Feedback</label>
+                    <input type="range" id="feedback" min="0" max="80" value="20">
+                    <div class="value-display" id="feedbackValue">20%</div>
+                </div>
+
+                <div class="control-group">
+                    <label>🎵 Pitch Shift</label>
+                    <input type="range" id="pitchShift" min="-12" max="12" value="0">
+                    <div class="value-display" id="pitchValue">0 semitones</div>
+                </div>
+
+                <div class="control-group">
+                    <label>📊 Dry/Wet</label>
+                    <input type="range" id="dryWet" min="0" max="100" value="70">
+                    <div class="value-display" id="dryWetValue">70% Dry</div>
+                </div>
+            </div>
+
+            <button class="btn-start" id="startBtn">
+                🎤 เริ่มใช้งาน (คลิกเพื่ออนุญาตไมค์)
+            </button>
+
+            <div class="status ready" id="status">
+                ⏸️ พร้อมใช้งาน - คลิกปุ่มเริ่ม
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🎤 Single Mode</h4>
+                    <p>เสียงเดิม 100% ไม่มีการซ้อน เหมาะสำหรับอ้างอิง</p>
+                </div>
+                <div class="feature-card">
+                    <h4>👯 Double Mode</h4>
+                    <p>เสียงคู่ 50/50 สร้างความหนาแบบธรรมชาติ</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎚️ Thick Mode</h4>
+                    <p>เสียงหนา 70/30 เหมาะสำหรับร้องนำ</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🌊 Chorus Mode</h4>
+                    <p>เอฟเฟกต์คอรัส เสียงกว้าง 立体感</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎼 Octave Mode</h4>
+                    <p>ซ้อนเสียงออกเทฟ (สูง/ต่ำ 12 semitones)</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>📖 วิธีใช้งาน</h3>
+            <ul>
+                <li>คลิกปุ่ม "เริ่มใช้งาน" และอนุญาตให้เข้าถึงไมโครโฟน</li>
+                <li>เลือกโหมดการซ้อนเสียง (Single, Double, Thick, Chorus, Octave)</li>
+                <li>ปรับค่า Delay, Mix, Detune ตามต้องการ</li>
+                <li>พูดหรือร้องเพลง เพื่อฟังผลลัพธ์แบบเรียลไทม์</li>
+                <li>ใช้หูฟังเพื่อฟังผลลัพธ์ได้ชัดเจนที่สุด</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">🎯 การประยุกต์ใช้</h3>
+            <ul>
+                <li><strong>🎤 นักร้อง:</strong> ซ้อนเสียงร้องให้หนาขึ้น</li>
+                <li><strong>🎙️ พอดแคสต์:</strong> เพิ่มความอุ่นให้เสียงพูด</li>
+                <li><strong>🎸 นักดนตรี:</strong> สร้างเสียงคู่ให้เครื่องดนตรี</li>
+                <li><strong>🎚️ Mixing:</strong> ใช้เป็น Reference สำหรับเปรียบเทียบ</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">💡 เคล็ดลับ</h3>
+            <ul>
+                <li>ใช้หูฟังเสมอเพื่อป้องกันเสียง Feedback</li>
+                <li>เริ่มจากค่า Default ก่อนแล้วค่อยปรับ</li>
+                <li>โหมด Double เหมาะสำหรับเสียงร้องหลัก</li>
+                <li>โหมด Chorus เหมาะสำหรับเสียงพื้นหลัง</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Created with ❤️ for Vela Resort Umphang</p>
+            <p>Web Audio API + Delay + Detune + Pitch Shift</p>
+        </footer>
+    </div>
+
+    <script>
+        // Audio Context and Nodes
+        let audioContext;
+        let analyserInput, analyserOutput;
+        let microphone;
+        let isListening = false;
+        
+        // Effect nodes
+        let delayNode, feedbackNode, dryNode, wetNode;
+        let detuneNode, pitchShiftNode;
+        let currentMode = 'single';
+
+        // DOM Elements
+        const startBtn = document.getElementById('startBtn');
+        const statusEl = document.getElementById('status');
+        const inputCanvas = document.getElementById('inputWaveform');
+        const outputCanvas = document.getElementById('outputWaveform');
+        const inputCtx = inputCanvas.getContext('2d');
+        const outputCtx = outputCanvas.getContext('2d');
+        const modeBtns = document.querySelectorAll('.mode-btn');
+        
+        // Sliders
+        const delaySlider = document.getElementById('delayTime');
+        const mixSlider = document.getElementById('mixBalance');
+        const detuneSlider = document.getElementById('detune');
+        const feedbackSlider = document.getElementById('feedback');
+        const pitchShiftSlider = document.getElementById('pitchShift');
+        const dryWetSlider = document.getElementById('dryWet');
+
+        // Value Displays
+        const delayValue = document.getElementById('delayValue');
+        const mixValue = document.getElementById('mixValue');
+        const detuneValue = document.getElementById('detuneValue');
+        const feedbackValue = document.getElementById('feedbackValue');
+        const pitchValue = document.getElementById('pitchValue');
+        const dryWetValue = document.getElementById('dryWetValue');
+
+        // Resize canvases
+        function resizeCanvases() {
+            inputCanvas.width = inputCanvas.offsetWidth;
+            inputCanvas.height = inputCanvas.offsetHeight;
+            outputCanvas.width = outputCanvas.offsetWidth;
+            outputCanvas.height = outputCanvas.offsetHeight;
+        }
+        resizeCanvases();
+        window.addEventListener('resize', resizeCanvases);
+
+        // Draw waveform
+        function drawWaveform(ctx, dataArray, color) {
+            ctx.fillStyle = '#0A0A0A';
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+
+            const sliceWidth = ctx.canvas.width / dataArray.length;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * ctx.canvas.height / 2;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            ctx.stroke();
+        }
+
+        // Setup audio chain
+        function setupAudioChain() {
+            // Create nodes
+            delayNode = audioContext.createDelay(1.0);
+            feedbackNode = audioContext.createGain();
+            dryNode = audioContext.createGain();
+            wetNode = audioContext.createGain();
+            detuneNode = audioContext.createBiquadFilter();
+            
+            analyserInput = audioContext.createAnalyser();
+            analyserOutput = audioContext.createAnalyser();
+            analyserInput.fftSize = 2048;
+            analyserOutput.fftSize = 2048;
+
+            // Connect microphone to analyser (input)
+            microphone.connect(analyserInput);
+
+            // Dry path
+            microphone.connect(dryNode);
+
+            // Wet path (delay + detune)
+            microphone.connect(delayNode);
+            delayNode.connect(feedbackNode);
+            feedbackNode.connect(delayNode); // Feedback loop
+            delayNode.connect(wetNode);
+
+            // Mix to output
+            dryNode.connect(analyserOutput);
+            wetNode.connect(analyserOutput);
+            analyserOutput.connect(audioContext.destination);
+
+            // Set initial values
+            updateEffectParams();
+        }
+
+        // Update effect parameters
+        function updateEffectParams() {
+            const delayTime = delaySlider.value / 1000;
+            const mix = mixSlider.value / 100;
+            const detune = detuneSlider.value;
+            const feedback = feedbackSlider.value / 100;
+            const dryWet = dryWetSlider.value / 100;
+
+            delayNode.delayTime.setValueAtTime(delayTime, audioContext.currentTime);
+            feedbackNode.gain.setValueAtTime(feedback, audioContext.currentTime);
+            dryNode.gain.setValueAtTime(1 - dryWet, audioContext.currentTime);
+            wetNode.gain.setValueAtTime(dryWet, audioContext.currentTime);
+            
+            detuneNode.detune.setValueAtTime(detune, audioContext.currentTime);
+        }
+
+        // Set mode
+        function setMode(mode) {
+            currentMode = mode;
+            
+            switch(mode) {
+                case 'single':
+                    delaySlider.value = 0;
+                    mixSlider.value = 50;
+                    detuneSlider.value = 0;
+                    feedbackSlider.value = 0;
+                    dryWetSlider.value = 100;
+                    break;
+                case 'double':
+                    delaySlider.value = 20;
+                    mixSlider.value = 50;
+                    detuneSlider.value = 10;
+                    feedbackSlider.value = 20;
+                    dryWetSlider.value = 50;
+                    break;
+                case 'thick':
+                    delaySlider.value = 15;
+                    mixSlider.value = 70;
+                    detuneSlider.value = 8;
+                    feedbackSlider.value = 15;
+                    dryWetSlider.value = 70;
+                    break;
+                case 'chorus':
+                    delaySlider.value = 30;
+                    mixSlider.value = 40;
+                    detuneSlider.value = 15;
+                    feedbackSlider.value = 40;
+                    dryWetSlider.value = 60;
+                    break;
+                case 'octave':
+                    delaySlider.value = 0;
+                    mixSlider.value = 50;
+                    detuneSlider.value = 0;
+                    feedbackSlider.value = 0;
+                    dryWetSlider.value = 50;
+                    break;
+            }
+
+            updateEffectParams();
+            updateValueDisplays();
+        }
+
+        // Update value displays
+        function updateValueDisplays() {
+            delayValue.textContent = `${delaySlider.value} ms`;
+            mixValue.textContent = `${mixSlider.value}/${100 - mixSlider.value}`;
+            detuneValue.textContent = `${detuneSlider.value >= 0 ? '+' : ''}${detuneSlider.value} cents`;
+            feedbackValue.textContent = `${feedbackSlider.value}%`;
+            pitchValue.textContent = `${pitchShiftSlider.value >= 0 ? '+' : ''}${pitchShiftSlider.value} semitones`;
+            dryWetValue.textContent = `${dryWetSlider.value}% Dry`;
+        }
+
+        // Main visualization loop
+        function visualize() {
+            if (!isListening) return;
+
+            const inputArray = new Uint8Array(analyserInput.fftSize);
+            const outputArray = new Uint8Array(analyserOutput.fftSize);
+
+            analyserInput.getByteTimeDomainData(inputArray);
+            analyserOutput.getByteTimeDomainData(outputArray);
+
+            drawWaveform(inputCtx, inputArray, '#FFD700');
+            drawWaveform(outputCtx, outputArray, '#10B981');
+
+            requestAnimationFrame(visualize);
+        }
+
+        // Start listening
+        async function startListening() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyserInput = audioContext.createAnalyser();
+                analyserOutput = audioContext.createAnalyser();
+                analyserInput.fftSize = 2048;
+                analyserOutput.fftSize = 2048;
+
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: false,
+                        noiseSuppression: false,
+                        autoGainControl: false
+                    } 
+                });
+                
+                microphone = audioContext.createMediaStreamSource(stream);
+                setupAudioChain();
+
+                isListening = true;
+                startBtn.textContent = '⏹️ หยุดใช้งาน';
+                startBtn.classList.add('active');
+                statusEl.textContent = '🎤 กำลังฟัง... (ใช้หูฟังเพื่อป้องกัน Feedback)';
+                statusEl.className = 'status active';
+                
+                visualize();
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                statusEl.textContent = '❌ ไม่สามารถเข้าถึงไมโครโฟน - กรุณาอนุญาต';
+                statusEl.className = 'status error';
+            }
+        }
+
+        // Stop listening
+        function stopListening() {
+            isListening = false;
+            if (audioContext) {
+                audioContext.close();
+            }
+            startBtn.textContent = '🎤 เริ่มใช้งาน (คลิกเพื่ออนุญาตไมค์)';
+            startBtn.classList.remove('active');
+            statusEl.textContent = '⏸️ พร้อมใช้งาน - คลิกปุ่มเริ่ม';
+            statusEl.className = 'status ready';
+            
+            // Clear canvases
+            inputCtx.fillStyle = '#0A0A0A';
+            inputCtx.fillRect(0, 0, inputCanvas.width, inputCanvas.height);
+            outputCtx.fillStyle = '#0A0A0A';
+            outputCtx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', () => {
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        });
+
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                setMode(btn.dataset.mode);
+            });
+        });
+
+        [delaySlider, mixSlider, detuneSlider, feedbackSlider, pitchShiftSlider, dryWetSlider].forEach(slider => {
+            slider.addEventListener('input', () => {
+                updateEffectParams();
+                updateValueDisplays();
+            });
+        });
+
+        // Initialize
+        updateValueDisplays();
+        
+        // Clear canvases
+        inputCtx.fillStyle = '#0A0A0A';
+        inputCtx.fillRect(0, 0, inputCanvas.width, inputCanvas.height);
+        outputCtx.fillStyle = '#0A0A0A';
+        outputCtx.fillRect(0, 0, outputCanvas.width, outputCanvas.height);
+    </script>
+</body>
+</html>

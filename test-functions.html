@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Functions</title>
+</head>
+<body>
+    <h1>Test Import/Sync Functions</h1>
+    <button onclick="testImport()">📊 Test Import CSV</button>
+    <button onclick="testSync()">🔄 Test Sync</button>
+    <div id="result"></div>
+    
+    <script>
+        // Test if functions exist
+        function testImport() {
+            document.getElementById('result').innerHTML = '<p>🔵 Checking importBookingsCSV...</p>';
+            
+            if (typeof importBookingsCSV === 'function') {
+                document.getElementById('result').innerHTML += '<p>✅ importBookingsCSV exists!</p>';
+                importBookingsCSV();
+            } else {
+                document.getElementById('result').innerHTML += '<p>❌ importBookingsCSV NOT FOUND!</p>';
+            }
+        }
+        
+        function testSync() {
+            document.getElementById('result').innerHTML = '<p>🔵 Checking syncFromWebsite...</p>';
+            
+            if (typeof syncFromWebsite === 'function') {
+                document.getElementById('result').innerHTML += '<p>✅ syncFromWebsite exists!</p>';
+                syncFromWebsite();
+            } else {
+                document.getElementById('result').innerHTML += '<p>❌ syncFromWebsite NOT FOUND!</p>';
+            }
+        }
+    </script>
+</body>
+</html>

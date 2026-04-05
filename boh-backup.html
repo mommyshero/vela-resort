@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VELA BOH - Back Office System</title>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         /* ===================================
            4-COLOR THEME VARIABLES
@@ -34,10 +34,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            font-size: 12px;
             background: var(--white);
             color: var(--black);
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         /* ===================================
@@ -140,168 +139,127 @@
             display: flex;
         }
 
-        /* Top Navigation Bar */
-        .boh-topnav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 60px;
+        /* Sidebar */
+        .boh-sidebar {
+            width: 320px;
             background: var(--white);
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            z-index: 1000;
-            gap: 20px;
+            border-right: 1px solid var(--light-gray);
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+            left: 0;
+            top: 0;
         }
 
-        .boh-topnav-logo {
-            font-size: 18px;
+        .boh-sidebar-header {
+            margin-bottom: 2rem;
+        }
+
+        .boh-sidebar-logo {
+            font-size: 1.75rem;
             font-weight: 800;
             color: var(--black);
-            letter-spacing: 2px;
-            text-decoration: none;
+            letter-spacing: 0.1em;
         }
 
-        .boh-topnav-menu {
-            display: flex;
-            gap: 4px;
-            overflow-x: auto;
-            flex: 1;
-            padding: 0 10px;
+        .boh-sidebar-subtitle {
+            font-size: 0.85rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
         }
 
-        .boh-topnav-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: var(--black);
-            font-size: 11px;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-
-        .boh-topnav-item:hover {
-            background: var(--light-gray);
-        }
-
-        .boh-topnav-item.active {
-            background: var(--yellow);
-        }
-
-        .boh-topnav-item .icon {
-            font-size: 14px;
-        }
-
-        .boh-topnav-badge {
-            background: var(--black);
-            color: var(--white);
-            padding: 2px 5px;
-            border-radius: 10px;
-            font-size: 9px;
-            margin-left: 4px;
-        }
-
-        .boh-topnav-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
+        /* Home Button */
         .boh-home-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 14px;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 1rem;
             background: var(--black);
             color: var(--white);
-            border-radius: 10px;
+            border-radius: 14px;
             text-decoration: none;
             font-weight: 700;
-            font-size: 10px;
+            margin-bottom: 1.5rem;
             transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(26, 26, 26, 0.3);
         }
 
         .boh-home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(26, 26, 26, 0.4);
             background: var(--yellow);
             color: var(--black);
         }
 
-        /* Hamburger Menu (Mobile) */
-        .boh-hamburger {
-            display: none;
+        /* Menu */
+        .boh-menu {
+            display: flex;
             flex-direction: column;
-            gap: 4px;
-            cursor: pointer;
-            padding: 8px;
+            gap: 0.5rem;
         }
 
-        .boh-hamburger span {
-            width: 20px;
-            height: 2px;
-            background: var(--black);
-            transition: all 0.3s;
-        }
-
-        /* Mobile Menu Dropdown */
-        .boh-mobile-menu {
-            display: none;
-            position: fixed;
-            top: 60px;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            border-bottom: 1px solid var(--light-gray);
-            padding: 10px;
-            z-index: 999;
-            max-height: calc(100vh - 60px);
-            overflow-y: auto;
-        }
-
-        .boh-mobile-menu.open {
-            display: block;
-        }
-
-        .boh-mobile-menu-item {
+        .boh-menu-item {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px 15px;
-            border-radius: 10px;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 14px;
             cursor: pointer;
+            transition: all 0.3s;
             text-decoration: none;
             color: var(--black);
-            font-size: 12px;
-            font-weight: 600;
         }
 
-        .boh-mobile-menu-item:hover, .boh-mobile-menu-item.active {
+        .boh-menu-item:hover {
+            background: var(--light-gray);
+        }
+
+        .boh-menu-item.active {
             background: var(--yellow);
         }
 
-        /* Main Content */
-        .boh-main {
-            margin-left: 0;
-            margin-top: 60px;
-            padding: 20px;
-            min-height: calc(100vh - 60px);
-            background: #F9FAFB;
+        .boh-menu-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            background: var(--light-gray);
         }
 
-        /* Hide old sidebar */
-        .boh-sidebar {
-            display: none;
+        .boh-menu-content {
+            flex: 1;
+        }
+
+        .boh-menu-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--black);
+        }
+
+        .boh-menu-subtitle {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-top: 0.25rem;
+        }
+
+        .boh-menu-badge {
+            background: var(--black);
+            color: var(--white);
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
         }
 
         /* Main Content */
         .boh-main {
-            margin-left: 200px;
+            margin-left: 320px;
             flex: 1;
             padding: 2rem;
             min-height: 100vh;
@@ -828,12 +786,11 @@
            RESPONSIVE
            =================================== */
         @media (max-width: 1024px) {
-            .boh-topnav-menu {
-                gap: 2px;
+            .boh-sidebar {
+                width: 280px;
             }
-            .boh-topnav-item {
-                padding: 6px 8px;
-                font-size: 10px;
+            .boh-main {
+                margin-left: 280px;
             }
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -841,19 +798,58 @@
         }
 
         @media (max-width: 768px) {
-            .boh-topnav-menu {
-                display: none;
+            .boh-sidebar {
+                position: fixed;
+                left: -100%;
+                top: 0;
+                height: 100vh;
+                z-index: 10000;
+                transition: left 0.3s ease;
+                display: block !important;
             }
-            .boh-hamburger {
-                display: flex;
-            }
-            .boh-topnav-actions {
-                flex: 1;
-                justify-content: flex-end;
+            .boh-sidebar.mobile-open {
+                left: 0;
             }
             .boh-main {
-                padding: 15px;
+                margin-left: 0;
             }
+            /* Mobile menu toggle button */
+            .boh-mobile-toggle {
+                display: flex !important;
+            }
+        }
+        
+        /* Mobile menu toggle - hidden on desktop */
+        .boh-mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 9999;
+            background: var(--black);
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1.25rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        /* Mobile sidebar overlay */
+        .boh-sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
+        }
+        .boh-sidebar-overlay.active {
+            display: block;
+        }
             .form-grid {
                 grid-template-columns: 1fr;
             }
@@ -944,106 +940,88 @@
         <!-- Mobile Sidebar Overlay -->
         <div class="boh-sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
         
-        <!-- Top Navigation Bar -->
-        <nav class="boh-topnav">
-            <a href="index.html" class="boh-topnav-logo">VELA</a>
-            
-            <!-- Hamburger Menu (Mobile) -->
-            <div class="boh-hamburger" onclick="toggleMobileMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+        <!-- Sidebar -->
+        <aside class="boh-sidebar">
+            <div class="boh-sidebar-header">
+                <div class="boh-sidebar-logo">VELA</div>
+                <div class="boh-sidebar-subtitle">Back Office System</div>
             </div>
-            
-            <!-- Horizontal Menu Items -->
-            <div class="boh-topnav-menu" id="topNavMenu">
-                <a class="boh-topnav-item active" data-section="dashboard">
-                    <span class="icon">📊</span>
-                    <span>แดชบอร์ด</span>
-                </a>
-                <a class="boh-topnav-item" data-section="bookings">
-                    <span class="icon">📝</span>
-                    <span>การจอง</span>
-                    <span class="boh-topnav-badge" id="pendingBadge">0</span>
-                </a>
-                <a class="boh-topnav-item" data-section="booking-control">
-                    <span class="icon">🔧</span>
-                    <span>ควบคุม</span>
-                    <span class="boh-topnav-badge" id="overbookingBadge">0</span>
-                </a>
-                <a class="boh-topnav-item" data-section="calendar">
-                    <span class="icon">📅</span>
-                    <span>ปฏิทิน</span>
-                </a>
-                <a class="boh-topnav-item" data-section="petty">
-                    <span class="icon">💵</span>
-                    <span>บัญชีย่อย</span>
-                </a>
-                <a class="boh-topnav-item" data-section="accounting">
-                    <span class="icon">💰</span>
-                    <span>บัญชีหลัก</span>
-                </a>
-                <a class="boh-topnav-item" data-section="vat">
-                    <span class="icon">📑</span>
-                    <span>VAT</span>
-                </a>
-                <a class="boh-topnav-item" data-section="peekaboo">
-                    <span class="icon">👁️</span>
-                    <span>Peekaboo</span>
-                </a>
-                <a class="boh-topnav-item" data-section="settings">
-                    <span class="icon">⚙️</span>
-                    <span>ตั้งค่า</span>
-                </a>
-            </div>
-            
-            <!-- Actions -->
-            <div class="boh-topnav-actions">
-                <a href="index.html" class="boh-home-btn">🏠 หน้าแรก</a>
-            </div>
-        </nav>
 
-        <!-- Mobile Menu Dropdown -->
-        <div class="boh-mobile-menu" id="mobileMenu">
-            <a class="boh-mobile-menu-item active" data-section="dashboard">
-                <span>📊</span>
-                <span>แดชบอร์ด</span>
+            <!-- Home Button -->
+            <a href="index.html" class="boh-home-btn" title="กลับหน้าแรกเว็บไซต์">
+                <span>🏠</span>
+                <span>หน้าแรก</span>
             </a>
-            <a class="boh-mobile-menu-item" data-section="bookings">
-                <span>📝</span>
-                <span>การจอง</span>
-                <span class="boh-topnav-badge" id="pendingBadgeMobile">0</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="booking-control">
-                <span>🔧</span>
-                <span>ควบคุมการจอง</span>
-                <span class="boh-topnav-badge" id="overbookingBadgeMobile">0</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="calendar">
-                <span>📅</span>
-                <span>ปฏิทินห้องพัก</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="petty">
-                <span>💵</span>
-                <span>บัญชีรายย่อย</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="accounting">
-                <span>💰</span>
-                <span>บัญชีหลัก</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="vat">
-                <span>📑</span>
-                <span>รายงานภาษี VAT</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="peekaboo">
-                <span>👁️</span>
-                <span>Peekaboo</span>
-            </a>
-            <a class="boh-mobile-menu-item" data-section="settings">
-                <span>⚙️</span>
-                <span>ตั้งค่า</span>
-            </a>
-        </div>
+
+            <!-- Navigation Menu -->
+            <nav class="boh-menu" id="bohMenu">
+                <a class="boh-menu-item active" data-section="dashboard">
+                    <div class="boh-menu-icon">📊</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">แดชบอร์ด</div>
+                        <div class="boh-menu-subtitle">ภาพรวมระบบ</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="bookings">
+                    <div class="boh-menu-icon">📝</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">การจอง</div>
+                        <div class="boh-menu-subtitle">จัดการการจอง</div>
+                    </div>
+                    <span class="boh-menu-badge" id="pendingBadge">0</span>
+                </a>
+                <a class="boh-menu-item" data-section="booking-control">
+                    <div class="boh-menu-icon">🔧</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ควบคุมการจอง</div>
+                        <div class="boh-menu-subtitle">Real-time Control</div>
+                    </div>
+                    <span class="boh-menu-badge" id="overbookingBadge">0</span>
+                </a>
+                <a class="boh-menu-item" data-section="calendar">
+                    <div class="boh-menu-icon">📅</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ปฏิทินห้องพัก</div>
+                        <div class="boh-menu-subtitle">Room Calendar</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="petty">
+                    <div class="boh-menu-icon">💵</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">บัญชีรายย่อย</div>
+                        <div class="boh-menu-subtitle">Petty Cash</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="accounting">
+                    <div class="boh-menu-icon">💰</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">บัญชีหลัก</div>
+                        <div class="boh-menu-subtitle">Main Accounting</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="vat">
+                    <div class="boh-menu-icon">📑</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">รายงานภาษี VAT</div>
+                        <div class="boh-menu-subtitle">VAT Report</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="peekaboo">
+                    <div class="boh-menu-icon">👁️</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">Peekaboo</div>
+                        <div class="boh-menu-subtitle">Auto-release</div>
+                    </div>
+                </a>
+                <a class="boh-menu-item" data-section="settings">
+                    <div class="boh-menu-icon">⚙️</div>
+                    <div class="boh-menu-content">
+                        <div class="boh-menu-title">ตั้งค่า</div>
+                        <div class="boh-menu-subtitle">การตั้งค่าระบบ</div>
+                    </div>
+                </a>
+            </nav>
+        </aside>
 
         <!-- Main Content -->
         <main class="boh-main">
@@ -1522,7 +1500,7 @@
                         <button onclick="importAllData()" class="btn btn-primary">📥 นำเข้าข้อมูลทั้งหมด</button>
                         <button onclick="showImportModal()" class="btn btn-success">📤 Import จากภายนอก</button>
                         <button onclick="exportPettyCashReportPDF()" class="btn btn-black">📊 รายงาน Petty Cash</button>
-                        <button onclick="clearAllPettyCash()" class="btn btn-danger">🗑️ ลบทั้งหมด</button>
+                        <button onclick="exportCashReceiptPDF()" class="btn btn-black">🧾 Export ใบสำคัญ</button>
                     </div>
                 </div>
 
@@ -1558,36 +1536,24 @@
                     </div>
                     <div style="margin-top: 1rem; display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;">
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #1A1A1A; border-radius: 4px;"></div>
+                            <div style="width: 16px; height: 16px; background: var(--black); border-radius: 4px;"></div>
                             <span>Website</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #10B981; border-radius: 4px;"></div>
+                            <div style="width: 16px; height: 16px; background: var(--success); border-radius: 4px;"></div>
                             <span>Facebook</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #06C755; border-radius: 4px;"></div>
+                            <div style="width: 16px; height: 16px; background: var(--yellow); border-radius: 4px;"></div>
                             <span>LINE</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #9CA3AF; border-radius: 4px;"></div>
+                            <div style="width: 16px; height: 16px; background: var(--gray); border-radius: 4px;"></div>
                             <span>Phone</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #7B1FA2; border-radius: 4px;"></div>
-                            <span>Agoda</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #EF4444; border-radius: 4px;"></div>
+                            <div style="width: 16px; height: 16px; background: var(--danger); border-radius: 4px;"></div>
                             <span>Walk-in</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #003580; border-radius: 4px;"></div>
-                            <span>Booking.com</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <div style="width: 16px; height: 16px; background: #1BA0E2; border-radius: 4px;"></div>
-                            <span>Traveloka</span>
                         </div>
                     </div>
                 </div>
@@ -1682,99 +1648,6 @@
                     </div>
                 </div>
             </section>
-
-            <!-- Cash Receipt Modal -->
-            <div class="modal-overlay" id="cashReceiptModal" style="display: none;">
-                <div class="modal-container" style="max-width: 800px; max-height: 90vh; overflow-y: auto;">
-                    <div class="modal-header">
-                        <h3>🧾 ใบสำคัญรับเงิน / ใบรับเงิน</h3>
-                        <button class="modal-close" onclick="closeCashReceiptModal()">×</button>
-                    </div>
-                    <div class="modal-body" style="padding: 2rem;">
-                        <!-- Receipt Form -->
-                        <form id="cashReceiptForm" onsubmit="generateCashReceipt(event)">
-                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
-                                <!-- Left Column -->
-                                <div class="form-group">
-                                    <label class="form-label">เลขที่ใบรับเงิน</label>
-                                    <input type="text" class="form-input" id="receiptNo" value="RV-2026-0001" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">วันที่</label>
-                                    <input type="date" class="form-input" id="receiptDate" required>
-                                </div>
-                                <div class="form-group" style="grid-column: span 2;">
-                                    <label class="form-label">ได้รับเงินจาก</label>
-                                    <input type="text" class="form-input" id="receiptFrom" placeholder="ชื่อผู้จ่ายเงิน" required>
-                                </div>
-                                <div class="form-group" style="grid-column: span 2;">
-                                    <label class="form-label">ที่อยู่</label>
-                                    <textarea class="form-input" id="receiptAddress" rows="2" placeholder="ที่อยู่ผู้จ่ายเงิน"></textarea>
-                                </div>
-                                <div class="form-group" style="grid-column: span 2;">
-                                    <label class="form-label">เป็นเงินค่า</label>
-                                    <textarea class="form-input" id="receiptFor" rows="2" placeholder="รายละเอียดการรับเงิน" required></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">จำนวนเงิน (บาท)</label>
-                                    <input type="number" class="form-input" id="receiptAmount" min="0" step="0.01" required onchange="updateReceiptAmountText()">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">ภาษีหัก ณ ที่จ่าย (%)</label>
-                                    <select class="form-select" id="receiptTax" onchange="updateReceiptAmountText()">
-                                        <option value="0">ไม่หักภาษี</option>
-                                        <option value="1">1%</option>
-                                        <option value="3">3%</option>
-                                        <option value="5">5%</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">เลขประจำตัวผู้เสียภาษี (ผู้จ่าย)</label>
-                                    <input type="text" class="form-input" id="receiptTaxId" placeholder="เลข 13 หลัก">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">ประเภทเช็ค</label>
-                                    <select class="form-select" id="receiptPaymentType">
-                                        <option value="cash">💵 เงินสด</option>
-                                        <option value="cheque">📄 เช็ค</option>
-                                        <option value="transfer">🏦 โอนเงิน</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="chequeNoGroup" style="display: none;">
-                                    <label class="form-label">เลขที่เช็ค</label>
-                                    <input type="text" class="form-input" id="receiptChequeNo" placeholder="เลขที่เช็ค">
-                                </div>
-                                <div class="form-group" id="bankGroup" style="display: none;">
-                                    <label class="form-label">ธนาคาร</label>
-                                    <input type="text" class="form-input" id="receiptBank" placeholder="ชื่อธนาคาร">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">หมายเหตุ</label>
-                                    <input type="text" class="form-input" id="receiptNote" placeholder="หมายเหตุเพิ่มเติม">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">ผู้รับเงิน</label>
-                                    <input type="text" class="form-input" id="receiptReceivedBy" value="นายธัญญพัฒน์ รัตนประเสริฐ" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">ตำแหน่ง</label>
-                                    <input type="text" class="form-input" id="receiptPosition" value="ผู้จัดการ" placeholder="ตำแหน่ง">
-                                </div>
-                            </div>
-                            
-                            <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: flex-end;">
-                                <button type="button" onclick="closeCashReceiptModal()" class="btn btn-secondary">ยกเลิก</button>
-                                <button type="submit" class="btn btn-primary">📄 สร้างใบรับเงิน</button>
-                            </div>
-                        </form>
-                        
-                        <!-- Receipt Preview -->
-                        <div id="receiptPreview" style="display: none; margin-top: 2rem; border: 2px solid var(--light-gray); border-radius: 12px; padding: 2rem; background: white;">
-                            <!-- Receipt will be rendered here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Accounting Section -->
             <section class="content-section" id="accounting">
@@ -2132,7 +2005,7 @@
                         <button onclick="resetAllData()" class="btn btn-black">🔄 Reset ทั้งหมด</button>
                     </div>
                     <p style="color: var(--gray); margin-top: 1rem; font-size: 0.9rem;">
-                        💡 รองรับไฟล์: JSON, CSV, Excel (.xlsx, .xls) | Auto-mapping columns | Preview ก่อนนำเข้า
+                        💡 รองรับไฟล์: JSON, CSV, Excel (.xlsx) | มี preview ก่อนนำเข้า | แสดง feedback ขณะประมวลผล
                     </p>
                 </div>
 
@@ -2307,7 +2180,7 @@
         
         function setupNavigation() {
             console.log('🔵 Setting up navigation...');
-            const menuItems = document.querySelectorAll('.boh-topnav-item, .boh-mobile-menu-item');
+            const menuItems = document.querySelectorAll('.boh-menu-item');
             console.log('📊 Found', menuItems.length, 'menu items');
             
             menuItems.forEach((item, index) => {
@@ -2321,20 +2194,15 @@
                     console.log('🔵 Clicked:', section);
                     showSection(section);
                     
-                    // Close mobile menu after selection
+                    // Close mobile sidebar after selection
                     if (window.innerWidth <= 768) {
-                        const mobileMenu = document.getElementById('mobileMenu');
-                        mobileMenu.classList.remove('open');
+                        const sidebar = document.querySelector('.boh-sidebar');
+                        sidebar.classList.remove('mobile-open');
                     }
                 });
             });
             
             console.log('✅ Navigation setup complete');
-        }
-
-        function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobileMenu');
-            mobileMenu.classList.toggle('open');
         }
 
         function showSection(sectionId) {
@@ -2346,7 +2214,7 @@
             });
 
             // Remove active from all menu items
-            document.querySelectorAll('.boh-topnav-item, .boh-mobile-menu-item').forEach(item => {
+            document.querySelectorAll('.boh-menu-item').forEach(item => {
                 item.classList.remove('active');
             });
 
@@ -3070,7 +2938,7 @@
                                             <td>${getChannelName(b.channel)}</td>
                                             <td>
                                                 <button class="btn btn-secondary" onclick="editBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">✏️</button>
-                                                <button class="btn btn-black" onclick="openReceiptFromBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;" title="ใบรับเงิน">🧾</button>
+                                                <button class="btn btn-primary" onclick="generateSingleInvoice(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🧾</button>
                                                 <button class="btn btn-danger" onclick="deleteBooking(${b.originalIndex})" style="padding: 0.4rem 0.8rem;">🗑️</button>
                                             </td>
                                         </tr>
@@ -4122,24 +3990,6 @@
             }
         }
 
-        function clearAllPettyCash() {
-            const count = pettyCash.length;
-            if (count === 0) {
-                alert('📭 ไม่มีรายการที่จะลบ');
-                return;
-            }
-            if (!confirm(`⚠️ คำเตือน!\n\nคุณกำลังจะลบบัญชีรายย่อยทั้งหมด ${count} รายการ\n\nการกระทำนี้ไม่สามารถย้อนกลับได้!`)) {
-                return;
-            }
-            if (!confirm('🔴 ยืนยันอีกครั้ง:\n\nลบรายการบัญชีย่อยทั้งหมดจริง ๆ หรือไม่?')) {
-                return;
-            }
-            pettyCash = [];
-            savePettyCash();
-            loadPettyCash();
-            alert(`🗑️ ลบบัญชีรายย่อยทั้งหมด ${count} รายการเรียบร้อยแล้ว`);
-        }
-
         function getCategoryName(category) {
             const names = {
                 'food': '🍽️ อาหาร',
@@ -4387,37 +4237,8 @@
                     if (ext === 'csv') {
                         data = parseCSV(content);
                     } else if (ext === 'xlsx' || ext === 'xls') {
-                        // Use SheetJS to parse Excel files
-                        showImportNotification('📊 กำลังประมวลผล Excel...', 'warning');
-                        const workbook = XLSX.read(content, { type: 'array' });
-                        const sheetName = workbook.SheetNames[0];
-                        const worksheet = workbook.Sheets[sheetName];
-                        const jsonData = XLSX.utils.sheet_to_json(worksheet);
-                        
-                        // Convert array to object with bookings array
-                        if (jsonData.length > 0) {
-                            // Check if it's booking data
-                            if (jsonData[0].guestName || jsonData[0].name || jsonData[0]['ชื่อ']) {
-                                data = {
-                                    bookings: jsonData.map(row => ({
-                                        id: row.id || row.ID || 'BK' + Date.now(),
-                                        guestName: row.guestName || row.name || row['ชื่อ'] || 'Unknown',
-                                        phone: row.phone || row.tel || row['โทร'] || '',
-                                        checkIn: row.checkIn || row['เช็คอิน'] || row.date || '',
-                                        checkOut: row.checkOut || row['เช็คเอาท์'] || '',
-                                        roomType: row.roomType || row.room || row['ห้อง'] || 'Hytte',
-                                        guests: parseInt(row.guests || row['คน'] || 1),
-                                        total: parseFloat(row.total || row.amount || row['ราคา'] || 0),
-                                        channel: row.channel || 'CSV Import',
-                                        status: row.status || 'confirmed'
-                                    }))
-                                };
-                            } else {
-                                data = { bookings: jsonData };
-                            }
-                        } else {
-                            throw new Error('Excel ไม่มีข้อมูล');
-                        }
+                        showImportNotification('📤 ไฟล์ Excel ต้องใช้ library เพิ่มเติม กรุณาแปลงเป็น CSV หรือ JSON ก่อน', 'warning');
+                        return;
                     } else {
                         data = JSON.parse(content);
                     }
@@ -4432,8 +4253,7 @@
                     savePettyCash();
                     saveBills();
                     
-                    const importCount = (data.bookings?.length || 0) + (data.pettyCash?.length || 0);
-                    showImportNotification(`✅ Import สำเร็จ! (${importCount} รายการ)`, 'success');
+                    showImportNotification('✅ Import ข้อมูลสำเร็จ!', 'success');
                     loadDashboard();
                     loadPettyCash();
                     renderCalendar();
@@ -4444,14 +4264,7 @@
             reader.onerror = function() {
                 showImportNotification('❌ ไม่สามารถอ่านไฟล์ได้', 'error');
             };
-            
-            // Read as ArrayBuffer for Excel, Text for CSV/JSON
-            const ext = file.name.split('.').pop().toLowerCase();
-            if (ext === 'xlsx' || ext === 'xls') {
-                reader.readAsArrayBuffer(file);
-            } else {
-                reader.readAsText(file);
-            }
+            reader.readAsText(file);
         }
 
         function resetAllData() {
@@ -5546,452 +5359,8 @@
             alert('📊 กำลังดาวน์โหลดรายงาน Petty Cash (PDF)...');
         }
 
-        function openReceiptFromBooking(index) {
-            const booking = bookings[index];
-            if (!booking) {
-                alert('❌ ไม่พบข้อมูลการจอง');
-                return;
-            }
-            
-            openCashReceiptModal();
-            
-            // Store booking for receipt generation
-            window.currentBookingForReceipt = booking;
-            
-            // Pre-fill form with booking data
-            setTimeout(() => {
-                document.getElementById('receiptFrom').value = booking.name || booking.guestName || '';
-                
-                // Build item list with tour types
-                let items = [];
-                const nights = calculateNights(booking.checkIn, booking.checkOut);
-                const roomName = booking.room === 'hus' ? 'Hus (บ้านใหญ่)' : 'Hytte (บ้านไม้)';
-                
-                // Room price
-                const roomPrice = booking.roomTotal || (booking.total - (booking.tourPrice || 0) - (booking.extraBed || 0));
-                items.push({
-                    name: `ที่พัก ${roomName} ${formatDate(booking.checkIn)} - ${formatDate(booking.checkOut)} (${nights} คืน)`,
-                    price: roomPrice
-                });
-                
-                // Add tour with type if exists
-                if (booking.tourPrice && booking.tourPrice > 0) {
-                    const tourTypes = {
-                        5800: 'VIP ทีลอซู (1-6 คน)',
-                        8300: 'VIP ทีลอซู (7-10 คน)',
-                        10800: 'VIP ทีลอซู (11-12 คน)',
-                        13800: 'VIP ทีลอซู (13-15 คน)',
-                        16800: 'VIP ทีลอซู (16-18 คน)',
-                        2100: 'Join Trip ทีลอซู (1 คน)',
-                        4200: 'Join Trip ทีลอซู (2 คน)',
-                        7500: 'VIP ทีลอซู-โคทะ (1-6 คน)',
-                        10000: 'VIP ทีลอซู-โคทะ (7-10 คน)',
-                        12500: 'VIP ทีลอซู-โคทะ (11-12 คน)',
-                        15500: 'VIP ทีลอซู-โคทะ (13-15 คน)',
-                        18500: 'VIP ทีลอซู-โคทะ (16-18 คน)',
-                        2500: 'รถ 4x4 ทีลอซู (1-6 คน)',
-                        3000: 'รถ 4x4 ทีลอซู (7-10 คน)',
-                        3500: 'รถ 4x4 ทีลอซู (11-18 คน)',
-                        1850: 'รถ 4x4 ออนเซ็น (1-6 คน)',
-                        2500: 'รถ 4x4 ออนเซ็น (7-10 คน)',
-                        3500: 'รถ 4x4 ออนเซ็น (11-18 คน)',
-                        1000: 'ดอยหัวหมด (1-5 คน)',
-                        1500: 'ดอยหัวหมด (6-10 คน)',
-                        2000: 'ดอยหัวหมด (11-18 คน)'
-                    };
-                    const tourName = tourTypes[booking.tourPrice] || `ทัวร์อื่นๆ`;
-                    items.push({
-                        name: `ทัวร์ ${tourName}`,
-                        price: booking.tourPrice
-                    });
-                }
-                
-                if (booking.extraBed && booking.extraBed > 0) {
-                    items.push({
-                        name: `เตียงเสริม`,
-                        price: booking.extraBed
-                    });
-                }
-                
-                // Store items for receipt
-                window.currentReceiptItems = items;
-                
-                // Format for display
-                const displayItems = items.map(i => i.price ? `${i.name} ราคา ฿${i.price.toLocaleString()}` : i.name);
-                document.getElementById('receiptFor').value = displayItems.join('\n');
-                document.getElementById('receiptAmount').value = booking.total || 0;
-                document.getElementById('receiptNote').value = `Booking: ${booking.id || index + 1} | Phone: ${booking.phone || '-'} | Channel: ${booking.channel || 'Walk-in'}`;
-            }, 100);
-        }
-
         function exportCashReceiptPDF() {
-            openCashReceiptModal();
-        }
-
-        function openCashReceiptModal() {
-            document.getElementById('cashReceiptModal').style.display = 'flex';
-            // Set today's date
-            document.getElementById('receiptDate').value = new Date().toISOString().split('T')[0];
-            // Generate receipt number
-            const today = new Date();
-            const receiptNo = `RV-${today.getFullYear()}-${String(pettyCash.length + 1).padStart(4, '0')}`;
-            document.getElementById('receiptNo').value = receiptNo;
-        }
-
-        function closeCashReceiptModal() {
-            document.getElementById('cashReceiptModal').style.display = 'none';
-            document.getElementById('receiptPreview').style.display = 'none';
-            window.currentReceiptItems = null;
-            window.currentBookingForReceipt = null;
-        }
-
-        // Show/hide cheque fields
-        document.getElementById('receiptPaymentType').addEventListener('change', function() {
-            const chequeGroup = document.getElementById('chequeNoGroup');
-            const bankGroup = document.getElementById('bankGroup');
-            if (this.value === 'cheque') {
-                chequeGroup.style.display = 'block';
-                bankGroup.style.display = 'block';
-            } else {
-                chequeGroup.style.display = 'none';
-                bankGroup.style.display = 'none';
-            }
-        });
-
-        function updateReceiptAmountText() {
-            const amount = parseFloat(document.getElementById('receiptAmount').value) || 0;
-            const taxRate = parseFloat(document.getElementById('receiptTax').value) || 0;
-            const taxAmount = amount * (taxRate / 100);
-            const netAmount = amount - taxAmount;
-            
-            // Thai number text
-            const thaiText = ThaiBaht(amount);
-            
-            // Update preview if visible
-            const preview = document.getElementById('receiptPreview');
-            if (preview.style.display !== 'none') {
-                document.getElementById('previewAmountText').textContent = '(' + thaiText + ')';
-                document.getElementById('previewAmount').textContent = '฿' + amount.toLocaleString();
-                if (taxRate > 0) {
-                    document.getElementById('previewTaxRow').style.display = 'flex';
-                    document.getElementById('previewTax').textContent = '฿' + taxAmount.toLocaleString();
-                    document.getElementById('previewNet').textContent = '฿' + netAmount.toLocaleString();
-                } else {
-                    document.getElementById('previewTaxRow').style.display = 'none';
-                }
-            }
-        }
-
-        function ThaiBaht(num) {
-            const numberText = ['ศูนย์', 'หนึ่ง', 'สอง', 'สาม', 'สี่', 'ห้า', 'หก', 'เจ็ด', 'แปด', 'เก้า'];
-            const positionText = ['', 'สิบ', 'ร้อย', 'พัน', 'หมื่น', 'แสน', 'ล้าน'];
-            
-            if (num === 0) return 'ศูนย์บาทถ้วน';
-            
-            let text = '';
-            const baht = Math.floor(num);
-            const satang = Math.round((num - baht) * 100);
-            
-            // Convert baht
-            const bahtStr = baht.toString();
-            for (let i = 0; i < bahtStr.length; i++) {
-                const digit = parseInt(bahtStr[i]);
-                const pos = bahtStr.length - i - 1;
-                
-                if (digit === 0) continue;
-                if (pos === 0 && digit === 1 && bahtStr.length > 1) {
-                    text += 'เอ็ด';
-                } else if (pos === 1 && digit === 2) {
-                    text += 'ยี่สิบ';
-                } else if (pos === 1 && digit === 1) {
-                    text += 'สิบ';
-                } else {
-                    text += numberText[digit] + positionText[pos % 6];
-                }
-                
-                if (pos >= 6) text += 'ล้าน';
-            }
-            text += 'บาท';
-            
-            // Convert satang
-            if (satang > 0) {
-                const satangStr = satang.toString();
-                for (let i = 0; i < satangStr.length; i++) {
-                    const digit = parseInt(satangStr[i]);
-                    const pos = satangStr.length - i - 1;
-                    
-                    if (digit === 0) continue;
-                    if (pos === 0 && digit === 1 && satangStr.length > 1) {
-                        text += 'เอ็ด';
-                    } else if (pos === 1 && digit === 2) {
-                        text += 'ยี่สิบ';
-                    } else if (pos === 1 && digit === 1) {
-                        text += 'สิบ';
-                    } else {
-                        text += numberText[digit] + positionText[pos];
-                    }
-                }
-                text += 'สตางค์';
-            } else {
-                text += 'ถ้วน';
-            }
-            
-            return text;
-        }
-
-        function generateCashReceipt(event) {
-            event.preventDefault();
-            
-            const data = {
-                no: document.getElementById('receiptNo').value,
-                date: document.getElementById('receiptDate').value,
-                from: document.getElementById('receiptFrom').value,
-                address: document.getElementById('receiptAddress').value,
-                for: document.getElementById('receiptFor').value,
-                amount: parseFloat(document.getElementById('receiptAmount').value),
-                taxRate: parseFloat(document.getElementById('receiptTax').value),
-                taxId: document.getElementById('receiptTaxId').value,
-                paymentType: document.getElementById('receiptPaymentType').value,
-                chequeNo: document.getElementById('receiptChequeNo').value,
-                bank: document.getElementById('receiptBank').value,
-                note: document.getElementById('receiptNote').value,
-                receivedBy: document.getElementById('receiptReceivedBy').value,
-                position: document.getElementById('receiptPosition').value
-            };
-            
-            const taxAmount = data.amount * (data.taxRate / 100);
-            const netAmount = data.amount - taxAmount;
-            
-            const paymentTypeText = {
-                'cash': '💵 เงินสด',
-                'cheque': `📄 เช็ค ${data.chequeNo} ${data.bank ? '(' + data.bank + ')' : ''}`,
-                'transfer': '🏦 โอนเงิน'
-            };
-            
-            const preview = document.getElementById('receiptPreview');
-            preview.innerHTML = `
-                <div style="font-family: 'Sarabun', sans-serif; max-width: 800px; margin: 0 auto;">
-                    <!-- Header -->
-                    <div style="text-align: center; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 3px double #000;">
-                        <div style="font-size: 24px; font-weight: 800; letter-spacing: 2px;">VELA RESORT</div>
-                        <div style="font-size: 16px; color: #333; font-weight: 600; margin-top: 4px;">Hytte & Hus</div>
-                        <div style="font-size: 12px; color: #666; margin-top: 4px;">528 หมู่ 1 ตำบลอุ้มผาง อำเภออุ้มผาง จังหวัดตาก 63170</div>
-                        <div style="font-size: 12px; color: #666;">โทร: 098-908-4356 (คุณลิ้นจี่) · 080-899-5394 (คุณเอ)</div>
-                        <div style="font-size: 12px; color: #666;">อีเมล: vela.umphang@gmail.com</div>
-                        <div style="font-size: 11px; color: #333; margin-top: 6px; font-weight: 600;">
-                            📋 เลขประจำตัวผู้เสียภาษี: 1 2001 00009235
-                        </div>
-                    </div>
-                    
-                    <!-- Title -->
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
-                        <div style="font-size: 18px; font-weight: 700; color: #1A1A1A;">ใบสำคัญรับเงิน</div>
-                        <div style="font-size: 12px; color: #666;">CASH RECEIPT</div>
-                    </div>
-                    
-                    <!-- Receipt Info -->
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 13px;">
-                        <div><strong>เลขที่:</strong> ${data.no}</div>
-                        <div><strong>วันที่:</strong> ${formatDate(data.date)}</div>
-                    </div>
-                    
-                    <!-- Main Content -->
-                    <div style="background: #f9f9f9; padding: 1.5rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                        <table style="width: 100%; font-size: 13px;">
-                            <tr>
-                                <td style="width: 150px; vertical-align: top; padding: 8px 0;"><strong>ได้รับเงินจาก</strong></td>
-                                <td style="padding: 8px 0;">${data.from}</td>
-                            </tr>
-                            ${data.address ? `<tr>
-                                <td style="vertical-align: top; padding: 8px 0;"><strong>ที่อยู่</strong></td>
-                                <td style="padding: 8px 0; white-space: pre-line;">${data.address}</td>
-                            </tr>` : ''}
-                            ${data.taxId ? `<tr>
-                                <td style="vertical-align: top; padding: 8px 0;"><strong>เลขประจำตัวผู้เสียภาษี</strong></td>
-                                <td style="padding: 8px 0;">${data.taxId}</td>
-                            </tr>` : ''}
-                        </table>
-                    </div>
-                    
-                    <!-- Item Details Table -->
-                    <div style="margin-bottom: 1.5rem;">
-                        <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-                            <thead>
-                                <tr style="background: #1A1A1A; color: white;">
-                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd;">ลำดับ</th>
-                                    <th style="padding: 10px; text-align: left; border: 1px solid #ddd;">รายการ</th>
-                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd; width: 80px;">จำนวน</th>
-                                    <th style="padding: 10px; text-align: center; border: 1px solid #ddd; width: 80px;">หน่วย</th>
-                                    <th style="padding: 10px; text-align: right; border: 1px solid #ddd; width: 100px;">ราคา/หน่วย</th>
-                                    <th style="padding: 10px; text-align: right; border: 1px solid #ddd; width: 120px;">จำนวนเงิน</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${(() => {
-                                    // Use stored items if available (from booking)
-                                    const items = window.currentReceiptItems || [];
-                                    
-                                    if (items.length > 0) {
-                                        return items.map((item, idx) => `
-                                            <tr style="background: ${idx % 2 === 0 ? '#fff' : '#f9f9f9'};">
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">${idx + 1}</td>
-                                                <td style="padding: 10px; text-align: left; border: 1px solid #ddd;">${item.name}</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">ครั้ง</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">${item.price ? '฿' + item.price.toLocaleString() : '-'}</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">${item.price ? '฿' + item.price.toLocaleString() : '-'}</td>
-                                            </tr>
-                                        `).join('');
-                                    }
-                                    
-                                    // Fallback: parse from text
-                                    const lines = data.for.split('\n').filter(l => l.trim());
-                                    if (lines.length === 0) {
-                                        return `
-                                            <tr style="background: #fff;">
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1</td>
-                                                <td style="padding: 10px; text-align: left; border: 1px solid #ddd;">${data.for}</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">ครั้ง</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">-</td>
-                                            </tr>
-                                        `;
-                                    }
-                                    
-                                    return lines.map((line, idx) => {
-                                        const item = line.trim();
-                                        const priceMatch = item.match(/฿([0-9,]+)/);
-                                        const price = priceMatch ? parseInt(priceMatch[1].replace(/,/g, '')) : null;
-                                        
-                                        return `
-                                            <tr style="background: ${idx % 2 === 0 ? '#fff' : '#f9f9f9'};">
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">${idx + 1}</td>
-                                                <td style="padding: 10px; text-align: left; border: 1px solid #ddd;">${item}</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">1</td>
-                                                <td style="padding: 10px; text-align: center; border: 1px solid #ddd;">ครั้ง</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">${price ? '฿' + price.toLocaleString() : '-'}</td>
-                                                <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">${price ? '฿' + price.toLocaleString() : '-'}</td>
-                                            </tr>
-                                        `;
-                                    }).join('');
-                                })()}
-                                <tr style="background: #1A1A1A; color: white; font-weight: 700;">
-                                    <td colspan="5" style="padding: 10px; text-align: right; border: 1px solid #ddd;">รวมเป็นเงินทั้งสิ้น</td>
-                                    <td style="padding: 10px; text-align: right; border: 1px solid #ddd;">฿${data.amount.toLocaleString()}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <!-- Amount in Thai Text -->
-                    <div style="background: #FFD700; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center;">
-                        <div style="font-size: 14px; font-weight: 600; color: #1A1A1A;">
-                            <strong>จำนวนเงิน (ตัวอักษร):</strong> ${ThaiBaht(data.amount)}
-                        </div>
-                    </div>
-                    
-                    <!-- Payment Info -->
-                    <div style="background: #f9f9f9; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem;">
-                        <table style="width: 100%; font-size: 13px;">
-                            <tr>
-                                <td style="width: 150px; padding: 6px 0;"><strong>ประเภทการชำระ</strong></td>
-                                <td style="padding: 6px 0;">${paymentTypeText[data.paymentType]}</td>
-                            </tr>
-                            ${data.note ? `<tr>
-                                <td style="padding: 6px 0;"><strong>หมายเหตุ</strong></td>
-                                <td style="padding: 6px 0;">${data.note}</td>
-                            </tr>` : ''}
-                        </table>
-                    </div>
-                    
-                    <!-- Signature Boxes -->
-                    <div style="display: flex; justify-content: space-between; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee;">
-                        <div style="text-align: center; width: 30%;">
-                            <div style="height: 80px; border-bottom: 1px solid #000; margin-bottom: 8px;"></div>
-                            <div style="font-size: 12px;"><strong>ผู้จ่ายเงิน</strong></div>
-                            <div style="height: 20px; border-bottom: 1px dotted #999; margin-top: 8px;"></div>
-                            <div style="font-size: 11px; color: #666;">วันที่ ........../........../..........</div>
-                        </div>
-                        <div style="text-align: center; width: 30%;">
-                            <div style="height: 80px; border-bottom: 1px solid #000; margin-bottom: 8px;"></div>
-                            <div style="font-size: 12px;"><strong>ผู้รับเงิน</strong></div>
-                            <div style="font-size: 11px;">(${data.receivedBy})</div>
-                            ${data.position ? `<div style="font-size: 11px; color: #666;">${data.position}</div>` : ''}
-                            <div style="font-size: 11px; color: #666;">วันที่ ${formatDate(data.date)}</div>
-                        </div>
-                        <div style="text-align: center; width: 30%;">
-                            <div style="height: 80px; border-bottom: 1px solid #000; margin-bottom: 8px;"></div>
-                            <div style="font-size: 12px;"><strong>ผู้อนุมัติ</strong></div>
-                            <div style="height: 20px; border-bottom: 1px dotted #999; margin-top: 8px;"></div>
-                            <div style="font-size: 11px; color: #666;">วันที่ ........../........../..........</div>
-                        </div>
-                    </div>
-                    
-                    <!-- Footer -->
-                    <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid #eee; font-size: 10px; color: #999;">
-                        เอกสารนี้สร้างโดยระบบ BOH - Vela Resort<br>
-                        พิมพ์เมื่อ: ${new Date().toLocaleString('th-TH')}
-                    </div>
-                </div>
-                
-                <!-- Action Buttons -->
-                <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem; justify-content: center;">
-                    <button onclick="printCashReceipt()" class="btn btn-primary">🖨️ พิมพ์</button>
-                    <button onclick="saveCashReceiptToPetty()" class="btn btn-success">💾 บันทึกเข้าบัญชีย่อย</button>
-                    <button onclick="closeCashReceiptModal()" class="btn btn-secondary">ปิด</button>
-                </div>
-            `;
-            preview.style.display = 'block';
-            
-            // Store data for later use
-            window.currentReceiptData = data;
-        }
-
-        function printCashReceipt() {
-            const preview = document.getElementById('receiptPreview');
-            const printWindow = window.open('', '_blank');
-            printWindow.document.write(`
-                <html>
-                <head>
-                    <title>ใบสำคัญรับเงิน - ${window.currentReceiptData?.no || ''}</title>
-                    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-                    <style>
-                        * { margin: 0; padding: 0; box-sizing: border-box; }
-                        body { font-family: 'Sarabun', sans-serif; padding: 20px; }
-                        @media print { body { padding: 0; } }
-                    </style>
-                </head>
-                <body>
-                    ${preview.innerHTML.split('<!-- Action Buttons -->')[0]}
-                </body>
-                </html>
-            `);
-            printWindow.document.close();
-            printWindow.print();
-        }
-
-        function saveCashReceiptToPetty() {
-            if (!window.currentReceiptData) return;
-            
-            const data = window.currentReceiptData;
-            const petty = {
-                id: 'PET' + (pettyCash.length + 1).toString().padStart(3, '0'),
-                type: 'income',
-                amount: data.amount,
-                category: 'capital',
-                description: `ใบรับเงิน ${data.no} - ${data.for}`,
-                date: data.date,
-                party: data.from,
-                note: `Receipt: ${data.no}`
-            };
-            
-            pettyCash.push(petty);
-            savePettyCash();
-            loadPettyCash();
-            
-            alert('✅ บันทึกเข้าบัญชีย่อยเรียบร้อยแล้ว!');
-            closeCashReceiptModal();
+            alert('🧾 กำลัง Export บิลเงินสด (PDF)...');
         }
 
         function openPulseIntegration() {

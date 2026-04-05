@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vela Resort - Update Database</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #1A1A1A;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+        .subtitle {
+            text-align: center;
+            color: #6B7280;
+            margin-bottom: 2rem;
+        }
+        .status-box {
+            background: #F3F4F6;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        .status-item:last-child { border-bottom: none; }
+        .status-label { color: #4B5563; font-weight: 500; }
+        .status-value { font-weight: 700; color: #1A1A1A; }
+        .btn {
+            width: 100%;
+            padding: 1.25rem;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1rem;
+        }
+        .btn-primary {
+            background: #FFD700;
+            color: #000000;
+        }
+        .btn-primary:hover {
+            background: #F59E0B;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        .btn-secondary {
+            background: #F3F4F6;
+            color: #1A1A1A;
+        }
+        .btn-secondary:hover {
+            background: #E5E7EB;
+        }
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+        .log-box {
+            background: #1A1A1A;
+            color: #10B981;
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 1.5rem;
+            display: none;
+        }
+        .log-box.active { display: block; }
+        .success { color: #10B981; }
+        .error { color: #EF4444; }
+        .warning { color: #F59E0B; }
+        .info { color: #3B82F6; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Vela Resort Database Update</h1>
+        <p class="subtitle">อัพเดทข้อมูลจาก index.html ลง localStorage</p>
+
+        <div class="status-box">
+            <div class="status-item">
+                <span class="status-label">🏠 ห้องพัก</span>
+                <span class="status-value" id="rooms-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">🎯 ทัวร์</span>
+                <span class="status-value" id="tours-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">💧 น้ำตก</span>
+                <span class="status-value" id="waterfalls-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">📅 ฤดูกาล</span>
+                <span class="status-value" id="seasons-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">📋 Booking ที่มีอยู่</span>
+                <span class="status-value" id="bookings-count">-</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">💰 Petty Cash ที่มีอยู่</span>
+                <span class="status-value" id="petty-count">-</span>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="runUpdate()">
+            🚀 อัพเดทฐานข้อมูล
+        </button>
+        
+        <button class="btn btn-secondary" onclick="checkCurrentData()">
+            🔍 ตรวจสอบข้อมูลปัจจุบัน
+        </button>
+        
+        <button class="btn btn-danger" onclick="clearAllData()">
+            ⚠️ ล้างข้อมูลทั้งหมด (Reset)
+        </button>
+
+        <div class="log-box" id="logBox"></div>
+    </div>
+
+    <script src="update-database.js"></script>
+    <script>
+        function log(message, type = 'info') {
+            const logBox = document.getElementById('logBox');
+            logBox.classList.add('active');
+            const timestamp = new Date().toLocaleTimeString('th-TH');
+            const className = type === 'error' ? 'error' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : 'info';
+            logBox.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            logBox.scrollTop = logBox.scrollHeight;
+        }
+
+        function checkCurrentData() {
+            log('🔍 Checking current data...', 'info');
+            
+            const rooms = JSON.parse(localStorage.getItem('vela_rooms')) || {};
+            const tours = JSON.parse(localStorage.getItem('vela_tours')) || [];
+            const waterfalls = JSON.parse(localStorage.getItem('vela_waterfalls')) || [];
+            const seasons = JSON.parse(localStorage.getItem('vela_seasons')) || {};
+            const bookings = JSON.parse(localStorage.getItem('vela_bookings')) || [];
+            const petty = JSON.parse(localStorage.getItem('vela_petty')) || [];
+
+            document.getElementById('rooms-count').textContent = Object.keys(rooms).length;
+            document.getElementById('tours-count').textContent = tours.length;
+            document.getElementById('waterfalls-count').textContent = waterfalls.length;
+            document.getElementById('seasons-count').textContent = Object.keys(seasons).length;
+            document.getElementById('bookings-count').textContent = bookings.length;
+            document.getElementById('petty-count').textContent = petty.length;
+
+            log(`✅ Rooms: ${Object.keys(rooms).length}`, 'success');
+            log(`✅ Tours: ${tours.length}`, 'success');
+            log(`✅ Waterfalls: ${waterfalls.length}`, 'success');
+            log(`✅ Seasons: ${Object.keys(seasons).length}`, 'success');
+            log(`✅ Bookings: ${bookings.length}`, 'success');
+            log(`✅ Petty Cash: ${petty.length}`, 'success');
+        }
+
+        function runUpdate() {
+            log('🚀 Starting database update...', 'info');
+            
+            try {
+                const result = updateVelaDatabase();
+                
+                document.getElementById('rooms-count').textContent = result.rooms;
+                document.getElementById('tours-count').textContent = result.tours;
+                document.getElementById('waterfalls-count').textContent = result.waterfalls;
+                document.getElementById('bookings-count').textContent = result.bookings;
+                document.getElementById('petty-count').textContent = result.pettyCash;
+                
+                log('🎉 Update completed successfully!', 'success');
+                log(`📊 Summary: ${result.rooms} rooms, ${result.tours} tours, ${result.waterfalls} waterfalls`, 'success');
+                
+                alert('✅ อัพเดทฐานข้อมูลสำเร็จ!\n\n' +
+                      `🏠 ห้องพัก: ${result.rooms}\n` +
+                      `🎯 ทัวร์: ${result.tours}\n` +
+                      `💧 น้ำตก: ${result.waterfalls}\n` +
+                      `📋 Booking: ${result.bookings}\n` +
+                      `💰 Petty Cash: ${result.pettyCash}`);
+            } catch (error) {
+                log(`❌ Error: ${error.message}`, 'error');
+                alert('❌ เกิดข้อผิดพลาด: ' + error.message);
+            }
+        }
+
+        function clearAllData() {
+            if (confirm('⚠️ คำเตือน: การกระทำนี้จะลบข้อมูลทั้งหมด!\n\nคุณแน่ใจหรือไม่?')) {
+                if (confirm('⚠️ ยืนยันอีกครั้ง: ข้อมูลจะหายไปทั้งหมด!')) {
+                    localStorage.removeItem('vela_rooms');
+                    localStorage.removeItem('vela_tours');
+                    localStorage.removeItem('vela_waterfalls');
+                    localStorage.removeItem('vela_seasons');
+                    localStorage.removeItem('vela_bookings');
+                    localStorage.removeItem('vela_petty');
+                    localStorage.removeItem('vela_general_ledger');
+                    localStorage.removeItem('vela_bills');
+                    localStorage.removeItem('vela_bill_images');
+                    localStorage.removeItem('vela_accounting');
+                    localStorage.removeItem('vela_invoices');
+                    
+                    log('🗑️ All data cleared!', 'warning');
+                    checkCurrentData();
+                    alert('✅ ล้างข้อมูลทั้งหมดแล้ว');
+                }
+            }
+        }
+
+        // Auto-check on load
+        window.addEventListener('load', checkCurrentData);
+    </script>
+</body>
+</html>

@@ -7,22 +7,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Kanit', sans-serif; font-size: 14px; line-height: 2; color: #333; background: #fff; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Kanit', sans-serif; font-size: 12px; line-height: 1.6; color: #333; background: #fff; -webkit-tap-highlight-color: transparent; }
         
         /* Header */
-        .logo { font-size: 13px; font-weight: 800; color: #1a1a1a; position: fixed; top: 8px; right: 12px; z-index: 1001; letter-spacing: 3px; background: rgba(255,255,255,0.9); padding: 4px 10px; border-radius: 12px; }
+        .logo { font-size: 18px; font-weight: 800; color: #1a1a1a; position: fixed; top: 10px; right: 15px; z-index: 1001; letter-spacing: 4px; background: rgba(255,255,255,0.9); padding: 5px 12px; border-radius: 15px; }
         
-        nav { position: fixed; top: 35px; right: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 1000; }
-        nav a { background: rgba(255,255,255,0.95); padding: 5px 10px; border-radius: 12px; font-size: 10px; text-decoration: none; color: #1a1a1a; font-weight: 600; }
+        nav { position: fixed; top: 45px; right: 15px; display: flex; flex-direction: column; gap: 8px; z-index: 1000; }
+        nav a { background: rgba(255,255,255,0.95); padding: 6px 12px; border-radius: 15px; font-size: 10px; text-decoration: none; color: #1a1a1a; font-weight: 600; }
         nav a:active { background: #FFD700; }
-        .nav-ai { background: #1A1A1A !important; color: #FFD700 !important; border-radius: 12px; font-weight: 600; border: 1px solid #FFD700; }
+        .nav-ai { background: #1A1A1A !important; color: #FFD700 !important; border-radius: 15px; font-weight: 600; border: 1px solid #FFD700; }
         
-        .weather { position: fixed; top: 8px; left: 12px; background: rgba(255,255,255,0.95); padding: 4px 8px; border-radius: 12px; font-size: 10px; font-weight: 600; z-index: 1001; }
-        .weather-temp { font-size: 10px; font-weight: 700; }
+        .weather { position: fixed; top: 10px; left: 15px; background: rgba(255,255,255,0.95); padding: 5px 10px; border-radius: 15px; font-size: 10px; font-weight: 600; z-index: 1001; }
+        .weather-temp { font-size: 12px; font-weight: 700; }
         
         /* Hero */
         .hero { 
-            min-height: 75vh; 
+            min-height: 100vh; 
             background-size: cover; 
             background-position: center; 
             display: flex; 
@@ -31,7 +31,7 @@
             align-items: center; 
             color: white; 
             text-align: center; 
-            padding: 60px 15px 45px 15px; 
+            padding: 80px 20px 60px 20px; 
             transition: background-image 2.5s ease-in-out, opacity 1s ease;
             position: relative;
             z-index: 1;
@@ -53,18 +53,17 @@
         }
         
         .hero h1 { 
-            font-size: 24px; 
+            font-size: 36px; 
             font-weight: 800; 
-            letter-spacing: 3px; 
-            margin-bottom: 6px; 
+            letter-spacing: 4px; 
+            margin-bottom: 8px; 
             text-shadow: 0 2px 10px rgba(0,0,0,0.3);
             transition: opacity 0.8s ease, transform 0.8s ease;
             animation: heroTextFadeIn 1.5s ease-out 0.5s both;
-            line-height: 1.3;
         }
         
         @keyframes heroTextFadeIn {
-            from { opacity: 0; transform: translateY(12px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
@@ -74,7 +73,6 @@
             text-shadow: 0 1px 5px rgba(0,0,0,0.3);
             transition: opacity 0.8s ease, transform 0.8s ease;
             animation: heroTextFadeIn 1.5s ease-out 0.8s both;
-            line-height: 1.7;
         }
         
         .hero.scrolled {
@@ -82,235 +80,120 @@
         }
         .hero.scrolled h1, .hero.scrolled p {
             opacity: 0;
-            transform: translateY(-15px);
+            transform: translateY(-20px);
         }
         
         /* Hero Dots Animation */
-        .hero-dots { position: absolute; bottom: 22px; display: flex; gap: 6px; animation: heroTextFadeIn 1.5s ease-out 1.2s both; }
-        .hero-dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+        .hero-dots { position: absolute; bottom: 30px; display: flex; gap: 8px; animation: heroTextFadeIn 1.5s ease-out 1.2s both; }
+        .hero-dot { width: 8px; height: 8px; background: rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
         .hero-dot.active { background: #FFD700; transform: scale(1.3); }
         .hero-dot:hover { transform: scale(1.2); }
         
         /* Badges Animation */
-        .badges { position: absolute; bottom: 60px; right: 12px; display: flex; flex-direction: column; gap: 5px; animation: heroTextFadeIn 1.5s ease-out 1.5s both; }
-        .badge { background: white; padding: 5px 9px; border-radius: 12px; font-size: 10px; display: flex; align-items: center; gap: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #1A1A1A; font-weight: 600; }
-        .badge .score { background: #1A1A1A; color: #FFD700; padding: 2px 5px; border-radius: 3px; font-weight: 700; font-size: 10px; }
+        .badges { position: absolute; bottom: 80px; right: 15px; display: flex; flex-direction: column; gap: 6px; animation: heroTextFadeIn 1.5s ease-out 1.5s both; }
+        .badge { background: white; padding: 6px 12px; border-radius: 15px; font-size: 10px; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); color: #1A1A1A; font-weight: 600; }
+        .badge .score { background: #1A1A1A; color: #FFD700; padding: 3px 6px; border-radius: 4px; font-weight: 700; font-size: 9px; }
         .badge.traveloka .score { background: #1A1A1A; }
         
         /* Sections */
-        section { padding: 60px 12px; margin-bottom: 50px; }
-        section h2 { font-size: 17px; font-weight: 800; text-align: center; margin-bottom: 12px; line-height: 1.6; }
-        section h3 { font-size: 12px; text-align: center; color: #666; margin-bottom: 30px; line-height: 1.7; }
-        
-        /* Section Separators */
-        #rooms { border-bottom: 1px solid #E5E7EB; padding-bottom: 50px; }
-        #tours-packages { border-bottom: 1px solid #E5E7EB; padding-bottom: 50px; }
-        #tours { border-bottom: 1px solid #E5E7EB; padding-bottom: 50px; }
-        
-        /* Grid Layout for sections */
-        /* Tour Packages - reduced 50% */
-        #tours-packages { 
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            max-width: 48%;
-            margin: 0 auto;
-        }
-        #tours-packages h2, #tours-packages h3 {
-            grid-column: 1 / -1;
-        }
-        
-        /* Waterfall section - reduced 50% */
-        #tours { 
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 50%;
-            margin: 0 auto;
-        }
-        #tours h2, #tours h3 {
-            grid-column: 1 / -1;
-        }
-        
-        /* Rooms */
-        #rooms { 
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 70%;
-            margin: 0 auto;
-        }
-        #rooms h2, #rooms h3 {
-            grid-column: 1 / -1;
-        }
-        
-        /* Rooms container - 2 columns */
-        .rooms {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            grid-column: 1 / -1;
-        }
-        
-        /* Gallery */
-        #gallery { 
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 24px;
-            max-width: 84%;
-            margin: 0 auto;
-        }
-        #gallery h2, #gallery h3 {
-            grid-column: 1 / -1;
-        }
-        
-        /* Center content in cards */
-        .room-card, .tour-card, .gallery-item {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .room-card img, .tour-card img {
-            display: block;
-            margin: 0 auto;
-        }
+        section { padding: 40px 15px; }
+        section h2 { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+        section h3 { font-size: 11px; text-align: center; color: #666; margin-bottom: 25px; }
         
         /* Room Cards */
-        .room-card { background: #f9f9f9; border-radius: 9px; overflow: hidden; text-align: center; margin-bottom: 15px; }
+        .rooms { display: flex; flex-direction: column; gap: 20px; }
+        .room-card { background: #f9f9f9; border-radius: 12px; overflow: hidden; }
         .room-image { 
             width: 100%;
             background: #1a1a1a; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: block; 
             overflow: hidden; 
             position: relative;
         }
         .room-image img { 
-            width: 50%; 
+            width: 100%; 
             height: auto;
             display: none;
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
-            margin: 0 auto;
         }
         .room-image img.active {
             display: block;
             opacity: 1;
         }
-        .room-content { padding: 20px; text-align: left; }
-        .room-content h3 { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: #1a1a1a; text-align: left; line-height: 1.5; }
-        .room-content .subtitle { font-size: 10px; color: #666; margin-bottom: 15px; line-height: 1.7; }
+        .room-content { padding: 16px; }
+        .room-content h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: #1a1a1a; text-align: left; }
+        .room-content .subtitle { font-size: 10px; color: #666; margin-bottom: 12px; }
         
-        .room-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .room-tag { background: #E3F2FD; color: #1565C0; padding: 6px 12px; border-radius: 12px; font-size: 10px; font-weight: 500; }
+        .room-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+        .room-tag { background: #E3F2FD; color: #1565C0; padding: 4px 8px; border-radius: 10px; font-size: 9px; font-weight: 500; }
         
-        .room-pricing { background: #F5F5F5; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
-        .price-row { display: flex; justify-content: space-between; padding: 6px 0; font-size: 10px; line-height: 1.8; }
+        .room-pricing { background: #F5F5F5; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+        .price-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 10px; }
         
-        /* Tour Cards - reduced size */
-        .tour-card { background: #f9f9f9; border-radius: 9px; overflow: hidden; text-align: center; margin-bottom: 18px; }
-        .tour-card img { width: 50%; height: auto; object-fit: cover; display: block; margin: 0 auto; }
-        .tour-card h4 { font-size: 10px; font-weight: 700; padding: 15px 15px 8px; color: #1a1a1a; text-align: left; line-height: 1.6; }
-        .tour-card p { font-size: 10px; color: #666; padding: 0 15px 10px; text-align: left; line-height: 1.7; }
-        .tour-price { font-size: 13px; font-weight: 700; color: #1a1a1a; padding: 0 15px 10px; text-align: left; }
+        /* Tour Cards */
+        .tour-card { background: #f9f9f9; border-radius: 12px; overflow: hidden; margin-bottom: 15px; }
+        .tour-card img { width: 100%; height: 180px; object-fit: cover; }
+        .tour-card h4 { font-size: 13px; font-weight: 700; padding: 12px 12px 6px; color: #1a1a1a; }
+        .tour-card p { font-size: 10px; color: #666; padding: 0 12px 8px; }
+        .tour-price { font-size: 14px; font-weight: 700; color: #1a1a1a; padding: 0 12px 8px; }
         .tour-features { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 12px 12px; }
-        .tour-feature { background: #E8F5E9; color: #2E7D32; padding: 3px 6px; border-radius: 6px; font-size: 10px; }
+        .tour-feature { background: #E8F5E9; color: #2E7D32; padding: 3px 6px; border-radius: 8px; font-size: 8px; }
         
-        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 15px 15px; }
-        .info-item { background: #F5F5F5; padding: 8px 10px; border-radius: 6px; text-align: center; }
-        .info-item .label { font-size: 10px; color: #666; }
-        .info-item .value { font-size: 13px; font-weight: 700; color: #1a1a1a; }
+        .info-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 12px 12px; }
+        .info-item { background: #F5F5F5; padding: 6px 8px; border-radius: 6px; text-align: center; }
+        .info-item .label { font-size: 8px; color: #666; }
+        .info-item .value { font-size: 11px; font-weight: 700; color: #1a1a1a; }
         
-        /* Gallery - smaller tabs, larger images */
-        .gallery-tabs { display: flex; gap: 8px; margin-bottom: 18px; overflow-x: auto; padding-bottom: 5px; justify-content: center; }
-        .gallery-tab { background: #E5E7EB; border: none; padding: 8px 14px; border-radius: 15px; font-size: 10px; font-weight: 600; cursor: pointer; white-space: nowrap; }
+        /* Gallery */
+        .gallery-tabs { display: flex; gap: 8px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 5px; }
+        .gallery-tab { background: #E5E7EB; border: none; padding: 8px 16px; border-radius: 20px; font-size: 10px; font-weight: 600; cursor: pointer; white-space: nowrap; }
         .gallery-tab.active { background: #1a1a1a; color: white; }
         
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; max-width: 100%; margin: 0 auto; }
-        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center; margin-bottom: 0; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .gallery-item:hover img { transform: scale(1.05); }
-        
-        /* Lightbox */
-        .lightbox {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 5000;
-            align-items: center;
-            justify-content: center;
-            cursor: zoom-out;
-        }
-        .lightbox.active {
-            display: flex;
-        }
-        .lightbox img {
-            max-width: 95%;
-            max-height: 95%;
-            object-fit: contain;
-            border-radius: 10px;
-            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
-        }
-        .lightbox-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            cursor: pointer;
-            font-weight: 700;
-            color: #1A1A1A;
-        }
         .gallery-item[data-category="video"]::after {
             content: '▶';
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-size: 10px;
+            font-size: 40px;
             color: white;
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
             pointer-events: none;
         }
         
         /* Contact */
-        .contact { background: #1a1a1a; color: white; padding: 50px 15px; text-align: center; margin-top: 35px; }
+        .contact { background: #1a1a1a; color: white; padding: 40px 15px; text-align: center; }
         .contact h2 { color: #FFD700; }
-        .contact p { font-size: 10px; margin-bottom: 8px; opacity: 0.9; line-height: 1.8; }
+        .contact p { font-size: 11px; margin-bottom: 6px; opacity: 0.9; }
         
         /* Footer */
-        footer { background: #000; color: rgba(255,255,255,0.5); text-align: center; padding: 18px; font-size: 10px; line-height: 1.6; }
+        footer { background: #000; color: rgba(255,255,255,0.5); text-align: center; padding: 20px; font-size: 9px; }
         
         /* Book Button */
         .book-btn { 
             background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
             color: #000; 
             border: none; 
-            padding: 12px 20px; 
-            border-radius: 19px; 
-            font-size: 10px; 
+            padding: 14px 24px; 
+            border-radius: 25px; 
+            font-size: 11px; 
             font-weight: 700; 
             cursor: pointer; 
             width: 100%; 
             position: relative;
             overflow: hidden;
-            box-shadow: 0 3px 11px rgba(255, 215, 0, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
             transition: all 0.3s ease;
         }
         .book-btn:hover { 
             background: linear-gradient(135deg, #000 0%, #333 100%); 
             color: #FFD700;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
             transform: translateY(-2px);
         }
         .book-btn:active {
@@ -330,8 +213,8 @@
             left: 100%;
         }
         @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 3px 11px rgba(255, 215, 0, 0.3); }
-            50% { box-shadow: 0 3px 19px rgba(255, 215, 0, 0.6); }
+            0%, 100% { box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 4px 25px rgba(255, 215, 0, 0.6); }
         }
         .book-btn.pulse {
             animation: pulse-glow 2s infinite;
@@ -356,20 +239,20 @@
         }
         .modal-container {
             background: white;
-            border-radius: 15px;
+            border-radius: 20px;
             width: 95%;
-            max-width: 375px;
+            max-width: 500px;
             max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 19px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.3);
             animation: modalSlideIn 0.3s ease;
         }
         @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(-22px); }
+            from { opacity: 0; transform: translateY(-30px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .modal-header {
-            padding: 1rem 1.1rem;
+            padding: 1.25rem 1.5rem;
             border-bottom: 2px solid #E5E7EB;
             display: flex;
             justify-content: space-between;
@@ -378,22 +261,21 @@
             top: 0;
             background: #FFFFFF;
             z-index: 1;
-            border-radius: 15px 15px 0 0;
+            border-radius: 20px 20px 0 0;
         }
         .modal-header h3 {
-            font-size: 0.71rem;
+            font-size: 1.25rem;
             font-weight: 800;
             color: #1A1A1A;
             margin: 0;
-            line-height: 1.5;
         }
         .modal-close {
-            width: 18px;
-            height: 18px;
+            width: 36px;
+            height: 36px;
             background: #F3F4F6;
             border: none;
             border-radius: 50%;
-            font-size: 0.85rem;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.3s;
             color: #1A1A1A;
@@ -407,29 +289,29 @@
             transform: rotate(90deg);
         }
         .modal-body {
-            padding: 1.1rem;
+            padding: 1.5rem;
         }
         .form-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
+            gap: 1rem;
         }
         .form-group {
             display: flex;
             flex-direction: column;
-            gap: 0.4rem;
+            gap: 0.5rem;
         }
         .form-group label {
-            font-size: 0.54rem;
+            font-size: 0.9rem;
             color: #4B5563;
             font-weight: 600;
         }
         .form-group input,
         .form-group select {
-            padding: 0.42rem 0.49rem;
+            padding: 0.875rem 1rem;
             border: 2px solid #E5E7EB;
-            border-radius: 9px;
-            font-size: 0.59rem;
+            border-radius: 12px;
+            font-size: 1rem;
             background: #FFFFFF;
             transition: all 0.3s;
         }
@@ -437,46 +319,45 @@
         .form-group select:focus {
             outline: none;
             border-color: #FFD700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.2);
         }
         .price-display {
-            margin-top: 1.1rem;
-            padding: 0.9rem;
+            margin-top: 1.5rem;
+            padding: 1.25rem;
             background: #F9FAFB;
-            border-radius: 9px;
+            border-radius: 12px;
             border: 2px solid #E5E7EB;
         }
         .price-display h4 {
-            font-size: 0.54rem;
+            font-size: 0.95rem;
             color: #1A1A1A;
-            margin-bottom: 0.4rem;
+            margin-bottom: 0.75rem;
         }
         .price-display .price-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.26rem 0;
-            font-size: 0.54rem;
+            padding: 0.5rem 0;
+            font-size: 0.95rem;
             color: #4B5563;
             border-bottom: 1px solid #E5E7EB;
-            line-height: 1.7;
         }
         .price-display .price-row:last-child {
             border-bottom: none;
             font-weight: 700;
             color: #1A1A1A;
-            font-size: 0.62rem;
+            font-size: 1.1rem;
         }
         .submit-btn {
             width: 100%;
-            padding: 0.49rem;
+            padding: 1rem;
             background: #1A1A1A;
             color: white;
             border: 2px solid #1A1A1A;
-            border-radius: 11px;
-            font-size: 0.62rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 0.72rem;
+            margin-top: 1.5rem;
             transition: all 0.3s;
         }
         .submit-btn:hover {
@@ -494,14 +375,14 @@
                 max-height: 95vh;
             }
             .modal-body {
-                padding: 0.75rem;
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <!-- BOH Link -->
-    <a href="javascript:void(0)" onclick="openBOHLogin()" class="boh-link" style="position: fixed; top: 10px; left: 15px; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.9); color: #666; padding: 5px 10px; border-radius: 15px; font-size: 10px; text-decoration: none; z-index: 1001; opacity: 0.4; transition: all 0.3s;" onmouseover="this.style.opacity='1';this.style.background='rgba(0,0,0,0.8)';this.style.color='#FFD700'" onmouseout="this.style.opacity='0.4';this.style.background='rgba(255,255,255,0.9)';this.style.color='#666'">🔑 BOH</a>
+    <a href="javascript:void(0)" onclick="openBOHLogin()" class="boh-link" style="position: fixed; top: 10px; left: 15px; display: flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.9); color: #666; padding: 5px 10px; border-radius: 15px; font-size: 9px; text-decoration: none; z-index: 1001; opacity: 0.4; transition: all 0.3s;" onmouseover="this.style.opacity='1';this.style.background='rgba(0,0,0,0.8)';this.style.color='#FFD700'" onmouseout="this.style.opacity='0.4';this.style.background='rgba(255,255,255,0.9)';this.style.color='#666'">🔑 BOH</a>
     
     <!-- Weather Widget -->
     <div class="weather" style="left: 80px;">
@@ -510,7 +391,7 @@
     </div>
     
     <!-- Logo -->
-    <div class="logo">VELA <a href="index.html" style="margin-left: 8px; padding: 3px 8px; background: #1A1A1A; color: #FFD700; border-radius: 10px; font-size: 10px; text-decoration: none; font-weight: 600;">TH</a></div>
+    <div class="logo">VELA</div>
     
     <!-- Navigation -->
     <nav>
@@ -530,10 +411,10 @@
                 <button class="modal-close" onclick="closeBOHLogin()">×</button>
             </div>
             <div class="modal-body" style="text-align: center; padding: 2rem;">
-                <p style="font-size: 13px; color: #666; margin-bottom: 1.5rem;">Enter password to access BOH</p>
-                <input type="password" id="bohPassword" placeholder="Password" style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 10px; text-align: center; letter-spacing: 8px;" onkeypress="if(event.key === 'Enter') verifyBOH()">
-                <p id="bohError" style="color: #EF4444; font-size: 13px; margin-top: 10px; display: none;">❌ Incorrect password</p>
-                <button onclick="verifyBOH()" style="width: 100%; margin-top: 1.5rem; padding: 12px; background: #1A1A1A; color: white; border: none; border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer;">Login</button>
+                <p style="font-size: 14px; color: #666; margin-bottom: 1.5rem;">Enter password to access BOH</p>
+                <input type="password" id="bohPassword" placeholder="Password" style="width: 100%; padding: 12px; border: 2px solid #E5E7EB; border-radius: 12px; font-size: 16px; text-align: center; letter-spacing: 8px;" onkeypress="if(event.key === 'Enter') verifyBOH()">
+                <p id="bohError" style="color: #EF4444; font-size: 12px; margin-top: 10px; display: none;">❌ Incorrect password</p>
+                <button onclick="verifyBOH()" style="width: 100%; margin-top: 1.5rem; padding: 12px; background: #1A1A1A; color: white; border: none; border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer;">Login</button>
             </div>
         </div>
     </div>
@@ -571,10 +452,10 @@
         </div>
     </div>
     
-    <!-- ==================== OUR ROOMS ==================== -->
+    <!-- Rooms Section -->
     <section id="rooms">
-        <h2>🏨 Our Rooms</h2>
-        <h3>Peaceful riverside retreat along the Mae Klong upstream, Umphang</h3>
+        <h2>Our Rooms</h2>
+        <h3>Peaceful riverside retreat along the Mae Klong headwaters, Umphang</h3>
         
         <div class="rooms">
             <!-- Hytte -->
@@ -588,7 +469,7 @@
                 <div class="room-content">
                     <h3>Hytte</h3>
                     <p class="subtitle">⭐ Popular • 5 rooms (2 persons/room)</p>
-                    <p style="font-size: 13px; margin-bottom: 12px;">Wood-concrete hybrid homes along the Mae Klong upstream with mountain and river views. Quiet and peaceful, perfect for a private getaway.</p>
+                    <p style="font-size: 10px; margin-bottom: 12px;">Wood-concrete hybrid homes along the Mae Klong headwaters with mountain and river views. Quiet and peaceful, perfect for a private getaway.</p>
                     
                     <div class="room-tags">
                         <span class="room-tag">📺 TV</span>
@@ -600,7 +481,7 @@
                     </div>
                     
                     <div class="room-pricing">
-                        <p style="font-size: 10px; color: #666; margin-bottom: 8px;">💰 Price/room/night</p>
+                        <p style="font-size: 9px; color: #666; margin-bottom: 8px;">💰 Price/room/night</p>
                         <p style="color: #4CAF50; margin-bottom: 6px; font-weight: 600;">🌿 Mar - Sep</p>
                         <div class="price-row"><span>Mon-Thu</span><span>฿750</span></div>
                         <div class="price-row"><span>Fri-Sun</span><span>฿950</span></div>
@@ -625,7 +506,7 @@
                 <div class="room-content">
                     <h3>Hus</h3>
                     <p class="subtitle">1 room (4 persons/room) • Garden view</p>
-                    <p style="font-size: 13px; margin-bottom: 12px;">Spacious family-sized wood-concrete home with garden views. Perfect for families or groups of friends.</p>
+                    <p style="font-size: 10px; margin-bottom: 12px;">Spacious family-sized wood-concrete home with garden views. Perfect for families or groups of friends.</p>
                     
                     <div class="room-tags">
                         <span class="room-tag">📺 TV</span>
@@ -637,7 +518,7 @@
                     </div>
                     
                     <div class="room-pricing">
-                        <p style="font-size: 10px; color: #666; margin-bottom: 8px;">💰 Price/room/night</p>
+                        <p style="font-size: 9px; color: #666; margin-bottom: 8px;">💰 Price/room/night</p>
                         <p style="color: #4CAF50; margin-bottom: 6px; font-weight: 600;">🌿 Mar - Sep</p>
                         <div class="price-row"><span>Mon-Thu</span><span>฿1,200</span></div>
                         <div class="price-row"><span>Fri-Sun</span><span>฿1,800</span></div>
@@ -650,11 +531,9 @@
                 </div>
             </div>
         </div>
-    </section>
-    
-    <!-- ==================== TOUR PACKAGES ==================== -->
+    <!-- Tours Section -->
     <section id="tours-packages">
-        <h2>🗺️ Tour Packages</h2>
+        <h2>Tour Packages</h2>
         <h3>Explore Thi Lo Su - Thailand's Largest Waterfall</h3>
         
         <!-- VIP 1 -->
@@ -663,19 +542,20 @@
             <h4>🌿 Thi Lo Su Waterfall Tour</h4>
             <p style="margin-bottom: 10px;">Private car + guide + lunch + sea of mist</p>
             <div class="tour-price">฿5,800 /group (1-6 persons)</div>
-            <p style="font-size: 10px; color: #666; margin-bottom: 10px;">7-10: ฿8,300 | 11-12: ฿10,800 | 13-15: ฿13,800 | 16-18: ฿16,800</p>
+            <p style="font-size: 9px; color: #666; margin-bottom: 10px;">7-10: ฿8,300 | 11-12: ฿10,800 | 13-15: ฿13,800 | 16-18: ฿16,800</p>
             
             <div style="margin-top: 12px; background: #FFFBEB; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600; width: 70px;">05:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">🏔️ Viewpoint - Sea of mist + sunrise</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">07:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
                     <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">Depart to pier</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">12:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ Lunch + 4x4 to Thi Lo Su</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">13:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">💧 Explore Thi Lo Su waterfall</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">16:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
+                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">🚣 Bamboo rafting through waterfalls</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">12:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ Lunch + 4x4 to Thi Lo Su</td></tr>
+                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">13:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">💧 Explore Thi Lo Su waterfall</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">16:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
                 </table>
-                <p style="font-size: 10px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ Note: Join Trip doesn't include Doi Hua Mot</p>
+                <p style="font-size: 9px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ Note: Join Trip doesn't include Doi Hua Mot</p>
             </div>
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'VIP Thi Lo Su')">📝 Book This Tour</button>
@@ -686,17 +566,17 @@
             <img src="video-1-thumb.jpg" alt="Join Trip">
             <h4>👥 Join Trip Thi Lo Su</h4>
             <p style="margin-bottom: 10px;">Shared tour + guide + lunch</p>
-            <div class="tour-price" style="color: #9C27B0; font-size: 10px;">฿2,100 <span style="font-size: 10px; color: #666;">/person</span></div>
-            <p style="font-size: 10px; color: #9C27B0; margin-bottom: 10px; font-weight: 600;">💡 Perfect for solo travelers/couples</p>
+            <div class="tour-price" style="color: #9C27B0; font-size: 16px;">฿2,100 <span style="font-size: 11px; color: #666;">/person</span></div>
+            <p style="font-size: 9px; color: #9C27B0; margin-bottom: 10px; font-weight: 600;">💡 Perfect for solo travelers/couples</p>
             
             <div style="margin-top: 12px; background: #F3E5F5; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #7B1FA2; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #7B1FA2; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600; width: 70px;">07:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">Meet at Vela Resort</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #CE93D8;">Arrive at Thi Lo Su</td></tr>
-                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">09:00-12:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">💧 Explore waterfall</td></tr>
+                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">09:00-12:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">🚣 Bamboo rafting</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">12:00-13:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">🍽️ Lunch</td></tr>
-                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">13:00-15:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">💧 Free time at waterfall</td></tr>
+                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">13:00-15:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">💧 Explore waterfall</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">16:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">Return to Resort</td></tr>
                 </table>
             </div>
@@ -710,19 +590,20 @@
             <h4>🌿 Thi Lo Su & Koh Tha Tour</h4>
             <p style="margin-bottom: 10px;">Private car + guide + lunch + 2 waterfalls</p>
             <div class="tour-price">฿7,500 /group (1-6 persons)</div>
-            <p style="font-size: 10px; color: #666; margin-bottom: 10px;">7-10: ฿10,000 | 11-12: ฿12,500 | 13-15: ฿15,500 | 16-18: ฿18,500</p>
+            <p style="font-size: 9px; color: #666; margin-bottom: 10px;">7-10: ฿10,000 | 11-12: ฿12,500 | 13-15: ฿15,500 | 16-18: ฿18,500</p>
             
             <div style="margin-top: 12px; background: #FFFBEB; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600; width: 70px;">05:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">🏔️ Sea of mist viewpoint</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">07:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
                     <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">Depart to pier</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">11:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ Lunch + Thi Lo Su waterfall</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">14:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">💚 Koh Tha waterfall</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">17:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
+                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">🚣 Bamboo rafting</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">11:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ Lunch + Thi Lo Su waterfall</td></tr>
+                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">14:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">💚 Koh Tha waterfall</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">17:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">Return to Resort</td></tr>
                 </table>
-                <p style="font-size: 10px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ Note: Join Trip doesn't include Doi Hua Mot</p>
+                <p style="font-size: 9px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ Note: Join Trip doesn't include Doi Hua Mot</p>
             </div>
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'VIP Thi Lo Su-Koh Tha')">📝 Book This Tour</button>
@@ -734,10 +615,10 @@
             <h4>🚙 4x4 Thi Lo Su</h4>
             <p style="margin-bottom: 10px;">4x4 truck to Thi Lo Su waterfall</p>
             <div class="tour-price">฿2,500 /group (1-10 persons)</div>
-            <p style="font-size: 10px; color: #666;">11-18 persons: ฿3,500</p>
+            <p style="font-size: 9px; color: #666;">11-18 persons: ฿3,500</p>
             
             <div style="margin-top: 12px; background: #E3F2FD; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #1565C0; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #1565C0; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #BBDEFB;"><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600; width: 70px;">08:00</td><td style="padding: 5px; border: 1px solid #90CAF9;">Pickup from room</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #90CAF9;">Head to Thi Lo Su by 4x4</td></tr>
@@ -756,10 +637,10 @@
             <h4>♨️ 4x4 Onsen</h4>
             <p style="margin-bottom: 10px;">Natural hot springs (~2km walk)</p>
             <div class="tour-price">฿1,850 /group (1-5 persons)</div>
-            <p style="font-size: 10px; color: #666;">6-10 persons: ฿2,500 | 11-18 persons: ฿3,500</p>
+            <p style="font-size: 9px; color: #666;">6-10 persons: ฿2,500 | 11-18 persons: ฿3,500</p>
             
             <div style="margin-top: 12px; background: #E0F7FA; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #00838F; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #00838F; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #B2EBF2;"><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600; width: 70px;">08:00</td><td style="padding: 5px; border: 1px solid #80DEEA;">4x4 pickup</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600;">09:30</td><td style="padding: 5px; border: 1px solid #80DEEA;">Start 2km hike</td></tr>
@@ -779,27 +660,27 @@
             
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
                 <div style="background: #E8F5E9; padding: 8px; border-radius: 8px; text-align: center;">
-                    <div style="font-size: 10px;">🎁</div>
-                    <div style="font-size: 13px; font-weight: 700; color: #2E7D32;">Viewpoint</div>
-                    <div style="font-size: 10px; color: #666;">Easy walk<br>Suitable for everyone</div>
+                    <div style="font-size: 20px;">🎁</div>
+                    <div style="font-size: 10px; font-weight: 700; color: #2E7D32;">Viewpoint</div>
+                    <div style="font-size: 9px; color: #666;">Easy walk<br>Suitable for everyone</div>
                 </div>
                 <div style="background: #FFF3E0; padding: 8px; border-radius: 8px; text-align: center;">
-                    <div style="font-size: 10px;">🏔️</div>
-                    <div style="font-size: 13px; font-weight: 700; color: #E65100;">Summit</div>
-                    <div style="font-size: 10px; color: #666;">Sea of mist<br>Sunrise views</div>
+                    <div style="font-size: 20px;">🏔️</div>
+                    <div style="font-size: 10px; font-weight: 700; color: #E65100;">Summit</div>
+                    <div style="font-size: 9px; color: #666;">Sea of mist<br>Sunrise views</div>
                 </div>
             </div>
             
             <div style="background: #E3F2FD; padding: 8px; border-radius: 8px; margin-bottom: 12px;">
-                <p style="font-size: 13px; font-weight: 700; color: #1565C0; margin-bottom: 4px;">🎁 Free with tour</p>
-                <p style="font-size: 10px; color: #666;">✅ No extra charge<br>✅ Self-drive option available</p>
+                <p style="font-size: 10px; font-weight: 700; color: #1565C0; margin-bottom: 4px;">🎁 Free with tour</p>
+                <p style="font-size: 9px; color: #666;">✅ No extra charge<br>✅ Self-drive option available</p>
             </div>
             
             <div class="tour-price">฿1,000 /group (1-5 persons)</div>
-            <p style="font-size: 10px; color: #666;">💰 6-10 persons: ฿1,500</p>
+            <p style="font-size: 9px; color: #666;">💰 6-10 persons: ฿1,500</p>
             
             <div style="margin-top: 12px; background: #E8F5E9; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 10px; font-weight: 700; color: #2E7D32; margin-bottom: 8px;">📅 Tour Schedule</p>
+                <p style="font-size: 11px; font-weight: 700; color: #2E7D32; margin-bottom: 8px;">📅 Tour Schedule</p>
                 <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
                     <tr style="background: #C8E6C9;"><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600; width: 70px;">05:00</td><td style="padding: 5px; border: 1px solid #A5D6A7;">🚗 Pickup (wear warm clothes!)</td></tr>
                     <tr><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600;">05:30</td><td style="padding: 5px; border: 1px solid #A5D6A7;">Arrive at viewpoint</td></tr>
@@ -811,9 +692,7 @@
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'Doi Hua Mot')">📝 Book This Tour</button>
         </div>
-    </section>
-    
-    <!-- ==================== BEAUTIFUL WATERFALLS ==================== -->
+    <!-- Waterfalls Section -->
     <section id="tours">
         <h2>💧 Beautiful Waterfalls</h2>
         <h3>Explore 7 magnificent waterfalls</h3>
@@ -821,133 +700,57 @@
         <div class="tour-card" style="border-left: 3px solid #FF6B6B;">
             <img src="waterfall.jpg" alt="Thi Lo Su">
             <h4>💧 Thi Lo Su Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #FF6B6B; font-weight: 600;">🏔️ Thailand's most beautiful limestone waterfall!</p>
+            <p style="font-size: 10px; margin-bottom: 8px; color: #FF6B6B; font-weight: 600;">🏔️ Thailand's most beautiful limestone waterfall!</p>
             <p style="margin-bottom: 10px;">Thailand's largest waterfall, over 300m high, cascading through lush rainforest. Crystal clear waters and breathtaking views.</p>
             <div class="info-grid">
                 <div class="info-item"><div class="label">Height</div><div class="value">300m</div></div>
                 <div class="info-item"><div class="label">Width</div><div class="value">500m</div></div>
+                <div class="info-item"><div class="label">Distance</div><div class="value">42km</div></div>
+                <div class="info-item"><div class="label">Travel time</div><div class="value">1-1.5hrs</div></div>
             </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #EC4899;">
-            <img src="pituegro-main.jpg" alt="Pitugro">
-            <h4>💕 Pitugro Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #EC4899; font-weight: 600;">❤️ Heart-shaped waterfall!</p>
-            <p style="margin-bottom: 10px;">Unique heart-shaped formation when viewed from below. Strong water flow through pristine jungle.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Height</div><div class="value">500m+</div></div>
-                <div class="info-item"><div class="label">Shape</div><div class="value">Heart</div></div>
+            <div style="margin-top: 12px; padding: 10px; background: #FEF3C7; border-radius: 8px;">
+                <p style="font-size: 10px; font-weight: 700; color: #92400E; margin-bottom: 6px;">🎯 Recommended activities:</p>
+                <p style="font-size: 9px; color: #666;">• Bamboo rafting • Tham Tho Lot cave • Bird watching • Photography</p>
             </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #4CAF50;">
-            <img src="doi-mamuang-main.jpg" alt="Doi Mamuang">
-            <h4>🏔️ Doi Mamuang Sammun</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #4CAF50; font-weight: 600;">🌄 Sea of mist viewpoint!</p>
-            <p style="margin-bottom: 10px;">1,600m peak with stunning sea of mist views at sunrise. Easy trail suitable for everyone.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Height</div><div class="value">1,600m</div></div>
-                <div class="info-item"><div class="label">Level</div><div class="value">Easy</div></div>
+            <div style="margin-top: 8px; padding: 10px; background: #DBEAFE; border-radius: 8px;">
+                <p style="font-size: 10px; font-weight: 700; color: #1E40AF; margin-bottom: 6px;">📍 Nearby:</p>
+                <p style="font-size: 9px; color: #666;">• Tham Khao Wong cave (10km) • Doi Hua Mot viewpoint (15km)</p>
             </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #8B5CF6;">
-            <img src="thailore-main.jpg" alt="Thi Lo Re">
-            <h4>🌿 Thi Lo Re Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #8B5CF6; font-weight: 600;">🚣 Deep jungle adventure!</p>
-            <p style="margin-bottom: 10px;">Remote waterfall in Thung Yai Naresuan Wildlife Sanctuary. Requires bamboo rafting to reach.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Distance</div><div class="value">60km+</div></div>
-                <div class="info-item"><div class="label">Duration</div><div class="value">3D2N</div></div>
-            </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #06B6D4;">
-            <img src="palata-main.jpg" alt="Palata">
-            <h4>💧 Palata Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #06B6D4; font-weight: 600;">💎 3-tier limestone waterfall!</p>
-            <p style="margin-bottom: 10px;">Beautiful 3-tier limestone waterfall with crystal clear water. Family-friendly, easy to walk on limestone.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Tiers</div><div class="value">3</div></div>
-                <div class="info-item"><div class="label">Type</div><div class="value">Limestone</div></div>
-            </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #10B981;">
-            <img src="sepala.jpg" alt="Sepala">
-            <h4>🌿 Sepala Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #10B981; font-weight: 600;">🛣️ Most accessible!</p>
-            <p style="margin-bottom: 10px;">50m high, 10m wide waterfall right beside Highway 1090. Perfect for a quick stop.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Height</div><div class="value">50m</div></div>
-                <div class="info-item"><div class="label">Access</div><div class="value">Roadside</div></div>
-            </div>
-        </div>
-        
-        <div class="tour-card" style="border-left: 3px solid #14B981;">
-            <img src="waterfall.jpg" alt="Koh Tha">
-            <h4>💚 Koh Tha (Emerald) Waterfall</h4>
-            <p style="font-size: 13px; margin-bottom: 8px; color: #14B981; font-weight: 600;">💎 10+ tiers with emerald waters!</p>
-            <p style="margin-bottom: 10px;">More than 10 tiers with stunning emerald green water. Requires 4x4 and hiking.</p>
-            <div class="info-grid">
-                <div class="info-item"><div class="label">Tiers</div><div class="value">10+</div></div>
-                <div class="info-item"><div class="label">Color</div><div class="value">Emerald</div></div>
+            <div style="margin-top: 8px; padding: 10px; background: #FEE2E2; border-radius: 8px;">
+                <p style="font-size: 10px; font-weight: 700; color: #991B1B; margin-bottom: 6px;">🎒 What to bring:</p>
+                <p style="font-size: 9px; color: #666;">• Non-slip shoes • Change of clothes • Waterproof bag • Insect repellent</p>
             </div>
         </div>
     </section>
     
-    <!-- ==================== GALLERY ==================== -->
+    <!-- Gallery -->
     <section id="gallery">
         <h2>📷 Gallery</h2>
         <h3>Memories at Vela Resort</h3>
         
         <div class="gallery-tabs">
             <button class="gallery-tab active" onclick="filterGallery('all')">All</button>
-            <button class="gallery-tab" onclick="filterGallery('video')">🎬 Videos</button>
+            <button class="gallery-tab" onclick="filterGallery('view')">Views</button>
+            <button class="gallery-tab" onclick="filterGallery('adventure')">Adventure</button>
+            <button class="gallery-tab" onclick="filterGallery('video')">Videos</button>
         </div>
         
         <div class="gallery-grid" id="gallery-grid">
-            <!-- Videos Section -->
+            <!-- Videos -->
             <div class="gallery-item" data-category="video" onclick="playVideo('video-1.mp4')"><img src="video-1-thumb.jpg" alt="Video 1"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-2.mp4')"><img src="video-1-thumb.jpg" alt="Video 2"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-3.mp4')"><img src="video-1-thumb.jpg" alt="Video 3"></div>
-            <!-- All Gallery Images -->
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-3.jpg')"><img src="gallery-3.jpg" alt="Gallery 3"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-4.jpg')"><img src="gallery-4.jpg" alt="Gallery 4"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-5.jpg')"><img src="gallery-5.jpg" alt="Gallery 5"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-6.jpg')"><img src="gallery-6.jpg" alt="Gallery 6"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-7.jpg')"><img src="gallery-7.jpg" alt="Gallery 7"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-8.jpg')"><img src="gallery-8.jpg" alt="Gallery 8"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-9.jpg')"><img src="gallery-9.jpg" alt="Gallery 9"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-10.jpg')"><img src="gallery-10.jpg" alt="Gallery 10"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-11.jpg')"><img src="gallery-11.jpg" alt="Gallery 11"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-12.jpg')"><img src="gallery-12.jpg" alt="Gallery 12"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-13.jpg')"><img src="gallery-13.jpg" alt="Gallery 13"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-14.jpg')"><img src="gallery-14.jpg" alt="Gallery 14"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-15.jpg')"><img src="gallery-15.jpg" alt="Gallery 15"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-16.jpg')"><img src="gallery-16.jpg" alt="Gallery 16"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-17.jpg')"><img src="gallery-17.jpg" alt="Gallery 17"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-18.jpg')"><img src="gallery-18.jpg" alt="Gallery 18"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-19.jpg')"><img src="gallery-19.jpg" alt="Gallery 19"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-20.jpg')"><img src="gallery-20.jpg" alt="Gallery 20"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-21.jpg')"><img src="gallery-21.jpg" alt="Gallery 21"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-22.jpg')"><img src="gallery-22.jpg" alt="Gallery 22"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-23.jpg')"><img src="gallery-23.jpg" alt="Gallery 23"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-24.jpg')"><img src="gallery-24.jpg" alt="Gallery 24"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-25.jpg')"><img src="gallery-25.jpg" alt="Gallery 25"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-26.jpg')"><img src="gallery-26.jpg" alt="Gallery 26"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-27.jpg')"><img src="gallery-27.jpg" alt="Gallery 27"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-28.jpg')"><img src="gallery-28.jpg" alt="Gallery 28"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-29.jpg')"><img src="gallery-29.jpg" alt="Gallery 29"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-30.jpg')"><img src="gallery-30.jpg" alt="Gallery 30"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-31.jpg')"><img src="gallery-31.jpg" alt="Gallery 31"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-32.jpg')"><img src="gallery-32.jpg" alt="Gallery 32"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-33.jpg')"><img src="gallery-33.jpg" alt="Gallery 33"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-34.jpg')"><img src="gallery-34.jpg" alt="Gallery 34"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-35.jpg')"><img src="gallery-35.jpg" alt="Gallery 35"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-36.jpg')"><img src="gallery-36.jpg" alt="Gallery 36"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-37.jpg')"><img src="gallery-37.jpg" alt="Gallery 37"></div>
-            <div class="gallery-item" data-category="all" onclick="openLightbox('gallery-38.jpg')"><img src="gallery-38.jpg" alt="Gallery 38"></div>
+            <!-- Gallery Images -->
+            <div class="gallery-item" data-category="view"><img src="gallery-3.jpg" alt="Gallery 3"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-4.jpg" alt="Gallery 4"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-5.jpg" alt="Gallery 5"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-6.jpg" alt="Gallery 6"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-7.jpg" alt="Gallery 7"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-8.jpg" alt="Gallery 8"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-9.jpg" alt="Gallery 9"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-10.jpg" alt="Gallery 10"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-11.jpg" alt="Gallery 11"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-12.jpg" alt="Gallery 12"></div>
         </div>
     </section>
     
@@ -957,19 +760,13 @@
         <p>Umphang, Tak Province, Thailand</p>
         <p>📞 Tel: 098-908-4356</p>
         <p>📱 LINE: @velaumphang</p>
-        <p style="margin-top: 15px; font-size: 13px;">42km from Thi Lo Su Waterfall</p>
+        <p style="margin-top: 15px; font-size: 10px;">42km from Thi Lo Su Waterfall</p>
     </section>
     
     <footer>
         © 2024 Vela Resort · Umphang, Thailand<br>
-        <span style="font-size: 10px;">Best viewed on mobile</span>
+        <span style="font-size: 8px;">Best viewed on mobile</span>
     </footer>
-    
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-        <div class="lightbox-close">×</div>
-        <img src="" id="lightbox-img" alt="Full size image">
-    </div>
     
     <!-- Video Player Modal -->
     <div class="modal-overlay" id="videoModal">
@@ -997,7 +794,7 @@
             </div>
             <div style="padding: 12px; border-top: 1px solid #E5E7EB; background: white; border-radius: 0 0 20px 20px;">
                 <div style="display: flex; gap: 8px;">
-                    <input type="text" id="aiInput" placeholder="Ask about Vela Resort..." style="flex: 1; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 20px; font-size: 10px;" onkeypress="if(event.key === 'Enter') sendAIMessage()">
+                    <input type="text" id="aiInput" placeholder="Ask about Vela Resort..." style="flex: 1; padding: 10px 14px; border: 2px solid #E5E7EB; border-radius: 20px; font-size: 13px;" onkeypress="if(event.key === 'Enter') sendAIMessage()">
                     <button onclick="sendAIMessage()" style="padding: 10px 16px; background: #1A1A1A; color: #FFD700; border: none; border-radius: 20px; font-weight: 700; cursor: pointer;">Send</button>
                 </div>
             </div>
@@ -1299,7 +1096,7 @@
     function addChatMessage(text, sender) {
         const chatBox = document.getElementById('aiChatBox');
         const msgDiv = document.createElement('div');
-        msgDiv.style.cssText = `margin: 8px 0; padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 10px; line-height: 1.5;`;
+        msgDiv.style.cssText = `margin: 8px 0; padding: 10px 14px; border-radius: 12px; max-width: 85%; font-size: 13px; line-height: 1.5;`;
         if (sender === 'user') {
             msgDiv.style.cssText += 'background: #1A1A1A; color: #FFD700; margin-left: auto; text-align: right;';
         } else {
@@ -1353,28 +1150,12 @@
         });
     }
     
-    // Lightbox
-    function openLightbox(src) {
-        const lightbox = document.getElementById('lightbox');
-        const img = document.getElementById('lightbox-img');
-        img.src = src;
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeLightbox() {
-        const lightbox = document.getElementById('lightbox');
-        lightbox.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    
     // Close modals on outside click
     document.addEventListener('click', function(e) {
         if (e.target.id === 'bookingModal') closeBookingModal();
         if (e.target.id === 'bohLoginModal') closeBOHLogin();
         if (e.target.id === 'aiChatModal') closeAIChat();
         if (e.target.id === 'videoModal') closeVideoModal();
-        if (e.target.id === 'lightbox') closeLightbox();
     });
     </script>
 </body>

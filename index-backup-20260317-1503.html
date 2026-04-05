@@ -10,7 +10,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Kanit', sans-serif; font-size: 12px; line-height: 1.6; color: #333; background: #fff; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Kanit', sans-serif; font-size: 11px; line-height: 1.6; color: #333; background: #fff; -webkit-tap-highlight-color: transparent; }
         
         /* Navigation - Mobile First */
         nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.98); padding: 10px 15px; display: flex; justify-content: center; gap: 12px; z-index: 1000; border-bottom: 1px solid #eee; overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -342,8 +342,8 @@
         .gallery-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
         .gallery-tab { padding: 8px 14px; background: #f0f0f0; border-radius: 15px; font-size: 10px; cursor: pointer; border: none; white-space: nowrap; }
         .gallery-tab.active { background: #FFD700; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .gallery-item:hover img { transform: scale(1.05); }
         .gallery-item[data-category="video"]::after {
@@ -413,7 +413,7 @@
             section h2 { font-size: 24px; }
             section h3 { font-size: 11px; }
             .rooms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
             .info-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
         }
         
@@ -421,7 +421,7 @@
         @media (min-width: 900px) {
             nav { gap: 30px; padding: 12px 30px; }
             section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
-            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(5, 1fr); }
         }
     </style>
 </head>
@@ -486,7 +486,7 @@
     </div>
     
     <!-- Logo -->
-    <div class="logo">VELA <a href="index-en.html" style="margin-left: 8px; padding: 3px 8px; background: #1A1A1A; color: #FFD700; border-radius: 10px; font-size: 9px; text-decoration: none; font-weight: 600;">EN</a></div>
+    <div class="logo">VELA</div>
     
     <!-- Navigation -->
     <nav>
@@ -623,27 +623,25 @@
             <p>ราคาไม่รวมค่าเข้าอุทยาน: ผู้ใหญ่ ฿400 | เด็ก ฿200</p>
         </div>
         
-        <!-- VIP 1 - Thi Lo Su Waterfall Tour -->
+        <!-- VIP 1 -->
         <div class="tour-card" style="border-left: 3px solid #FFD700;">
             <img src="thailosu-main.jpg" alt="VIP ทีลอซู">
-            <h4>🌿 โปรแกรมทัวร์น้ำตกทีลอซู (Thi Lo Su Waterfall Tour)</h4>
-            <p style="margin-bottom: 10px;">รถส่วนตัว + ไกด์ + อาหารกลางวัน + ชมทะเลหมอก</p>
+            <h4>🏆 VIP ทีลอซู 1 วัน</h4>
+            <p style="margin-bottom: 10px;">รถส่วนตัว + ไกด์ + อาหารกลางวัน</p>
             <div class="tour-price">฿5,800 /กลุ่ม (1-6 คน)</div>
             <p style="font-size: 9px; color: #666; margin-bottom: 10px;">7-10: ฿8,300 | 11-12: ฿10,800 | 13-15: ฿13,800 | 16-18: ฿16,800</p>
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #FFFBEB; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600; width: 70px;">05:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">🏔️ ไปจุดชมวิว ชมแสงแรกของวัน + ทะเลหมอก</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">07:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">กลับ Resort พักผ่อน</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">เดินทางไปท่าเรือ</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">🚣 ล่องเรือชมธรรมชาติ ผ่านบ่อน้ำร้อน น้ำตกต่างๆ</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">12:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ อาหารกลางวัน + รถ 4x4 เข้าน้ำตกทีลอซู</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">13:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">💧 เดินเข้าน้ำตกทีลอซู ชม+ถ่ายรูป</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">16:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">กลับถึง Resort</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">07:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">ออกจาก Vela Resort</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">08:30</td><td style="padding: 6px; border: 1px solid #FCD34D;">ถึงน้ำตกทีลอซู</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">09:00-12:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">ล่องเรือยาง ชมน้ำตก</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">12:00-13:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">🍽️ อาหารกลางวัน</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">13:00-15:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">ชมถ้ำโตนด / ถ่ายรูป</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">16:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">กลับถึง Resort</td></tr>
                 </table>
-                <p style="font-size: 9px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ หมายเหตุ: จอยทริปไม่มีไปดอยหัวหมดจ้ะ</p>
             </div>
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'VIP ทีลอซู')">📝 จองทัวร์นี้</button>
@@ -659,41 +657,39 @@
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #F3E5F5; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #7B1FA2; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600; width: 70px;">07:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">รวมกลุ่มที่ Vela Resort</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #CE93D8;">ถึงน้ำตกทีลอซู</td></tr>
-                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">09:00-12:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">🚣 ล่องเรือยาง ชมน้ำตก</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">12:00-13:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">🍽️ อาหารกลางวัน</td></tr>
-                    <tr style="background: #E1BEE7;"><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">13:00-15:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">💧 ชมน้ำตกทีลอซู / ถ่ายรูป</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #CE93D8; font-weight: 600;">16:00</td><td style="padding: 5px; border: 1px solid #CE93D8;">กลับถึง Resort</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #7B1FA2; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #E1BEE7;"><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">07:00</td><td style="padding: 6px; border: 1px solid #CE93D8;">รวมกลุ่มที่ Vela Resort</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">08:30</td><td style="padding: 6px; border: 1px solid #CE93D8;">ถึงน้ำตกทีลอซู</td></tr>
+                    <tr style="background: #E1BEE7;"><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">09:00-12:00</td><td style="padding: 6px; border: 1px solid #CE93D8;">ล่องเรือยาง ชมน้ำตก</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">12:00-13:00</td><td style="padding: 6px; border: 1px solid #CE93D8;">🍽️ อาหารกลางวัน</td></tr>
+                    <tr style="background: #E1BEE7;"><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">13:00-15:00</td><td style="padding: 6px; border: 1px solid #CE93D8;">ชมถ้ำ / ถ่ายรูป</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #CE93D8; font-weight: 600;">16:00</td><td style="padding: 6px; border: 1px solid #CE93D8;">กลับถึง Resort</td></tr>
                 </table>
             </div>
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'Join Trip ทีลอซู')" style="background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%); color: white;">📝 จองทัวร์นี้</button>
         </div>
         
-        <!-- VIP 2 - Thi Lo Su & Koh Tha -->
+        <!-- VIP 2 -->
         <div class="tour-card" style="border-left: 3px solid #FFD700;">
             <img src="khota-main.jpg" alt="VIP ทีลอซู-โคทะ">
-            <h4>🌿 โปรแกรมทัวร์น้ำตกทีลอซู – โคทะ (Thi Lo Su & Koh Tha)</h4>
-            <p style="margin-bottom: 10px;">รถส่วนตัว + ไกด์ + อาหารกลางวัน + 2 น้ำตก</p>
+            <h4>🏆 VIP ทีลอซู-โคทะ 1 วัน</h4>
+            <p style="margin-bottom: 10px;">รถส่วนตัว + ไกด์ + อาหารกลางวัน</p>
             <div class="tour-price">฿7,500 /กลุ่ม (1-6 คน)</div>
             <p style="font-size: 9px; color: #666; margin-bottom: 10px;">7-10: ฿10,000 | 11-12: ฿12,500 | 13-15: ฿15,500 | 16-18: ฿18,500</p>
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #FFFBEB; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600; width: 70px;">05:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">🏔️ ไปจุดชมวิว ชมทะเลหมอกยามเช้า</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">07:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">กลับ Resort พักผ่อน</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #FCD34D;">เดินทางไปท่าเรือ</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">08:45</td><td style="padding: 5px; border: 1px solid #FCD34D;">🚣 ล่องเรือชมธรรมชาติ ผ่านน้ำตกต่างๆ</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">11:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">🍽️ อาหารกลางวัน + เข้าน้ำตกทีลอซู</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">14:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">💚 น้ำตกโคทะ เล่นน้ำ ถ่ายรูป</td></tr>
-                    <tr style="background: #FEF3C7;"><td style="padding: 5px; border: 1px solid #FCD34D; font-weight: 600;">17:00</td><td style="padding: 5px; border: 1px solid #FCD34D;">กลับถึง Resort</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #92400E; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">06:30</td><td style="padding: 6px; border: 1px solid #FCD34D;">ออกจาก Vela Resort</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">08:00-11:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">💧 น้ำตกทีลอซู</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">11:00-12:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">เดินทางไปน้ำตกโขะทะ</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">12:00-13:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">🍽️ อาหารกลางวัน</td></tr>
+                    <tr style="background: #FEF3C7;"><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">13:00-16:00</td><td style="padding: 6px; border: 1px solid #FCD34D;">💚 น้ำตกโขะทะ (มรกต)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #FCD34D; font-weight: 600;">17:30</td><td style="padding: 6px; border: 1px solid #FCD34D;">กลับถึง Resort</td></tr>
                 </table>
-                <p style="font-size: 9px; color: #DC2626; margin-top: 8px; font-weight: 600;">⚠️ หมายเหตุ: จอยทริปไม่มีไปดอยหัวหมดจ้ะ</p>
             </div>
             
             <button class="book-btn pulse" onclick="openBookingModal('tour', 'VIP ทีลอซู-โคทะ')">📝 จองทัวร์นี้</button>
@@ -709,13 +705,13 @@
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #E3F2FD; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #1565C0; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #BBDEFB;"><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600; width: 70px;">08:00</td><td style="padding: 5px; border: 1px solid #90CAF9;">🚗 รถรับจากที่พัก</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600;">08:30</td><td style="padding: 5px; border: 1px solid #90CAF9;">มุ่งหน้าน้ำตกทีลอซู โดยรถ 4x4</td></tr>
-                    <tr style="background: #BBDEFB;"><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600;">10:00</td><td style="padding: 5px; border: 1px solid #90CAF9;">แวะชมวิวระหว่างทาง ถ่ายรูปกับธรรมชาติ</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600;">11:30-13:00</td><td style="padding: 5px; border: 1px solid #90CAF9;">💧 ถึงน้ำตกทีลอซู เที่ยว+พักผ่อน</td></tr>
-                    <tr style="background: #BBDEFB;"><td style="padding: 5px; border: 1px solid #90CAF9; font-weight: 600;">13:00</td><td style="padding: 5px; border: 1px solid #90CAF9;">เดินทางกลับ Resort</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #1565C0; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #BBDEFB;"><td style="padding: 6px; border: 1px solid #90CAF9; font-weight: 600;">07:00</td><td style="padding: 6px; border: 1px solid #90CAF9;">ขึ้นรถ 4x4 ที่ Resort</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #90CAF9; font-weight: 600;">08:00</td><td style="padding: 6px; border: 1px solid #90CAF9;">ถึงน้ำตกทีลอซู</td></tr>
+                    <tr style="background: #BBDEFB;"><td style="padding: 6px; border: 1px solid #90CAF9; font-weight: 600;">08:00-15:00</td><td style="padding: 6px; border: 1px solid #90CAF9;">อิสระชมน้ำตก</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #90CAF9; font-weight: 600;">15:00</td><td style="padding: 6px; border: 1px solid #90CAF9;">รถรอรับกลับ</td></tr>
+                    <tr style="background: #BBDEFB;"><td style="padding: 6px; border: 1px solid #90CAF9; font-weight: 600;">16:00</td><td style="padding: 6px; border: 1px solid #90CAF9;">กลับถึง Resort</td></tr>
                 </table>
             </div>
             
@@ -732,13 +728,13 @@
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #E0F7FA; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #00838F; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #B2EBF2;"><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600; width: 70px;">08:00</td><td style="padding: 5px; border: 1px solid #80DEEA;">ขึ้นรถ 4x4 ที่ Resort</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600;">09:30</td><td style="padding: 5px; border: 1px solid #80DEEA;">ถึงจุดเริ่มต้น เดิน 2 กม.</td></tr>
-                    <tr style="background: #B2EBF2;"><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600;">10:30-14:00</td><td style="padding: 5px; border: 1px solid #80DEEA;">♨️ แช่ออนเซ็นธรรมชาติ</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600;">14:00-15:00</td><td style="padding: 5px; border: 1px solid #80DEEA;">เดินกลับ</td></tr>
-                    <tr style="background: #B2EBF2;"><td style="padding: 5px; border: 1px solid #80DEEA; font-weight: 600;">16:30</td><td style="padding: 5px; border: 1px solid #80DEEA;">กลับถึง Resort</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #00838F; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #B2EBF2;"><td style="padding: 6px; border: 1px solid #80DEEA; font-weight: 600;">08:00</td><td style="padding: 6px; border: 1px solid #80DEEA;">ขึ้นรถ 4x4 ที่ Resort</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #80DEEA; font-weight: 600;">09:30</td><td style="padding: 6px; border: 1px solid #80DEEA;">ถึงจุดเริ่มต้น เดิน 2 กม.</td></tr>
+                    <tr style="background: #B2EBF2;"><td style="padding: 6px; border: 1px solid #80DEEA; font-weight: 600;">10:30-14:00</td><td style="padding: 6px; border: 1px solid #80DEEA;">♨️ แช่ออนเซ็นธรรมชาติ</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #80DEEA; font-weight: 600;">14:00-15:00</td><td style="padding: 6px; border: 1px solid #80DEEA;">เดินกลับ</td></tr>
+                    <tr style="background: #B2EBF2;"><td style="padding: 6px; border: 1px solid #80DEEA; font-weight: 600;">16:30</td><td style="padding: 6px; border: 1px solid #80DEEA;">กลับถึง Resort</td></tr>
                 </table>
             </div>
             
@@ -748,40 +744,20 @@
         <!-- Doi Hua Mot -->
         <div class="tour-card" style="border-left: 3px solid #4CAF50;">
             <img src="gallery-13.jpg" alt="ดอยหัวหมด">
-            <h4>🏔️ โปรแกรมทัวร์ดอยหัวหมด</h4>
-            
-            <!-- Highlights -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px;">
-                <div style="background: #E8F5E9; padding: 8px; border-radius: 8px; text-align: center;">
-                    <div style="font-size: 20px;">🎁</div>
-                    <div style="font-size: 10px; font-weight: 700; color: #2E7D32;">จุดชมวิว</div>
-                    <div style="font-size: 9px; color: #666;">เดินง่าย เส้นทางเดินสบาย<br>เหมาะสำหรับทุกคน</div>
-                </div>
-                <div style="background: #FFF3E0; padding: 8px; border-radius: 8px; text-align: center;">
-                    <div style="font-size: 20px;">🏔️</div>
-                    <div style="font-size: 10px; font-weight: 700; color: #E65100;">ขึ้นยอดดอย</div>
-                    <div style="font-size: 9px; color: #666;">พิชิตยอดดอยหัวหมด<br>วิวทะเลหมอก</div>
-                </div>
-            </div>
-            
-            <!-- Freebies -->
-            <div style="background: #E3F2FD; padding: 8px; border-radius: 8px; margin-bottom: 12px;">
-                <p style="font-size: 10px; font-weight: 700; color: #1565C0; margin-bottom: 4px;">🎁 แถมฟรีในทัวร์</p>
-                <p style="font-size: 9px; color: #666;">✅ ไม่เสียค่าใช้จ่ายเพิ่ม<br>✅ ขับรถไปเองได้</p>
-            </div>
-            
+            <h4>🏔️ ดอยหัวหมด</h4>
+            <p style="margin-bottom: 10px;">ชมวิวทะเลหมอก ยอดดอยหัวหมด</p>
             <div class="tour-price">฿1,000 /กลุ่ม (1-5 คน)</div>
-            <p style="font-size: 9px; color: #666;">💰 6-10 คน: ฿1,500</p>
+            <p style="font-size: 9px; color: #666;">6-10 คน: ฿1,500 | 11-18 คน: ฿2,000</p>
             
             <!-- Schedule Table -->
             <div style="margin-top: 12px; background: #E8F5E9; border-radius: 8px; padding: 10px;">
-                <p style="font-size: 11px; font-weight: 700; color: #2E7D32; margin-bottom: 8px;">📅 ตารางทัวร์</p>
-                <table style="width: 100%; font-size: 10px; border-collapse: collapse;">
-                    <tr style="background: #C8E6C9;"><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600; width: 70px;">05:00</td><td style="padding: 5px; border: 1px solid #A5D6A7;">🚗 รถรับจากที่พัก (ใส่เสื้อกันหนาว!)</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600;">05:30</td><td style="padding: 5px; border: 1px solid #A5D6A7;">ถึงจุดชมวิว ดอยหัวหมด</td></tr>
-                    <tr style="background: #C8E6C9;"><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600;">05:30-07:30</td><td style="padding: 5px; border: 1px solid #A5D6A7;">🌅 ชมวิวทะเลหมอก พระอาทิตย์ขึ้น ถ่ายรูป</td></tr>
-                    <tr><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600;">07:30</td><td style="padding: 5px; border: 1px solid #A5D6A7;">เดินทางลงจากดอย</td></tr>
-                    <tr style="background: #C8E6C9;"><td style="padding: 5px; border: 1px solid #A5D6A7; font-weight: 600;">08:00</td><td style="padding: 5px; border: 1px solid #A5D6A7;">กลับถึง Resort (พักผ่อนต่อได้)</td></tr>
+                <p style="font-size: 10px; font-weight: 700; color: #2E7D32; margin-bottom: 8px;">📅 ตารางทัวร์</p>
+                <table style="width: 100%; font-size: 9px; border-collapse: collapse;">
+                    <tr style="background: #C8E6C9;"><td style="padding: 6px; border: 1px solid #A5D6A7; font-weight: 600;">05:00</td><td style="padding: 6px; border: 1px solid #A5D6A7;">ออกจาก Resort (มื้อเช้า)</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #A5D6A7; font-weight: 600;">05:45</td><td style="padding: 6px; border: 1px solid #A5D6A7;">ถึงจุดชมวิว</td></tr>
+                    <tr style="background: #C8E6C9;"><td style="padding: 6px; border: 1px solid #A5D6A7; font-weight: 600;">06:00-07:00</td><td style="padding: 6px; border: 1px solid #A5D6A7;">🌅 ชมทะเลหมอก + พระอาทิตย์ขึ้น</td></tr>
+                    <tr><td style="padding: 6px; border: 1px solid #A5D6A7; font-weight: 600;">07:00-08:00</td><td style="padding: 6px; border: 1px solid #A5D6A7;">ถ่ายรูป / เดินเล่น</td></tr>
+                    <tr style="background: #C8E6C9;"><td style="padding: 6px; border: 1px solid #A5D6A7; font-weight: 600;">08:00</td><td style="padding: 6px; border: 1px solid #A5D6A7;">กลับถึง Resort</td></tr>
                 </table>
             </div>
             
@@ -980,51 +956,53 @@
         
         <div class="gallery-tabs">
             <button class="gallery-tab active" onclick="filterGallery('all')">ทั้งหมด</button>
-            <button class="gallery-tab" onclick="filterGallery('video')">🎬 วิดีโอ</button>
+            <button class="gallery-tab" onclick="filterGallery('view')">View</button>
+            <button class="gallery-tab" onclick="filterGallery('adventure')">Adventure</button>
+            <button class="gallery-tab" onclick="filterGallery('video')">วิดีโอ</button>
         </div>
         
         <div class="gallery-grid" id="gallery-grid">
-            <!-- Videos Section -->
+            <!-- Videos -->
             <div class="gallery-item" data-category="video" onclick="playVideo('video-1.mp4')"><img src="video-1-thumb.jpg" alt="Video 1"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-2.mp4')"><img src="video-1-thumb.jpg" alt="Video 2"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-3.mp4')"><img src="video-1-thumb.jpg" alt="Video 3"></div>
-            <!-- All Gallery Images -->
-            <div class="gallery-item" data-category="all"><img src="gallery-3.jpg" alt="Gallery 3"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-4.jpg" alt="Gallery 4"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-5.jpg" alt="Gallery 5"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-6.jpg" alt="Gallery 6"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-7.jpg" alt="Gallery 7"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-8.jpg" alt="Gallery 8"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-9.jpg" alt="Gallery 9"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-10.jpg" alt="Gallery 10"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-11.jpg" alt="Gallery 11"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-12.jpg" alt="Gallery 12"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-13.jpg" alt="Gallery 13"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-14.jpg" alt="Gallery 14"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-15.jpg" alt="Gallery 15"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-16.jpg" alt="Gallery 16"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-17.jpg" alt="Gallery 17"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-18.jpg" alt="Gallery 18"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-19.jpg" alt="Gallery 19"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-20.jpg" alt="Gallery 20"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-21.jpg" alt="Gallery 21"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-22.jpg" alt="Gallery 22"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-23.jpg" alt="Gallery 23"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-24.jpg" alt="Gallery 24"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-25.jpg" alt="Gallery 25"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-26.jpg" alt="Gallery 26"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-27.jpg" alt="Gallery 27"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-28.jpg" alt="Gallery 28"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-29.jpg" alt="Gallery 29"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-30.jpg" alt="Gallery 30"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-31.jpg" alt="Gallery 31"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-32.jpg" alt="Gallery 32"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-33.jpg" alt="Gallery 33"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-34.jpg" alt="Gallery 34"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-35.jpg" alt="Gallery 35"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-36.jpg" alt="Gallery 36"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-37.jpg" alt="Gallery 37"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-38.jpg" alt="Gallery 38"></div>
+            <!-- Gallery Images -->
+            <div class="gallery-item" data-category="view"><img src="gallery-3.jpg" alt="Gallery 3"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-4.jpg" alt="Gallery 4"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-5.jpg" alt="Gallery 5"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-6.jpg" alt="Gallery 6"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-7.jpg" alt="Gallery 7"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-8.jpg" alt="Gallery 8"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-9.jpg" alt="Gallery 9"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-10.jpg" alt="Gallery 10"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-11.jpg" alt="Gallery 11"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-12.jpg" alt="Gallery 12"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-13.jpg" alt="Gallery 13"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-14.jpg" alt="Gallery 14"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-15.jpg" alt="Gallery 15"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-16.jpg" alt="Gallery 16"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-17.jpg" alt="Gallery 17"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-18.jpg" alt="Gallery 18"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-19.jpg" alt="Gallery 19"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-20.jpg" alt="Gallery 20"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-21.jpg" alt="Gallery 21"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-22.jpg" alt="Gallery 22"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-23.jpg" alt="Gallery 23"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-24.jpg" alt="Gallery 24"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-25.jpg" alt="Gallery 25"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-26.jpg" alt="Gallery 26"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-27.jpg" alt="Gallery 27"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-28.jpg" alt="Gallery 28"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-29.jpg" alt="Gallery 29"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-30.jpg" alt="Gallery 30"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-31.jpg" alt="Gallery 31"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-32.jpg" alt="Gallery 32"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-33.jpg" alt="Gallery 33"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-34.jpg" alt="Gallery 34"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-35.jpg" alt="Gallery 35"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-36.jpg" alt="Gallery 36"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-37.jpg" alt="Gallery 37"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-38.jpg" alt="Gallery 38"></div>
         </div>
     </section>
     

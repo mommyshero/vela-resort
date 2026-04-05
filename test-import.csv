@@ -1,0 +1,6 @@
+BookingID,GuestName,BookerName,Phone,Email,CheckIn,CheckOut,Room,Qty,Guests,Total,Channel,Status,Notes
+BK001,คุณสมชาย ใจดี,คุณสมชาย ใจดี,081-234-5678,somchai@email.com,2026-03-15,2026-03-17,hytte,1,2,1900,Facebook,pending,จองผ่าน Facebook
+BK002,คุณวิไล รักธรรมชาติ,คุณวิไล รักธรรมชาติ,082-345-6789,wilai@email.com,2026-03-16,2026-03-18,hus,1,2,3600,LINE,confirmed,ลูกค้าเก่า
+BK003,คุณประเสริฐ สุขใจ,คุณประเสริฐ สุขใจ,083-456-7890,prasert@email.com,2026-03-17,2026-03-19,hytte,2,4,3800,Website,pending,จองให้พ่อแม่
+BK004,คุณมานี มีเงิน,คุณมานี มีเงิน,084-567-8901,manee@email.com,2026-03-18,2026-03-20,hus,1,2,3600,Walk-in,checked-in,ลูกค้าทั่วไป
+BK005,คุณวิชัย เที่ยวไทย,คุณวิชัย เที่ยวไทย,085-678-9012,wichai@email.com,2026-03-19,2026-03-21,hytte,1,3,1900,Booking.com,confirmed,ครอบครัว

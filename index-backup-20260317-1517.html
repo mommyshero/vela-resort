@@ -342,8 +342,8 @@
         .gallery-tabs { display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; padding-bottom: 10px; -webkit-overflow-scrolling: touch; }
         .gallery-tab { padding: 8px 14px; background: #f0f0f0; border-radius: 15px; font-size: 10px; cursor: pointer; border: none; white-space: nowrap; }
         .gallery-tab.active { background: #FFD700; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .gallery-item { aspect-ratio: 1; background: linear-gradient(135deg, #E8F5E9, #C8E6C9); border-radius: 10px; overflow: hidden; cursor: pointer; position: relative; }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
         .gallery-item:hover img { transform: scale(1.05); }
         .gallery-item[data-category="video"]::after {
@@ -413,7 +413,7 @@
             section h2 { font-size: 24px; }
             section h3 { font-size: 11px; }
             .rooms { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-            .gallery-grid { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
             .info-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
         }
         
@@ -421,7 +421,7 @@
         @media (min-width: 900px) {
             nav { gap: 30px; padding: 12px 30px; }
             section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
-            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+            .gallery-grid { grid-template-columns: repeat(5, 1fr); }
         }
     </style>
 </head>
@@ -486,7 +486,7 @@
     </div>
     
     <!-- Logo -->
-    <div class="logo">VELA <a href="index-en.html" style="margin-left: 8px; padding: 3px 8px; background: #1A1A1A; color: #FFD700; border-radius: 10px; font-size: 9px; text-decoration: none; font-weight: 600;">EN</a></div>
+    <div class="logo">VELA</div>
     
     <!-- Navigation -->
     <nav>
@@ -980,51 +980,53 @@
         
         <div class="gallery-tabs">
             <button class="gallery-tab active" onclick="filterGallery('all')">ทั้งหมด</button>
-            <button class="gallery-tab" onclick="filterGallery('video')">🎬 วิดีโอ</button>
+            <button class="gallery-tab" onclick="filterGallery('view')">View</button>
+            <button class="gallery-tab" onclick="filterGallery('adventure')">Adventure</button>
+            <button class="gallery-tab" onclick="filterGallery('video')">วิดีโอ</button>
         </div>
         
         <div class="gallery-grid" id="gallery-grid">
-            <!-- Videos Section -->
+            <!-- Videos -->
             <div class="gallery-item" data-category="video" onclick="playVideo('video-1.mp4')"><img src="video-1-thumb.jpg" alt="Video 1"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-2.mp4')"><img src="video-1-thumb.jpg" alt="Video 2"></div>
             <div class="gallery-item" data-category="video" onclick="playVideo('video-3.mp4')"><img src="video-1-thumb.jpg" alt="Video 3"></div>
-            <!-- All Gallery Images -->
-            <div class="gallery-item" data-category="all"><img src="gallery-3.jpg" alt="Gallery 3"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-4.jpg" alt="Gallery 4"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-5.jpg" alt="Gallery 5"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-6.jpg" alt="Gallery 6"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-7.jpg" alt="Gallery 7"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-8.jpg" alt="Gallery 8"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-9.jpg" alt="Gallery 9"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-10.jpg" alt="Gallery 10"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-11.jpg" alt="Gallery 11"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-12.jpg" alt="Gallery 12"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-13.jpg" alt="Gallery 13"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-14.jpg" alt="Gallery 14"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-15.jpg" alt="Gallery 15"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-16.jpg" alt="Gallery 16"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-17.jpg" alt="Gallery 17"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-18.jpg" alt="Gallery 18"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-19.jpg" alt="Gallery 19"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-20.jpg" alt="Gallery 20"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-21.jpg" alt="Gallery 21"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-22.jpg" alt="Gallery 22"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-23.jpg" alt="Gallery 23"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-24.jpg" alt="Gallery 24"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-25.jpg" alt="Gallery 25"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-26.jpg" alt="Gallery 26"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-27.jpg" alt="Gallery 27"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-28.jpg" alt="Gallery 28"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-29.jpg" alt="Gallery 29"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-30.jpg" alt="Gallery 30"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-31.jpg" alt="Gallery 31"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-32.jpg" alt="Gallery 32"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-33.jpg" alt="Gallery 33"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-34.jpg" alt="Gallery 34"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-35.jpg" alt="Gallery 35"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-36.jpg" alt="Gallery 36"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-37.jpg" alt="Gallery 37"></div>
-            <div class="gallery-item" data-category="all"><img src="gallery-38.jpg" alt="Gallery 38"></div>
+            <!-- Gallery Images -->
+            <div class="gallery-item" data-category="view"><img src="gallery-3.jpg" alt="Gallery 3"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-4.jpg" alt="Gallery 4"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-5.jpg" alt="Gallery 5"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-6.jpg" alt="Gallery 6"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-7.jpg" alt="Gallery 7"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-8.jpg" alt="Gallery 8"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-9.jpg" alt="Gallery 9"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-10.jpg" alt="Gallery 10"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-11.jpg" alt="Gallery 11"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-12.jpg" alt="Gallery 12"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-13.jpg" alt="Gallery 13"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-14.jpg" alt="Gallery 14"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-15.jpg" alt="Gallery 15"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-16.jpg" alt="Gallery 16"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-17.jpg" alt="Gallery 17"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-18.jpg" alt="Gallery 18"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-19.jpg" alt="Gallery 19"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-20.jpg" alt="Gallery 20"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-21.jpg" alt="Gallery 21"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-22.jpg" alt="Gallery 22"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-23.jpg" alt="Gallery 23"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-24.jpg" alt="Gallery 24"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-25.jpg" alt="Gallery 25"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-26.jpg" alt="Gallery 26"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-27.jpg" alt="Gallery 27"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-28.jpg" alt="Gallery 28"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-29.jpg" alt="Gallery 29"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-30.jpg" alt="Gallery 30"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-31.jpg" alt="Gallery 31"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-32.jpg" alt="Gallery 32"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-33.jpg" alt="Gallery 33"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-34.jpg" alt="Gallery 34"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-35.jpg" alt="Gallery 35"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-36.jpg" alt="Gallery 36"></div>
+            <div class="gallery-item" data-category="adventure"><img src="gallery-37.jpg" alt="Gallery 37"></div>
+            <div class="gallery-item" data-category="view"><img src="gallery-38.jpg" alt="Gallery 38"></div>
         </div>
     </section>
     

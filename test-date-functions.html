@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Date Functions</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-result {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            background: #F3F4F6;
+        }
+        .test-result.pass {
+            background: #D1FAE5;
+            border-left: 4px solid #10B981;
+        }
+        .test-result.fail {
+            background: #FEE2E2;
+            border-left: 4px solid #EF4444;
+        }
+        h1 {
+            color: #1A1A1A;
+        }
+        h2 {
+            color: #666;
+            margin-top: 2rem;
+        }
+        code {
+            background: #1A1A1A;
+            color: #FFD700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Date Functions</h1>
+    <p>ทดสอบฟังก์ชัน formatDate และ formatDateDisplay</p>
+    
+    <h2>📋 Test Results:</h2>
+    <div id="results"></div>
+    
+    <h2>🔧 Manual Test:</h2>
+    <div style="margin: 1rem 0;">
+        <label>Input Date (YYYY-MM-DD): </label>
+        <input type="text" id="testInput" value="2026-03-15" style="padding: 0.5rem; width: 150px;">
+        <button onclick="runManualTest()" style="padding: 0.5rem 1rem; margin-left: 0.5rem;">Test</button>
+    </div>
+    <div id="manualResult" class="test-result"></div>
+
+    <script>
+        // Copy of the functions from boh.html
+        function formatDate(dateStr) {
+            if (!dateStr) return new Date().toISOString().split('T')[0];
+            try {
+                // Handle YYYY-MM-DD format explicitly to avoid timezone issues
+                const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                if (match) {
+                    return `${match[1]}-${match[2]}-${match[3]}`;
+                }
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return new Date().toISOString().split('T')[0];
+                return date.toISOString().split('T')[0];
+            } catch (e) {
+                return new Date().toISOString().split('T')[0];
+            }
+        }
+
+        function formatDateDisplay(dateStr) {
+            if (!dateStr) return '-';
+            try {
+                // Handle YYYY-MM-DD format explicitly to avoid timezone issues
+                const match = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})/);
+                if (match) {
+                    const day = match[3];
+                    const month = match[2];
+                    const year = parseInt(match[1]) + 543; // Thai Buddhist year
+                    return `${day}/${month}/${year}`;
+                }
+                const date = new Date(dateStr);
+                if (isNaN(date.getTime())) return '-';
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear() + 543; // Thai Buddhist year
+                return `${day}/${month}/${year}`;
+            } catch (e) {
+                return '-';
+            }
+        }
+
+        // Run automated tests
+        function runTests() {
+            const tests = [
+                { input: '2026-03-15', expectedDisplay: '15/03/2569', expectedFormat: '2026-03-15' },
+                { input: '2026-01-01', expectedDisplay: '01/01/2569', expectedFormat: '2026-01-01' },
+                { input: '2026-12-31', expectedDisplay: '31/12/2569', expectedFormat: '2026-12-31' },
+                { input: null, expectedDisplay: '-', expectedFormat: new Date().toISOString().split('T')[0] },
+                { input: undefined, expectedDisplay: '-', expectedFormat: new Date().toISOString().split('T')[0] },
+                { input: '', expectedDisplay: '-', expectedFormat: new Date().toISOString().split('T')[0] },
+                { input: 'invalid', expectedDisplay: '-', expectedFormat: new Date().toISOString().split('T')[0] },
+            ];
+
+            const resultsDiv = document.getElementById('results');
+            let allPassed = true;
+
+            tests.forEach((test, index) => {
+                const displayResult = formatDateDisplay(test.input);
+                const formatResult = formatDate(test.input);
+                
+                const displayPass = displayResult === test.expectedDisplay;
+                const formatPass = formatResult === test.expectedFormat;
+                const passed = displayPass && formatPass;
+                
+                if (!passed) allPassed = false;
+
+                const div = document.createElement('div');
+                div.className = `test-result ${passed ? 'pass' : 'fail'}`;
+                div.innerHTML = `
+                    <strong>Test ${index + 1}:</strong> ${passed ? '✅ PASS' : '❌ FAIL'}<br>
+                    Input: <code>${test.input}</code><br>
+                    formatDateDisplay: <code>${displayResult}</code> (expected: <code>${test.expectedDisplay}</code>) ${displayPass ? '✅' : '❌'}<br>
+                    formatDate: <code>${formatResult}</code> (expected: <code>${test.expectedFormat}</code>) ${formatPass ? '✅' : '❌'}
+                `;
+                resultsDiv.appendChild(div);
+            });
+
+            const summary = document.createElement('div');
+            summary.className = `test-result ${allPassed ? 'pass' : 'fail'}`;
+            summary.innerHTML = `<strong>Summary:</strong> ${allPassed ? '✅ All tests passed!' : '❌ Some tests failed'}`;
+            resultsDiv.appendChild(summary);
+        }
+
+        function runManualTest() {
+            const input = document.getElementById('testInput').value;
+            const displayResult = formatDateDisplay(input);
+            const formatResult = formatDate(input);
+            
+            const div = document.getElementById('manualResult');
+            div.className = 'test-result';
+            div.innerHTML = `
+                <strong>Input:</strong> <code>${input}</code><br>
+                <strong>formatDateDisplay:</strong> <code>${displayResult}</code><br>
+                <strong>formatDate:</strong> <code>${formatResult}</code>
+            `;
+        }
+
+        // Run tests on load
+        runTests();
+    </script>
+</body>
+</html>

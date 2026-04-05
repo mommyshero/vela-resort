@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎛️ Hum-me FX - Vocal Effects Processor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #9CA3AF;
+            font-size: 1.1rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .effects-panel {
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #FFD700;
+        }
+
+        .visualizer-panel {
+            background: linear-gradient(135deg, #2D2D2D 0%, #1A1A1A 100%);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #FFD700;
+        }
+
+        .section-title {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .effect-card {
+            background: #0A0A0A;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 3px solid #FFD700;
+        }
+
+        .effect-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .effect-name {
+            color: #FFD700;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .effect-toggle {
+            width: 50px;
+            height: 26px;
+            background: #333;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .effect-toggle.active {
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+        }
+
+        .effect-toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .effect-toggle.active::after {
+            transform: translateX(24px);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+
+        .control-item {
+            background: #1A1A1A;
+            padding: 12px;
+            border-radius: 8px;
+        }
+
+        .control-item label {
+            display: block;
+            color: #9CA3AF;
+            font-size: 0.8rem;
+            margin-bottom: 8px;
+        }
+
+        .control-item input[type="range"] {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #333;
+            border-radius: 3px;
+        }
+
+        .control-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #FFD700;
+            cursor: pointer;
+        }
+
+        .control-value {
+            text-align: center;
+            color: #FFD700;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        .visualizer {
+            background: #0A0A0A;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .visualizer h4 {
+            color: #9CA3AF;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100px;
+            background: #0A0A0A;
+            border-radius: 8px;
+        }
+
+        .btn-start {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            color: #1A1A1A;
+            margin-top: 20px;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-start.active {
+            background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+            color: white;
+        }
+
+        .status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .status.ready {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+            border: 1px solid #10B981;
+        }
+
+        .status.active {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+            border: 1px solid #F59E0B;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .preset-btn {
+            padding: 12px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background: transparent;
+            color: #9CA3AF;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .preset-btn:hover {
+            border-color: #FFD700;
+            color: white;
+        }
+
+        .preset-btn.active {
+            background: linear-gradient(135deg, #FFD700 0%, #F59E0B 100%);
+            color: #1A1A1A;
+            border-color: #FFD700;
+            font-weight: 700;
+        }
+
+        .info-section {
+            background: #0A0A0A;
+            border-radius: 12px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .info-section h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 10px 0;
+            color: #9CA3AF;
+            border-bottom: 1px solid #1A1A1A;
+        }
+
+        .info-section li:before {
+            content: "🎙️ ";
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎛️ Hum-me FX</h1>
+            <p class="subtitle">Vocal Effects Processor - EQ, Noise Gate, Compressor</p>
+        </header>
+
+        <div class="main-grid">
+            <div class="effects-panel">
+                <h2 class="section-title">🎚️ Effects Chain</h2>
+
+                <!-- Noise Gate -->
+                <div class="effect-card">
+                    <div class="effect-header">
+                        <span class="effect-name">🔇 Noise Gate</span>
+                        <div class="effect-toggle" data-effect="gate"></div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Threshold</label>
+                            <input type="range" id="gateThreshold" min="-80" max="0" value="-40">
+                            <div class="control-value" id="gateThresholdValue">-40 dB</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Attack</label>
+                            <input type="range" id="gateAttack" min="0" max="100" value="10">
+                            <div class="control-value" id="gateAttackValue">10 ms</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Release</label>
+                            <input type="range" id="gateRelease" min="0" max="500" value="100">
+                            <div class="control-value" id="gateReleaseValue">100 ms</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EQ -->
+                <div class="effect-card">
+                    <div class="effect-header">
+                        <span class="effect-name">🎛️ 3-Band EQ</span>
+                        <div class="effect-toggle active" data-effect="eq"></div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Low (100Hz)</label>
+                            <input type="range" id="eqLow" min="-20" max="20" value="0">
+                            <div class="control-value" id="eqLowValue">0 dB</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Mid (1kHz)</label>
+                            <input type="range" id="eqMid" min="-20" max="20" value="0">
+                            <div class="control-value" id="eqMidValue">0 dB</div>
+                        </div>
+                        <div class="control-item">
+                            <label>High (10kHz)</label>
+                            <input type="range" id="eqHigh" min="-20" max="20" value="0">
+                            <div class="control-value" id="eqHighValue">0 dB</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Compressor -->
+                <div class="effect-card">
+                    <div class="effect-header">
+                        <span class="effect-name">📊 Compressor</span>
+                        <div class="effect-toggle active" data-effect="compressor"></div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Threshold</label>
+                            <input type="range" id="compThreshold" min="-60" max="0" value="-24">
+                            <div class="control-value" id="compThresholdValue">-24 dB</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Ratio</label>
+                            <input type="range" id="compRatio" min="1" max="20" value="4">
+                            <div class="control-value" id="compRatioValue">4:1</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Attack</label>
+                            <input type="range" id="compAttack" min="0" max="100" value="20">
+                            <div class="control-value" id="compAttackValue">20 ms</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Release</label>
+                            <input type="range" id="compRelease" min="0" max="500" value="100">
+                            <div class="control-value" id="compReleaseValue">100 ms</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Makeup Gain</label>
+                            <input type="range" id="compMakeup" min="0" max="20" value="5">
+                            <div class="control-value" id="compMakeupValue">+5 dB</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reverb -->
+                <div class="effect-card">
+                    <div class="effect-header">
+                        <span class="effect-name">🌊 Reverb</span>
+                        <div class="effect-toggle" data-effect="reverb"></div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Room Size</label>
+                            <input type="range" id="reverbRoom" min="0" max="100" value="50">
+                            <div class="control-value" id="reverbRoomValue">50%</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Dampening</label>
+                            <input type="range" id="reverbDamp" min="0" max="100" value="50">
+                            <div class="control-value" id="reverbDampValue">50%</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Wet Mix</label>
+                            <input type="range" id="reverbWet" min="0" max="100" value="30">
+                            <div class="control-value" id="reverbWetValue">30%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delay -->
+                <div class="effect-card">
+                    <div class="effect-header">
+                        <span class="effect-name">⏱️ Delay</span>
+                        <div class="effect-toggle" data-effect="delay"></div>
+                    </div>
+                    <div class="controls-grid">
+                        <div class="control-item">
+                            <label>Time</label>
+                            <input type="range" id="delayTime" min="0" max="1000" value="300">
+                            <div class="control-value" id="delayTimeValue">300 ms</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Feedback</label>
+                            <input type="range" id="delayFeedback" min="0" max="90" value="40">
+                            <div class="control-value" id="delayFeedbackValue">40%</div>
+                        </div>
+                        <div class="control-item">
+                            <label>Mix</label>
+                            <input type="range" id="delayMix" min="0" max="100" value="30">
+                            <div class="control-value" id="delayMixValue">30%</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-start" id="startBtn">
+                    🎤 เริ่มใช้งาน (คลิกเพื่ออนุญาตไมค์)
+                </button>
+
+                <div class="status ready" id="status">
+                    ⏸️ พร้อมใช้งาน - คลิกปุ่มเริ่ม
+                </div>
+
+                <h3 style="color: #FFD700; margin: 25px 0 15px 0; font-size: 1.1rem;">🎯 Presets</h3>
+                <div class="preset-grid">
+                    <button class="preset-btn active" data-preset="clean">✨ Clean</button>
+                    <button class="preset-btn" data-preset="radio">📻 Radio</button>
+                    <button class="preset-btn" data-preset="warm">🔥 Warm</button>
+                    <button class="preset-btn" data-preset="bright">⭐ Bright</button>
+                    <button class="preset-btn" data-preset="studio">🎙️ Studio</button>
+                    <button class="preset-btn" data-preset="live">🎤 Live</button>
+                </div>
+            </div>
+
+            <div class="visualizer-panel">
+                <h2 class="section-title">📊 Real-time Analysis</h2>
+
+                <div class="visualizer">
+                    <h4>📈 Input Level</h4>
+                    <canvas id="inputVisualizer"></canvas>
+                </div>
+
+                <div class="visualizer">
+                    <h4>📈 Output Level</h4>
+                    <canvas id="outputVisualizer"></canvas>
+                </div>
+
+                <div class="visualizer">
+                    <h4>🎛️ EQ Curve</h4>
+                    <canvas id="eqVisualizer"></canvas>
+                </div>
+
+                <div class="visualizer">
+                    <h4>📊 Frequency Spectrum</h4>
+                    <canvas id="spectrumVisualizer"></canvas>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #1A1A1A; border-radius: 8px;">
+                    <h4 style="color: #9CA3AF; margin-bottom: 10px; font-size: 0.9rem;">📊 Metering</h4>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #9CA3AF; font-size: 0.85rem;">Input:</span>
+                        <span style="color: #FFD700; font-weight: 700;" id="inputLevel">-∞ dB</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="color: #9CA3AF; font-size: 0.85rem;">Output:</span>
+                        <span style="color: #10B981; font-weight: 700;" id="outputLevel">-∞ dB</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span style="color: #9CA3AF; font-size: 0.85rem;">Gain Reduction:</span>
+                        <span style="color: #EF4444; font-weight: 700;" id="gainReduction">0 dB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3>📖 วิธีใช้งาน Hum-me FX</h3>
+            <ul>
+                <li>คลิกปุ่ม "เริ่มใช้งาน" และอนุญาตให้เข้าถึงไมโครโฟน</li>
+                <li>เปิด/ปิด Effect แต่ละตัวด้วย Toggle Switch</li>
+                <li>ปรับค่าต่างๆ ตามต้องการ (Threshold, Attack, Release, etc.)</li>
+                <li>เลือก Preset สำหรับใช้งานรวดเร็ว</li>
+                <li>ดูผลลัพธ์แบบเรียลไทม์จาก Visualizer</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">🎚️ Effects Chain คำอธิบาย</h3>
+            <ul>
+                <li><strong>🔇 Noise Gate:</strong> ตัดเสียงรบกวนเมื่อไม่พูด (Threshold = ระดับที่เปิดเกท)</li>
+                <li><strong>🎛️ 3-Band EQ:</strong> ปรับเสียงต่ำ/กลาง/สูง (Low/Mid/High)</li>
+                <li><strong>📊 Compressor:</strong> อัดเสียงให้สม่ำเสมอ (Threshold, Ratio, Attack, Release)</li>
+                <li><strong>🌊 Reverb:</strong> เพิ่มเสียงก้อง (Room Size, Dampening, Wet Mix)</li>
+                <li><strong>⏱️ Delay:</strong> เสียงสะท้อน (Time, Feedback, Mix)</li>
+            </ul>
+
+            <h3 style="margin-top: 20px;">🎯 Preset แนะนำ</h3>
+            <ul>
+                <li><strong>✨ Clean:</strong> เสียงสะอาด ไม่แต่งมาก (เหมาะสำหรับพูด)</li>
+                <li><strong>📻 Radio:</strong> เสียงเหมือนวิทยุ (EQ Boost Low/High)</li>
+                <li><strong>🔥 Warm:</strong> เสียงอุ่น นุ่ม (Boost Low, Cut High)</li>
+                <li><strong>⭐ Bright:</strong> เสียงสว่าง ชัด (Boost High)</li>
+                <li><strong>🎙️ Studio:</strong> เสียงสตูดิโอ (Compressor + Reverb)</li>
+                <li><strong>🎤 Live:</strong> เสียงแสดงสด (Compressor + Delay)</li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>Created with ❤️ for Vela Resort Umphang</p>
+            <p>Hum-me FX - Web Audio API + Effects Chain</p>
+        </footer>
+    </div>
+
+    <script>
+        // Audio Context and Nodes
+        let audioContext;
+        let analyserInput, analyserOutput;
+        let microphone;
+        let isListening = false;
+
+        // Effect nodes
+        let gateNode, gateGain;
+        let eqLow, eqMid, eqHigh;
+        let compressor;
+        let reverbNode, reverbGain;
+        let delayNode, feedbackNode, delayGain;
+        let outputGain;
+
+        // Effect states
+        const effects = {
+            gate: false,
+            eq: true,
+            compressor: true,
+            reverb: false,
+            delay: false
+        };
+
+        // DOM Elements
+        const startBtn = document.getElementById('startBtn');
+        const statusEl = document.getElementById('status');
+        const toggles = document.querySelectorAll('.effect-toggle');
+        const presetBtns = document.querySelectorAll('.preset-btn');
+
+        // Canvases
+        const inputCanvas = document.getElementById('inputVisualizer');
+        const outputCanvas = document.getElementById('outputVisualizer');
+        const eqCanvas = document.getElementById('eqVisualizer');
+        const spectrumCanvas = document.getElementById('spectrumVisualizer');
+        const inputCtx = inputCanvas.getContext('2d');
+        const outputCtx = outputCanvas.getContext('2d');
+        const eqCtx = eqCanvas.getContext('2d');
+        const spectrumCtx = spectrumCanvas.getContext('2d');
+
+        // Metering elements
+        const inputLevelEl = document.getElementById('inputLevel');
+        const outputLevelEl = document.getElementById('outputLevel');
+        const gainReductionEl = document.getElementById('gainReduction');
+
+        // Resize canvases
+        function resizeCanvases() {
+            [inputCanvas, outputCanvas, eqCanvas, spectrumCanvas].forEach(canvas => {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            });
+        }
+        resizeCanvases();
+        window.addEventListener('resize', resizeCanvases);
+
+        // Convolver for reverb
+        function createReverbImpulse(duration = 2, decay = 2) {
+            const sampleRate = audioContext.sampleRate;
+            const length = sampleRate * duration;
+            const impulse = audioContext.createBuffer(2, length, sampleRate);
+            const left = impulse.getChannelData(0);
+            const right = impulse.getChannelData(1);
+
+            for (let i = 0; i < length; i++) {
+                const n = i / length;
+                left[i] = (Math.random() * 2 - 1) * Math.pow(1 - n, decay);
+                right[i] = (Math.random() * 2 - 1) * Math.pow(1 - n, decay);
+            }
+            return impulse;
+        }
+
+        // Setup audio chain
+        function setupAudioChain() {
+            // Create nodes
+            gateGain = audioContext.createGain();
+            
+            eqLow = audioContext.createBiquadFilter();
+            eqLow.type = 'lowshelf';
+            eqLow.frequency.value = 100;
+
+            eqMid = audioContext.createBiquadFilter();
+            eqMid.type = 'peaking';
+            eqMid.frequency.value = 1000;
+            eqMid.Q.value = 1;
+
+            eqHigh = audioContext.createBiquadFilter();
+            eqHigh.type = 'highshelf';
+            eqHigh.frequency.value = 10000;
+
+            compressor = audioContext.createDynamicsCompressor();
+            compressor.threshold.value = -24;
+            compressor.knee.value = 30;
+            compressor.ratio.value = 4;
+            compressor.attack.value = 0.02;
+            compressor.release.value = 0.1;
+
+            reverbNode = audioContext.createConvolver();
+            reverbNode.buffer = createReverbImpulse(2, 2);
+            reverbGain = audioContext.createGain();
+            reverbGain.gain.value = 0;
+
+            delayNode = audioContext.createDelay(1.0);
+            delayNode.delayTime.value = 0.3;
+            feedbackNode = audioContext.createGain();
+            feedbackNode.gain.value = 0.4;
+            delayGain = audioContext.createGain();
+            delayGain.gain.value = 0;
+
+            outputGain = audioContext.createGain();
+            outputGain.gain.value = 1;
+
+            analyserInput = audioContext.createAnalyser();
+            analyserOutput = audioContext.createAnalyser();
+            analyserInput.fftSize = 2048;
+            analyserOutput.fftSize = 2048;
+
+            // Connect chain: Mic -> Gate -> EQ -> Compressor -> [Reverb] -> [Delay] -> Output
+            microphone.connect(analyserInput);
+            microphone.connect(gateGain);
+            gateGain.connect(eqLow);
+            eqLow.connect(eqMid);
+            eqMid.connect(eqHigh);
+            eqHigh.connect(compressor);
+            compressor.connect(outputGain);
+
+            // Reverb send
+            compressor.connect(reverbNode);
+            reverbNode.connect(reverbGain);
+            reverbGain.connect(outputGain);
+
+            // Delay send
+            compressor.connect(delayNode);
+            delayNode.connect(feedbackNode);
+            feedbackNode.connect(delayNode);
+            delayNode.connect(delayGain);
+            delayGain.connect(outputGain);
+
+            // Output
+            outputGain.connect(analyserOutput);
+            analyserOutput.connect(audioContext.destination);
+
+            updateEffectParams();
+        }
+
+        // Update effect parameters from sliders
+        function updateEffectParams() {
+            // Gate
+            const gateThreshold = parseFloat(document.getElementById('gateThreshold').value);
+            gateGain.gain.value = effects.gate ? (gateThreshold + 80) / 80 : 1;
+
+            // EQ
+            eqLow.gain.value = parseFloat(document.getElementById('eqLow').value);
+            eqMid.gain.value = parseFloat(document.getElementById('eqMid').value);
+            eqHigh.gain.value = parseFloat(document.getElementById('eqHigh').value);
+
+            // Compressor
+            compressor.threshold.value = parseFloat(document.getElementById('compThreshold').value);
+            compressor.ratio.value = parseFloat(document.getElementById('compRatio').value);
+            compressor.attack.value = parseFloat(document.getElementById('compAttack').value) / 1000;
+            compressor.release.value = parseFloat(document.getElementById('compRelease').value) / 1000;
+
+            // Reverb
+            reverbGain.gain.value = effects.reverb ? parseFloat(document.getElementById('reverbWet').value) / 100 : 0;
+
+            // Delay
+            delayNode.delayTime.value = parseFloat(document.getElementById('delayTime').value) / 1000;
+            feedbackNode.gain.value = parseFloat(document.getElementById('delayFeedback').value) / 100;
+            delayGain.gain.value = effects.delay ? parseFloat(document.getElementById('delayMix').value) / 100 : 0;
+        }
+
+        // Toggle effect
+        function toggleEffect(effectName) {
+            effects[effectName] = !effects[effectName];
+            updateEffectParams();
+        }
+
+        // Load preset
+        function loadPreset(preset) {
+            const presets = {
+                clean: {
+                    gate: false, gateThreshold: -40,
+                    eqLow: 0, eqMid: 0, eqHigh: 0,
+                    compressor: true, compThreshold: -24, compRatio: 4,
+                    reverb: false, reverbWet: 0,
+                    delay: false, delayMix: 0
+                },
+                radio: {
+                    gate: true, gateThreshold: -30,
+                    eqLow: 8, eqMid: -3, eqHigh: 6,
+                    compressor: true, compThreshold: -18, compRatio: 6,
+                    reverb: false, reverbWet: 0,
+                    delay: false, delayMix: 0
+                },
+                warm: {
+                    gate: false, gateThreshold: -40,
+                    eqLow: 6, eqMid: 2, eqHigh: -4,
+                    compressor: true, compThreshold: -20, compRatio: 3,
+                    reverb: true, reverbWet: 20,
+                    delay: false, delayMix: 0
+                },
+                bright: {
+                    gate: false, gateThreshold: -40,
+                    eqLow: -2, eqMid: 0, eqHigh: 8,
+                    compressor: true, compThreshold: -24, compRatio: 4,
+                    reverb: false, reverbWet: 0,
+                    delay: false, delayMix: 0
+                },
+                studio: {
+                    gate: true, gateThreshold: -35,
+                    eqLow: 3, eqMid: 0, eqHigh: 3,
+                    compressor: true, compThreshold: -24, compRatio: 4,
+                    reverb: true, reverbWet: 25,
+                    delay: false, delayMix: 0
+                },
+                live: {
+                    gate: true, gateThreshold: -30,
+                    eqLow: 4, eqMid: 2, eqHigh: 4,
+                    compressor: true, compThreshold: -20, compRatio: 5,
+                    reverb: false, reverbWet: 0,
+                    delay: true, delayMix: 25, delayTime: 300, delayFeedback: 35
+                }
+            };
+
+            const p = presets[preset];
+            if (!p) return;
+
+            // Set sliders
+            document.getElementById('gateThreshold').value = p.gateThreshold;
+            document.getElementById('eqLow').value = p.eqLow;
+            document.getElementById('eqMid').value = p.eqMid;
+            document.getElementById('eqHigh').value = p.eqHigh;
+            document.getElementById('compThreshold').value = p.compThreshold;
+            document.getElementById('compRatio').value = p.compRatio;
+            document.getElementById('reverbWet').value = p.reverbWet;
+            document.getElementById('delayMix').value = p.delayMix;
+            if (p.delayTime) document.getElementById('delayTime').value = p.delayTime;
+            if (p.delayFeedback) document.getElementById('delayFeedback').value = p.delayFeedback;
+
+            // Set toggles
+            effects.gate = p.gate;
+            effects.compressor = p.compressor;
+            effects.reverb = p.reverb;
+            effects.delay = p.delay;
+
+            // Update UI
+            toggles.forEach(toggle => {
+                toggle.classList.toggle('active', effects[toggle.dataset.effect]);
+            });
+
+            updateEffectParams();
+            updateValueDisplays();
+        }
+
+        // Update value displays
+        function updateValueDisplays() {
+            document.getElementById('gateThresholdValue').textContent = `${document.getElementById('gateThreshold').value} dB`;
+            document.getElementById('gateAttackValue').textContent = `${document.getElementById('gateAttack').value} ms`;
+            document.getElementById('gateReleaseValue').textContent = `${document.getElementById('gateRelease').value} ms`;
+            document.getElementById('eqLowValue').textContent = `${document.getElementById('eqLow').value} dB`;
+            document.getElementById('eqMidValue').textContent = `${document.getElementById('eqMid').value} dB`;
+            document.getElementById('eqHighValue').textContent = `${document.getElementById('eqHigh').value} dB`;
+            document.getElementById('compThresholdValue').textContent = `${document.getElementById('compThreshold').value} dB`;
+            document.getElementById('compRatioValue').textContent = `${document.getElementById('compRatio').value}:1`;
+            document.getElementById('compAttackValue').textContent = `${document.getElementById('compAttack').value} ms`;
+            document.getElementById('compReleaseValue').textContent = `${document.getElementById('compRelease').value} ms`;
+            document.getElementById('compMakeupValue').textContent = `+${document.getElementById('compMakeup').value} dB`;
+            document.getElementById('reverbRoomValue').textContent = `${document.getElementById('reverbRoom').value}%`;
+            document.getElementById('reverbDampValue').textContent = `${document.getElementById('reverbDamp').value}%`;
+            document.getElementById('reverbWetValue').textContent = `${document.getElementById('reverbWet').value}%`;
+            document.getElementById('delayTimeValue').textContent = `${document.getElementById('delayTime').value} ms`;
+            document.getElementById('delayFeedbackValue').textContent = `${document.getElementById('delayFeedback').value}%`;
+            document.getElementById('delayMixValue').textContent = `${document.getElementById('delayMix').value}%`;
+        }
+
+        // Draw waveform
+        function drawWaveform(ctx, dataArray, color) {
+            ctx.fillStyle = '#0A0A0A';
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = color;
+            ctx.beginPath();
+
+            const sliceWidth = ctx.canvas.width / dataArray.length;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * ctx.canvas.height / 2;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            ctx.stroke();
+        }
+
+        // Draw EQ curve
+        function drawEQCurve() {
+            eqCtx.fillStyle = '#0A0A0A';
+            eqCtx.fillRect(0, 0, eqCanvas.width, eqCanvas.height);
+
+            const low = parseFloat(document.getElementById('eqLow').value);
+            const mid = parseFloat(document.getElementById('eqMid').value);
+            const high = parseFloat(document.getElementById('eqHigh').value);
+
+            eqCtx.strokeStyle = '#FFD700';
+            eqCtx.lineWidth = 2;
+            eqCtx.beginPath();
+
+            const points = [];
+            for (let i = 0; i <= eqCanvas.width; i++) {
+                const x = i;
+                const progress = i / eqCanvas.width;
+                
+                // Create smooth curve
+                let y = eqCanvas.height / 2;
+                if (progress < 0.33) {
+                    y -= low * (eqCanvas.height / 40) * Math.sin(progress * Math.PI / 0.66);
+                } else if (progress < 0.66) {
+                    y -= mid * (eqCanvas.height / 40) * Math.sin((progress - 0.33) * Math.PI / 0.33);
+                } else {
+                    y -= high * (eqCanvas.height / 40) * Math.sin((progress - 0.66) * Math.PI / 0.33);
+                }
+
+                if (i === 0) {
+                    eqCtx.moveTo(x, y);
+                } else {
+                    eqCtx.lineTo(x, y);
+                }
+            }
+
+            eqCtx.stroke();
+        }
+
+        // Draw spectrum
+        function drawSpectrum(dataArray) {
+            spectrumCtx.fillStyle = '#0A0A0A';
+            spectrumCtx.fillRect(0, 0, spectrumCanvas.width, spectrumCanvas.height);
+
+            const barWidth = spectrumCanvas.width / dataArray.length;
+            let x = 0;
+
+            for (let i = 0; i < dataArray.length; i++) {
+                const barHeight = (dataArray[i] / 255) * spectrumCanvas.height;
+
+                const gradient = spectrumCtx.createLinearGradient(0, spectrumCanvas.height, 0, 0);
+                gradient.addColorStop(0, '#F59E0B');
+                gradient.addColorStop(1, '#FFD700');
+
+                spectrumCtx.fillStyle = gradient;
+                spectrumCtx.fillRect(x, spectrumCanvas.height - barHeight, barWidth - 1, barHeight);
+
+                x += barWidth;
+            }
+        }
+
+        // Calculate RMS level
+        function calculateRMS(dataArray) {
+            let sum = 0;
+            for (let i = 0; i < dataArray.length; i++) {
+                const val = (dataArray[i] - 128) / 128;
+                sum += val * val;
+            }
+            return Math.sqrt(sum / dataArray.length);
+        }
+
+        // Convert to dB
+        function toDb(rms) {
+            if (rms < 0.00001) return -Infinity;
+            return 20 * Math.log10(rms);
+        }
+
+        // Main visualization loop
+        function visualize() {
+            if (!isListening) return;
+
+            const inputArray = new Uint8Array(analyserInput.fftSize);
+            const outputArray = new Uint8Array(analyserOutput.fftSize);
+            const spectrumArray = new Uint8Array(analyserOutput.frequencyBinCount);
+
+            analyserInput.getByteTimeDomainData(inputArray);
+            analyserOutput.getByteTimeDomainData(outputArray);
+            analyserOutput.getByteFrequencyData(spectrumArray);
+
+            drawWaveform(inputCtx, inputArray, '#FFD700');
+            drawWaveform(outputCtx, outputArray, '#10B981');
+            drawEQCurve();
+            drawSpectrum(spectrumArray);
+
+            // Update meters
+            const inputRMS = calculateRMS(inputArray);
+            const outputRMS = calculateRMS(outputArray);
+            const inputDb = toDb(inputRMS);
+            const outputDb = toDb(outputRMS);
+            const gainReduction = inputDb - outputDb;
+
+            inputLevelEl.textContent = inputDb === -Infinity ? '-∞ dB' : `${inputDb.toFixed(1)} dB`;
+            outputLevelEl.textContent = outputDb === -Infinity ? '-∞ dB' : `${outputDb.toFixed(1)} dB`;
+            gainReductionEl.textContent = `${Math.max(0, gainReduction).toFixed(1)} dB`;
+
+            requestAnimationFrame(visualize);
+        }
+
+        // Start listening
+        async function startListening() {
+            try {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyserInput = audioContext.createAnalyser();
+                analyserOutput = audioContext.createAnalyser();
+                analyserInput.fftSize = 2048;
+                analyserOutput.fftSize = 2048;
+
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        echoCancellation: false,
+                        noiseSuppression: false,
+                        autoGainControl: false
+                    } 
+                });
+                
+                microphone = audioContext.createMediaStreamSource(stream);
+                setupAudioChain();
+
+                isListening = true;
+                startBtn.textContent = '⏹️ หยุดใช้งาน';
+                startBtn.classList.add('active');
+                statusEl.textContent = '🎤 กำลังฟัง... (ใช้หูฟังเพื่อป้องกัน Feedback)';
+                statusEl.className = 'status active';
+                
+                visualize();
+            } catch (error) {
+                console.error('Error accessing microphone:', error);
+                statusEl.textContent = '❌ ไม่สามารถเข้าถึงไมโครโฟน - กรุณาอนุญาต';
+                statusEl.className = 'status error';
+            }
+        }
+
+        // Stop listening
+        function stopListening() {
+            isListening = false;
+            if (audioContext) {
+                audioContext.close();
+            }
+            startBtn.textContent = '🎤 เริ่มใช้งาน (คลิกเพื่ออนุญาตไมค์)';
+            startBtn.classList.remove('active');
+            statusEl.textContent = '⏸️ พร้อมใช้งาน - คลิกปุ่มเริ่ม';
+            statusEl.className = 'status ready';
+            
+            // Clear canvases
+            [inputCtx, outputCtx, eqCtx, spectrumCtx].forEach(ctx => {
+                ctx.fillStyle = '#0A0A0A';
+                ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            });
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', () => {
+            if (isListening) {
+                stopListening();
+            } else {
+                startListening();
+            }
+        });
+
+        toggles.forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                toggle.classList.toggle('active');
+                toggleEffect(toggle.dataset.effect);
+            });
+        });
+
+        presetBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                presetBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                loadPreset(btn.dataset.preset);
+            });
+        });
+
+        // Slider event listeners
+        document.querySelectorAll('input[type="range"]').forEach(slider => {
+            slider.addEventListener('input', () => {
+                updateEffectParams();
+                updateValueDisplays();
+            });
+        });
+
+        // Initialize
+        updateValueDisplays();
+        
+        // Clear canvases
+        [inputCtx, outputCtx, eqCtx, spectrumCtx].forEach(ctx => {
+            ctx.fillStyle = '#0A0A0A';
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        });
+    </script>
+</body>
+</html>

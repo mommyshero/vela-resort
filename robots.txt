@@ -1,0 +1,15 @@
+# robots.txt for Vela Resort Umphang
+# https://velaresort.com
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://velaresort.com/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
+
+# Disallow admin pages (if any)
+Disallow: /admin/
+Disallow: /boh.html

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VELA BOH - Debug Login</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+            min-height: 100vh;
+        }
+        
+        /* Login Page */
+        .login-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .login-logo-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .login-title {
+            color: #1A1A1A;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .login-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        .login-input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        .login-input:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #FFD700;
+            color: #1A1A1A;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .login-btn:hover {
+            background: #E6C200;
+        }
+        
+        /* BOH Layout */
+        .boh-layout {
+            display: none;
+            min-height: 100vh;
+        }
+        .boh-layout.active {
+            display: flex;
+        }
+        .boh-sidebar {
+            width: 320px;
+            background: white;
+            border-right: 1px solid #E5E7EB;
+            padding: 2rem 1.5rem;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .boh-sidebar-header {
+            margin-bottom: 2rem;
+        }
+        .boh-sidebar-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: #1A1A1A;
+        }
+        .boh-menu-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            color: #1A1A1A;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 100%;
+            text-align: left;
+            font-size: 1rem;
+        }
+        .boh-menu-item:hover {
+            background: #FFF9E6;
+        }
+        .boh-menu-item.active {
+            background: #FFD700;
+        }
+        .boh-content {
+            margin-left: 320px;
+            flex: 1;
+            padding: 2rem;
+            background: #F3F4F6;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        /* Debug Console */
+        .debug-console {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            color: #10B981;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10000;
+        }
+        .debug-console h3 {
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+        .debug-log {
+            margin-bottom: 0.25rem;
+        }
+        .debug-log.error { color: #EF4444; }
+        .debug-log.success { color: #10B981; }
+        .debug-log.info { color: #3B82F6; }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="loginPage" class="login-page">
+        <div class="login-container">
+            <div class="login-logo-icon">🔑</div>
+            <h1 class="login-title">VELA BOH</h1>
+            <p class="login-subtitle">Debug Version - Back Office System</p>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <input type="text" id="loginUsername" class="login-input" placeholder="ชื่อผู้ใช้" value="Boss" required>
+                <input type="password" id="loginPassword" class="login-input" placeholder="รหัสผ่าน" value="5281" required>
+                <button type="submit" class="login-btn">🔑 เข้าสู่ระบบ</button>
+            </form>
+            <div style="margin-top: 1rem; padding: 0.5rem; background: #FEF3C7; border-radius: 8px; font-size: 0.85rem;">
+                <strong>💡 Debug:</strong> คลิกปุ่มเพื่อดู log ด้านล่าง
+            </div>
+        </div>
+    </div>
+
+    <!-- BOH Layout -->
+    <div id="bohLayout" class="boh-layout">
+        <!-- Sidebar -->
+        <aside class="boh-sidebar">
+            <div class="boh-sidebar-header">
+                <div class="boh-sidebar-logo">VELA</div>
+                <div class="boh-sidebar-subtitle" style="color: #666; font-size: 0.875rem;">Back Office System</div>
+            </div>
+            
+            <nav class="boh-menu">
+                <button class="boh-menu-item active" onclick="showSection('dashboard')">📊 แดชบอร์ด</button>
+                <button class="boh-menu-item" onclick="showSection('bookings')">📋 การจอง</button>
+                <button class="boh-menu-item" onclick="showSection('calendar')">📅 ปฏิทิน</button>
+                <button class="boh-menu-item" onclick="showSection('petty')">💰 บัญชีรายย่อย</button>
+                <button class="boh-menu-item" onclick="showSection('accounting')">📒 บัญชีใหญ่</button>
+            </nav>
+            
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #E5E7EB;">
+                <button class="boh-menu-item" onclick="logout()" style="color: #EF4444;">🚪 ออกจากระบบ</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="boh-content">
+            <div id="dashboard" class="content-section active">
+                <h1 style="color: #1A1A1A; margin-bottom: 1rem;">📊 แดชบอร์ด</h1>
+                <div class="card">
+                    <h2 style="color: #1A1A1A;">✅ Login สำเร็จ!</h2>
+                    <p style="color: #666; margin-top: 0.5rem;">ระบบพร้อมใช้งาน</p>
+                </div>
+            </div>
+            
+            <div id="bookings" class="content-section">
+                <h1 style="color: #1A1A1A;">📋 การจอง</h1>
+            </div>
+            
+            <div id="calendar" class="content-section">
+                <h1 style="color: #1A1A1A;">📅 ปฏิทิน</h1>
+            </div>
+            
+            <div id="petty" class="content-section">
+                <h1 style="color: #1A1A1A;">💰 บัญชีรายย่อย</h1>
+            </div>
+            
+            <div id="accounting" class="content-section">
+                <h1 style="color: #1A1A1A;">📒 บัญชีใหญ่</h1>
+            </div>
+        </main>
+    </div>
+
+    <!-- Debug Console -->
+    <div class="debug-console">
+        <h3>🔍 Debug Console</h3>
+        <div id="debugLogs"></div>
+    </div>
+
+    <script>
+        // Debug logging
+        function debugLog(message, type = 'info') {
+            const logs = document.getElementById('debugLogs');
+            const timestamp = new Date().toLocaleTimeString('th-TH');
+            const logEntry = document.createElement('div');
+            logEntry.className = `debug-log ${type}`;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logs.appendChild(logEntry);
+            logs.scrollTop = logs.scrollHeight;
+            console.log(`[${type.toUpperCase()}]`, message);
+        }
+
+        // Login function
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            debugLog('🔵 handleLogin called', 'info');
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            debugLog(`📝 Username: "${username}"`, 'info');
+            debugLog(`📝 Password: "${password}"`, 'info');
+            
+            // Check credentials
+            if (username === 'Boss' && password === '5281') {
+                debugLog('✅ Credentials match!', 'success');
+                
+                // Hide login page
+                const loginPage = document.getElementById('loginPage');
+                debugLog(`🔍 loginPage element: ${loginPage ? 'found' : 'NOT FOUND'}`, 'info');
+                
+                if (loginPage) {
+                    loginPage.style.display = 'none';
+                    debugLog('✅ loginPage hidden', 'success');
+                } else {
+                    debugLog('❌ loginPage element not found!', 'error');
+                }
+                
+                // Show BOH layout
+                const bohLayout = document.getElementById('bohLayout');
+                debugLog(`🔍 bohLayout element: ${bohLayout ? 'found' : 'NOT FOUND'}`, 'info');
+                
+                if (bohLayout) {
+                    bohLayout.classList.add('active');
+                    debugLog('✅ bohLayout shown', 'success');
+                } else {
+                    debugLog('❌ bohLayout element not found!', 'error');
+                }
+                
+                debugLog('🎉 Login successful!', 'success');
+                
+            } else {
+                debugLog('❌ Credentials do not match!', 'error');
+                alert('❌ ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง\n\nที่กรอก:\nUsername: ' + username + '\nPassword: ' + password + '\n\nที่ถูกต้อง:\nUsername: Boss\nPassword: 5281');
+            }
+        }
+
+        // Show section
+        function showSection(sectionId) {
+            debugLog(`🔵 Switching to section: ${sectionId}`, 'info');
+            
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.boh-menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.classList.add('active');
+                debugLog(`✅ Section ${sectionId} shown`, 'success');
+            }
+        }
+
+        // Logout
+        function logout() {
+            debugLog('🔵 Logout clicked', 'info');
+            document.getElementById('bohLayout').classList.remove('active');
+            document.getElementById('loginPage').style.display = 'flex';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            debugLog('✅ Logged out', 'success');
+        }
+
+        // On load
+        window.addEventListener('load', function() {
+            debugLog('🚀 Page loaded', 'info');
+            debugLog('📄 File: boh-debug.html', 'info');
+            debugLog('🔐 Expected: Boss / 5281', 'info');
+        });
+    </script>
+</body>
+</html>
